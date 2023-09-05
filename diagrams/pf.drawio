@@ -1,9 +1,85 @@
 <mxfile host="65bd71144e">
     <diagram id="yxhIGMW8OohsdPnCvQMu" name="Page-1">
-        <mxGraphModel dx="934" dy="667" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
+        <mxGraphModel dx="1199" dy="785" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="24" style="edgeStyle=none;html=1;strokeColor=#525252;strokeWidth=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="3" target="6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="1. Policy formulation" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=#0066CC;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="120" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" style="edgeStyle=none;html=1;strokeColor=#525252;strokeWidth=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="4" target="7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="2. Define conditions for suitable site" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=#0066CC;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="200" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Define Search Space" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;spacingLeft=2;spacingRight=2;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="10" y="160" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#525252;strokeWidth=1;endArrow=blockThin;endFill=1;rounded=0;" edge="1" parent="1" source="6" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="How much? How many? What are the targets? (Objectives)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=default;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="380" y="120" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#525252;strokeWidth=1;endArrow=blockThin;endFill=1;rounded=0;" edge="1" parent="1" source="7" target="10">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="590" y="235"/>
+                            <mxPoint x="590" y="195"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="Where is suitable for locating the plants?&lt;br&gt;(Proximity to residential, industrial, nature areas etc.)&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=default;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="380" y="200" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#525252;strokeWidth=1;endArrow=blockThin;endFill=1;elbow=vertical;" edge="1" parent="1" source="8" target="11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="3. Spatial optimization problem" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=#0066CC;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="340" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=none;html=1;strokeColor=#525252;strokeWidth=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="10" target="8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="Suitability map" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="22">
+                    <mxGeometry x="0.0184" y="3" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="SQL Queries" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=default;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="620" y="160" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="What are the implications of the policy?" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=default;spacingLeft=2;spacingRight=2;" vertex="1" parent="1">
+                    <mxGeometry x="810" y="340" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="endArrow=none;html=1;strokeWidth=4;strokeColor=#525252;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="160" y="270" as="sourcePoint"/>
+                        <mxPoint x="160" y="120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="" style="endArrow=none;html=1;strokeWidth=4;strokeColor=#525252;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="190" y="100" as="sourcePoint"/>
+                        <mxPoint x="330" y="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="User Action" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;spacingLeft=2;spacingRight=2;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="190" y="80" width="140" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="" style="endArrow=none;html=1;strokeWidth=4;strokeColor=#525252;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="619.9999999999998" y="100" as="sourcePoint"/>
+                        <mxPoint x="990" y="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="30" value="MCDA" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;spacingLeft=2;spacingRight=2;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="660" y="80" width="280" height="20" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
