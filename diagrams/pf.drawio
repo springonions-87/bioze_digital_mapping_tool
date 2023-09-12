@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="yxhIGMW8OohsdPnCvQMu" name="Page-1">
-        <mxGraphModel dx="884" dy="633" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
+        <mxGraphModel dx="730" dy="517" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -37,7 +37,7 @@
                 <mxCell id="8" value="3. Spatial optimization" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=default;spacingLeft=2;spacingRight=2;fillColor=default;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="400" y="290" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="37" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="10" target="36">
+                <mxCell id="37" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="10" target="36" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="10" value="Conditional statement" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=default;spacingLeft=2;spacingRight=2;fillColor=default;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
@@ -70,7 +70,7 @@
                 <mxCell id="30" value="MCDA" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;spacingLeft=2;spacingRight=2;fontStyle=1" parent="1" vertex="1">
                     <mxGeometry x="440" y="80" width="280" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="40" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="31" target="8">
+                <mxCell id="40" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="31" target="8" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="725" y="260"/>
@@ -78,14 +78,29 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="31" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Suitability &lt;br&gt;map&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                <mxCell id="31" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;Suitability &lt;br&gt;map&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" parent="1" vertex="1">
                     <mxGeometry x="680" y="160" width="90" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="39" value="" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="36" target="31">
+                <mxCell id="39" value="" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="36" target="31" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="36" value="Map/Data" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;" vertex="1" parent="1">
+                <mxCell id="36" value="Map/Data" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;" parent="1" vertex="1">
                     <mxGeometry x="580" y="160" width="60" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="Given a set of feedstock locations, a set of potential plant locations, the objective is to maximize the coverage of farms while minimizing the total transportation distance and considering a budget constraint on the number of plants that can be built.&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="390" width="430" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;F: The set of feedstock locations, where \(n:=|F| \). \[ F = \{f_1, f_2, f_3, \ldots, f_n\}\]&lt;/font&gt;&lt;/span&gt;&lt;/font&gt;&lt;span id=&quot;docs-internal-guid-d7d6a5e9-7fff-3747-1d99-b8a17d7eb3a2&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="570" width="400" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="P: The set of potential plant locations, where&amp;nbsp;&lt;span style=&quot;&quot;&gt;&amp;nbsp;\(m:=|P| \).&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\[ P = \{p_1, p_2, p_3, \ldots, p_m\}\]&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="640" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;C: A matrix of size&amp;nbsp;&lt;span style=&quot;&quot;&gt;\( n \times m \)&lt;/span&gt;, where&amp;nbsp;&lt;span style=&quot;&quot;&gt;&amp;nbsp;\(C_{ij}\) represent the coverage of facility&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( j \)&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&amp;nbsp;at location&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( i \)&lt;/span&gt;&lt;span style=&quot;&quot;&gt;.&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\[\mathbf{C}:=[C_{ij}]_{n\times m}\]&lt;/span&gt;&lt;/font&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="720" width="400" height="44.44" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;B: Budget constraint represented by the maximum number of plants that can be built within the budget.&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;docs-internal-guid-def9f7a5-7fff-8f22-0a7a-3c3afaaced15&quot;&gt;&lt;p style=&quot;text-align: left; line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;\[ \sum_{j=1}^{m} X[j] \leq B \]&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;line-height:1.38;margin-top:0pt;margin-bottom:0pt;&quot; dir=&quot;ltr&quot;&gt;&lt;/p&gt;&lt;ul&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; color: rgb(0, 0, 0); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;&quot;&gt;\(X[j]\) is a binary decision variable representing whether a biogas processing plant is built at location \(j\) (1 if built, 0 if not).&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; color: rgb(0, 0, 0); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;&quot;&gt;\(m\) is the total number of potential plant locations.&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; color: rgb(0, 0, 0); background-color: transparent; font-weight: 400; font-style: normal; font-variant: normal; text-decoration: none; vertical-align: baseline;&quot;&gt;The summation \(\sum_{j=1}^{m} X[j]\) calculates the total number of plants built.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;/p&gt;&lt;p style=&quot;line-height:1.38;margin-top:0pt;margin-bottom:0pt;&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;docs-internal-guid-fa30f236-7fff-2b56-960d-c291ab59fe8a&quot;&gt;&lt;/span&gt;&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="810" width="400" height="160" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
