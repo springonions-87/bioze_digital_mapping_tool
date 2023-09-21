@@ -243,7 +243,7 @@
                     <mxGeometry x="-330" y="350" width="280" height="130" as="geometry"/>
                 </mxCell>
                 <mxCell id="164" value="Check how biogas price is determined - maybe this can be calculated by the total biogas potential/total cost for simplicity?" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=12;fontColor=#FF3333;" parent="1" vertex="1">
-                    <mxGeometry x="-420" y="620" width="280" height="130" as="geometry"/>
+                    <mxGeometry x="-320" y="520" width="280" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="165" value="Biogas potential will just be a display of value but doesn't have any role in the optimisation right? Because the biogas potential will be bascially extrapolated from&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=12;fontColor=#FF3333;" parent="1" vertex="1">
                     <mxGeometry x="-830" y="550" width="280" height="70" as="geometry"/>
