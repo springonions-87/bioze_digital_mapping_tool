@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="yxhIGMW8OohsdPnCvQMu" name="Page-1">
-        <mxGraphModel dx="2384" dy="1814" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
+        <mxGraphModel dx="2705" dy="2055" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -688,7 +688,7 @@
                     <mxGeometry x="2820" y="250" width="140" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="306" value="AgriDirect&amp;nbsp;&lt;br&gt;Farm &lt;br&gt;Data" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-                    <mxGeometry x="3550" y="470" width="60" height="70" as="geometry"/>
+                    <mxGeometry x="3710" y="470" width="60" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="307" value="&lt;span style=&quot;&quot;&gt;Target of Manure Utilization&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( M \right) \)&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
                     <mxGeometry x="3140" y="110" width="100" height="70" as="geometry"/>
@@ -697,6 +697,9 @@
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3190" y="-20.000000000000227" as="sourcePoint"/>
                         <mxPoint x="2920" y="-20" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="3190" y="60"/>
+                        </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="311" value="Land Use" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
@@ -715,28 +718,28 @@
                     <mxGeometry x="3560" y="250" width="140" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="317" value="&lt;span style=&quot;&quot;&gt;Farm Locations&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( \text{Farm} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="3480" y="360" width="100" height="70" as="geometry"/>
+                    <mxGeometry x="3640" y="360" width="100" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="318" value="&lt;span style=&quot;&quot;&gt;Farm Manure Production&lt;br&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( p_{i}, P \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="3580" y="360" width="100" height="70" as="geometry"/>
+                    <mxGeometry x="3740" y="360" width="100" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="319" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="306" target="317">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="3760" y="680" as="sourcePoint"/>
-                        <mxPoint x="3911.5" y="680" as="targetPoint"/>
+                        <mxPoint x="3920" y="680" as="sourcePoint"/>
+                        <mxPoint x="4071.5" y="680" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="320" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="306" target="318">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="3679.163333333332" y="820" as="sourcePoint"/>
-                        <mxPoint x="3649.996666666666" y="770" as="targetPoint"/>
+                        <mxPoint x="3839.163333333332" y="820" as="sourcePoint"/>
+                        <mxPoint x="3809.996666666666" y="770" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="321" value="OpenStreetMap" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-                    <mxGeometry x="3700" y="470" width="60" height="70" as="geometry"/>
+                    <mxGeometry x="3310" y="470" width="60" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="322" value="&lt;span style=&quot;&quot;&gt;OD Matrix&lt;br&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( c_{ij} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="3680" y="360" width="100" height="70" as="geometry"/>
+                    <mxGeometry x="3490" y="360" width="100" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="324" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="303" target="305">
                     <mxGeometry relative="1" as="geometry">
@@ -799,7 +802,7 @@
                         <mxPoint x="3611.2962962962965" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="333" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="321" target="322">
+                <mxCell id="333" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="321" target="377">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3612.5" y="840" as="sourcePoint"/>
                         <mxPoint x="3617.5" y="770" as="targetPoint"/>
@@ -871,6 +874,21 @@
                 </mxCell>
                 <mxCell id="375" value="Manure Utilization Percentage" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
                     <mxGeometry x="3140" y="-70" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="377" value="Nearest Neighbor &amp;amp; Shortest Path" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="3270" y="360" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="379" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="315" target="377">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="3240" y="390" as="sourcePoint"/>
+                        <mxPoint x="3381.5" y="390" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="380" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="377" target="322">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="3470" y="430" as="sourcePoint"/>
+                        <mxPoint x="3470" y="470" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
