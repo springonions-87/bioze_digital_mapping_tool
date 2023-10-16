@@ -1,10 +1,10 @@
 <mxfile host="65bd71144e">
     <diagram id="yxhIGMW8OohsdPnCvQMu" name="Page-1">
-        <mxGraphModel dx="2705" dy="2055" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
+        <mxGraphModel dx="2710" dy="1656" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="303" value="" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#82b366;spacingLeft=2;spacingRight=2;fillColor=none;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="303" value="" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#82b366;spacingLeft=2;spacingRight=2;fillColor=none;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="2660" y="-110" width="450" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="57" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Helvetica Neue&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=none;fillColor=none;dashed=1;" parent="1" vertex="1">
@@ -292,20 +292,20 @@
                 <mxCell id="204" value="Parameters" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;" parent="1" vertex="1">
                     <mxGeometry x="2030" y="910" width="440" height="380" as="geometry"/>
                 </mxCell>
-                <mxCell id="362" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;perimeterSpacing=2;strokeColor=#000000;fontStyle=1" vertex="1" parent="204">
+                <mxCell id="362" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;perimeterSpacing=2;strokeColor=#000000;fontStyle=1" parent="204" vertex="1">
                     <mxGeometry y="30" width="440" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="363" value="Notation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;pointerEvents=1;verticalAlign=middle;fontStyle=1;align=center;" vertex="1" parent="362">
+                <mxCell id="363" value="Notation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;pointerEvents=1;verticalAlign=middle;fontStyle=1;align=center;" parent="362" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="364" value="Description" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=center;spacingLeft=6;overflow=hidden;fontStyle=1" vertex="1" parent="362">
+                <mxCell id="364" value="Description" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=center;spacingLeft=6;overflow=hidden;fontStyle=1" parent="362" vertex="1">
                     <mxGeometry x="60" width="230" height="50" as="geometry">
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="365" value="&lt;b&gt;Data Type&lt;/b&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;top=0;left=0;bottom=0;right=0;align=center;spacingLeft=6;overflow=hidden;perimeterSpacing=1;fillColor=none;" vertex="1" parent="362">
+                <mxCell id="365" value="&lt;b&gt;Data Type&lt;/b&gt;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;top=0;left=0;bottom=0;right=0;align=center;spacingLeft=6;overflow=hidden;perimeterSpacing=1;fillColor=none;" parent="362" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -323,7 +323,7 @@
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="356" value="Float representing Euro" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="205">
+                <mxCell id="356" value="Float representing Euro" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="205" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -341,7 +341,7 @@
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="357" value="Float representing distance in meter" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="208">
+                <mxCell id="357" value="Float representing distance in meter" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="208" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -359,7 +359,7 @@
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="358" value="Float representing tonne" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="214">
+                <mxCell id="358" value="Float representing tonne" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="214" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -377,7 +377,7 @@
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="359" value="Float representing tonne" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="217">
+                <mxCell id="359" value="Float representing tonne" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="217" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -395,7 +395,7 @@
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="360" value="Float representing tonne" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="220">
+                <mxCell id="360" value="Float representing tonne" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="220" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -413,7 +413,7 @@
                         <mxRectangle width="230" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="361" value="Float representing percentage" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;fontColor=#0000FF;" vertex="1" parent="223">
+                <mxCell id="361" value="Float representing percentage" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;fontColor=#0000FF;" parent="223" vertex="1">
                     <mxGeometry x="290" width="150" height="50" as="geometry">
                         <mxRectangle width="150" height="50" as="alternateBounds"/>
                     </mxGeometry>
@@ -528,172 +528,172 @@
                 <mxCell id="257" value="&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Optimal solution&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" parent="1" vertex="1">
                     <mxGeometry x="1940" y="240" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="259" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\(\text{Subject to}:\)&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[\sum_{j \in \text{Plant}}^{m} x_{ij} = p_i a_i, \forall i \in \text{Farm} \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[\sum_{i \in \text{Farm}}^{n} x_{ij} \leq M_j y_j, \forall j \in \text{Plant} \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[x_{ij} \leq p_i \cdot y_j, \forall i \in \text{Farm}, \forall j \in \text{Plant} \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[\sum_{i \in \text{Farm}}^{n} \sum_{j \in \text{Plant}}^{m} x_{ij} \geq T P\]&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[x_{ij} \geq 0 \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px;&quot;&gt;\[ y_j \in \left \{0,1 \right \}\]&lt;/span&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="259" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\(\text{Subject to}:\)&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[\sum_{j \in \text{Plant}}^{m} x_{ij} = p_i a_i, \forall i \in \text{Farm} \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[\sum_{i \in \text{Farm}}^{n} x_{ij} \leq M_j y_j, \forall j \in \text{Plant} \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[x_{ij} \leq p_i \cdot y_j, \forall i \in \text{Farm}, \forall j \in \text{Plant} \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[\sum_{i \in \text{Farm}}^{n} \sum_{j \in \text{Plant}}^{m} x_{ij} \geq T P\]&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;\[x_{ij} \geq 0 \]&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;;&quot; class=&quot;p1&quot;&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px;&quot;&gt;\[ y_j \in \left \{0,1 \right \}\]&lt;/span&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="30" y="2210" width="300" height="430" as="geometry"/>
                 </mxCell>
-                <mxCell id="260" value="&lt;p style=&quot;border-color: var(--border-color); line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;border-color: var(--border-color); font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;\[ \text{Minimize} \sum_{j \in \text{Plant}}^{m} f_j y_j + \sum_{i \in \text{Farm}}^{n} \sum_{j \in \text{Plant}}^{m} c_{ij} x_{ij}\]&lt;/span&gt;&lt;/p&gt;&lt;span style=&quot;border-color: var(--border-color); font-family: Barlow, sans-serif;&quot;&gt;&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="260" value="&lt;p style=&quot;border-color: var(--border-color); line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;border-color: var(--border-color); font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;\[ \text{Minimize} \sum_{j \in \text{Plant}}^{m} f_j y_j + \sum_{i \in \text{Farm}}^{n} \sum_{j \in \text{Plant}}^{m} c_{ij} x_{ij}\]&lt;/span&gt;&lt;/p&gt;&lt;span style=&quot;border-color: var(--border-color); font-family: Barlow, sans-serif;&quot;&gt;&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="30" y="2070" width="270" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="261" value="Decision Variables" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;" vertex="1" parent="1">
+                <mxCell id="261" value="Decision Variables" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;" parent="1" vertex="1">
                     <mxGeometry x="580" y="1950" width="300" height="180" as="geometry"/>
                 </mxCell>
-                <mxCell id="262" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="261">
+                <mxCell id="262" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="261" vertex="1">
                     <mxGeometry y="30" width="300" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="263" value="\(x_{ij}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;pointerEvents=1;verticalAlign=middle;" vertex="1" parent="262">
+                <mxCell id="263" value="\(x_{ij}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;pointerEvents=1;verticalAlign=middle;" parent="262" vertex="1">
                     <mxGeometry width="67" height="50" as="geometry">
                         <mxRectangle width="67" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="264" value="Non-negative variable representing the amount of manure from from \(i\) serviced by the plant at location \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="262">
+                <mxCell id="264" value="Non-negative variable representing the amount of manure from from \(i\) serviced by the plant at location \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="262" vertex="1">
                     <mxGeometry x="67" width="233" height="50" as="geometry">
                         <mxRectangle width="233" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="265" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="261">
+                <mxCell id="265" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="261" vertex="1">
                     <mxGeometry y="80" width="300" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="266" value="\(y_{j}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" vertex="1" parent="265">
+                <mxCell id="266" value="\(y_{j}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="265" vertex="1">
                     <mxGeometry width="67" height="50" as="geometry">
                         <mxRectangle width="67" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="267" value="Binary variable indicating whether a plant at location \(j\) is open (1) or not open (0)&amp;nbsp;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="265">
+                <mxCell id="267" value="Binary variable indicating whether a plant at location \(j\) is open (1) or not open (0)&amp;nbsp;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="265" vertex="1">
                     <mxGeometry x="67" width="233" height="50" as="geometry">
                         <mxRectangle width="233" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="268" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="261">
+                <mxCell id="268" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="261" vertex="1">
                     <mxGeometry y="130" width="300" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="269" value="\(a_{i}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" vertex="1" parent="268">
+                <mxCell id="269" value="\(a_{i}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="268" vertex="1">
                     <mxGeometry width="67" height="50" as="geometry">
                         <mxRectangle width="67" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="270" value="Binary variable indicating whether farm \(i\) is assigned to any plant (1) or not assigned (0)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="268">
+                <mxCell id="270" value="Binary variable indicating whether farm \(i\) is assigned to any plant (1) or not assigned (0)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="268" vertex="1">
                     <mxGeometry x="67" width="233" height="50" as="geometry">
                         <mxRectangle width="233" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="271" value="Parameters" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;" vertex="1" parent="1">
+                <mxCell id="271" value="Parameters" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;" parent="1" vertex="1">
                     <mxGeometry x="910" y="1950" width="270" height="330" as="geometry"/>
                 </mxCell>
-                <mxCell id="272" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="271">
+                <mxCell id="272" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="271" vertex="1">
                     <mxGeometry y="30" width="270" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="273" value="\(f_{j}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;pointerEvents=1;verticalAlign=middle;" vertex="1" parent="272">
+                <mxCell id="273" value="\(f_{j}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;pointerEvents=1;verticalAlign=middle;" parent="272" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="274" value="Fixed cost associated with opening a plant at location \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="272">
+                <mxCell id="274" value="Fixed cost associated with opening a plant at location \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="272" vertex="1">
                     <mxGeometry x="60" width="210" height="50" as="geometry">
                         <mxRectangle width="210" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="275" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="271">
+                <mxCell id="275" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="271" vertex="1">
                     <mxGeometry y="80" width="270" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="276" value="\(c_{ij}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" vertex="1" parent="275">
+                <mxCell id="276" value="\(c_{ij}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="275" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="277" value="Cost of transporting manure from farm \(i\) to plant \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="275">
+                <mxCell id="277" value="Cost of transporting manure from farm \(i\) to plant \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="275" vertex="1">
                     <mxGeometry x="60" width="210" height="50" as="geometry">
                         <mxRectangle width="210" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="278" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="271">
+                <mxCell id="278" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="271" vertex="1">
                     <mxGeometry y="130" width="270" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="279" value="\(p_{i}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" vertex="1" parent="278">
+                <mxCell id="279" value="\(p_{i}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="278" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="280" value="Manure produced by farm \(i\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="278">
+                <mxCell id="280" value="Manure produced by farm \(i\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="278" vertex="1">
                     <mxGeometry x="60" width="210" height="50" as="geometry">
                         <mxRectangle width="210" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="281" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="271">
+                <mxCell id="281" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="271" vertex="1">
                     <mxGeometry y="180" width="270" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="282" value="\(M_{j}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" vertex="1" parent="281">
+                <mxCell id="282" value="\(M_{j}\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="281" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="283" value="Maximum capacity of the plant at location \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="281">
+                <mxCell id="283" value="Maximum capacity of the plant at location \(j\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="281" vertex="1">
                     <mxGeometry x="60" width="210" height="50" as="geometry">
                         <mxRectangle width="210" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="284" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="271">
+                <mxCell id="284" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="271" vertex="1">
                     <mxGeometry y="230" width="270" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="285" value="\(P\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" vertex="1" parent="284">
+                <mxCell id="285" value="\(P\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;" parent="284" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="286" value="Total manure production by all farms" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="284">
+                <mxCell id="286" value="Total manure production by all farms" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="284" vertex="1">
                     <mxGeometry x="60" width="210" height="50" as="geometry">
                         <mxRectangle width="210" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="287" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="271">
+                <mxCell id="287" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="271" vertex="1">
                     <mxGeometry y="280" width="270" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="288" value="\(T\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontColor=#0000FF;" vertex="1" parent="287">
+                <mxCell id="288" value="\(T\)" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontColor=#0000FF;" parent="287" vertex="1">
                     <mxGeometry width="60" height="50" as="geometry">
                         <mxRectangle width="60" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="289" value="Target of manure utilization&amp;nbsp;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;fontColor=#0000FF;" vertex="1" parent="287">
+                <mxCell id="289" value="Target of manure utilization&amp;nbsp;" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;fontColor=#0000FF;" parent="287" vertex="1">
                     <mxGeometry x="60" width="210" height="50" as="geometry">
                         <mxRectangle width="210" height="50" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="290" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;\(\text{Farm}\): The set of farms, where \(n:=|\text{Farm}| \). \[ \text{Farm} = \{1, 2, \ldots, n\}\]&lt;/font&gt;&lt;/span&gt;&lt;/font&gt;&lt;span id=&quot;docs-internal-guid-d7d6a5e9-7fff-3747-1d99-b8a17d7eb3a2&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="290" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;\(\text{Farm}\): The set of farms, where \(n:=|\text{Farm}| \). \[ \text{Farm} = \{1, 2, \ldots, n\}\]&lt;/font&gt;&lt;/span&gt;&lt;/font&gt;&lt;span id=&quot;docs-internal-guid-d7d6a5e9-7fff-3747-1d99-b8a17d7eb3a2&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="30" y="1920" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="291" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;\(\text{Plant}\): The set of potential plant locations, where \(m:=|\text{Plant}| \). \[ \text{Plant} = \{1, 2, \ldots, m\}\]&lt;/font&gt;&lt;/span&gt;&lt;/font&gt;&lt;span id=&quot;docs-internal-guid-d7d6a5e9-7fff-3747-1d99-b8a17d7eb3a2&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                <mxCell id="291" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;\(\text{Plant}\): The set of potential plant locations, where \(m:=|\text{Plant}| \). \[ \text{Plant} = \{1, 2, \ldots, m\}\]&lt;/font&gt;&lt;/span&gt;&lt;/font&gt;&lt;span id=&quot;docs-internal-guid-d7d6a5e9-7fff-3747-1d99-b8a17d7eb3a2&quot;&gt;&lt;span style=&quot;font-family: Barlow, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; vertical-align: baseline;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="30" y="2000" width="400" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="292" value="How about the number of plants that can be built according to budget? (\(m'\))" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" vertex="1" parent="1">
+                <mxCell id="292" value="How about the number of plants that can be built according to budget? (\(m'\))" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" parent="1" vertex="1">
                     <mxGeometry x="1140" y="2270" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="293" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;This can simply be:&amp;nbsp;&lt;span style=&quot;font-family: &amp;quot;Helvetica Neue&amp;quot;; font-size: 12px;&quot;&gt;\(\sum_{j \in \text{Plant}}^{m} x_{ij} = 1\) given that it's single-source allocation, aka, every farms is assigned 1 plant. And make \(x_{ij}\) a binary decision variable too.&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF3333;fontSize=12;" vertex="1" parent="1">
+                <mxCell id="293" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;This can simply be:&amp;nbsp;&lt;span style=&quot;font-family: &amp;quot;Helvetica Neue&amp;quot;; font-size: 12px;&quot;&gt;\(\sum_{j \in \text{Plant}}^{m} x_{ij} = 1\) given that it's single-source allocation, aka, every farms is assigned 1 plant. And make \(x_{ij}\) a binary decision variable too.&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF3333;fontSize=12;" parent="1" vertex="1">
                     <mxGeometry x="260" y="2210" width="240" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="294" value="&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Suitability &lt;br&gt;Criteria&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                <mxCell id="294" value="&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Suitability &lt;br&gt;Criteria&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" parent="1" vertex="1">
                     <mxGeometry x="1630" y="30" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="295" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="294" target="250">
+                <mxCell id="295" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="294" target="250" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="1620" y="205" as="sourcePoint"/>
                         <mxPoint x="1660" y="205" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="296" value="Or add budget constraint" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" vertex="1" parent="1">
+                <mxCell id="296" value="Or add budget constraint" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" parent="1" vertex="1">
                     <mxGeometry x="2440" y="1340" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="304" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Spatial Preference&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+                <mxCell id="304" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Spatial Preference&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" parent="1" vertex="1">
                     <mxGeometry x="2670" y="-110" width="110" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="305" value="Conditional statement" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="305" value="Conditional statement" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="2820" y="250" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="306" value="AgriDirect&amp;nbsp;&lt;br&gt;Farm &lt;br&gt;Data" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                <mxCell id="306" value="AgriDirect&amp;nbsp;&lt;br&gt;Farm &lt;br&gt;Data" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=14;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="3710" y="470" width="60" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="307" value="&lt;span style=&quot;&quot;&gt;Target of Manure Utilization&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( M \right) \)&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="307" value="&lt;span style=&quot;&quot;&gt;Target of Manure Utilization&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( \mu \right) \)&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="3140" y="110" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="308" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="375" target="307">
+                <mxCell id="308" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="375" target="307" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3190" y="-20.000000000000227" as="sourcePoint"/>
                         <mxPoint x="2920" y="-20" as="targetPoint"/>
@@ -702,58 +702,58 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="311" value="Land Use" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                <mxCell id="311" value="Land Use" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="3020" y="470" width="60" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="312" value="Gas Network" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                <mxCell id="312" value="Gas Network" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=4;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="3100" y="470" width="60" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="314" value="Suitability Analysis" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="314" value="Suitability Analysis" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="3020" y="250" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="315" value="&lt;span style=&quot;&quot;&gt;Potential Digester Locations&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( \text{Plant} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="315" value="&lt;span style=&quot;&quot;&gt;Potential Digester Locations&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( \mathcal{P} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="3290" y="250" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="316" value="Spatial Optimization&lt;br&gt;(SSCFLP)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="316" value="Spatial Optimization&lt;br&gt;(SSCFLP)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="3560" y="250" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="317" value="&lt;span style=&quot;&quot;&gt;Farm Locations&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( \text{Farm} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="3640" y="360" width="100" height="70" as="geometry"/>
+                <mxCell id="317" value="&lt;span style=&quot;&quot;&gt;Farm Locations&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( \mathcal{F} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="3600" y="360" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="318" value="&lt;span style=&quot;&quot;&gt;Farm Manure Production&lt;br&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( p_{i}, P \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="3740" y="360" width="100" height="70" as="geometry"/>
+                <mxCell id="318" value="&lt;span style=&quot;&quot;&gt;Farm Manure Production&lt;br&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( p_{i}, \alpha \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="3700" y="360" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="319" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="306" target="317">
+                <mxCell id="319" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="306" target="317" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3920" y="680" as="sourcePoint"/>
                         <mxPoint x="4071.5" y="680" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="320" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="306" target="318">
+                <mxCell id="320" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="306" target="318" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3839.163333333332" y="820" as="sourcePoint"/>
                         <mxPoint x="3809.996666666666" y="770" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="321" value="OpenStreetMap" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                <mxCell id="321" value="OpenStreetMap" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;spacingTop=14;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="3310" y="470" width="60" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="322" value="&lt;span style=&quot;&quot;&gt;OD Matrix&lt;br&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( c_{ij} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="322" value="&lt;span style=&quot;&quot;&gt;OD Matrix&lt;br&gt;&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;\( \left( c_{ij} \right) \)&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="3490" y="360" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="324" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="303" target="305">
+                <mxCell id="324" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="303" target="305" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3200" y="9.999999999999773" as="sourcePoint"/>
                         <mxPoint x="3200" y="59.99999999999977" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="325" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="305" target="314">
+                <mxCell id="325" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="305" target="314" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="2900" y="19.999999999999773" as="sourcePoint"/>
                         <mxPoint x="2900" y="430" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="326" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="311" target="314">
+                <mxCell id="326" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="311" target="314" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3070" y="590" as="sourcePoint"/>
                         <mxPoint x="3150" y="590" as="targetPoint"/>
@@ -762,13 +762,13 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="327" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="312" target="314">
+                <mxCell id="327" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="312" target="314" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3078.75" y="630" as="sourcePoint"/>
                         <mxPoint x="3111.25" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="328" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="314" target="370">
+                <mxCell id="328" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="314" target="370" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3369.5" y="400" as="sourcePoint"/>
                         <mxPoint x="3535.000000000001" y="-2.2737367544323206e-13" as="targetPoint"/>
@@ -778,61 +778,61 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="329" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="314" target="315">
+                <mxCell id="329" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="314" target="315" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3250" y="450" as="sourcePoint"/>
                         <mxPoint x="3330" y="450" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="330" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="317" target="316">
+                <mxCell id="330" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="317" target="316" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3499.5" y="630" as="sourcePoint"/>
                         <mxPoint x="3480" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="331" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="318" target="316">
+                <mxCell id="331" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="318" target="316" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3514.259259259259" y="700" as="sourcePoint"/>
                         <mxPoint x="3595.740740740741" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="332" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="322" target="316">
+                <mxCell id="332" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="322" target="316" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3618.7037037037035" y="700" as="sourcePoint"/>
                         <mxPoint x="3611.2962962962965" y="500" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="333" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="321" target="377">
+                <mxCell id="333" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="321" target="377" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3612.5" y="840" as="sourcePoint"/>
                         <mxPoint x="3617.5" y="770" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="340" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="316" target="371">
+                <mxCell id="340" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="316" target="371" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3743.701851851852" y="700" as="sourcePoint"/>
                         <mxPoint x="3625.546875000001" y="-2.2737367544323206e-13" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="341" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="315" target="316">
+                <mxCell id="341" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="315" target="316" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3390" y="340" as="sourcePoint"/>
                         <mxPoint x="3481.5" y="340" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="342" value="Front End" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#82b366;spacingLeft=2;spacingRight=2;fillColor=#d5e8d4;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="342" value="Front End" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#82b366;spacingLeft=2;spacingRight=2;fillColor=#d5e8d4;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="2500" y="-110" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="343" value="Back End" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="343" value="Back End" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="2500" y="250" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="344" value="Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;spacingLeft=2;spacingRight=2;fillColor=#fff2cc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="344" value="Data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#d6b656;spacingLeft=2;spacingRight=2;fillColor=#fff2cc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="2500" y="470" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="309" value="&lt;span style=&quot;&quot;&gt;Budget &lt;br&gt;Constraint/Various Digester Configurations&lt;br&gt;&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="309" value="&lt;span style=&quot;&quot;&gt;Budget &lt;br&gt;Constraint/Various Digester Configurations&lt;br&gt;&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="4240" y="210" width="100" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="353" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="307" target="316">
+                <mxCell id="353" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="307" target="316" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3388.500000000001" y="295" as="sourcePoint"/>
                         <mxPoint x="3570" y="295" as="targetPoint"/>
@@ -842,49 +842,49 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="354" value="\[\mathbf{X} := [X_{ij}]_{m \times&amp;nbsp; n}\]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=12;fontColor=default;" vertex="1" parent="1">
+                <mxCell id="354" value="\[\mathbf{X} := [X_{ij}]_{m \times&amp;nbsp; n}\]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=12;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="1720" y="1070" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="355" value="\[\mathbf{C} := [C_{ij}]_{m \times&amp;nbsp; n}\]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=12;fontColor=default;" vertex="1" parent="1">
+                <mxCell id="355" value="\[\mathbf{C} := [C_{ij}]_{m \times&amp;nbsp; n}\]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;fontSize=12;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="1720" y="1100" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="367" value="\(C_{ij} = D_{ij}\) in our model" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" vertex="1" parent="1">
+                <mxCell id="367" value="\(C_{ij} = D_{ij}\) in our model" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" parent="1" vertex="1">
                     <mxGeometry x="1900" y="1040" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="368" value="&lt;font color=&quot;#ff3333&quot;&gt;Should be converted to cost, I think I have cost per km or something&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" vertex="1" parent="1">
+                <mxCell id="368" value="&lt;font color=&quot;#ff3333&quot;&gt;Should be converted to cost, I think I have cost per km or something&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=4;fontColor=#0000FF;" parent="1" vertex="1">
                     <mxGeometry x="1860" y="1090" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="369" value="Gas Network" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
+                <mxCell id="369" value="Gas Network" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" parent="1" vertex="1">
                     <mxGeometry x="2780" y="-70" width="100" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="370" value="Suitability map" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
+                <mxCell id="370" value="Suitability map" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" parent="1" vertex="1">
                     <mxGeometry x="3330" y="-70" width="100" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="371" value="Optimal solution:&lt;br&gt;&lt;ul&gt;&lt;li&gt;Nitrogen saving&amp;nbsp;&lt;/li&gt;&lt;li&gt;Carbon saving&amp;nbsp;&lt;/li&gt;&lt;li&gt;Return of investment&lt;/li&gt;&lt;li&gt;Total biogas production&amp;nbsp;&lt;/li&gt;&lt;li&gt;Underutilization&amp;nbsp;&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;align=center;" vertex="1" parent="1">
+                <mxCell id="371" value="Optimal solution:&lt;br&gt;&lt;ul&gt;&lt;li&gt;Nitrogen saving&amp;nbsp;&lt;/li&gt;&lt;li&gt;Carbon saving&amp;nbsp;&lt;/li&gt;&lt;li&gt;Return of investment&lt;/li&gt;&lt;li&gt;Total biogas production&amp;nbsp;&lt;/li&gt;&lt;li&gt;Underutilization&amp;nbsp;&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;align=center;" parent="1" vertex="1">
                     <mxGeometry x="3500" y="-160" width="260" height="150" as="geometry"/>
                 </mxCell>
-                <mxCell id="372" value="Residential/Urban Areas" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
+                <mxCell id="372" value="Residential/Urban Areas" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" parent="1" vertex="1">
                     <mxGeometry x="2890" y="-70" width="100" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="373" value="Industrial Areas" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
+                <mxCell id="373" value="Industrial Areas" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" parent="1" vertex="1">
                     <mxGeometry x="3000" y="-70" width="100" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="374" value="Road Network" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
+                <mxCell id="374" value="Road Network" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" parent="1" vertex="1">
                     <mxGeometry x="2670" y="-70" width="100" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="375" value="Manure Utilization Percentage" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" vertex="1" parent="1">
+                <mxCell id="375" value="Manure Utilization Percentage" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;labelBackgroundColor=none;strokeColor=#82b366;fontSize=12;fillColor=#d5e8d4;" parent="1" vertex="1">
                     <mxGeometry x="3140" y="-70" width="100" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="377" value="Nearest Neighbor &amp;amp; Shortest Path" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="377" value="Nearest Neighbor &amp;amp; Shortest Path" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#6c8ebf;spacingLeft=2;spacingRight=2;fillColor=#dae8fc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="3270" y="360" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="379" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="315" target="377">
+                <mxCell id="379" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="315" target="377" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3240" y="390" as="sourcePoint"/>
                         <mxPoint x="3381.5" y="390" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="380" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="377" target="322">
+                <mxCell id="380" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="377" target="322" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="3470" y="430" as="sourcePoint"/>
                         <mxPoint x="3470" y="470" as="targetPoint"/>
