@@ -1,1 +1,0 @@
-https://services.geodataoverijssel.nl/geoserver/B73_Cultuur/wfs?REQUEST=GetFeature&service=WFS&version=2.0.0&TYPENAME=B73_Boerderijtypen&CRS=urn%3Ax-ogc%3Adef%3Acrs%3AEPSG%3A28992&SRSNAME=urn%3Ax-ogc%3Adef%3Acrs%3AEPSG%3A28992&OUTPUTFORMAT=SHAPE-ZIP
