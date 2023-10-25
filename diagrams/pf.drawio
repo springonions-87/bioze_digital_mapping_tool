@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="yxhIGMW8OohsdPnCvQMu" name="Page-1">
-        <mxGraphModel dx="2326" dy="1626" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
+        <mxGraphModel dx="2109" dy="1534" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -830,7 +830,7 @@
                     <mxGeometry x="2500" y="470" width="140" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="309" value="&lt;span style=&quot;&quot;&gt;Budget &lt;br&gt;Constraint/Various Digester Configurations&lt;br&gt;&lt;/span&gt;" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;fillColor=#ecf0f8;strokeColor=#6c8ebf;labelBackgroundColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="4050" y="70" width="100" height="70" as="geometry"/>
+                    <mxGeometry x="3920" y="80" width="140" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="353" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" parent="1" source="307" target="316" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -890,11 +890,17 @@
                         <mxPoint x="3470" y="470" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="381" value="Digester scale" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#b85450;spacingLeft=2;spacingRight=2;fillColor=#f8cecc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
-                    <mxGeometry x="3920" y="-20" width="140" height="70" as="geometry"/>
+                <mxCell id="381" value="Digester number and scale - configurations&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#b85450;spacingLeft=2;spacingRight=2;fillColor=#f8cecc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="3120" y="-360" width="140" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="383" value="When the model is infeasible.&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="3920" y="210" width="120" height="60" as="geometry"/>
+                <mxCell id="385" value="When the model is infeasible. manure &amp;gt; total capacity" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#b85450;spacingLeft=2;spacingRight=2;fillColor=#f8cecc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                    <mxGeometry x="3920" y="200" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="386" style="edgeStyle=none;rounded=1;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="375" target="381">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="3320" y="10" as="sourcePoint"/>
+                        <mxPoint x="3320" y="-250" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
