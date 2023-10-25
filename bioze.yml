@@ -180,6 +180,7 @@ dependencies:
     - platformdirs==3.10.0
     - prompt-toolkit==3.0.36
     - psutil==5.9.0
+    - pulp==2.7.0
     - pygments==2.15.1
     - pyproj==3.6.1
     - pyzmq==25.1.0
