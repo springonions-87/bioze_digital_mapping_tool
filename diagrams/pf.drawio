@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="yxhIGMW8OohsdPnCvQMu" name="Page-1">
-        <mxGraphModel dx="2200" dy="1942" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
+        <mxGraphModel dx="1667" dy="1216" grid="1" gridSize="10" guides="0" tooltips="1" connect="0" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="1" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -902,8 +902,122 @@
                         <mxPoint x="3320" y="-250" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="387" value="Digester number and scale - configurations&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#b85450;spacingLeft=2;spacingRight=2;fillColor=#f8cecc;strokeWidth=2;arcSize=12;" vertex="1" parent="1">
+                <mxCell id="387" value="Digester number and scale - configurations&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;strokeColor=#b85450;spacingLeft=2;spacingRight=2;fillColor=#f8cecc;strokeWidth=2;arcSize=12;" parent="1" vertex="1">
                     <mxGeometry x="3920" y="300" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="392" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="389" target="390">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="393" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="389" target="391">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="389" value="Agricultural, industrial areas" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="2880" y="960" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="409" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="390" target="394">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="390" value="Euclidean Distance&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="3030" y="960" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="408" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="391" target="395">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="391" value="Euclidean Distance&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="3030" y="1040" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="410" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="394" target="396">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="394" value="Distance to road" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="3180" y="960" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="411" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="395" target="397">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="395" value="Distance to urban areas" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="3180" y="1040" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="413" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="396" target="398">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="396" value="Fuzzy Membership" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="3340" y="960" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="412" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="397" target="399">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="397" value="Fuzzy Membership" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="3340" y="1040" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="414" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="398" target="401">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="398" value="Fuzzy road" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="3490" y="960" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="415" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="399" target="401">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="399" value="Fuzzy urban areas" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="3490" y="1040" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="416" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="401" target="403">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="401" value="Fuzzy Overlay" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="3650" y="1000" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="403" value="Suitability map" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="3650" y="1100" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="406" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="404" target="405">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="404" value="Land use" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" vertex="1" parent="1">
+                    <mxGeometry x="2880" y="780" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="407" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="405" target="389">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="405" value="Select by attributes" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="2880" y="870" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="417" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2970" y="1320" as="sourcePoint"/>
+                        <mxPoint x="2970" y="1170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="418" value="" style="endArrow=none;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2970" y="1320" as="sourcePoint"/>
+                        <mxPoint x="3190" y="1320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="419" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2940" y="1155" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="420" value="0" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="2940" y="1300" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="421" value="Distance from road" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3180" y="1290" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="422" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2970" y="1320" as="sourcePoint"/>
+                        <mxPoint x="3180" y="1180" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="423" value="" style="endArrow=classic;html=1;exitX=0.973;exitY=0.506;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="419">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="2980" y="1330" as="sourcePoint"/>
+                        <mxPoint x="3180" y="1310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="424" value="Distance from urban areas" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="3180" y="1160" width="160" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
