@@ -25,6 +25,9 @@ Load files and create parameters
 * alpha
 * mu
 """
+# import os 
+# print(os.getcwd())
+
 
 # Import farm_cluster_mock_5 dataset - which is the mock data for potential digester locations
 potential_digester_location = pd.read_csv('farm_cluster_mock_5.csv')
