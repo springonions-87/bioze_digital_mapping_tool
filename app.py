@@ -5,13 +5,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+st.title('BIOZE Digital Mapping Tool')
+st.text('This is an interactive mapping tool on biogas.')
 
-# st.title('BIOZE Digital Mapping Tool')
-# st.text('This is an interactive mapping tool on biogas.')
-
-
-# slider = st.slider('Choose manure use percentage', 
-#                    min_value=0, max_value=100, step=10)
+slider = st.slider('Choose manure use percentage', 
+                   min_value=0, max_value=100, step=10)
 
 """
 Load files and create parameters
@@ -25,8 +23,9 @@ Load files and create parameters
 * alpha
 * mu
 """
-# import os 
-# print(os.getcwd())
+
+# import os
+# print("Current working directory: ", os.getcwd())
 
 
 # Import farm_cluster_mock_5 dataset - which is the mock data for potential digester locations
@@ -97,3 +96,13 @@ total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_pla
                                                                                                 manure_production, 
                                                                                                 max_capacity, 
                                                                                                 target, total_manure)
+
+
+filename = f"./outputs/cflp_v{6}_{int(target*100)}%manure.png"  # You can choose the file extension (e.g., .png, .jpg, .pdf)
+plot_result(Plant, 
+            potential_digester_location, 
+            assignment_decision, farm, Farm, use_plant_index, target, total_cost, filename, save_fig=False)
+
+# Display the plot using st.pyplot()
+st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
+                        # which avoids using Matplotlib's global figure object directly. 
