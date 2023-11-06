@@ -5,6 +5,9 @@ from pulp import *
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import pickle
+
 
 def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
     """
@@ -180,3 +183,20 @@ def plot_result(Plant, potential_digester_location, assignment_decision, farm, F
         plt.savefig(filename, dpi=400, bbox_extra_artists=(legend,), bbox_inches='tight')
     
     plt.show()
+
+folder_path='app_data'
+def load_data_from_pickle(file_name, folder_path=folder_path):
+    """
+    Load data from a pickle file in a specific folder.
+
+    Parameters:
+    folder_path (str): The path of the folder to load the data from.
+    file_name (str): The name of the file to load the data from.
+
+    Returns:
+    The data (dictionary, list, or float) loaded from the pickle file.
+    """
+    file_path = os.path.join(folder_path, file_name)
+    with open(file_path, 'rb') as f:
+        data = pickle.load(f)
+        return data

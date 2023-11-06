@@ -4,29 +4,33 @@ from pulp import *
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+# import os
+# print("Current working directory: ", os.getcwd())
 
 st.title('BIOZE Digital Mapping Tool')
 st.text('This is an interactive mapping tool on biogas.')
 
-slider = st.slider('Choose manure use percentage', 
-                   min_value=0, max_value=100, step=10)
+# slider = st.slider('Choose manure use percentage', 
+#                    min_value=0, max_value=100, step=10)
 
-"""
-Load files and create parameters
 
-* q_j max capacity of each j 
-* f_j fixed cost of establishing each j
-* set F set of farm locations
-* set P set of potential digester locations
-* C_ij transportation matrix 
-* p_i 
-* alpha
-* mu
-"""
+# Load files and create parameters
+    # List
+        # set F     set of farm locations (list)
+        # set P     set of potential digester locations
+    # Dictionary 
+        # p_i       manure production of each i
+        # q_j       max capacity of each j 
+        # f_j       fixed cost of establishing each j
+        # C_ij      transportation matrix 
+    # Float
+        # alpha     total manure production
+    # Float defined here
+        # mu        manure utilization target 
 
-# import os
-# print("Current working directory: ", os.getcwd())
-
+loaded_manure = load_data_from_pickle('manure_production.pickle')
+for key, value in loaded_manure.items():
+    print(f"{key}: {value}")
 
 # Import farm_cluster_mock_5 dataset - which is the mock data for potential digester locations
 potential_digester_location = pd.read_csv('farm_cluster_mock_5.csv')
@@ -86,7 +90,9 @@ for key, value in transport_cost.items():
     print(f"{key}: {value}")
 
 # Define manure use goal (mu)
-target = 0.6
+target = (st.slider('Choose manure use percentage', 
+                   min_value=0, max_value=100, step=10))/ 100
+
 
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
