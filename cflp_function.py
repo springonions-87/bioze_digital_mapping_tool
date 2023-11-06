@@ -184,8 +184,24 @@ def plot_result(Plant, potential_digester_location, assignment_decision, farm, F
     
     plt.show()
 
-folder_path='app_data'
-def load_data_from_pickle(file_name, folder_path=folder_path):
+def store_data_to_pickle(data, folder_path, file_name):
+    """
+    Store data (dictionary or list) to a pickle file in a specific folder.
+
+    Parameters:
+    data (dict or list): The data (dictionary or list) to be stored.
+    folder_path (str): The path of the folder to store the data.
+    file_name (str): The name of the file to store the data.
+
+    Returns:
+    None
+    """
+    os.makedirs(folder_path, exist_ok=True)  # Create the folder if it doesn't exist
+    file_path = os.path.join(folder_path, file_name)
+    with open(file_path, 'wb') as f:
+        pickle.dump(data, f)
+
+def load_data_from_pickle(folder_path, file_name):
     """
     Load data from a pickle file in a specific folder.
 
