@@ -1,18 +1,22 @@
 from cflp_function import *
 import streamlit as st
+import folium
+from streamlit_folium import st_folium
 from pulp import *
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+
 # import os
 # print("Current working directory: ", os.getcwd())
+
+# st.set_page_config(layout="wide")
 
 st.title('BIOZE Digital Mapping Tool')
 st.text('This is an interactive mapping tool on biogas.')
 
 # slider = st.slider('Choose manure use percentage', 
 #                    min_value=0, max_value=100, step=10)
-
 
 # Load files and create parameters
 folder_path = 'app_data'
@@ -59,6 +63,19 @@ plot_result(Plant,
             potential_digester_location, 
             assignment_decision, farm, Farm, use_plant_index, target, total_cost, filename, save_fig=False)
 
-# Display the plot using st.pyplot()
-st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
-                        # which avoids using Matplotlib's global figure object directly. 
+
+
+
+center_map_coords = [52.40659843013704, 6.485187055207251]
+map = folium.Map(location=center_map_coords, zoom_start=9, tiles='OpenStreetMap')
+
+for lat, long in zip(farm.y, farm.x):
+    folium.Marker(
+        location=[lat, long], 
+        icon=folium.Icon(icon_color='white')
+    ).add_to(map)
+st_folium(map)
+
+# # Display the plot using st.pyplot()
+# st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
+#                         # which avoids using Matplotlib's global figure object directly. 
