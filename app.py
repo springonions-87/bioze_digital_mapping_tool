@@ -66,16 +66,16 @@ plot_result(Plant,
 
 
 
-center_map_coords = [52.40659843013704, 6.485187055207251]
-map = folium.Map(location=center_map_coords, zoom_start=9, tiles='OpenStreetMap')
+# center_map_coords = [52.40659843013704, 6.485187055207251]
+# map = folium.Map(location=center_map_coords, zoom_start=9, tiles='OpenStreetMap')
 
-for lat, long in zip(farm.y, farm.x):
-    folium.Marker(
-        location=[lat, long], 
-        icon=folium.Icon(icon_color='white')
-    ).add_to(map)
-st_folium(map)
+# for lat, long in zip(farm.y, farm.x):
+#     folium.Marker(
+#         location=[lat, long], 
+#         icon=folium.Icon(icon_color='white')
+#     ).add_to(map)
+# st_folium(map)
 
-# # Display the plot using st.pyplot()
-# st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
-#                         # which avoids using Matplotlib's global figure object directly. 
+# Display the plot using st.pyplot()
+st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
+                        # which avoids using Matplotlib's global figure object directly. 
