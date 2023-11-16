@@ -6,6 +6,8 @@ from pulp import *
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import geopandas as gpd
+import pydeck as pdk
 
 # import os
 # print("Current working directory: ", os.getcwd())
@@ -47,6 +49,11 @@ farm = pd.read_csv(r"./farm_mock.csv")
 target = (st.slider('Choose manure use percentage', 
                    min_value=0, max_value=100, step=10))/ 100
 
+farm_gdf = gpd.read_file(r"./farm_new.shp")
+
+# Extract latitude and longitude from the 'geometry' column
+farm_gdf['latitude'] = farm_gdf['geometry'].y
+farm_gdf['longitude'] = farm_gdf['geometry'].x
 
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
@@ -64,8 +71,6 @@ plot_result(Plant,
             assignment_decision, farm, Farm, use_plant_index, target, total_cost, filename, save_fig=False)
 
 
-
-
 # center_map_coords = [52.40659843013704, 6.485187055207251]
 # map = folium.Map(location=center_map_coords, zoom_start=9, tiles='OpenStreetMap')
 
@@ -79,3 +84,40 @@ plot_result(Plant,
 # Display the plot using st.pyplot()
 st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
                         # which avoids using Matplotlib's global figure object directly. 
+
+st.map(farm_gdf)
+
+layer = pdk.Layer(
+    'ScatterplotLayer',     # Change the `type` positional argument here
+    farm_gdf,
+    get_position=['longitude', 'latitude'],
+    auto_highlight=True,
+    get_radius=1000,          # Radius is given in meters
+    get_fill_color=[180, 0, 200, 140],  # Set an RGBA value for fill
+    pickable=True)
+# Set the center and zoom level based on the first digester's location
+center = [farm_gdf.iloc[5].longitude, farm_gdf.iloc[5].latitude]
+zoom = 8
+
+# Create a Pydeck view state
+view_state = pdk.ViewState(
+    longitude=center[0],
+    latitude=center[1],
+    zoom=zoom,
+)
+
+# # Create a Pydeck Deck
+# deck = pdk.Deck(
+#     layers=[layer],
+#     initial_view_state=view_state,
+# )
+
+# # Show the Pydeck Deck
+# deck.show()
+
+# Rendering the map 
+st.pydeck_chart(pdk.Deck(
+    layers=[layer],
+    initial_view_state=view_state,
+    map_style='mapbox://styles/mapbox/dark-v10'
+))
