@@ -1404,7 +1404,7 @@
                 <mxCell id="553" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;" edge="1" parent="1" source="552" target="489">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="552" value="Cost of transportation" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+                <mxCell id="552" value="Cost of transportation" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" vertex="1" parent="1">
                     <mxGeometry x="5040" y="1430" width="120" height="50" as="geometry"/>
                 </mxCell>
             </root>
