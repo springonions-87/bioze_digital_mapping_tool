@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pickle
+import random
 
 
 def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
@@ -183,6 +184,22 @@ def plot_result(Plant, potential_digester_location, assignment_decision, farm, F
         plt.savefig(filename, dpi=400, bbox_extra_artists=(legend,), bbox_inches='tight')
     
     plt.show()
+
+
+def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
+
+    # Map digesters to colors
+    digester_df['color'] = digester_df.index.map(color_mapping)
+
+    # Map assigned farms to colors
+    assigned_farms_df = farm[farm.index.isin([i for indices in assignment_decision.values() for i in indices])]
+    assigned_farms_df['color'] = assigned_farms_df.index.map({index: color_mapping[digester] for digester, indices in assignment_decision.items() for index in indices})
+
+    # Map unassigned farms to a default color (e.g., grey)
+    unassigned_farms_df = farm[~farm.index.isin([index for indices in assignment_decision.values() for index in indices])]
+
+    return digester_df, assigned_farms_df, unassigned_farms_df
+
 
 def store_data_to_pickle(data, folder_path, file_name):
     """

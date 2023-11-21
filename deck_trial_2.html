@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>pydeck</title>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src='https://cdn.jsdelivr.net/npm/@deck.gl/jupyter-widget@~8.9.*/dist/index.js'></script>
+    <style>
+    body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#deck-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#deck-container canvas {
+  z-index: 1;
+  background: none;
+}
+    </style>
+  </head>
+  <body>
+    <div id="deck-container">
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById('deck-container');
+    const jsonInput = {
+  "initialViewState": {
+    "latitude": 52.300598648446694,
+    "longitude": 6.746896082370168,
+    "pitch": 0,
+    "zoom": 8
+  },
+  "layers": [
+    {
+      "@@type": "ScatterplotLayer",
+      "autoHighlight": true,
+      "data": [
+        {
+          "capacity": 150560,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "cost": 252616,
+          "x": 6.870685581608,
+          "y": 52.215190148236
+        },
+        {
+          "capacity": 150560,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "cost": 252616,
+          "x": 6.554937234092,
+          "y": 52.254894901336
+        },
+        {
+          "capacity": 200000,
+          "color": [
+            222,
+            153,
+            135
+          ],
+          "cost": 12000000,
+          "x": 6.730517882726191,
+          "y": 52.252884892316665
+        },
+        {
+          "capacity": 150560,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "cost": 252616,
+          "x": 6.914234425077778,
+          "y": 52.38740121596667
+        },
+        {
+          "capacity": 200000,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "cost": 12000000,
+          "x": 6.664105288346875,
+          "y": 52.392622084378125
+        }
+      ],
+      "getFillColor": "@@=color",
+      "getPosition": "@@=[x, y]",
+      "getRadius": 1000,
+      "id": "2944e1ee-0c70-4e9d-b7fc-000ff775c404",
+      "pickable": true
+    },
+    {
+      "@@type": "ScatterplotLayer",
+      "autoHighlight": true,
+      "data": [
+        {
+          "IND_OBJ_NA": "507950",
+          "Unnamed: 0": 1,
+          "biogas_potential_m3": 3832530.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 9827,
+          "x": 6.837249466,
+          "y": 52.4250842522
+        },
+        {
+          "IND_OBJ_NA": "507953",
+          "Unnamed: 0": 2,
+          "biogas_potential_m3": 3377400.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 8660,
+          "x": 6.8593610438,
+          "y": 52.3862247622
+        },
+        {
+          "IND_OBJ_NA": "507962",
+          "Unnamed: 0": 3,
+          "biogas_potential_m3": 1136070.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 2913,
+          "x": 6.7534834692,
+          "y": 52.4343820977
+        },
+        {
+          "IND_OBJ_NA": "507964",
+          "Unnamed: 0": 4,
+          "biogas_potential_m3": 2530320.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 6488,
+          "x": 6.4840766356,
+          "y": 52.2436198663
+        },
+        {
+          "IND_OBJ_NA": "507968",
+          "Unnamed: 0": 5,
+          "biogas_potential_m3": 2225730.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 5707,
+          "x": 6.5372603964,
+          "y": 52.2656283602
+        },
+        {
+          "IND_OBJ_NA": "507973",
+          "Unnamed: 0": 6,
+          "biogas_potential_m3": 3327870.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 8533,
+          "x": 6.5442865956,
+          "y": 52.2581897466
+        },
+        {
+          "IND_OBJ_NA": "507980",
+          "Unnamed: 0": 7,
+          "biogas_potential_m3": 1316640.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 3376,
+          "x": 6.5360573609,
+          "y": 52.2595617688
+        },
+        {
+          "IND_OBJ_NA": "508283",
+          "Unnamed: 0": 9,
+          "biogas_potential_m3": 1063530.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 2727,
+          "x": 6.904208931,
+          "y": 52.3585207448
+        },
+        {
+          "IND_OBJ_NA": "508948",
+          "Unnamed: 0": 12,
+          "biogas_potential_m3": 1157520.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 2968,
+          "x": 6.988118899,
+          "y": 52.3758981254
+        },
+        {
+          "IND_OBJ_NA": "508949",
+          "Unnamed: 0": 13,
+          "biogas_potential_m3": 2879370.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 7383,
+          "x": 6.988416487,
+          "y": 52.376289487
+        },
+        {
+          "IND_OBJ_NA": "510553",
+          "Unnamed: 0": 14,
+          "biogas_potential_m3": 3173820.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 8138,
+          "x": 6.934623537,
+          "y": 52.2500679808
+        },
+        {
+          "IND_OBJ_NA": "510587",
+          "Unnamed: 0": 16,
+          "biogas_potential_m3": 2565810.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 6579,
+          "x": 6.8211798801,
+          "y": 52.2254065666
+        },
+        {
+          "IND_OBJ_NA": "510595",
+          "Unnamed: 0": 17,
+          "biogas_potential_m3": 3104010.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 7959,
+          "x": 6.8458935653,
+          "y": 52.1962640994
+        },
+        {
+          "IND_OBJ_NA": "510605",
+          "Unnamed: 0": 18,
+          "biogas_potential_m3": 2147340.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 5506,
+          "x": 6.851861762,
+          "y": 52.2537024625
+        },
+        {
+          "IND_OBJ_NA": "510610",
+          "Unnamed: 0": 19,
+          "biogas_potential_m3": 2806830.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 7197,
+          "x": 6.9242982022,
+          "y": 52.2082476559
+        },
+        {
+          "IND_OBJ_NA": "510620",
+          "Unnamed: 0": 20,
+          "biogas_potential_m3": 2136030.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 5477,
+          "x": 6.7798420041,
+          "y": 52.219489064
+        },
+        {
+          "IND_OBJ_NA": "12335",
+          "Unnamed: 0": 21,
+          "biogas_potential_m3": 1367340.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 3506,
+          "x": 6.8608124787,
+          "y": 52.4253950349
+        },
+        {
+          "IND_OBJ_NA": "12358",
+          "Unnamed: 0": 23,
+          "biogas_potential_m3": 2499120.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 6408,
+          "x": 6.9732986747,
+          "y": 52.4186338726
+        },
+        {
+          "IND_OBJ_NA": "510622",
+          "Unnamed: 0": 28,
+          "biogas_potential_m3": 3575130.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 9167,
+          "x": 6.8351291013,
+          "y": 52.2305551004
+        },
+        {
+          "IND_OBJ_NA": "507615",
+          "Unnamed: 0": 29,
+          "biogas_potential_m3": 3397680.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 8712,
+          "x": 6.731964637,
+          "y": 52.2727724036
+        },
+        {
+          "IND_OBJ_NA": "507671",
+          "Unnamed: 0": 30,
+          "biogas_potential_m3": 2206620.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 5658,
+          "x": 6.7000505516,
+          "y": 52.3456609141
+        },
+        {
+          "IND_OBJ_NA": "511481",
+          "Unnamed: 0": 32,
+          "biogas_potential_m3": 1692210.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 4339,
+          "x": 6.7581025295,
+          "y": 52.2683918553
+        },
+        {
+          "IND_OBJ_NA": "511931",
+          "Unnamed: 0": 35,
+          "biogas_potential_m3": 2324400.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 5960,
+          "x": 6.8522695879,
+          "y": 52.2756253536
+        },
+        {
+          "IND_OBJ_NA": "511936",
+          "Unnamed: 0": 36,
+          "biogas_potential_m3": 1367340.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 3506,
+          "x": 6.8236604457,
+          "y": 52.3550519764
+        },
+        {
+          "IND_OBJ_NA": "512252",
+          "Unnamed: 0": 37,
+          "biogas_potential_m3": 1773720.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 4548,
+          "x": 6.5559214998,
+          "y": 52.3923740708
+        },
+        {
+          "IND_OBJ_NA": "513499",
+          "Unnamed: 0": 38,
+          "biogas_potential_m3": 3770130.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 9667,
+          "x": 6.994540204,
+          "y": 52.314705362
+        },
+        {
+          "IND_OBJ_NA": "513515",
+          "Unnamed: 0": 39,
+          "biogas_potential_m3": 1539720.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 3948,
+          "x": 6.9709155352,
+          "y": 52.3193043016
+        },
+        {
+          "IND_OBJ_NA": "520454",
+          "Unnamed: 0": 43,
+          "biogas_potential_m3": 940680.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 2412,
+          "x": 6.5970184279,
+          "y": 52.2196114225
+        },
+        {
+          "IND_OBJ_NA": "527676",
+          "Unnamed: 0": 45,
+          "biogas_potential_m3": 2509650.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 6435,
+          "x": 6.7403645028,
+          "y": 52.2155153271
+        },
+        {
+          "IND_OBJ_NA": "512271",
+          "Unnamed: 0": 46,
+          "biogas_potential_m3": 2713230.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 6957,
+          "x": 6.7388246432,
+          "y": 52.2694366143
+        },
+        {
+          "IND_OBJ_NA": "15298",
+          "Unnamed: 0": 55,
+          "biogas_potential_m3": 2680080.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 6872,
+          "x": 6.8455566668,
+          "y": 52.1962502822
+        },
+        {
+          "IND_OBJ_NA": "15318",
+          "Unnamed: 0": 64,
+          "biogas_potential_m3": 745680.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 1912,
+          "x": 6.8675952738,
+          "y": 52.2252875024
+        },
+        {
+          "IND_OBJ_NA": "512273",
+          "Unnamed: 0": 82,
+          "biogas_potential_m3": 2004990.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 5141,
+          "x": 6.7412605913,
+          "y": 52.2666846469
+        },
+        {
+          "IND_OBJ_NA": "527052",
+          "Unnamed: 0": 84,
+          "biogas_potential_m3": 1439490.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 3691,
+          "x": 6.7289544411,
+          "y": 52.3328677019
+        },
+        {
+          "IND_OBJ_NA": "7546",
+          "Unnamed: 0": 87,
+          "biogas_potential_m3": 765960.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 1964,
+          "x": 6.6168951738,
+          "y": 52.2383476762
+        },
+        {
+          "IND_OBJ_NA": "7549",
+          "Unnamed: 0": 88,
+          "biogas_potential_m3": 1946100.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 4990,
+          "x": 6.6671784754,
+          "y": 52.2835425995
+        },
+        {
+          "IND_OBJ_NA": "528762",
+          "Unnamed: 0": 98,
+          "biogas_potential_m3": 3017820.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 7738,
+          "x": 6.5464240813,
+          "y": 52.1975195779
+        },
+        {
+          "IND_OBJ_NA": "529139",
+          "Unnamed: 0": 99,
+          "biogas_potential_m3": 2893020.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 7418,
+          "x": 6.5795146117,
+          "y": 52.2030059672
+        },
+        {
+          "IND_OBJ_NA": "22215",
+          "Unnamed: 0": 111,
+          "biogas_potential_m3": 2258100.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 5790,
+          "x": 6.4625100501,
+          "y": 52.2796283109
+        },
+        {
+          "IND_OBJ_NA": "26288",
+          "Unnamed: 0": 119,
+          "biogas_potential_m3": 3787680.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 9712,
+          "x": 6.9960179425,
+          "y": 52.3517232378
+        },
+        {
+          "IND_OBJ_NA": "28127",
+          "Unnamed: 0": 122,
+          "biogas_potential_m3": 2983890.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 7651,
+          "x": 6.5412531751,
+          "y": 52.27863361
+        },
+        {
+          "IND_OBJ_NA": "28133",
+          "Unnamed: 0": 123,
+          "biogas_potential_m3": 1443000.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 3700,
+          "x": 6.595124471,
+          "y": 52.224009363
+        },
+        {
+          "IND_OBJ_NA": "ALM01078",
+          "Unnamed: 0": 128,
+          "biogas_potential_m3": 2709720.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 6948,
+          "x": 6.7126468834,
+          "y": 52.3501887637
+        },
+        {
+          "IND_OBJ_NA": "ALM01080",
+          "Unnamed: 0": 129,
+          "biogas_potential_m3": 3452670.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8853,
+          "x": 6.7134845154,
+          "y": 52.3572404254
+        },
+        {
+          "IND_OBJ_NA": "ALM01081",
+          "Unnamed: 0": 130,
+          "biogas_potential_m3": 2481570.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 6363,
+          "x": 6.6811735726,
+          "y": 52.3546416327
+        },
+        {
+          "IND_OBJ_NA": "ALM01090",
+          "Unnamed: 0": 131,
+          "biogas_potential_m3": 3115710.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 7989,
+          "x": 6.6348865653,
+          "y": 52.351974479
+        },
+        {
+          "IND_OBJ_NA": "ALM01092",
+          "Unnamed: 0": 132,
+          "biogas_potential_m3": 3588390.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 9201,
+          "x": 6.6442232598,
+          "y": 52.3545992484
+        },
+        {
+          "IND_OBJ_NA": "ALM01082",
+          "Unnamed: 0": 133,
+          "biogas_potential_m3": 2015520.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 5168,
+          "x": 6.7043422962,
+          "y": 52.3448761712
+        },
+        {
+          "IND_OBJ_NA": "ALM01076",
+          "Unnamed: 0": 134,
+          "biogas_potential_m3": 2102880.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 5392,
+          "x": 6.6946617987,
+          "y": 52.3586948923
+        },
+        {
+          "IND_OBJ_NA": "ALM01077",
+          "Unnamed: 0": 135,
+          "biogas_potential_m3": 3791970.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 9723,
+          "x": 6.7201049145,
+          "y": 52.3601343584
+        },
+        {
+          "IND_OBJ_NA": "ALM01093",
+          "Unnamed: 0": 136,
+          "biogas_potential_m3": 3222570.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8263,
+          "x": 6.6590190421,
+          "y": 52.371968911
+        },
+        {
+          "IND_OBJ_NA": "BOR01032",
+          "Unnamed: 0": 137,
+          "biogas_potential_m3": 3069690.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 7871,
+          "x": 6.760410259,
+          "y": 52.3008232326
+        },
+        {
+          "IND_OBJ_NA": "BOR01001",
+          "Unnamed: 0": 139,
+          "biogas_potential_m3": 1615770.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 4143,
+          "x": 6.7610275019,
+          "y": 52.2984969501
+        },
+        {
+          "IND_OBJ_NA": "DNK01031",
+          "Unnamed: 0": 140,
+          "biogas_potential_m3": 3381300.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 8670,
+          "x": 7.0159961676,
+          "y": 52.36926877
+        },
+        {
+          "IND_OBJ_NA": "DNK01017",
+          "Unnamed: 0": 141,
+          "biogas_potential_m3": 2294370.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 5883,
+          "x": 6.88012943,
+          "y": 52.3876892061
+        },
+        {
+          "IND_OBJ_NA": "333490",
+          "Unnamed: 0": 147,
+          "biogas_potential_m3": 2256540.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 5786,
+          "x": 6.7156625149,
+          "y": 52.147242024
+        },
+        {
+          "IND_OBJ_NA": "34143",
+          "Unnamed: 0": 148,
+          "biogas_potential_m3": 2649270.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 6793,
+          "x": 6.7060114373,
+          "y": 52.2557850392
+        },
+        {
+          "IND_OBJ_NA": "34144",
+          "Unnamed: 0": 149,
+          "biogas_potential_m3": 1622010.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 4159,
+          "x": 6.7079183106,
+          "y": 52.2552182102
+        },
+        {
+          "IND_OBJ_NA": "ENS01027",
+          "Unnamed: 0": 154,
+          "biogas_potential_m3": 2396160.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 6144,
+          "x": 6.8755082227,
+          "y": 52.2543239587
+        },
+        {
+          "IND_OBJ_NA": "ENS01029",
+          "Unnamed: 0": 155,
+          "biogas_potential_m3": 816270.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 2093,
+          "x": 6.9243854387,
+          "y": 52.213993032
+        },
+        {
+          "IND_OBJ_NA": "ENS01047",
+          "Unnamed: 0": 156,
+          "biogas_potential_m3": 2696070.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 6913,
+          "x": 6.8875284391,
+          "y": 52.2515011431
+        },
+        {
+          "IND_OBJ_NA": "ENS01085",
+          "Unnamed: 0": 162,
+          "biogas_potential_m3": 2811120.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 7208,
+          "x": 6.9228103481,
+          "y": 52.2069288076
+        },
+        {
+          "IND_OBJ_NA": "ENS01071",
+          "Unnamed: 0": 163,
+          "biogas_potential_m3": 409500.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 1050,
+          "x": 6.8358948559,
+          "y": 52.2127673217
+        },
+        {
+          "IND_OBJ_NA": "ENS01081",
+          "Unnamed: 0": 164,
+          "biogas_potential_m3": 3764280.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 9652,
+          "x": 6.8414021827,
+          "y": 52.2424424978
+        },
+        {
+          "IND_OBJ_NA": "ENS01161",
+          "Unnamed: 0": 168,
+          "biogas_potential_m3": 1900470.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 4873,
+          "x": 6.9200021573,
+          "y": 52.200232023
+        },
+        {
+          "IND_OBJ_NA": "HKB01003",
+          "Unnamed: 0": 171,
+          "biogas_potential_m3": 2870010.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 7359,
+          "x": 6.8365751014,
+          "y": 52.1435855321
+        },
+        {
+          "IND_OBJ_NA": "HKB01004",
+          "Unnamed: 0": 172,
+          "biogas_potential_m3": 2300610.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 5899,
+          "x": 6.8472248943,
+          "y": 52.1395169546
+        },
+        {
+          "IND_OBJ_NA": "HKB01023",
+          "Unnamed: 0": 173,
+          "biogas_potential_m3": 3515850.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 9015,
+          "x": 6.7362249281,
+          "y": 52.1584477817
+        },
+        {
+          "IND_OBJ_NA": "HGL01068",
+          "Unnamed: 0": 179,
+          "biogas_potential_m3": 2953080.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 7572,
+          "x": 6.7368461658,
+          "y": 52.212347502
+        },
+        {
+          "IND_OBJ_NA": "HGL01022",
+          "Unnamed: 0": 185,
+          "biogas_potential_m3": 2535000.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 6500,
+          "x": 6.7499624529,
+          "y": 52.2421839539
+        },
+        {
+          "IND_OBJ_NA": "HOF01023",
+          "Unnamed: 0": 191,
+          "biogas_potential_m3": 3153150.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 8085,
+          "x": 6.6605317628,
+          "y": 52.1989115199
+        },
+        {
+          "IND_OBJ_NA": "HOF01043",
+          "Unnamed: 0": 192,
+          "biogas_potential_m3": 546390.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 1401,
+          "x": 6.5899990584,
+          "y": 52.2370549954
+        },
+        {
+          "IND_OBJ_NA": "HOF01031",
+          "Unnamed: 0": 194,
+          "biogas_potential_m3": 2635620.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 6758,
+          "x": 6.5883569762,
+          "y": 52.2353616483
+        },
+        {
+          "IND_OBJ_NA": "TUB01009",
+          "Unnamed: 0": 208,
+          "biogas_potential_m3": 999180.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 2562,
+          "x": 6.8702409799,
+          "y": 52.438159733
+        },
+        {
+          "IND_OBJ_NA": "46769",
+          "Unnamed: 0": 232,
+          "biogas_potential_m3": 2597400.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 6660,
+          "x": 6.4397723384,
+          "y": 52.4142614118
+        },
+        {
+          "IND_OBJ_NA": "TUB01010",
+          "Unnamed: 0": 236,
+          "biogas_potential_m3": 3524820.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 9038,
+          "x": 6.8308185326,
+          "y": 52.4235723119
+        },
+        {
+          "IND_OBJ_NA": "TUB01011",
+          "Unnamed: 0": 237,
+          "biogas_potential_m3": 2723370.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 6983,
+          "x": 6.8354457953,
+          "y": 52.4247922577
+        },
+        {
+          "IND_OBJ_NA": "TUB01012",
+          "Unnamed: 0": 238,
+          "biogas_potential_m3": 3041220.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 7798,
+          "x": 6.7419423221,
+          "y": 52.369880972
+        },
+        {
+          "IND_OBJ_NA": "TUB01013",
+          "Unnamed: 0": 239,
+          "biogas_potential_m3": 2047110.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 5249,
+          "x": 6.7117620948,
+          "y": 52.3800737591
+        },
+        {
+          "IND_OBJ_NA": "TUB01014",
+          "Unnamed: 0": 240,
+          "biogas_potential_m3": 1139580.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 2922,
+          "x": 6.6908772887,
+          "y": 52.40462847
+        },
+        {
+          "IND_OBJ_NA": "VZV01003",
+          "Unnamed: 0": 241,
+          "biogas_potential_m3": 752700.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 1930,
+          "x": 6.6430904085,
+          "y": 52.4182145304
+        },
+        {
+          "IND_OBJ_NA": "VZV01005",
+          "Unnamed: 0": 243,
+          "biogas_potential_m3": 1524510.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 3909,
+          "x": 6.6512901679,
+          "y": 52.4207781842
+        },
+        {
+          "IND_OBJ_NA": "VZV01006",
+          "Unnamed: 0": 244,
+          "biogas_potential_m3": 3369600.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8640,
+          "x": 6.6255182997,
+          "y": 52.412311192
+        },
+        {
+          "IND_OBJ_NA": "VZV01018",
+          "Unnamed: 0": 245,
+          "biogas_potential_m3": 870870.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 2233,
+          "x": 6.6402564826,
+          "y": 52.4168775214
+        },
+        {
+          "IND_OBJ_NA": "VZV01019",
+          "Unnamed: 0": 246,
+          "biogas_potential_m3": 3441750.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8825,
+          "x": 6.6496136741,
+          "y": 52.4199924326
+        },
+        {
+          "IND_OBJ_NA": "VZV01020",
+          "Unnamed: 0": 247,
+          "biogas_potential_m3": 3463200.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8880,
+          "x": 6.6539678907,
+          "y": 52.4208484688
+        },
+        {
+          "IND_OBJ_NA": "47011",
+          "Unnamed: 0": 258,
+          "biogas_potential_m3": 1737450.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 4455,
+          "x": 6.5485093641,
+          "y": 52.3294213467
+        },
+        {
+          "IND_OBJ_NA": "47013",
+          "Unnamed: 0": 259,
+          "biogas_potential_m3": 3045510.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 7809,
+          "x": 6.5553390127,
+          "y": 52.309443684
+        },
+        {
+          "IND_OBJ_NA": "507476",
+          "Unnamed: 0": 261,
+          "biogas_potential_m3": 2933970.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 7523,
+          "x": 6.6207273018,
+          "y": 52.4106609269
+        },
+        {
+          "IND_OBJ_NA": "507706",
+          "Unnamed: 0": 268,
+          "biogas_potential_m3": 3007680.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 7712,
+          "x": 6.6729721853,
+          "y": 52.358856739
+        },
+        {
+          "IND_OBJ_NA": "507711",
+          "Unnamed: 0": 269,
+          "biogas_potential_m3": 3226080.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8272,
+          "x": 6.6962569647,
+          "y": 52.3439321628
+        },
+        {
+          "IND_OBJ_NA": "507716",
+          "Unnamed: 0": 270,
+          "biogas_potential_m3": 944580.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 2422,
+          "x": 6.6569050501,
+          "y": 52.3648097538
+        },
+        {
+          "IND_OBJ_NA": "507739",
+          "Unnamed: 0": 271,
+          "biogas_potential_m3": 2824380.0,
+          "color": [
+            159,
+            37,
+            186
+          ],
+          "manure_t": 7242,
+          "x": 6.779408399,
+          "y": 52.1709400588
+        },
+        {
+          "IND_OBJ_NA": "507786",
+          "Unnamed: 0": 273,
+          "biogas_potential_m3": 3893370.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 9983,
+          "x": 6.6963409619,
+          "y": 52.2794096871
+        },
+        {
+          "IND_OBJ_NA": "507790",
+          "Unnamed: 0": 274,
+          "biogas_potential_m3": 2198820.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 5638,
+          "x": 6.6790333092,
+          "y": 52.2955946299
+        },
+        {
+          "IND_OBJ_NA": "507796",
+          "Unnamed: 0": 275,
+          "biogas_potential_m3": 2874300.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 7370,
+          "x": 6.7203953073,
+          "y": 52.2789673823
+        },
+        {
+          "IND_OBJ_NA": "507799",
+          "Unnamed: 0": 276,
+          "biogas_potential_m3": 2597400.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 6660,
+          "x": 6.7072739649,
+          "y": 52.2942028929
+        },
+        {
+          "IND_OBJ_NA": "507802",
+          "Unnamed: 0": 277,
+          "biogas_potential_m3": 2769780.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 7102,
+          "x": 6.7177149439,
+          "y": 52.26768876
+        },
+        {
+          "IND_OBJ_NA": "507805",
+          "Unnamed: 0": 278,
+          "biogas_potential_m3": 2335320.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 5988,
+          "x": 6.6421507164,
+          "y": 52.267548018
+        },
+        {
+          "IND_OBJ_NA": "507807",
+          "Unnamed: 0": 279,
+          "biogas_potential_m3": 1877460.0,
+          "color": [
+            156,
+            223,
+            94
+          ],
+          "manure_t": 4814,
+          "x": 6.6277506676,
+          "y": 52.2370784863
+        },
+        {
+          "IND_OBJ_NA": "507809",
+          "Unnamed: 0": 280,
+          "biogas_potential_m3": 3155100.0,
+          "color": [
+            156,
+            111,
+            235
+          ],
+          "manure_t": 8090,
+          "x": 6.7168101087,
+          "y": 52.2878368467
+        },
+        {
+          "IND_OBJ_NA": "507913",
+          "Unnamed: 0": 281,
+          "biogas_potential_m3": 3410550.0,
+          "color": [
+            84,
+            55,
+            90
+          ],
+          "manure_t": 8745,
+          "x": 6.7409595764,
+          "y": 52.3124524677
+        }
+      ],
+      "getFillColor": "@@=color",
+      "getPosition": "@@=[x, y]",
+      "getRadius": 500,
+      "id": "e2e00bf5-255d-4fa6-9728-1ba8762fdc2b",
+      "pickable": true
+    },
+    {
+      "@@type": "ScatterplotLayer",
+      "autoHighlight": true,
+      "data": [
+        {
+          "IND_OBJ_NA": "507920",
+          "Unnamed: 0": 0,
+          "biogas_potential_m3": 957060.0,
+          "manure_t": 2454,
+          "x": 6.7658433939,
+          "y": 52.3141390592
+        },
+        {
+          "IND_OBJ_NA": "507984",
+          "Unnamed: 0": 8,
+          "biogas_potential_m3": 94770.0,
+          "manure_t": 243,
+          "x": 6.4999411358,
+          "y": 52.2293056571
+        },
+        {
+          "IND_OBJ_NA": "508608",
+          "Unnamed: 0": 10,
+          "biogas_potential_m3": 1228500.0,
+          "manure_t": 3150,
+          "x": 6.4695229402,
+          "y": 52.4490480269
+        },
+        {
+          "IND_OBJ_NA": "508944",
+          "Unnamed: 0": 11,
+          "biogas_potential_m3": 452400.0,
+          "manure_t": 1160,
+          "x": 6.9780917374,
+          "y": 52.383647521
+        },
+        {
+          "IND_OBJ_NA": "510570",
+          "Unnamed: 0": 15,
+          "biogas_potential_m3": 178620.0,
+          "manure_t": 458,
+          "x": 6.7977540715,
+          "y": 52.2037075598
+        },
+        {
+          "IND_OBJ_NA": "511456",
+          "Unnamed: 0": 31,
+          "biogas_potential_m3": 437190.0,
+          "manure_t": 1121,
+          "x": 6.7912894572,
+          "y": 52.26633688
+        },
+        {
+          "IND_OBJ_NA": "511482",
+          "Unnamed: 0": 33,
+          "biogas_potential_m3": 1375920.0,
+          "manure_t": 3528,
+          "x": 6.7466692796,
+          "y": 52.2011796679
+        },
+        {
+          "IND_OBJ_NA": "511485",
+          "Unnamed: 0": 34,
+          "biogas_potential_m3": 895050.0,
+          "manure_t": 2295,
+          "x": 6.8116538149,
+          "y": 52.2366257484
+        },
+        {
+          "IND_OBJ_NA": "513933",
+          "Unnamed: 0": 40,
+          "biogas_potential_m3": 405600.0,
+          "manure_t": 1040,
+          "x": 6.5705917087,
+          "y": 52.2048918962
+        },
+        {
+          "IND_OBJ_NA": "513936",
+          "Unnamed: 0": 41,
+          "biogas_potential_m3": 275340.0,
+          "manure_t": 706,
+          "x": 6.5542936412,
+          "y": 52.2000370564
+        },
+        {
+          "IND_OBJ_NA": "7554",
+          "Unnamed: 0": 42,
+          "biogas_potential_m3": 208260.0,
+          "manure_t": 534,
+          "x": 6.6660025214,
+          "y": 52.2899433048
+        },
+        {
+          "IND_OBJ_NA": "526231",
+          "Unnamed: 0": 44,
+          "biogas_potential_m3": 1176630.0,
+          "manure_t": 3017,
+          "x": 6.7634878232,
+          "y": 52.3014586163
+        },
+        {
+          "IND_OBJ_NA": "512272",
+          "Unnamed: 0": 47,
+          "biogas_potential_m3": 928980.0,
+          "manure_t": 2382,
+          "x": 6.7386614308,
+          "y": 52.2710782138
+        },
+        {
+          "IND_OBJ_NA": "15316",
+          "Unnamed: 0": 62,
+          "biogas_potential_m3": 273780.0,
+          "manure_t": 702,
+          "x": 6.8938186317,
+          "y": 52.1863625653
+        },
+        {
+          "IND_OBJ_NA": "18864",
+          "Unnamed: 0": 71,
+          "biogas_potential_m3": 1759680.0,
+          "manure_t": 4512,
+          "x": 6.8157355773,
+          "y": 52.1441123818
+        },
+        {
+          "IND_OBJ_NA": "20002",
+          "Unnamed: 0": 79,
+          "biogas_potential_m3": 1133340.0,
+          "manure_t": 2906,
+          "x": 6.4868360712,
+          "y": 52.4756546538
+        },
+        {
+          "IND_OBJ_NA": "9916",
+          "Unnamed: 0": 95,
+          "biogas_potential_m3": 643110.0,
+          "manure_t": 1649,
+          "x": 6.7609613357,
+          "y": 52.2992168332
+        },
+        {
+          "IND_OBJ_NA": "21525",
+          "Unnamed: 0": 110,
+          "biogas_potential_m3": 847470.0,
+          "manure_t": 2173,
+          "x": 6.7388488755,
+          "y": 52.2469572214
+        },
+        {
+          "IND_OBJ_NA": "26297",
+          "Unnamed: 0": 120,
+          "biogas_potential_m3": 138060.0,
+          "manure_t": 354,
+          "x": 7.0087987299,
+          "y": 52.2473864703
+        },
+        {
+          "IND_OBJ_NA": "ALM01025",
+          "Unnamed: 0": 127,
+          "biogas_potential_m3": 372450.0,
+          "manure_t": 955,
+          "x": 6.6548847353,
+          "y": 52.3655325043
+        },
+        {
+          "IND_OBJ_NA": "ENS01005",
+          "Unnamed: 0": 157,
+          "biogas_potential_m3": 173160.0,
+          "manure_t": 444,
+          "x": 6.867179361,
+          "y": 52.2381852578
+        },
+        {
+          "IND_OBJ_NA": "ENS01155",
+          "Unnamed: 0": 167,
+          "biogas_potential_m3": 88530.0,
+          "manure_t": 227,
+          "x": 6.9024601373,
+          "y": 52.1966754481
+        },
+        {
+          "IND_OBJ_NA": "HKB01039",
+          "Unnamed: 0": 170,
+          "biogas_potential_m3": 1287390.0,
+          "manure_t": 3301,
+          "x": 6.7387881782,
+          "y": 52.1410899046
+        },
+        {
+          "IND_OBJ_NA": "HKB01006",
+          "Unnamed: 0": 174,
+          "biogas_potential_m3": 245310.0,
+          "manure_t": 629,
+          "x": 6.7444057177,
+          "y": 52.1188920731
+        },
+        {
+          "IND_OBJ_NA": "HOF01001",
+          "Unnamed: 0": 189,
+          "biogas_potential_m3": 455910.0,
+          "manure_t": 1169,
+          "x": 6.7129367004,
+          "y": 52.2635400544
+        },
+        {
+          "IND_OBJ_NA": "HOF01022",
+          "Unnamed: 0": 190,
+          "biogas_potential_m3": 183300.0,
+          "manure_t": 470,
+          "x": 6.4986911687,
+          "y": 52.2342795716
+        },
+        {
+          "IND_OBJ_NA": "38906",
+          "Unnamed: 0": 227,
+          "biogas_potential_m3": 1217970.0,
+          "manure_t": 3123,
+          "x": 6.5632241071,
+          "y": 52.2937525266
+        },
+        {
+          "IND_OBJ_NA": "TUB01019",
+          "Unnamed: 0": 233,
+          "biogas_potential_m3": 335790.0,
+          "manure_t": 861,
+          "x": 6.7562661164,
+          "y": 52.3985697194
+        },
+        {
+          "IND_OBJ_NA": "VZV01004",
+          "Unnamed: 0": 242,
+          "biogas_potential_m3": 403650.0,
+          "manure_t": 1035,
+          "x": 6.6467849021,
+          "y": 52.419513837
+        },
+        {
+          "IND_OBJ_NA": "VZV01024",
+          "Unnamed: 0": 248,
+          "biogas_potential_m3": 121680.0,
+          "manure_t": 312,
+          "x": 6.7088672122,
+          "y": 52.479572871
+        },
+        {
+          "IND_OBJ_NA": "WDN01023",
+          "Unnamed: 0": 249,
+          "biogas_potential_m3": 1302210.0,
+          "manure_t": 3339,
+          "x": 6.5630659972,
+          "y": 52.2922080713
+        },
+        {
+          "IND_OBJ_NA": "46926",
+          "Unnamed: 0": 257,
+          "biogas_potential_m3": 612300.0,
+          "manure_t": 1570,
+          "x": 6.848896901,
+          "y": 52.4392609308
+        },
+        {
+          "IND_OBJ_NA": "480693",
+          "Unnamed: 0": 260,
+          "biogas_potential_m3": 418470.0,
+          "manure_t": 1073,
+          "x": 6.5913239804,
+          "y": 52.2199724941
+        },
+        {
+          "IND_OBJ_NA": "507480",
+          "Unnamed: 0": 262,
+          "biogas_potential_m3": 661050.0,
+          "manure_t": 1695,
+          "x": 6.6990287501,
+          "y": 52.45741401
+        },
+        {
+          "IND_OBJ_NA": "507489",
+          "Unnamed: 0": 263,
+          "biogas_potential_m3": 1487070.0,
+          "manure_t": 3813,
+          "x": 6.7032535492,
+          "y": 52.2556425969
+        },
+        {
+          "IND_OBJ_NA": "507502",
+          "Unnamed: 0": 264,
+          "biogas_potential_m3": 981240.0,
+          "manure_t": 2516,
+          "x": 6.7266909115,
+          "y": 52.2622987544
+        },
+        {
+          "IND_OBJ_NA": "507506",
+          "Unnamed: 0": 265,
+          "biogas_potential_m3": 1233960.0,
+          "manure_t": 3164,
+          "x": 6.7197117142,
+          "y": 52.2657234587
+        },
+        {
+          "IND_OBJ_NA": "507619",
+          "Unnamed: 0": 266,
+          "biogas_potential_m3": 1734330.0,
+          "manure_t": 4447,
+          "x": 6.7186676569,
+          "y": 52.2786342442
+        },
+        {
+          "IND_OBJ_NA": "507623",
+          "Unnamed: 0": 267,
+          "biogas_potential_m3": 171210.0,
+          "manure_t": 439,
+          "x": 6.7124562938,
+          "y": 52.2732912075
+        },
+        {
+          "IND_OBJ_NA": "507743",
+          "Unnamed: 0": 272,
+          "biogas_potential_m3": 592020.0,
+          "manure_t": 1518,
+          "x": 6.7540525063,
+          "y": 52.1864942353
+        }
+      ],
+      "getFillColor": [
+        128,
+        128,
+        128
+      ],
+      "getPosition": "@@=[x, y]",
+      "getRadius": 500,
+      "id": "f6c19fda-4674-4f44-90fb-30b9d8be9fd0",
+      "pickable": true
+    }
+  ],
+  "mapProvider": "carto",
+  "mapStyle": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  "views": [
+    {
+      "@@type": "MapView",
+      "controller": true
+    }
+  ]
+};
+    const tooltip = true;
+    const customLibraries = null;
+    const configuration = null;
+
+    const deckInstance = createDeck({
+            mapboxApiKey: 'sk.eyJ1Ijoid2VueXVjaGVuIiwiYSI6ImNscDZxZ2hpZzF0ejYyaXBicWs0YWZzb2kifQ.ReihW6LnhBUycKmcX_OIYQ',
+                  container,
+      jsonInput,
+      tooltip,
+      customLibraries,
+      configuration
+    });
+
+  </script>
+</html>
