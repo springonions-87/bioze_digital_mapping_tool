@@ -201,6 +201,34 @@ def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
     return digester_df, assigned_farms_df, unassigned_farms_df
 
 
+def get_arc(assignment_decision, potential_digester_location, farm):
+
+    # Create a list to store dictionaries for the ArcLayer DataFrame
+    arc_data = []
+
+    # Iterate through the assignments dictionary
+    for digester_number, farm_indices in assignment_decision.items():
+        digester_coords = potential_digester_location[potential_digester_location.index == digester_number][['x', 'y']].values[0]
+        for farm_index in farm_indices:
+            # Get coordinates for the current digester and farm
+            farm_coords = farm[farm.index == farm_index][['x', 'y', 'manure_t']].values[0]
+
+            # Append a dictionary with required columns for ArcLayer to the list
+            arc_data.append({
+                'start_lon': farm_coords[0],
+                'start_lat': farm_coords[1],
+                'end_lon': digester_coords[0],
+                'end_lat': digester_coords[1],
+                'digester_number': digester_number,
+                'farm_number': farm_index,
+                'material_quantity': farm_coords[2]  # Add the material quantity to the dictionary
+            })
+
+    # Create a DataFrame from the list of dictionaries
+    arc_layer_df = pd.DataFrame(arc_data)
+
+    return arc_layer_df
+
 def store_data_to_pickle(data, folder_path, file_name):
     """
     Store data (dictionary or list) to a pickle file in a specific folder.
