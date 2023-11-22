@@ -1,23 +1,16 @@
 from cflp_function import *
 import streamlit as st
-# import folium
-# from streamlit_folium import st_folium
 from pulp import *
 import pandas as pd
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import geopandas as gpd
 import pydeck as pdk
 import random
-import rasterio
-from rasterio.plot import reshape_as_image
-
+# import leafmap
 
 # import os
 # print("Current working directory: ", os.getcwd())
 
-st.title('BIOZE Digital Mapping Tool')
-st.text('This is an interactive mapping tool on biogas.')
+# st.title('BIOZE Digital Mapping Tool')
+# st.text('This is an interactive mapping tool on biogas.')
 # st.set_page_config(layout="wide")
 
 
@@ -46,9 +39,20 @@ total_manure = load_data_from_pickle(folder_path, 'total_manure.pickle')
 potential_digester_location = pd.read_csv(r'./farm_cluster_mock_5.csv')
 farm = pd.read_csv(r"./farm_mock.csv")
 
+# Add a title to the sidebar
+st.sidebar.title("BIOZE Digital Mapping Tool")
+# st.sidebar.text('This is an interactive mapping tool on biogas.')
 # Define manure use goal (mu)
-target = (st.slider('Choose manure use percentage', 
-                   min_value=0, max_value=100, step=10))/ 100
+target = (st.sidebar.slider('Select a manure utilization target (%):', 
+                   min_value=0, max_value=100,step=10)/ 100)
+
+# st.markdown("""
+#     <style>
+#     .stSlider [data-baseweb=slider]{
+#         width: 85%;
+#     }
+#     </style>
+#     """,unsafe_allow_html=True)
 
 # farm_gdf = gpd.read_file(r"./farm_new.shp")
 
@@ -132,8 +136,6 @@ arc_layer = pdk.Layer(
     auto_highlight=True
 )
 
-
-
 # # Create the Deck
 # st.pydeck_chart(pdk.Deck(layers=[raster_layer], initial_view_state=view_state))
 
@@ -184,6 +186,7 @@ deck = pdk.Deck(layers=[digesters_layer, assigned_farms_layer, unassigned_farms_
         }
     })
 
+
 # Streamlit checkbox for toggling the visibility of the ArcLayer
 show_arcs = st.checkbox('Show assignment of farms to digesters', value=True)
 
@@ -192,6 +195,8 @@ deck.layers[3].visible = show_arcs
 
 # Rendering the map 
 st.pydeck_chart(deck, use_container_width=True)
+
+
 
 # Update the map when the checkbox is toggled
 # if not show_arcs:
