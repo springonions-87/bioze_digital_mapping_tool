@@ -28,32 +28,32 @@ def load_raster(raster_file):
 
 df = load_raster(raster_file)
 
-# Set the view
-view_state = pdk.ViewState(
-    longitude=df['Longitude'].mean(),
-    latitude=df['Latitude'].mean(),
-    zoom=10,
-    pitch=0)
-
+# Define a layer to display on a map
 layer = pdk.Layer(
-    "HeatmapLayer",
-    data=df,
-    opacity=0.4,
+    "ScreenGridLayer",
+    df,
+    pickable=False,
+    opacity=0.7,
+    cell_size_pixels=15,
+    color_range=[
+        [0, 25, 0, 25],
+        [0, 85, 0, 85],
+        [0, 127, 0, 127],
+        [0, 170, 0, 170],
+        [0, 190, 0, 190],
+        [0, 255, 0, 255],
+    ],
     get_position=["Longitude", "Latitude"],
-    aggregation=pdk.types.String("MEAN"),
     get_weight="Value",
-    pickable=True)
-
-r = pdk.Deck(
-    layers=[layer],
-    initial_view_state=view_state, 
-    tooltip = {
-        "html": "<b>Suitability:</b> {Value}",
-        "style": {
-                "backgroundColor": "steelblue",
-                "color": "white"
-        }}
 )
+# Set the viewport location
+view_state = pdk.ViewState(longitude=df['Longitude'].mean(), latitude=df['Latitude'].mean(), zoom=10, bearing=0, pitch=0)
 
-# Rendering the map 
+# Render
+r = pdk.Deck(layers=[layer], initial_view_state=view_state,
+             tooltip={
+            'html': '<b>Value:</b> {Value}',
+            'style': {
+            'color': 'white'}})
+
 st.pydeck_chart(r, use_container_width=True)
