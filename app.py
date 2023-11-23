@@ -18,21 +18,21 @@ import random
 folder_path = 'app_data'
     # List
         # set F     set of farm locations (list)
-Farm = load_data_from_pickle(folder_path, 'Farm.pickle')
+Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
         # set P     set of potential digester locations
-Plant = load_data_from_pickle(folder_path, 'Plant.pickle')
+Plant = load_data_from_pickle(folder_path, 'Plant_test.pickle')
     # Dictionary 
         # p_i       manure production of each i
-manure_production = load_data_from_pickle(folder_path, 'manure_production.pickle')
+manure_production = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
         # q_j       max capacity of each j 
-max_capacity = load_data_from_pickle(folder_path, 'max_capacity.pickle')
+max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
         # f_j       fixed cost of establishing each j
-fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost.pickle')        
+fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
         # C_ij      transportation matrix 
-transport_cost = load_data_from_pickle(folder_path, 'transportation_cost.pickle')
+transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle')
     # Float
         # alpha     total manure production
-total_manure = load_data_from_pickle(folder_path, 'total_manure.pickle')
+total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
     # Float defined here
         # mu        manure utilization target 
 
