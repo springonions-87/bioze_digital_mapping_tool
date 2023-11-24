@@ -1,10 +1,10 @@
-from cflp_function import *
 import streamlit as st
-from pulp import *
 import pandas as pd
 import pydeck as pdk
 import random
-# import leafmap
+import rasterio
+from pulp import *
+from cflp_function import *
 
 # import os
 # print("Current working directory: ", os.getcwd())
@@ -14,51 +14,68 @@ import random
 # st.set_page_config(layout="wide")
 
 
-# Load files and create parameters
-folder_path = 'app_data'
-    # List
-        # set F     set of farm locations (list)
-Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
-        # set P     set of potential digester locations
-Plant = load_data_from_pickle(folder_path, 'Plant_test.pickle')
-    # Dictionary 
-        # p_i       manure production of each i
-manure_production = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
-        # q_j       max capacity of each j 
-max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
-        # f_j       fixed cost of establishing each j
-fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
-        # C_ij      transportation matrix 
-transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle')
-    # Float
-        # alpha     total manure production
-total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
-    # Float defined here
-        # mu        manure utilization target 
+# # Load files and create parameters
+# folder_path = 'app_data'
+#     # List
+#         # set F     set of farm locations (list)
+# Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
+#         # set P     set of potential digester locations
+# Plant = load_data_from_pickle(folder_path, 'Plant_test.pickle')
+#     # Dictionary 
+#         # p_i       manure production of each i
+# manure_production = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
+#         # q_j       max capacity of each j 
+# max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
+#         # f_j       fixed cost of establishing each j
+# fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
+#         # C_ij      transportation matrix 
+# transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle')
+#     # Float
+#         # alpha     total manure production
+# total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
+#     # Float defined here
+#         # mu        manure utilization target 
 
-potential_digester_location = pd.read_csv(r'./farm_cluster_mock_5.csv')
-farm = pd.read_csv(r"./farm_mock.csv")
+# potential_digester_location = pd.read_csv(r'./farm_cluster_mock_5.csv')
+# farm = pd.read_csv(r"./farm_mock.csv")
+
+@st.cache_data
+def load_data():
+    folder_path = 'app_data'
+
+    # List
+    # set F     set of farm locations (list)
+    Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
+    # set P     set of potential digester locations
+    Plant = load_data_from_pickle(folder_path, 'Plant_test.pickle')
+
+    # Dictionary 
+    # p_i       manure production of each i
+    manure_production = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
+    # q_j       max capacity of each j 
+    max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
+    # f_j       fixed cost of establishing each j
+    fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
+    # C_ij      transportation matrix 
+    transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle')
+
+    # Float
+    # alpha     total manure production
+    total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
+    
+    # DataFrame
+    potential_digester_location = pd.read_csv(r'./farm_cluster_mock_5.csv')
+    farm = pd.read_csv(r"./farm_mock.csv")
+
+    return Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm
+    
+Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm = load_data()
 
 # Add a title to the sidebar
 st.sidebar.title("BIOZE Digital Mapping Tool")
-# st.sidebar.text('This is an interactive mapping tool on biogas.')
 # Define manure use goal (mu)
 target = (st.sidebar.slider('Select a manure utilization target (%):', 
                    min_value=0, max_value=100,step=10)/ 100)
-
-# st.markdown("""
-#     <style>
-#     .stSlider [data-baseweb=slider]{
-#         width: 85%;
-#     }
-#     </style>
-#     """,unsafe_allow_html=True)
-
-# farm_gdf = gpd.read_file(r"./farm_new.shp")
-
-# # Extract latitude and longitude from the 'geometry' column
-# farm_gdf['latitude'] = farm_gdf['geometry'].y
-# farm_gdf['longitude'] = farm_gdf['geometry'].x
 
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
@@ -69,25 +86,36 @@ total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_pla
                                                                                                 max_capacity, 
                                                                                                 target, total_manure)
 
-# # Load raster data
-# with rasterio.open('./raster/fuzzy_and_complete_1.tif') as src:
-#     raster_data = src.read()
 
-# # Reshape raster data for Pydeck
-# raster_image = reshape_as_image(raster_data)
+raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
+#'/Users/wenyuc/Desktop/UT/data/raster/fuzzy_and_complete_1_4326.tif'
 
-# # Create a Pydeck layer for the raster data
-# fuzzy_layer = pdk.Layer(
-#     "BitmapLayer",
-#     data={"image": raster_image},
-#     opacity=0.7,
-#     get_position=[0, 0],
-#     image_size=20,
-#     bounds=[src.bounds.left, src.bounds.bottom, src.bounds.right, src.bounds.top],
-# )
+@st.cache_data
+def load_raster(raster_file):
+    with rasterio.open(raster_file) as src:
+        band1 = src.read(1)
+        # print('Band1 has shape', band1.shape)
+        height = band1.shape[0]
+        width = band1.shape[1]
+        cols, rows = np.meshgrid(np.arange(width), np.arange(height))
+        xs, ys = rasterio.transform.xy(src.transform, rows, cols)
+        lons= np.array(xs)
+        lats = np.array(ys)
+        # print('lons shape', lons.shape)
+    df = pd.DataFrame({
+        'Latitude': lats.flatten(),
+        'Longitude': lons.flatten(),
+        'Value': band1.flatten()})
+    # Optionally, you can filter out no-data values
+    df = df[df['Value'] != src.nodatavals[0]]
+    return (df)
+
+screen_grid_df = load_raster(raster_file)
 
 arc_layer_df = get_arc(assignment_decision, potential_digester_location, farm)
+
 color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in assignment_decision.keys()}
+
 digester_df, assigned_farms_df, unassigned_farms_df = get_plot_variables(assignment_decision, potential_digester_location, farm, color_mapping)
 
 # Create a Pydeck layer for digesters
@@ -136,8 +164,24 @@ arc_layer = pdk.Layer(
     auto_highlight=True
 )
 
-# # Create the Deck
-# st.pydeck_chart(pdk.Deck(layers=[raster_layer], initial_view_state=view_state))
+# Define a layer to display on a map
+screen_grid_layer = pdk.Layer(
+    "ScreenGridLayer",
+    screen_grid_df,
+    pickable=False,
+    opacity=0.7,
+    cell_size_pixels=15,
+    color_range=[
+        [0, 25, 0, 25],
+        [0, 85, 0, 85],
+        [0, 127, 0, 127],
+        [0, 170, 0, 170],
+        [0, 190, 0, 190],
+        [0, 255, 0, 255],
+    ],
+    get_position=["Longitude", "Latitude"],
+    get_weight="Value",
+)
 
 # Inject custom CSS to make the map full screen
 st.markdown(
@@ -157,35 +201,28 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-
-# # Define your map view
-# view_state = pdk.ViewState(
-#     latitude=potential_digester_location['y'].mean(),
-#     longitude=potential_digester_location['x'].mean(), # Center of the raster bounds
-#     zoom=8,
-# )
-
-
-# # Create the deck
-# view_state = pdk.ViewState(latitude=37.7749, longitude=-122.4194, zoom=10)
-# deck = pdk.Deck(layers=[arc_layer, point_layer], initial_view_state=view_state)
-
-view_state=pdk.ViewState(
+@st.cache_data
+def configure_deck(potential_digester_location, _screen_grid_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
+    view_state=pdk.ViewState(
         latitude=potential_digester_location['y'].mean(),
         longitude=potential_digester_location['x'].mean(),
         zoom=9,
         pitch=0
-    )
+        )
+    deck = pdk.Deck(
+        layers=[_screen_grid_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
+        initial_view_state=view_state, 
+        tooltip={
+            'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t',
+            'style': {
+                'color': 'white'
+            }
+        })
+    return deck
 
-deck = pdk.Deck(layers=[digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer],
-                initial_view_state=view_state, 
-                 tooltip={
-        'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t',
-        'style': {
-            'color': 'white'
-        }
-    })
 
+
+deck = configure_deck(potential_digester_location, screen_grid_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer)
 
 # Streamlit checkbox for toggling the visibility of the ArcLayer
 show_arcs = st.checkbox('Show assignment of farms to digesters', value=True)
@@ -195,31 +232,6 @@ deck.layers[3].visible = show_arcs
 
 # Rendering the map 
 st.pydeck_chart(deck, use_container_width=True)
-
-
-
-# Update the map when the checkbox is toggled
-# if not show_arcs:
-#     updated_deck = pdk.Deck(layers=[digesters_layer, assigned_farms_layer, unassigned_farms_layer], initial_view_state=view_state)
-#     st.pydeck_chart(updated_deck)
-# else:
-#     st.pydeck_chart(deck)
-
-# center_map_coords = [52.40659843013704, 6.485187055207251]
-# map = folium.Map(location=center_map_coords, zoom_start=9, tiles='OpenStreetMap')
-
-# for lat, long in zip(farm.y, farm.x):
-#     folium.Marker(
-#         location=[lat, long], 
-#         icon=folium.Icon(icon_color='white')
-#     ).add_to(map)
-# st_folium(map)
-
-# Display the plot using st.pyplot()
-# st.pyplot(plt.gcf()) # get current figure, explicitly providing the current figure to Streamlit, 
-                        # which avoids using Matplotlib's global figure object directly. 
-
-# st.map(farm_gdf)
 
 
 
