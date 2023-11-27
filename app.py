@@ -220,8 +220,6 @@ def configure_deck(potential_digester_location, _screen_grid_layer, _digesters_l
         })
     return deck
 
-
-
 deck = configure_deck(potential_digester_location, screen_grid_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer)
 
 # Streamlit checkbox for toggling the visibility of the ArcLayer
@@ -232,7 +230,6 @@ deck.layers[3].visible = show_arcs
 
 # Rendering the map 
 st.pydeck_chart(deck, use_container_width=True)
-
 
 
 # filename = f"./outputs/cflp_v{6}_{int(target*100)}%manure.png"  # You can choose the file extension (e.g., .png, .jpg, .pdf)
