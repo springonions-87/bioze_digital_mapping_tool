@@ -195,18 +195,29 @@ arc_layer = pdk.Layer(
 #     get_weight="Value",
 # )
 
+min_count = hex_df['suitability'].min()
+max_count = hex_df['suitability'].max()
+diff = max_count - min_count
+
+color_scheme = f"""[
+    255 - (255-189) * (suitability - {min_count})/{diff}, 
+    255 - 255 * (suitability - {min_count})/{diff}, 
+    178 - (178-38) * (suitability - {min_count})/{diff}
+    ]"""
+
 hex_layer = pdk.Layer(
     "H3HexagonLayer",
     hex_df,
     pickable=True,
-    stroked=True,
     filled=True,
     extruded=False,
     opacity=0.5,
     get_hexagon="hex7",
-    get_fill_color ='[255 * Value, 255 * (1 - Value), 0, 255]', 
+    # get_fill_color ='[255 * suitability, 255 * (100 - suitability), 0, 255]',
+    auto_highlight=True,
+    get_fill_color=color_scheme) 
     # get_line_color=[255, 255, 255],
-    line_width_min_pixels=1)
+    # line_width_min_pixels=1)
 
 # Inject custom CSS to make the map full screen
 st.markdown(
@@ -232,14 +243,15 @@ def configure_deck(potential_digester_location, _suitability_layer, _digesters_l
         latitude=potential_digester_location['y'].mean(),
         longitude=potential_digester_location['x'].mean(),
         zoom=9,
-        pitch=0
+        # pitch=0
         )
     deck = pdk.Deck(
         layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
         initial_view_state=view_state, 
+        map_style='mapbox://styles/mapbox/light-v11',
         tooltip=
         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
-        {"text": "Suitability: {Value}"}
+        {"text": "Suitability: {suitability}%"}
         )
     return deck
 
