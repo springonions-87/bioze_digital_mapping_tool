@@ -4,9 +4,9 @@ import pydeck as pdk
 import numpy as np
 import streamlit as st
 
-raster_file = "./raster/fuzzy_and_complete_50.tif"
+raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
 
-#'/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
+# "./raster/fuzzy_and_complete_50.tif"
 
 @st.cache_data
 def load_raster(raster_file):
@@ -36,7 +36,7 @@ layer = pdk.Layer(
     df,
     pickable=False,
     opacity=0.7,
-    cell_size_pixels=15,
+    cell_size_pixels=20,
     color_range=[
         [0, 25, 0, 25],
         [0, 85, 0, 85],

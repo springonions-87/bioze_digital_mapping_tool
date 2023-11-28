@@ -90,27 +90,39 @@ total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_pla
 raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
 #'/Users/wenyuc/Desktop/UT/data/raster/fuzzy_and_complete_1_4326.tif'
 
-@st.cache_data
-def load_raster(raster_file):
-    with rasterio.open(raster_file) as src:
-        band1 = src.read(1)
-        # print('Band1 has shape', band1.shape)
-        height = band1.shape[0]
-        width = band1.shape[1]
-        cols, rows = np.meshgrid(np.arange(width), np.arange(height))
-        xs, ys = rasterio.transform.xy(src.transform, rows, cols)
-        lons= np.array(xs)
-        lats = np.array(ys)
-        # print('lons shape', lons.shape)
-    df = pd.DataFrame({
-        'Latitude': lats.flatten(),
-        'Longitude': lons.flatten(),
-        'Value': band1.flatten()})
-    # Optionally, you can filter out no-data values
-    df = df[df['Value'] != src.nodatavals[0]]
-    return (df)
+# @st.cache_data
+# def load_raster(raster_file):
+#     with rasterio.open(raster_file) as src:
+#         band1 = src.read(1)
+#         # print('Band1 has shape', band1.shape)
+#         height = band1.shape[0]
+#         width = band1.shape[1]
+#         cols, rows = np.meshgrid(np.arange(width), np.arange(height))
+#         xs, ys = rasterio.transform.xy(src.transform, rows, cols)
+#         lons= np.array(xs)
+#         lats = np.array(ys)
+#         # print('lons shape', lons.shape)
+#     df = pd.DataFrame({
+#         'Latitude': lats.flatten(),
+#         'Longitude': lons.flatten(),
+#         'Value': band1.flatten()})
+#     # Optionally, you can filter out no-data values
+#     df = df[df['Value'] != src.nodatavals[0]]
+#     return (df)
 
-screen_grid_df = load_raster(raster_file)
+# screen_grid_df = load_raster(raster_file)
+
+color_scale = [
+    [0, 255, 0, 255],  # RGB color for value 0 (green)
+    [255, 0, 0, 255]   # RGB color for value 1 (red)
+]
+
+@st.cache_data
+def load_data(csv_path):
+    df = pd.read_csv(csv_path)
+    return df
+
+hex_df = load_data('./df_hex_7.csv')
 
 arc_layer_df = get_arc(assignment_decision, potential_digester_location, farm)
 
@@ -147,7 +159,7 @@ unassigned_farms_layer = pdk.Layer(
     get_position=['x', 'y'],
     get_radius=300,
     get_fill_color=[128, 128, 128],
-    pickable=True,
+    pickable=False,
     auto_highlight=True
 )
 
@@ -164,24 +176,37 @@ arc_layer = pdk.Layer(
     auto_highlight=True
 )
 
-# Define a layer to display on a map
-screen_grid_layer = pdk.Layer(
-    "ScreenGridLayer",
-    screen_grid_df,
-    pickable=False,
-    opacity=0.7,
-    cell_size_pixels=15,
-    color_range=[
-        [0, 25, 0, 25],
-        [0, 85, 0, 85],
-        [0, 127, 0, 127],
-        [0, 170, 0, 170],
-        [0, 190, 0, 190],
-        [0, 255, 0, 255],
-    ],
-    get_position=["Longitude", "Latitude"],
-    get_weight="Value",
-)
+# # Define a layer to display on a map
+# screen_grid_layer = pdk.Layer(
+#     "ScreenGridLayer",
+#     screen_grid_df,
+#     pickable=False,
+#     opacity=0.7,
+#     cell_size_pixels=15,
+#     color_range=[
+#         [0, 25, 0, 25],
+#         [0, 85, 0, 85],
+#         [0, 127, 0, 127],
+#         [0, 170, 0, 170],
+#         [0, 190, 0, 190],
+#         [0, 255, 0, 255],
+#     ],
+#     get_position=["Longitude", "Latitude"],
+#     get_weight="Value",
+# )
+
+hex_layer = pdk.Layer(
+    "H3HexagonLayer",
+    hex_df,
+    pickable=True,
+    stroked=True,
+    filled=True,
+    extruded=False,
+    opacity=0.5,
+    get_hexagon="hex7",
+    get_fill_color ='[255 * Value, 255 * (1 - Value), 0, 255]', 
+    # get_line_color=[255, 255, 255],
+    line_width_min_pixels=1)
 
 # Inject custom CSS to make the map full screen
 st.markdown(
@@ -202,7 +227,7 @@ st.markdown(
 )
 
 @st.cache_data
-def configure_deck(potential_digester_location, _screen_grid_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
+def configure_deck(potential_digester_location, _suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
     view_state=pdk.ViewState(
         latitude=potential_digester_location['y'].mean(),
         longitude=potential_digester_location['x'].mean(),
@@ -210,17 +235,15 @@ def configure_deck(potential_digester_location, _screen_grid_layer, _digesters_l
         pitch=0
         )
     deck = pdk.Deck(
-        layers=[_screen_grid_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
+        layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
         initial_view_state=view_state, 
-        tooltip={
-            'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t',
-            'style': {
-                'color': 'white'
-            }
-        })
+        tooltip=
+        # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
+        {"text": "Suitability: {Value}"}
+        )
     return deck
 
-deck = configure_deck(potential_digester_location, screen_grid_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer)
+deck = configure_deck(potential_digester_location, hex_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer)
 
 # Streamlit checkbox for toggling the visibility of the ArcLayer
 show_arcs = st.checkbox('Show assignment of farms to digesters', value=True)
