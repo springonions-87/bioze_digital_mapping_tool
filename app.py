@@ -1,10 +1,12 @@
 import streamlit as st
 import pandas as pd
+import geopandas as gpd
 import pydeck as pdk
 import random
 import rasterio
 from pulp import *
 from cflp_function import *
+from shapely.geometry import mapping
 
 # import os
 # print("Current working directory: ", os.getcwd())
@@ -76,6 +78,14 @@ st.sidebar.title("BIOZE Digital Mapping Tool")
 # Define manure use goal (mu)
 target = (st.sidebar.slider('Select a manure utilization target (%):', 
                    min_value=0, max_value=100,step=10)/ 100)
+# Add a subtitle for the checkboxes
+st.sidebar.markdown("### Layers")
+# Streamlit checkbox for toggling the visibility of the ArcLayer
+show_farm = st.sidebar.checkbox('Farms', value=True)
+show_digester = st.sidebar.checkbox('Digesters', value=True)
+show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
+show_suitability = st.sidebar.checkbox('Suitability', value=False)
+show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
 
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
@@ -118,11 +128,19 @@ color_scale = [
 ]
 
 @st.cache_data
-def load_data(csv_path):
+def load_csv(csv_path):
     df = pd.read_csv(csv_path)
     return df
 
-hex_df = load_data('./df_hex_7.csv')
+@st.cache_data
+def load_gdf(gdf_path):
+    gdf = gpd.read_file(gdf_path)
+    return gdf
+
+hex_df = load_csv('./df_hex_7.csv')
+
+polygons = load_gdf('./suitable_polygon_plot.shp')
+polygons['coordinates'] = polygons['geometry'].apply(lambda geom: mapping(geom)['coordinates'][0])
 
 arc_layer_df = get_arc(assignment_decision, potential_digester_location, farm)
 
@@ -176,6 +194,17 @@ arc_layer = pdk.Layer(
     auto_highlight=True
 )
 
+# Set up the Pydeck PolygonLayer
+polygon_layer = pdk.Layer(
+    "PolygonLayer",
+    data=polygons,
+    get_polygon='coordinates',
+    get_fill_color=[255, 0, 0, 150],  # Red color with 150 transparency
+    get_line_color=[255, 255, 255],
+    get_line_width=2,
+    pickable=True,
+)
+
 # # Define a layer to display on a map
 # screen_grid_layer = pdk.Layer(
 #     "ScreenGridLayer",
@@ -195,15 +224,6 @@ arc_layer = pdk.Layer(
 #     get_weight="Value",
 # )
 
-min_count = hex_df['suitability'].min()
-max_count = hex_df['suitability'].max()
-diff = max_count - min_count
-
-color_scheme = f"""[
-    255 - (255-189) * (suitability - {min_count})/{diff}, 
-    255 - 255 * (suitability - {min_count})/{diff}, 
-    178 - (178-38) * (suitability - {min_count})/{diff}
-    ]"""
 
 hex_layer = pdk.Layer(
     "H3HexagonLayer",
@@ -213,11 +233,10 @@ hex_layer = pdk.Layer(
     extruded=False,
     opacity=0.5,
     get_hexagon="hex7",
-    # get_fill_color ='[255 * suitability, 255 * (100 - suitability), 0, 255]',
-    auto_highlight=True,
-    get_fill_color=color_scheme) 
-    # get_line_color=[255, 255, 255],
-    # line_width_min_pixels=1)
+    # get_fill_color ='[255 * Value, 255 * (100 - Value), 0, 255]',
+    get_fill_color ='[0, 0, 255*Value, 255]',
+    auto_highlight=True)
+
 
 # Inject custom CSS to make the map full screen
 st.markdown(
@@ -238,7 +257,7 @@ st.markdown(
 )
 
 @st.cache_data
-def configure_deck(potential_digester_location, _suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
+def configure_deck(potential_digester_location, _suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer, _polygon_layer):
     view_state=pdk.ViewState(
         latitude=potential_digester_location['y'].mean(),
         longitude=potential_digester_location['x'].mean(),
@@ -246,22 +265,26 @@ def configure_deck(potential_digester_location, _suitability_layer, _digesters_l
         # pitch=0
         )
     deck = pdk.Deck(
-        layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
+        layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer, _polygon_layer],
         initial_view_state=view_state, 
         map_style='mapbox://styles/mapbox/light-v11',
         tooltip=
         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
-        {"text": "Suitability: {suitability}%"}
+        {"text": "Suitability: {Value}"}
         )
     return deck
 
-deck = configure_deck(potential_digester_location, hex_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer)
-
-# Streamlit checkbox for toggling the visibility of the ArcLayer
-show_arcs = st.checkbox('Show assignment of farms to digesters', value=True)
+deck = configure_deck(potential_digester_location, hex_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer, polygon_layer)
 
 # Toggle the visibility of the ArcLayer based on the checkbox
-deck.layers[3].visible = show_arcs
+deck.layers[0].visible = show_suitability
+
+deck.layers[1].visible = show_digester
+deck.layers[2].visible = show_farm
+deck.layers[3].visible = show_farm
+
+deck.layers[-2].visible = show_arcs
+deck.layers[-1].visible = show_polygon
 
 # Rendering the map 
 st.pydeck_chart(deck, use_container_width=True)
