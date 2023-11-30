@@ -1,6 +1,5 @@
 import pandas as pd
 import pydeck as pdk
-import numpy as np
 import streamlit as st
 
 
