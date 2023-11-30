@@ -7,39 +7,45 @@ import rasterio
 from pulp import *
 from cflp_function import *
 from shapely.geometry import mapping
+from datetime import date
 
+today = date.today()
 # import os
 # print("Current working directory: ", os.getcwd())
 
 # st.title('BIOZE Digital Mapping Tool')
 # st.text('This is an interactive mapping tool on biogas.')
-# st.set_page_config(layout="wide")
+st.set_page_config(page_title="Bioze Mapping Tool", layout="wide")
+# st.markdown(
+#     """
+#     <style>
+#     .small-font {
+#         font-size:10px;
+#         font-style: italic;
+#         color: #b1a7a6;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True,
+# )
 
-
-# # Load files and create parameters
-# folder_path = 'app_data'
-#     # List
-#         # set F     set of farm locations (list)
-# Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
-#         # set P     set of potential digester locations
-# Plant = load_data_from_pickle(folder_path, 'Plant_test.pickle')
-#     # Dictionary 
-#         # p_i       manure production of each i
-# manure_production = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
-#         # q_j       max capacity of each j 
-# max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
-#         # f_j       fixed cost of establishing each j
-# fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
-#         # C_ij      transportation matrix 
-# transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle')
-#     # Float
-#         # alpha     total manure production
-# total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
-#     # Float defined here
-#         # mu        manure utilization target 
-
-# potential_digester_location = pd.read_csv(r'./farm_cluster_mock_5.csv')
-# farm = pd.read_csv(r"./farm_mock.csv")
+# Inject custom CSS to make the map full screen
+st.markdown(
+    """
+    <style>
+    #root .block-container {
+        max-width: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .stFrame {
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 @st.cache_data
 def load_data():
@@ -73,19 +79,27 @@ def load_data():
     
 Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm = load_data()
 
-# Add a title to the sidebar
-st.sidebar.title("BIOZE Digital Mapping Tool")
-# Define manure use goal (mu)
+# with st.sidebar.form(key="my_form"):
+#     # Define manure use goal (mu)
+    
+#     target = (st.slider('Select a manure utilization target (%):', 
+#                                 min_value=0, max_value=100,step=10)/ 100)
+
+# # Add a title to the sidebar
+# st.sidebar.title("BIOZE Digital Mapping Tool")
+
+########## Sidebar ##########
 target = (st.sidebar.slider('Select a manure utilization target (%):', 
-                   min_value=0, max_value=100,step=10)/ 100)
-# Add a subtitle for the checkboxes
+                    min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 st.sidebar.markdown("### Layers")
-# Streamlit checkbox for toggling the visibility of the ArcLayer
+
 show_farm = st.sidebar.checkbox('Farms', value=True)
 show_digester = st.sidebar.checkbox('Digesters', value=True)
 show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
 show_suitability = st.sidebar.checkbox('Suitability', value=False)
 show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
+#############################
+
 
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
@@ -100,27 +114,6 @@ total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_pla
 raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
 #'/Users/wenyuc/Desktop/UT/data/raster/fuzzy_and_complete_1_4326.tif'
 
-# @st.cache_data
-# def load_raster(raster_file):
-#     with rasterio.open(raster_file) as src:
-#         band1 = src.read(1)
-#         # print('Band1 has shape', band1.shape)
-#         height = band1.shape[0]
-#         width = band1.shape[1]
-#         cols, rows = np.meshgrid(np.arange(width), np.arange(height))
-#         xs, ys = rasterio.transform.xy(src.transform, rows, cols)
-#         lons= np.array(xs)
-#         lats = np.array(ys)
-#         # print('lons shape', lons.shape)
-#     df = pd.DataFrame({
-#         'Latitude': lats.flatten(),
-#         'Longitude': lons.flatten(),
-#         'Value': band1.flatten()})
-#     # Optionally, you can filter out no-data values
-#     df = df[df['Value'] != src.nodatavals[0]]
-#     return (df)
-
-# screen_grid_df = load_raster(raster_file)
 
 color_scale = [
     [0, 255, 0, 255],  # RGB color for value 0 (green)
@@ -148,6 +141,18 @@ color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.
 
 digester_df, assigned_farms_df, unassigned_farms_df = get_plot_variables(assignment_decision, potential_digester_location, farm, color_mapping)
 
+##### Dashboard Outputs #####
+formatted_cost = "€{:,.2f}".format(total_cost)
+total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
+formatted_volume = "{:,.2f} m³".format(total_biogas)
+
+# Display metrics side by side 
+col1, col2 = st.columns(2)
+col1.metric(label="Total Cost", value=formatted_cost) #, delta="1.2 °F")
+col2.metric(label="Total Biogas Production", value=formatted_volume)
+#############################
+
+##### Plot PyDeck Layers #####
 # Create a Pydeck layer for digesters
 digesters_layer = pdk.Layer(
     type='ScatterplotLayer',
@@ -237,25 +242,6 @@ hex_layer = pdk.Layer(
     get_fill_color ='[0, 0, 255*Value, 255]',
     auto_highlight=True)
 
-
-# Inject custom CSS to make the map full screen
-st.markdown(
-    """
-    <style>
-    #root .block-container {
-        max-width: none;
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .stFrame {
-        width: 100vw !important;
-        height: 100vh !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 @st.cache_data
 def configure_deck(potential_digester_location, _suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer, _polygon_layer):
     view_state=pdk.ViewState(
@@ -289,6 +275,12 @@ deck.layers[-1].visible = show_polygon
 # Rendering the map 
 st.pydeck_chart(deck, use_container_width=True)
 
+
+with st.sidebar.expander("Click to learn more about this dashboard"):
+    st.markdown(f"""
+    blablabla introduce bioze
+    *Updated on {str(today)}.*  
+    """)
 
 # filename = f"./outputs/cflp_v{6}_{int(target*100)}%manure.png"  # You can choose the file extension (e.g., .png, .jpg, .pdf)
 # plot_result(Plant, 
