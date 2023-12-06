@@ -46,6 +46,11 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+@st.cache_data
+def filter_Plant(original_dict, selected_plant):
+    # Extract key-value pairs where the key is not in the list
+    filtered_dict = {key: value for key, value in original_dict.items() if key in selected_plant}
+    return filtered_dict
 
 @st.cache_data
 def load_data():
@@ -98,8 +103,28 @@ show_digester = st.sidebar.checkbox('Digesters', value=True)
 show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
 show_suitability = st.sidebar.checkbox('Suitability', value=False)
 show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
-#############################
 
+# with st.sidebar.form("choose_plant"):
+#     selected_variables = st.multiselect("Select potential locations", Plant)
+#     submit_button = st.form_submit_button("Submit")
+
+with st.form("choose_plant"):
+    selected_plant = st.multiselect("Select one or more options:", Plant)
+
+    all_options = st.checkbox("Select all options")
+
+    if all_options:
+        selected_plant = Plant
+
+    submit_button = st.form_submit_button("Submit")
+    
+    selected_plant # this uses MAGIC to print the options to the screen!
+
+# max_capacity = filter_Plant(max_capacity, selected_plant)
+# fixed_cost = filter_Plant(fixed_cost, selected_plant)
+# transport_cost = filter_Plant(transport_cost, selected_plant)
+# Plant = selected_plant
+#############################
 
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
