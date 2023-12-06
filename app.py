@@ -13,23 +13,10 @@ today = date.today()
 # import os
 # print("Current working directory: ", os.getcwd())
 
+########## PAGE CONFIGURATIONS ##########
 # st.title('BIOZE Digital Mapping Tool')
 # st.text('This is an interactive mapping tool on biogas.')
 st.set_page_config(page_title="Bioze Mapping Tool", layout="wide")
-# st.markdown(
-#     """
-#     <style>
-#     .small-font {
-#         font-size:10px;
-#         font-style: italic;
-#         color: #b1a7a6;
-#     }
-#     </style>
-#     """,
-#     unsafe_allow_html=True,
-# )
-
-# Inject custom CSS to make the map full screen
 st.markdown(
     """
     <style>
@@ -44,18 +31,23 @@ st.markdown(
     }
     </style>
     """,
-    unsafe_allow_html=True,
-)
+    unsafe_allow_html=True)
+#############################
+
+########## LOAD DATA ##########
 @st.cache_data
-def filter_Plant(original_dict, selected_plant):
-    # Extract key-value pairs where the key is not in the list
-    filtered_dict = {key: value for key, value in original_dict.items() if key in selected_plant}
-    return filtered_dict
+def load_csv(csv_path):
+    df = pd.read_csv(csv_path)
+    return df
+
+@st.cache_data
+def load_gdf(gdf_path):
+    gdf = gpd.read_file(gdf_path)
+    return gdf
 
 @st.cache_data
 def load_data():
     folder_path = 'app_data'
-
     # List
     # set F     set of farm locations (list)
     Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
@@ -79,53 +71,69 @@ def load_data():
     # DataFrame
     potential_digester_location = pd.read_csv(r'./farm_cluster_mock_5.csv')
     farm = pd.read_csv(r"./farm_mock.csv")
-
     return Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm
     
-Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm = load_data()
+Farm, plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm = load_data()
+Plant_all = ['All'] + plant.copy()
 
-# with st.sidebar.form(key="my_form"):
-#     # Define manure use goal (mu)
-    
-#     target = (st.slider('Select a manure utilization target (%):', 
-#                                 min_value=0, max_value=100,step=10)/ 100)
+hex_df = load_csv('./df_hex_7.csv')
 
-# # Add a title to the sidebar
-# st.sidebar.title("BIOZE Digital Mapping Tool")
+polygons = load_gdf('./suitable_polygon_plot.shp')
+polygons['coordinates'] = polygons['geometry'].apply(lambda geom: mapping(geom)['coordinates'][0])
+#############################
 
-########## Sidebar ##########
-target = (st.sidebar.slider('Select a manure utilization target (%):', 
-                    min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
-st.sidebar.markdown("### Layers")
+########## FUNCTIONS ##########
+@st.cache_data
+def filter_Plant(original_dict, selected_plant):
+    # Extract key-value pairs where the key is not in the list
+    filtered_dict = {key: value for key, value in original_dict.items() if key in selected_plant}
+    return filtered_dict
+#############################
 
-show_farm = st.sidebar.checkbox('Farms', value=True)
-show_digester = st.sidebar.checkbox('Digesters', value=True)
-show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
-show_suitability = st.sidebar.checkbox('Suitability', value=False)
-show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
+########## SIDEBAR ##########
+with st.sidebar:
+    target = (st.slider('Manure Utilization target (%):', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
+
+    with st.container():
+        st.write("**Layers**")
+        show_farm = st.sidebar.checkbox('Farms', value=True)
+        show_digester = st.sidebar.checkbox('Digesters', value=True)
+        show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
+        show_suitability = st.sidebar.checkbox('Suitability', value=False)
+        show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
+
+    with st.expander("Click to learn more about this dashboard"):
+        st.markdown(f"""
+        Introduce Bioze
+        *Updated on {str(today)}.*  
+        """)
 
 # with st.sidebar.form("choose_plant"):
 #     selected_variables = st.multiselect("Select potential locations", Plant)
 #     submit_button = st.form_submit_button("Submit")
-
-with st.form("choose_plant"):
-    selected_plant = st.multiselect("Select one or more options:", Plant)
-
-    all_options = st.checkbox("Select all options")
-
-    if all_options:
-        selected_plant = Plant
-
-    submit_button = st.form_submit_button("Submit")
-    
-    selected_plant # this uses MAGIC to print the options to the screen!
-
-# max_capacity = filter_Plant(max_capacity, selected_plant)
-# fixed_cost = filter_Plant(fixed_cost, selected_plant)
-# transport_cost = filter_Plant(transport_cost, selected_plant)
-# Plant = selected_plant
 #############################
 
+########## FORM ##########
+@st.cache_data
+def filter_Plant(original_dict, Plant):
+    # Extract key-value pairs where the key is not in the list
+    filtered_dict = {key: value for key, value in original_dict.items() if key in Plant}
+    return filtered_dict
+
+with st.expander('Select Locations'):
+    with st.form('select_plant'):
+        Plant = st.multiselect(" ", Plant_all)
+        if "All" in Plant:
+            Plant = plant
+        submit = st.form_submit_button("Submit")
+max_capacity = filter_Plant(max_capacity, Plant)
+fixed_cost = filter_Plant(fixed_cost, Plant)
+transport_cost = filter_Plant(transport_cost, Plant)
+# max_capacity
+# fixed_cost
+#############################
+
+########## RUN CFLP MODEL ##########
 # Run the model 
 total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
                                                                                                 Farm, 
@@ -135,49 +143,25 @@ total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_pla
                                                                                                 max_capacity, 
                                                                                                 target, total_manure)
 
+#############################
 
 raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
 #'/Users/wenyuc/Desktop/UT/data/raster/fuzzy_and_complete_1_4326.tif'
 
-
-color_scale = [
-    [0, 255, 0, 255],  # RGB color for value 0 (green)
-    [255, 0, 0, 255]   # RGB color for value 1 (red)
-]
-
-@st.cache_data
-def load_csv(csv_path):
-    df = pd.read_csv(csv_path)
-    return df
-
-@st.cache_data
-def load_gdf(gdf_path):
-    gdf = gpd.read_file(gdf_path)
-    return gdf
-
-hex_df = load_csv('./df_hex_7.csv')
-
-polygons = load_gdf('./suitable_polygon_plot.shp')
-polygons['coordinates'] = polygons['geometry'].apply(lambda geom: mapping(geom)['coordinates'][0])
-
 arc_layer_df = get_arc(assignment_decision, potential_digester_location, farm)
-
 color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in assignment_decision.keys()}
-
 digester_df, assigned_farms_df, unassigned_farms_df = get_plot_variables(assignment_decision, potential_digester_location, farm, color_mapping)
 
-##### Dashboard Outputs #####
-formatted_cost = "€{:,.2f}".format(total_cost)
+##### OUTCOME INDICATORS #####
 total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
-formatted_volume = "{:,.2f} m³".format(total_biogas)
 
 # Display metrics side by side 
 col1, col2 = st.columns(2)
-col1.metric(label="Total Cost", value=formatted_cost) #, delta="1.2 °F")
-col2.metric(label="Total Biogas Production", value=formatted_volume)
+col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
+col2.metric(label="Total Biogas Production", value="{:,.2f} m³".format(total_biogas))
 #############################
 
-##### Plot PyDeck Layers #####
+##### PLOT PYDECK LAYERS #####
 # Create a Pydeck layer for digesters
 digesters_layer = pdk.Layer(
     type='ScatterplotLayer',
@@ -254,7 +238,6 @@ polygon_layer = pdk.Layer(
 #     get_weight="Value",
 # )
 
-
 hex_layer = pdk.Layer(
     "H3HexagonLayer",
     hex_df,
@@ -300,12 +283,6 @@ deck.layers[-1].visible = show_polygon
 # Rendering the map 
 st.pydeck_chart(deck, use_container_width=True)
 
-
-with st.sidebar.expander("Click to learn more about this dashboard"):
-    st.markdown(f"""
-    blablabla introduce bioze
-    *Updated on {str(today)}.*  
-    """)
 
 # filename = f"./outputs/cflp_v{6}_{int(target*100)}%manure.png"  # You can choose the file extension (e.g., .png, .jpg, .pdf)
 # plot_result(Plant, 

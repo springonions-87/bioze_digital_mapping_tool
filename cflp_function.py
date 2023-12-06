@@ -190,6 +190,7 @@ def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
 
     # Map digesters to colors
     digester_df['color'] = digester_df.index.map(color_mapping)
+    digester_df['color'] = digester_df['color'].fillna('[128, 128, 128]') # the color doesn't really work here
 
     # Map assigned farms to colors
     assigned_farms_df = farm[farm.index.isin([i for indices in assignment_decision.values() for i in indices])]
