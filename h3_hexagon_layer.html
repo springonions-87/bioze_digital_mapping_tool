@@ -1,0 +1,6565 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>pydeck</title>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src='https://cdn.jsdelivr.net/npm/@deck.gl/jupyter-widget@~8.9.*/dist/index.js'></script>
+    <style>
+    body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#deck-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#deck-container canvas {
+  z-index: 1;
+  background: none;
+}
+    </style>
+  </head>
+  <body>
+    <div id="deck-container">
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById('deck-container');
+    const jsonInput = {
+  "initialViewState": {
+    "bearing": 0,
+    "latitude": 52.316862707395394,
+    "longitude": 6.747489560596507,
+    "pitch": 0,
+    "zoom": 10
+  },
+  "layers": [
+    {
+      "@@type": "H3HexagonLayer",
+      "data": [
+        {
+          "hex": "8a1f16180007fff",
+          "nearest_farm": 0.03558852809155389
+        },
+        {
+          "hex": "8a1f16180017fff",
+          "nearest_farm": 0.03438821966887581
+        },
+        {
+          "hex": "8a1f1618001ffff",
+          "nearest_farm": 0.03618268895009259
+        },
+        {
+          "hex": "8a1f16180027fff",
+          "nearest_farm": 0.03502016139913599
+        },
+        {
+          "hex": "8a1f1618002ffff",
+          "nearest_farm": 0.03681288695794153
+        },
+        {
+          "hex": "8a1f16180037fff",
+          "nearest_farm": 0.03379433514970666
+        },
+        {
+          "hex": "8a1f16180087fff",
+          "nearest_farm": 0.03386108630411633
+        },
+        {
+          "hex": "8a1f1618008ffff",
+          "nearest_farm": 0.03565208594957145
+        },
+        {
+          "hex": "8a1f16180097fff",
+          "nearest_farm": 0.03274512519842636
+        },
+        {
+          "hex": "8a1f1618009ffff",
+          "nearest_farm": 0.034531887545819526
+        },
+        {
+          "hex": "8a1f161800a7fff",
+          "nearest_farm": 0.033214565783014245
+        },
+        {
+          "hex": "8a1f161800affff",
+          "nearest_farm": 0.035007918274113405
+        },
+        {
+          "hex": "8a1f161800b7fff",
+          "nearest_farm": 0.0320704893846335
+        },
+        {
+          "hex": "8a1f161800f7fff",
+          "nearest_farm": 0.03680139566514039
+        },
+        {
+          "hex": "8a1f16180107fff",
+          "nearest_farm": 0.03268957081861335
+        },
+        {
+          "hex": "8a1f1618010ffff",
+          "nearest_farm": 0.034478863425114956
+        },
+        {
+          "hex": "8a1f16180117fff",
+          "nearest_farm": 0.03143537997741742
+        },
+        {
+          "hex": "8a1f1618011ffff",
+          "nearest_farm": 0.03322764776309878
+        },
+        {
+          "hex": "8a1f16180127fff",
+          "nearest_farm": 0.03218153829237269
+        },
+        {
+          "hex": "8a1f1618012ffff",
+          "nearest_farm": 0.03396592723680908
+        },
+        {
+          "hex": "8a1f16180137fff",
+          "nearest_farm": 0.03090090301450629
+        },
+        {
+          "hex": "8a1f16180157fff",
+          "nearest_farm": 0.036268690377079894
+        },
+        {
+          "hex": "8a1f16180177fff",
+          "nearest_farm": 0.035751349591940776
+        },
+        {
+          "hex": "8a1f16180187fff",
+          "nearest_farm": 0.030799340188248283
+        },
+        {
+          "hex": "8a1f1618018ffff",
+          "nearest_farm": 0.032593769744959505
+        },
+        {
+          "hex": "8a1f16180197fff",
+          "nearest_farm": 0.029628316350011213
+        },
+        {
+          "hex": "8a1f1618019ffff",
+          "nearest_farm": 0.03142135725130857
+        },
+        {
+          "hex": "8a1f161801a7fff",
+          "nearest_farm": 0.030206112101079288
+        },
+        {
+          "hex": "8a1f161801affff",
+          "nearest_farm": 0.03200019420458535
+        },
+        {
+          "hex": "8a1f161801b7fff",
+          "nearest_farm": 0.029004932257810666
+        },
+        {
+          "hex": "8a1f16180407fff",
+          "nearest_farm": 0.027861428546183165
+        },
+        {
+          "hex": "8a1f1618040ffff",
+          "nearest_farm": 0.029616862434641178
+        },
+        {
+          "hex": "8a1f16180417fff",
+          "nearest_farm": 0.026922492698681612
+        },
+        {
+          "hex": "8a1f16180427fff",
+          "nearest_farm": 0.02708504919687125
+        },
+        {
+          "hex": "8a1f1618042ffff",
+          "nearest_farm": 0.02885043908237829
+        },
+        {
+          "hex": "8a1f16180437fff",
+          "nearest_farm": 0.02611130004296376
+        },
+        {
+          "hex": "8a1f16180447fff",
+          "nearest_farm": 0.03239081576435264
+        },
+        {
+          "hex": "8a1f16180457fff",
+          "nearest_farm": 0.03137671359096928
+        },
+        {
+          "hex": "8a1f16180467fff",
+          "nearest_farm": 0.031663295639850875
+        },
+        {
+          "hex": "8a1f1618046ffff",
+          "nearest_farm": 0.03344372244313172
+        },
+        {
+          "hex": "8a1f16180477fff",
+          "nearest_farm": 0.03061921191738852
+        },
+        {
+          "hex": "8a1f16180497fff",
+          "nearest_farm": 0.025794563617697327
+        },
+        {
+          "hex": "8a1f161804b7fff",
+          "nearest_farm": 0.02521691242618945
+        },
+        {
+          "hex": "8a1f16180507fff",
+          "nearest_farm": 0.024562105726812625
+        },
+        {
+          "hex": "8a1f1618050ffff",
+          "nearest_farm": 0.026333500783733102
+        },
+        {
+          "hex": "8a1f16180517fff",
+          "nearest_farm": 0.023567445511800674
+        },
+        {
+          "hex": "8a1f1618051ffff",
+          "nearest_farm": 0.025323746886239746
+        },
+        {
+          "hex": "8a1f16180527fff",
+          "nearest_farm": 0.023828859801075585
+        },
+        {
+          "hex": "8a1f1618052ffff",
+          "nearest_farm": 0.025608968088797715
+        },
+        {
+          "hex": "8a1f16180537fff",
+          "nearest_farm": 0.022794318582380547
+        },
+        {
+          "hex": "8a1f16180547fff",
+          "nearest_farm": 0.029174473378787185
+        },
+        {
+          "hex": "8a1f1618054ffff",
+          "nearest_farm": 0.03095926602530711
+        },
+        {
+          "hex": "8a1f16180557fff",
+          "nearest_farm": 0.02810782423814997
+        },
+        {
+          "hex": "8a1f1618055ffff",
+          "nearest_farm": 0.029884556943608476
+        },
+        {
+          "hex": "8a1f16180567fff",
+          "nearest_farm": 0.028490797170741048
+        },
+        {
+          "hex": "8a1f1618056ffff",
+          "nearest_farm": 0.03028036422116686
+        },
+        {
+          "hex": "8a1f16180577fff",
+          "nearest_farm": 0.02739095307372325
+        },
+        {
+          "hex": "8a1f16180587fff",
+          "nearest_farm": 0.023471660651021947
+        },
+        {
+          "hex": "8a1f1618058ffff",
+          "nearest_farm": 0.025192257867227
+        },
+        {
+          "hex": "8a1f16180597fff",
+          "nearest_farm": 0.022643016687999583
+        },
+        {
+          "hex": "8a1f161805a7fff",
+          "nearest_farm": 0.022631866260958613
+        },
+        {
+          "hex": "8a1f161805affff",
+          "nearest_farm": 0.024367617076959346
+        },
+        {
+          "hex": "8a1f161805b7fff",
+          "nearest_farm": 0.02176298367604301
+        },
+        {
+          "hex": "8a1f16180727fff",
+          "nearest_farm": 0.0363194217832889
+        },
+        {
+          "hex": "8a1f16180897fff",
+          "nearest_farm": 0.028616623573048488
+        },
+        {
+          "hex": "8a1f1618089ffff",
+          "nearest_farm": 0.03039836233813924
+        },
+        {
+          "hex": "8a1f16180c07fff",
+          "nearest_farm": 0.023030583601755326
+        },
+        {
+          "hex": "8a1f16180c0ffff",
+          "nearest_farm": 0.024824316951315463
+        },
+        {
+          "hex": "8a1f16180c17fff",
+          "nearest_farm": 0.021827556434954005
+        },
+        {
+          "hex": "8a1f16180c1ffff",
+          "nearest_farm": 0.023621856539198603
+        },
+        {
+          "hex": "8a1f16180c27fff",
+          "nearest_farm": 0.022479672863179978
+        },
+        {
+          "hex": "8a1f16180c2ffff",
+          "nearest_farm": 0.024269796309511295
+        },
+        {
+          "hex": "8a1f16180c37fff",
+          "nearest_farm": 0.02123698557844063
+        },
+        {
+          "hex": "8a1f16180c47fff",
+          "nearest_farm": 0.02785176129587813
+        },
+        {
+          "hex": "8a1f16180c4ffff",
+          "nearest_farm": 0.029643400168598035
+        },
+        {
+          "hex": "8a1f16180c57fff",
+          "nearest_farm": 0.026618161019741102
+        },
+        {
+          "hex": "8a1f16180c5ffff",
+          "nearest_farm": 0.02841209741193311
+        },
+        {
+          "hex": "8a1f16180c67fff",
+          "nearest_farm": 0.02732592184075477
+        },
+        {
+          "hex": "8a1f16180c6ffff",
+          "nearest_farm": 0.02911297266266654
+        },
+        {
+          "hex": "8a1f16180c77fff",
+          "nearest_farm": 0.026060530869236903
+        },
+        {
+          "hex": "8a1f16180c87fff",
+          "nearest_farm": 0.02134084913175247
+        },
+        {
+          "hex": "8a1f16180c8ffff",
+          "nearest_farm": 0.023126708515701644
+        },
+        {
+          "hex": "8a1f16180c97fff",
+          "nearest_farm": 0.02027623557553049
+        },
+        {
+          "hex": "8a1f16180c9ffff",
+          "nearest_farm": 0.02205107939347094
+        },
+        {
+          "hex": "8a1f16180ca7fff",
+          "nearest_farm": 0.020667029364257756
+        },
+        {
+          "hex": "8a1f16180caffff",
+          "nearest_farm": 0.022458566854282495
+        },
+        {
+          "hex": "8a1f16180cb7fff",
+          "nearest_farm": 0.019556564184544777
+        },
+        {
+          "hex": "8a1f16180cc7fff",
+          "nearest_farm": 0.02604286469708061
+        },
+        {
+          "hex": "8a1f16180ccffff",
+          "nearest_farm": 0.027835472845740634
+        },
+        {
+          "hex": "8a1f16180cd7fff",
+          "nearest_farm": 0.024913806704087264
+        },
+        {
+          "hex": "8a1f16180cdffff",
+          "nearest_farm": 0.026701897708693405
+        },
+        {
+          "hex": "8a1f16180ce7fff",
+          "nearest_farm": 0.02541618808545379
+        },
+        {
+          "hex": "8a1f16180ceffff",
+          "nearest_farm": 0.027210547544022527
+        },
+        {
+          "hex": "8a1f16180cf7fff",
+          "nearest_farm": 0.024250541079129606
+        },
+        {
+          "hex": "8a1f16180d07fff",
+          "nearest_farm": 0.02019111082435786
+        },
+        {
+          "hex": "8a1f16180d0ffff",
+          "nearest_farm": 0.021972158854414937
+        },
+        {
+          "hex": "8a1f16180d17fff",
+          "nearest_farm": 0.01890193827913077
+        },
+        {
+          "hex": "8a1f16180d1ffff",
+          "nearest_farm": 0.020690315612196062
+        },
+        {
+          "hex": "8a1f16180d27fff",
+          "nearest_farm": 0.01974297015159806
+        },
+        {
+          "hex": "8a1f16180d2ffff",
+          "nearest_farm": 0.021511111651363924
+        },
+        {
+          "hex": "8a1f16180d37fff",
+          "nearest_farm": 0.01841268239201486
+        },
+        {
+          "hex": "8a1f16180d47fff",
+          "nearest_farm": 0.025058671970344705
+        },
+        {
+          "hex": "8a1f16180d4ffff",
+          "nearest_farm": 0.026836605526732494
+        },
+        {
+          "hex": "8a1f16180d57fff",
+          "nearest_farm": 0.023755240360354642
+        },
+        {
+          "hex": "8a1f16180d5ffff",
+          "nearest_farm": 0.02553993230896545
+        },
+        {
+          "hex": "8a1f16180d67fff",
+          "nearest_farm": 0.02461905543001417
+        },
+        {
+          "hex": "8a1f16180d6ffff",
+          "nearest_farm": 0.026385842944554153
+        },
+        {
+          "hex": "8a1f16180d77fff",
+          "nearest_farm": 0.0232832972855794
+        },
+        {
+          "hex": "8a1f16180d87fff",
+          "nearest_farm": 0.018239071609463732
+        },
+        {
+          "hex": "8a1f16180d8ffff",
+          "nearest_farm": 0.02003329256578381
+        },
+        {
+          "hex": "8a1f16180d97fff",
+          "nearest_farm": 0.017085796943395785
+        },
+        {
+          "hex": "8a1f16180d9ffff",
+          "nearest_farm": 0.018876049081633033
+        },
+        {
+          "hex": "8a1f16180da7fff",
+          "nearest_farm": 0.017650343929055175
+        },
+        {
+          "hex": "8a1f16180daffff",
+          "nearest_farm": 0.019443556564785535
+        },
+        {
+          "hex": "8a1f16180db7fff",
+          "nearest_farm": 0.01644490315654736
+        },
+        {
+          "hex": "8a1f16182807fff",
+          "nearest_farm": 0.020233470109181095
+        },
+        {
+          "hex": "8a1f1618280ffff",
+          "nearest_farm": 0.022027416339529513
+        },
+        {
+          "hex": "8a1f16182817fff",
+          "nearest_farm": 0.019050624844662373
+        },
+        {
+          "hex": "8a1f1618281ffff",
+          "nearest_farm": 0.020843548754683274
+        },
+        {
+          "hex": "8a1f16182827fff",
+          "nearest_farm": 0.019668401631477893
+        },
+        {
+          "hex": "8a1f1618282ffff",
+          "nearest_farm": 0.021459462266817532
+        },
+        {
+          "hex": "8a1f16182837fff",
+          "nearest_farm": 0.018439560906812966
+        },
+        {
+          "hex": "8a1f16182847fff",
+          "nearest_farm": 0.025042921254812046
+        },
+        {
+          "hex": "8a1f1618284ffff",
+          "nearest_farm": 0.026835146431068626
+        },
+        {
+          "hex": "8a1f16182857fff",
+          "nearest_farm": 0.023821394306727663
+        },
+        {
+          "hex": "8a1f1618285ffff",
+          "nearest_farm": 0.02561540020096493
+        },
+        {
+          "hex": "8a1f16182867fff",
+          "nearest_farm": 0.024508362607447716
+        },
+        {
+          "hex": "8a1f1618286ffff",
+          "nearest_farm": 0.026296120877576025
+        },
+        {
+          "hex": "8a1f16182877fff",
+          "nearest_farm": 0.023251002115562778
+        },
+        {
+          "hex": "8a1f16182887fff",
+          "nearest_farm": 0.01862500939402541
+        },
+        {
+          "hex": "8a1f161828a7fff",
+          "nearest_farm": 0.017919466428321165
+        },
+        {
+          "hex": "8a1f161828affff",
+          "nearest_farm": 0.019706553098199547
+        },
+        {
+          "hex": "8a1f161828b7fff",
+          "nearest_farm": 0.016850400480038528
+        },
+        {
+          "hex": "8a1f16182907fff",
+          "nearest_farm": 0.017370618563791313
+        },
+        {
+          "hex": "8a1f1618290ffff",
+          "nearest_farm": 0.01915232571443092
+        },
+        {
+          "hex": "8a1f16182917fff",
+          "nearest_farm": 0.0160883399488195
+        },
+        {
+          "hex": "8a1f1618291ffff",
+          "nearest_farm": 0.017877960139696062
+        },
+        {
+          "hex": "8a1f16182927fff",
+          "nearest_farm": 0.01692241482155296
+        },
+        {
+          "hex": "8a1f1618292ffff",
+          "nearest_farm": 0.018689299361356188
+        },
+        {
+          "hex": "8a1f16182937fff",
+          "nearest_farm": 0.015591762830934752
+        },
+        {
+          "hex": "8a1f16182947fff",
+          "nearest_farm": 0.022236185102301496
+        },
+        {
+          "hex": "8a1f1618294ffff",
+          "nearest_farm": 0.024014255161526908
+        },
+        {
+          "hex": "8a1f16182957fff",
+          "nearest_farm": 0.020936159811956484
+        },
+        {
+          "hex": "8a1f1618295ffff",
+          "nearest_farm": 0.02272162313729244
+        },
+        {
+          "hex": "8a1f16182967fff",
+          "nearest_farm": 0.02179762222029363
+        },
+        {
+          "hex": "8a1f1618296ffff",
+          "nearest_farm": 0.02354353376635847
+        },
+        {
+          "hex": "8a1f16182977fff",
+          "nearest_farm": 0.02046093342482806
+        },
+        {
+          "hex": "8a1f16182987fff",
+          "nearest_farm": 0.015465593864644377
+        },
+        {
+          "hex": "8a1f1618298ffff",
+          "nearest_farm": 0.017257946347073064
+        },
+        {
+          "hex": "8a1f16182997fff",
+          "nearest_farm": 0.014350519037626347
+        },
+        {
+          "hex": "8a1f1618299ffff",
+          "nearest_farm": 0.016133930492718395
+        },
+        {
+          "hex": "8a1f161829a7fff",
+          "nearest_farm": 0.01485188752396384
+        },
+        {
+          "hex": "8a1f161829affff",
+          "nearest_farm": 0.0166456963029594
+        },
+        {
+          "hex": "8a1f161829b7fff",
+          "nearest_farm": 0.013673690240466673
+        },
+        {
+          "hex": "8a1f16182b17fff",
+          "nearest_farm": 0.028627622722595517
+        },
+        {
+          "hex": "8a1f16182b37fff",
+          "nearest_farm": 0.028084705996346864
+        },
+        {
+          "hex": "8a1f16182d17fff",
+          "nearest_farm": 0.009414270961884165
+        },
+        {
+          "hex": "8a1f16182d27fff",
+          "nearest_farm": 0.009005721272370914
+        },
+        {
+          "hex": "8a1f16182d37fff",
+          "nearest_farm": 0.008388440749685618
+        },
+        {
+          "hex": "8a1f16182d67fff",
+          "nearest_farm": 0.013316808475577676
+        },
+        {
+          "hex": "8a1f16182d6ffff",
+          "nearest_farm": 0.015080390674144876
+        },
+        {
+          "hex": "8a1f16182da7fff",
+          "nearest_farm": 0.009104896868668404
+        },
+        {
+          "hex": "8a1f16182db7fff",
+          "nearest_farm": 0.008611052662665894
+        },
+        {
+          "hex": "8a1f16184407fff",
+          "nearest_farm": 0.009621049533141428
+        },
+        {
+          "hex": "8a1f16184417fff",
+          "nearest_farm": 0.008129984901434847
+        },
+        {
+          "hex": "8a1f1618441ffff",
+          "nearest_farm": 0.009354141157743617
+        },
+        {
+          "hex": "8a1f16184437fff",
+          "nearest_farm": 0.00856234468794266
+        },
+        {
+          "hex": "8a1f16184487fff",
+          "nearest_farm": 0.006319050178736825
+        },
+        {
+          "hex": "8a1f1618448ffff",
+          "nearest_farm": 0.007694065983834053
+        },
+        {
+          "hex": "8a1f16184497fff",
+          "nearest_farm": 0.004807922808355205
+        },
+        {
+          "hex": "8a1f1618449ffff",
+          "nearest_farm": 0.00617229201290755
+        },
+        {
+          "hex": "8a1f161844a7fff",
+          "nearest_farm": 0.006654007596238011
+        },
+        {
+          "hex": "8a1f161844affff",
+          "nearest_farm": 0.007835279057714204
+        },
+        {
+          "hex": "8a1f161844b7fff",
+          "nearest_farm": 0.005205944205958335
+        },
+        {
+          "hex": "8a1f161844c7fff",
+          "nearest_farm": 0.010721153970358261
+        },
+        {
+          "hex": "8a1f161844cffff",
+          "nearest_farm": 0.012303625474732962
+        },
+        {
+          "hex": "8a1f161844d7fff",
+          "nearest_farm": 0.009214486993411411
+        },
+        {
+          "hex": "8a1f161844dffff",
+          "nearest_farm": 0.010819191261493083
+        },
+        {
+          "hex": "8a1f161844f7fff",
+          "nearest_farm": 0.009216687262048303
+        },
+        {
+          "hex": "8a1f16184507fff",
+          "nearest_farm": 0.009761338988281644
+        },
+        {
+          "hex": "8a1f16184517fff",
+          "nearest_farm": 0.008507915727820451
+        },
+        {
+          "hex": "8a1f1618451ffff",
+          "nearest_farm": 0.009112782205408634
+        },
+        {
+          "hex": "8a1f16184537fff",
+          "nearest_farm": 0.009315480031124508
+        },
+        {
+          "hex": "8a1f16184587fff",
+          "nearest_farm": 0.006527632508069918
+        },
+        {
+          "hex": "8a1f1618458ffff",
+          "nearest_farm": 0.00715076079295423
+        },
+        {
+          "hex": "8a1f16184597fff",
+          "nearest_farm": 0.005418810194734075
+        },
+        {
+          "hex": "8a1f1618459ffff",
+          "nearest_farm": 0.005796536443243248
+        },
+        {
+          "hex": "8a1f161845a7fff",
+          "nearest_farm": 0.00735746116463262
+        },
+        {
+          "hex": "8a1f161845affff",
+          "nearest_farm": 0.007778368021862655
+        },
+        {
+          "hex": "8a1f161845b7fff",
+          "nearest_farm": 0.006366029082738552
+        },
+        {
+          "hex": "8a1f16184687fff",
+          "nearest_farm": 0.017608249452010966
+        },
+        {
+          "hex": "8a1f1618468ffff",
+          "nearest_farm": 0.019349439985992048
+        },
+        {
+          "hex": "8a1f16184697fff",
+          "nearest_farm": 0.016224088201522102
+        },
+        {
+          "hex": "8a1f1618469ffff",
+          "nearest_farm": 0.017980061839653894
+        },
+        {
+          "hex": "8a1f161846a7fff",
+          "nearest_farm": 0.017301163928516456
+        },
+        {
+          "hex": "8a1f161846affff",
+          "nearest_farm": 0.019013909482392812
+        },
+        {
+          "hex": "8a1f161846b7fff",
+          "nearest_farm": 0.01587894244202916
+        },
+        {
+          "hex": "8a1f161846d7fff",
+          "nearest_farm": 0.021099575746346327
+        },
+        {
+          "hex": "8a1f161846dffff",
+          "nearest_farm": 0.022856605216214916
+        },
+        {
+          "hex": "8a1f161846f7fff",
+          "nearest_farm": 0.020740496780459326
+        },
+        {
+          "hex": "8a1f1618479ffff",
+          "nearest_farm": 0.015606813208964107
+        },
+        {
+          "hex": "8a1f16184c87fff",
+          "nearest_farm": 0.011095075397158916
+        },
+        {
+          "hex": "8a1f16184c97fff",
+          "nearest_farm": 0.010186796278975943
+        },
+        {
+          "hex": "8a1f16184c9ffff",
+          "nearest_farm": 0.010182511923416728
+        },
+        {
+          "hex": "8a1f16184cb7fff",
+          "nearest_farm": 0.011195566551915694
+        },
+        {
+          "hex": "8a1f16184d87fff",
+          "nearest_farm": 0.013267086844604195
+        },
+        {
+          "hex": "8a1f16184d97fff",
+          "nearest_farm": 0.012659199859402968
+        },
+        {
+          "hex": "8a1f16184d9ffff",
+          "nearest_farm": 0.012223842558698114
+        },
+        {
+          "hex": "8a1f16184da7fff",
+          "nearest_farm": 0.014322026225991807
+        },
+        {
+          "hex": "8a1f16184db7fff",
+          "nearest_farm": 0.01374778144506735
+        },
+        {
+          "hex": "8a1f16186007fff",
+          "nearest_farm": 0.006309940569270217
+        },
+        {
+          "hex": "8a1f1618600ffff",
+          "nearest_farm": 0.007110992630174296
+        },
+        {
+          "hex": "8a1f1618601ffff",
+          "nearest_farm": 0.007192086105041546
+        },
+        {
+          "hex": "8a1f16186027fff",
+          "nearest_farm": 0.005223429538528862
+        },
+        {
+          "hex": "8a1f1618602ffff",
+          "nearest_farm": 0.005990203214581863
+        },
+        {
+          "hex": "8a1f16186037fff",
+          "nearest_farm": 0.005958402473109365
+        },
+        {
+          "hex": "8a1f16186047fff",
+          "nearest_farm": 0.008508480152830719
+        },
+        {
+          "hex": "8a1f1618604ffff",
+          "nearest_farm": 0.010015383656302291
+        },
+        {
+          "hex": "8a1f16186057fff",
+          "nearest_farm": 0.008231361098587214
+        },
+        {
+          "hex": "8a1f1618605ffff",
+          "nearest_farm": 0.009559433293872755
+        },
+        {
+          "hex": "8a1f16186067fff",
+          "nearest_farm": 0.007477882522704601
+        },
+        {
+          "hex": "8a1f1618606ffff",
+          "nearest_farm": 0.009037702725811853
+        },
+        {
+          "hex": "8a1f16186077fff",
+          "nearest_farm": 0.007135766138296842
+        },
+        {
+          "hex": "8a1f16186087fff",
+          "nearest_farm": 0.004370890910657568
+        },
+        {
+          "hex": "8a1f1618608ffff",
+          "nearest_farm": 0.005326806860695357
+        },
+        {
+          "hex": "8a1f16186097fff",
+          "nearest_farm": 0.003124465805634941
+        },
+        {
+          "hex": "8a1f1618609ffff",
+          "nearest_farm": 0.003840284515087095
+        },
+        {
+          "hex": "8a1f161860a7fff",
+          "nearest_farm": 0.00509651744664984
+        },
+        {
+          "hex": "8a1f161860affff",
+          "nearest_farm": 0.005752612490063172
+        },
+        {
+          "hex": "8a1f161860b7fff",
+          "nearest_farm": 0.0040337778570069364
+        },
+        {
+          "hex": "8a1f161860c7fff",
+          "nearest_farm": 0.008163337970126035
+        },
+        {
+          "hex": "8a1f161860cffff",
+          "nearest_farm": 0.009647271972994937
+        },
+        {
+          "hex": "8a1f161860d7fff",
+          "nearest_farm": 0.006639432403955471
+        },
+        {
+          "hex": "8a1f161860dffff",
+          "nearest_farm": 0.00813796093439752
+        },
+        {
+          "hex": "8a1f161860e7fff",
+          "nearest_farm": 0.00823183192942354
+        },
+        {
+          "hex": "8a1f161860effff",
+          "nearest_farm": 0.009332983498492332
+        },
+        {
+          "hex": "8a1f161860f7fff",
+          "nearest_farm": 0.006829912181652769
+        },
+        {
+          "hex": "8a1f16186107fff",
+          "nearest_farm": 0.004154358983672785
+        },
+        {
+          "hex": "8a1f1618610ffff",
+          "nearest_farm": 0.004155261438210929
+        },
+        {
+          "hex": "8a1f16186117fff",
+          "nearest_farm": 0.005422352612677177
+        },
+        {
+          "hex": "8a1f1618611ffff",
+          "nearest_farm": 0.005012390271491768
+        },
+        {
+          "hex": "8a1f16186127fff",
+          "nearest_farm": 0.0034505669763926906
+        },
+        {
+          "hex": "8a1f1618612ffff",
+          "nearest_farm": 0.0031242950953333307
+        },
+        {
+          "hex": "8a1f16186147fff",
+          "nearest_farm": 0.004978549046048938
+        },
+        {
+          "hex": "8a1f1618614ffff",
+          "nearest_farm": 0.006477358091661239
+        },
+        {
+          "hex": "8a1f16186157fff",
+          "nearest_farm": 0.004869490469147042
+        },
+        {
+          "hex": "8a1f1618615ffff",
+          "nearest_farm": 0.006049468152761483
+        },
+        {
+          "hex": "8a1f16186167fff",
+          "nearest_farm": 0.003935573759777212
+        },
+        {
+          "hex": "8a1f1618616ffff",
+          "nearest_farm": 0.005523267366185529
+        },
+        {
+          "hex": "8a1f16186177fff",
+          "nearest_farm": 0.0037489132078164316
+        },
+        {
+          "hex": "8a1f161861affff",
+          "nearest_farm": 0.006134142105336525
+        },
+        {
+          "hex": "8a1f16186207fff",
+          "nearest_farm": 0.0158202161289064
+        },
+        {
+          "hex": "8a1f1618620ffff",
+          "nearest_farm": 0.017495735175443436
+        },
+        {
+          "hex": "8a1f16186217fff",
+          "nearest_farm": 0.015127954998779577
+        },
+        {
+          "hex": "8a1f1618621ffff",
+          "nearest_farm": 0.016744833616231754
+        },
+        {
+          "hex": "8a1f16186227fff",
+          "nearest_farm": 0.014922533237090542
+        },
+        {
+          "hex": "8a1f1618622ffff",
+          "nearest_farm": 0.016623824397694564
+        },
+        {
+          "hex": "8a1f16186237fff",
+          "nearest_farm": 0.01417380792581536
+        },
+        {
+          "hex": "8a1f16186247fff",
+          "nearest_farm": 0.020075078109703742
+        },
+        {
+          "hex": "8a1f1618624ffff",
+          "nearest_farm": 0.021817349480562832
+        },
+        {
+          "hex": "8a1f16186257fff",
+          "nearest_farm": 0.019192746302284302
+        },
+        {
+          "hex": "8a1f1618625ffff",
+          "nearest_farm": 0.02090601991824278
+        },
+        {
+          "hex": "8a1f16186267fff",
+          "nearest_farm": 0.019273522270683182
+        },
+        {
+          "hex": "8a1f1618626ffff",
+          "nearest_farm": 0.021031045689377244
+        },
+        {
+          "hex": "8a1f16186277fff",
+          "nearest_farm": 0.018342857184978453
+        },
+        {
+          "hex": "8a1f16186287fff",
+          "nearest_farm": 0.014804670488749058
+        },
+        {
+          "hex": "8a1f1618628ffff",
+          "nearest_farm": 0.016538155472481376
+        },
+        {
+          "hex": "8a1f16186297fff",
+          "nearest_farm": 0.013410378777919557
+        },
+        {
+          "hex": "8a1f1618629ffff",
+          "nearest_farm": 0.015161935508925197
+        },
+        {
+          "hex": "8a1f161862a7fff",
+          "nearest_farm": 0.014525320418479825
+        },
+        {
+          "hex": "8a1f161862affff",
+          "nearest_farm": 0.016103611194187708
+        },
+        {
+          "hex": "8a1f161862b7fff",
+          "nearest_farm": 0.013087545150282973
+        },
+        {
+          "hex": "8a1f161862c7fff",
+          "nearest_farm": 0.019316782288462286
+        },
+        {
+          "hex": "8a1f161862cffff",
+          "nearest_farm": 0.020969084989499166
+        },
+        {
+          "hex": "8a1f161862d7fff",
+          "nearest_farm": 0.018283351419652358
+        },
+        {
+          "hex": "8a1f161862dffff",
+          "nearest_farm": 0.020037202223987714
+        },
+        {
+          "hex": "8a1f161862e7fff",
+          "nearest_farm": 0.018394643366459767
+        },
+        {
+          "hex": "8a1f161862effff",
+          "nearest_farm": 0.02006926815498134
+        },
+        {
+          "hex": "8a1f161862f7fff",
+          "nearest_farm": 0.017692165391490135
+        },
+        {
+          "hex": "8a1f16186307fff",
+          "nearest_farm": 0.012349874055141334
+        },
+        {
+          "hex": "8a1f1618630ffff",
+          "nearest_farm": 0.0140569434003165
+        },
+        {
+          "hex": "8a1f16186317fff",
+          "nearest_farm": 0.011604323805950216
+        },
+        {
+          "hex": "8a1f1618631ffff",
+          "nearest_farm": 0.013245816128074578
+        },
+        {
+          "hex": "8a1f16186327fff",
+          "nearest_farm": 0.011493475947245684
+        },
+        {
+          "hex": "8a1f1618632ffff",
+          "nearest_farm": 0.013229744608153718
+        },
+        {
+          "hex": "8a1f16186337fff",
+          "nearest_farm": 0.01067146861282493
+        },
+        {
+          "hex": "8a1f16186347fff",
+          "nearest_farm": 0.016739075469998147
+        },
+        {
+          "hex": "8a1f1618634ffff",
+          "nearest_farm": 0.018505169359316176
+        },
+        {
+          "hex": "8a1f16186357fff",
+          "nearest_farm": 0.015783383502493753
+        },
+        {
+          "hex": "8a1f1618635ffff",
+          "nearest_farm": 0.01752347416768744
+        },
+        {
+          "hex": "8a1f16186367fff",
+          "nearest_farm": 0.015994806567903867
+        },
+        {
+          "hex": "8a1f1618636ffff",
+          "nearest_farm": 0.017774323710944583
+        },
+        {
+          "hex": "8a1f16186377fff",
+          "nearest_farm": 0.014979707816133914
+        },
+        {
+          "hex": "8a1f16186387fff",
+          "nearest_farm": 0.012045855682476084
+        },
+        {
+          "hex": "8a1f1618638ffff",
+          "nearest_farm": 0.01355579089425544
+        },
+        {
+          "hex": "8a1f16186397fff",
+          "nearest_farm": 0.011222172531671367
+        },
+        {
+          "hex": "8a1f1618639ffff",
+          "nearest_farm": 0.012854654137844727
+        },
+        {
+          "hex": "8a1f161863a7fff",
+          "nearest_farm": 0.011020378446502305
+        },
+        {
+          "hex": "8a1f161863affff",
+          "nearest_farm": 0.012567950546143434
+        },
+        {
+          "hex": "8a1f161863b7fff",
+          "nearest_farm": 0.010624706715163119
+        },
+        {
+          "hex": "8a1f16186447fff",
+          "nearest_farm": 0.0011957988838285567
+        },
+        {
+          "hex": "8a1f1618644ffff",
+          "nearest_farm": 0.002069595229086085
+        },
+        {
+          "hex": "8a1f1618645ffff",
+          "nearest_farm": 0.0005549182961053941
+        },
+        {
+          "hex": "8a1f16186467fff",
+          "nearest_farm": 0.0022505824753403006
+        },
+        {
+          "hex": "8a1f1618646ffff",
+          "nearest_farm": 0.002401294493811354
+        },
+        {
+          "hex": "8a1f16186547fff",
+          "nearest_farm": 0.003955586776387105
+        },
+        {
+          "hex": "8a1f1618654ffff",
+          "nearest_farm": 0.0033486443905266484
+        },
+        {
+          "hex": "8a1f1618655ffff",
+          "nearest_farm": 0.0030532750261794304
+        },
+        {
+          "hex": "8a1f16186607fff",
+          "nearest_farm": 0.0076778022425139075
+        },
+        {
+          "hex": "8a1f1618660ffff",
+          "nearest_farm": 0.009471035925850071
+        },
+        {
+          "hex": "8a1f16186617fff",
+          "nearest_farm": 0.006517746072310484
+        },
+        {
+          "hex": "8a1f1618661ffff",
+          "nearest_farm": 0.008303490252684913
+        },
+        {
+          "hex": "8a1f16186627fff",
+          "nearest_farm": 0.0071737355373770245
+        },
+        {
+          "hex": "8a1f1618662ffff",
+          "nearest_farm": 0.008947766188780995
+        },
+        {
+          "hex": "8a1f16186647fff",
+          "nearest_farm": 0.012512949519631493
+        },
+        {
+          "hex": "8a1f1618664ffff",
+          "nearest_farm": 0.014299844293626648
+        },
+        {
+          "hex": "8a1f16186657fff",
+          "nearest_farm": 0.011264518087137897
+        },
+        {
+          "hex": "8a1f1618665ffff",
+          "nearest_farm": 0.013058151962656157
+        },
+        {
+          "hex": "8a1f16186667fff",
+          "nearest_farm": 0.012047632512991397
+        },
+        {
+          "hex": "8a1f1618666ffff",
+          "nearest_farm": 0.013816854574966357
+        },
+        {
+          "hex": "8a1f16186677fff",
+          "nearest_farm": 0.010728448733587992
+        },
+        {
+          "hex": "8a1f16186687fff",
+          "nearest_farm": 0.006432842327834062
+        },
+        {
+          "hex": "8a1f1618668ffff",
+          "nearest_farm": 0.008106518854141202
+        },
+        {
+          "hex": "8a1f16186697fff",
+          "nearest_farm": 0.00587937823115262
+        },
+        {
+          "hex": "8a1f1618669ffff",
+          "nearest_farm": 0.007390328182205123
+        },
+        {
+          "hex": "8a1f161866a7fff",
+          "nearest_farm": 0.005537092460736825
+        },
+        {
+          "hex": "8a1f161866affff",
+          "nearest_farm": 0.00726922775910514
+        },
+        {
+          "hex": "8a1f161866b7fff",
+          "nearest_farm": 0.004845983681412144
+        },
+        {
+          "hex": "8a1f161866cffff",
+          "nearest_farm": 0.01257013050773018
+        },
+        {
+          "hex": "8a1f161866e7fff",
+          "nearest_farm": 0.01009215684952153
+        },
+        {
+          "hex": "8a1f161866effff",
+          "nearest_farm": 0.011882432373504318
+        },
+        {
+          "hex": "8a1f161866f7fff",
+          "nearest_farm": 0.009025545162366724
+        },
+        {
+          "hex": "8a1f16186707fff",
+          "nearest_farm": 0.0051456969319371255
+        },
+        {
+          "hex": "8a1f1618670ffff",
+          "nearest_farm": 0.006818312006721626
+        },
+        {
+          "hex": "8a1f16186717fff",
+          "nearest_farm": 0.0036841526470034313
+        },
+        {
+          "hex": "8a1f1618671ffff",
+          "nearest_farm": 0.005412887475320804
+        },
+        {
+          "hex": "8a1f16186727fff",
+          "nearest_farm": 0.0051156682800374805
+        },
+        {
+          "hex": "8a1f1618672ffff",
+          "nearest_farm": 0.00663545505982837
+        },
+        {
+          "hex": "8a1f16186737fff",
+          "nearest_farm": 0.0035921940487727583
+        },
+        {
+          "hex": "8a1f16186747fff",
+          "nearest_farm": 0.009952840315321296
+        },
+        {
+          "hex": "8a1f1618674ffff",
+          "nearest_farm": 0.01167175601691247
+        },
+        {
+          "hex": "8a1f16186757fff",
+          "nearest_farm": 0.008540348355912194
+        },
+        {
+          "hex": "8a1f1618675ffff",
+          "nearest_farm": 0.01028702376641636
+        },
+        {
+          "hex": "8a1f16186767fff",
+          "nearest_farm": 0.009736942781435335
+        },
+        {
+          "hex": "8a1f1618676ffff",
+          "nearest_farm": 0.0113941717167599
+        },
+        {
+          "hex": "8a1f16186777fff",
+          "nearest_farm": 0.0082659263068501
+        },
+        {
+          "hex": "8a1f16186807fff",
+          "nearest_farm": 0.0022068586010957347
+        },
+        {
+          "hex": "8a1f1618680ffff",
+          "nearest_farm": 0.000743377016277815
+        },
+        {
+          "hex": "8a1f16186817fff",
+          "nearest_farm": 0.0033056372908393905
+        },
+        {
+          "hex": "8a1f1618681ffff",
+          "nearest_farm": 0.0015243967083542946
+        },
+        {
+          "hex": "8a1f16186827fff",
+          "nearest_farm": 0.0031510843191717244
+        },
+        {
+          "hex": "8a1f1618682ffff",
+          "nearest_farm": 0.0018598261550018282
+        },
+        {
+          "hex": "8a1f16186837fff",
+          "nearest_farm": 0.003953035851877639
+        },
+        {
+          "hex": "8a1f16186847fff",
+          "nearest_farm": 0.003136078169756864
+        },
+        {
+          "hex": "8a1f1618684ffff",
+          "nearest_farm": 0.00476253002559881
+        },
+        {
+          "hex": "8a1f16186857fff",
+          "nearest_farm": 0.0016351736825098897
+        },
+        {
+          "hex": "8a1f1618685ffff",
+          "nearest_farm": 0.003351704433664325
+        },
+        {
+          "hex": "8a1f16186867fff",
+          "nearest_farm": 0.0033088594436661675
+        },
+        {
+          "hex": "8a1f1618686ffff",
+          "nearest_farm": 0.0046521725318167334
+        },
+        {
+          "hex": "8a1f16186877fff",
+          "nearest_farm": 0.0018513388750453776
+        },
+        {
+          "hex": "8a1f16186887fff",
+          "nearest_farm": 0.004450089518172893
+        },
+        {
+          "hex": "8a1f1618688ffff",
+          "nearest_farm": 0.0030111664435897236
+        },
+        {
+          "hex": "8a1f16186897fff",
+          "nearest_farm": 0.005959125666000477
+        },
+        {
+          "hex": "8a1f1618689ffff",
+          "nearest_farm": 0.004526563938724138
+        },
+        {
+          "hex": "8a1f161868a7fff",
+          "nearest_farm": 0.004650781183369687
+        },
+        {
+          "hex": "8a1f161868affff",
+          "nearest_farm": 0.0029564770729451793
+        },
+        {
+          "hex": "8a1f161868b7fff",
+          "nearest_farm": 0.006080919445003929
+        },
+        {
+          "hex": "8a1f161868c7fff",
+          "nearest_farm": 0.0015092737884496714
+        },
+        {
+          "hex": "8a1f161868cffff",
+          "nearest_farm": 0.002950315406747147
+        },
+        {
+          "hex": "8a1f161868d7fff",
+          "nearest_farm": 0.0021838516991214583
+        },
+        {
+          "hex": "8a1f161868dffff",
+          "nearest_farm": 0.002628630519822109
+        },
+        {
+          "hex": "8a1f161868e7fff",
+          "nearest_farm": 0.00039862582591794715
+        },
+        {
+          "hex": "8a1f161868effff",
+          "nearest_farm": 0.002105406510227722
+        },
+        {
+          "hex": "8a1f161868f7fff",
+          "nearest_farm": 0.0015133037560684463
+        },
+        {
+          "hex": "8a1f16186907fff",
+          "nearest_farm": 0.005706401961627296
+        },
+        {
+          "hex": "8a1f1618690ffff",
+          "nearest_farm": 0.004183423631221112
+        },
+        {
+          "hex": "8a1f16186917fff",
+          "nearest_farm": 0.006495086329365971
+        },
+        {
+          "hex": "8a1f1618691ffff",
+          "nearest_farm": 0.004778958649900433
+        },
+        {
+          "hex": "8a1f16186927fff",
+          "nearest_farm": 0.0066932914635549285
+        },
+        {
+          "hex": "8a1f1618692ffff",
+          "nearest_farm": 0.00525216650667085
+        },
+        {
+          "hex": "8a1f16186937fff",
+          "nearest_farm": 0.007352801025997994
+        },
+        {
+          "hex": "8a1f1618694ffff",
+          "nearest_farm": 0.003817661802812359
+        },
+        {
+          "hex": "8a1f16186957fff",
+          "nearest_farm": 0.0029795737629359988
+        },
+        {
+          "hex": "8a1f16186967fff",
+          "nearest_farm": 0.004556680323244947
+        },
+        {
+          "hex": "8a1f16186977fff",
+          "nearest_farm": 0.004099909057795599
+        },
+        {
+          "hex": "8a1f16186987fff",
+          "nearest_farm": 0.006888342633093731
+        },
+        {
+          "hex": "8a1f1618698ffff",
+          "nearest_farm": 0.005095989916486912
+        },
+        {
+          "hex": "8a1f16186997fff",
+          "nearest_farm": 0.008168366831117466
+        },
+        {
+          "hex": "8a1f1618699ffff",
+          "nearest_farm": 0.006399763119641072
+        },
+        {
+          "hex": "8a1f161869a7fff",
+          "nearest_farm": 0.007513614009665772
+        },
+        {
+          "hex": "8a1f161869affff",
+          "nearest_farm": 0.005728984640696661
+        },
+        {
+          "hex": "8a1f161869b7fff",
+          "nearest_farm": 0.008681448253499768
+        },
+        {
+          "hex": "8a1f16186a07fff",
+          "nearest_farm": 0.01048173839295985
+        },
+        {
+          "hex": "8a1f16186a0ffff",
+          "nearest_farm": 0.012272893008688007
+        },
+        {
+          "hex": "8a1f16186a17fff",
+          "nearest_farm": 0.009269205964726232
+        },
+        {
+          "hex": "8a1f16186a1ffff",
+          "nearest_farm": 0.0110629020055597
+        },
+        {
+          "hex": "8a1f16186a27fff",
+          "nearest_farm": 0.00999291402839737
+        },
+        {
+          "hex": "8a1f16186a2ffff",
+          "nearest_farm": 0.011767038989734756
+        },
+        {
+          "hex": "8a1f16186a37fff",
+          "nearest_farm": 0.008691919061565688
+        },
+        {
+          "hex": "8a1f16186a47fff",
+          "nearest_farm": 0.01532947595768112
+        },
+        {
+          "hex": "8a1f16186a4ffff",
+          "nearest_farm": 0.017114843768884943
+        },
+        {
+          "hex": "8a1f16186a57fff",
+          "nearest_farm": 0.014064877990578623
+        },
+        {
+          "hex": "8a1f16186a5ffff",
+          "nearest_farm": 0.015857416456680526
+        },
+        {
+          "hex": "8a1f16186a67fff",
+          "nearest_farm": 0.014867423939342917
+        },
+        {
+          "hex": "8a1f16186a6ffff",
+          "nearest_farm": 0.016637709211952116
+        },
+        {
+          "hex": "8a1f16186a77fff",
+          "nearest_farm": 0.013546512163883013
+        },
+        {
+          "hex": "8a1f16186a87fff",
+          "nearest_farm": 0.008936366743356287
+        },
+        {
+          "hex": "8a1f16186a8ffff",
+          "nearest_farm": 0.01068612983319479
+        },
+        {
+          "hex": "8a1f16186a97fff",
+          "nearest_farm": 0.008097230936625463
+        },
+        {
+          "hex": "8a1f16186a9ffff",
+          "nearest_farm": 0.009778192083035868
+        },
+        {
+          "hex": "8a1f16186aa7fff",
+          "nearest_farm": 0.008161923684911898
+        },
+        {
+          "hex": "8a1f16186aaffff",
+          "nearest_farm": 0.009939791696291351
+        },
+        {
+          "hex": "8a1f16186ab7fff",
+          "nearest_farm": 0.007208541463756522
+        },
+        {
+          "hex": "8a1f16186ac7fff",
+          "nearest_farm": 0.013508613311883334
+        },
+        {
+          "hex": "8a1f16186acffff",
+          "nearest_farm": 0.015296523819255513
+        },
+        {
+          "hex": "8a1f16186ad7fff",
+          "nearest_farm": 0.012448589378530118
+        },
+        {
+          "hex": "8a1f16186adffff",
+          "nearest_farm": 0.014219030114635794
+        },
+        {
+          "hex": "8a1f16186ae7fff",
+          "nearest_farm": 0.012856788878959665
+        },
+        {
+          "hex": "8a1f16186aeffff",
+          "nearest_farm": 0.014650801493571406
+        },
+        {
+          "hex": "8a1f16186af7fff",
+          "nearest_farm": 0.011722682649956401
+        },
+        {
+          "hex": "8a1f16186b07fff",
+          "nearest_farm": 0.00789616278054692
+        },
+        {
+          "hex": "8a1f16186b0ffff",
+          "nearest_farm": 0.00961052544443682
+        },
+        {
+          "hex": "8a1f16186b17fff",
+          "nearest_farm": 0.006478249795287387
+        },
+        {
+          "hex": "8a1f16186b1ffff",
+          "nearest_farm": 0.008227588811273216
+        },
+        {
+          "hex": "8a1f16186b27fff",
+          "nearest_farm": 0.00771478382206224
+        },
+        {
+          "hex": "8a1f16186b2ffff",
+          "nearest_farm": 0.009347639850241809
+        },
+        {
+          "hex": "8a1f16186b37fff",
+          "nearest_farm": 0.006227059679505305
+        },
+        {
+          "hex": "8a1f16186b47fff",
+          "nearest_farm": 0.012744381606505987
+        },
+        {
+          "hex": "8a1f16186b4ffff",
+          "nearest_farm": 0.014477567697770253
+        },
+        {
+          "hex": "8a1f16186b57fff",
+          "nearest_farm": 0.011349663300376912
+        },
+        {
+          "hex": "8a1f16186b5ffff",
+          "nearest_farm": 0.013103721095646467
+        },
+        {
+          "hex": "8a1f16186b67fff",
+          "nearest_farm": 0.01247570379385303
+        },
+        {
+          "hex": "8a1f16186b6ffff",
+          "nearest_farm": 0.01416586651402474
+        },
+        {
+          "hex": "8a1f16186b77fff",
+          "nearest_farm": 0.011030810466600418
+        },
+        {
+          "hex": "8a1f16186b87fff",
+          "nearest_farm": 0.005683057523406811
+        },
+        {
+          "hex": "8a1f16186b8ffff",
+          "nearest_farm": 0.00747582830349864
+        },
+        {
+          "hex": "8a1f16186b97fff",
+          "nearest_farm": 0.004644307924093658
+        },
+        {
+          "hex": "8a1f16186b9ffff",
+          "nearest_farm": 0.006393258914951677
+        },
+        {
+          "hex": "8a1f16186ba7fff",
+          "nearest_farm": 0.005121830262383541
+        },
+        {
+          "hex": "8a1f16186baffff",
+          "nearest_farm": 0.006904462885790405
+        },
+        {
+          "hex": "8a1f16186bb7fff",
+          "nearest_farm": 0.003891713550091381
+        },
+        {
+          "hex": "8a1f16186c67fff",
+          "nearest_farm": 0.007474234135576658
+        },
+        {
+          "hex": "8a1f16186c6ffff",
+          "nearest_farm": 0.006046307530656618
+        },
+        {
+          "hex": "8a1f16186d07fff",
+          "nearest_farm": 0.011237384850519998
+        },
+        {
+          "hex": "8a1f16186d27fff",
+          "nearest_farm": 0.0106383546493955
+        },
+        {
+          "hex": "8a1f16186d2ffff",
+          "nearest_farm": 0.012430883164140021
+        },
+        {
+          "hex": "8a1f16186d47fff",
+          "nearest_farm": 0.009212354340967083
+        },
+        {
+          "hex": "8a1f16186d4ffff",
+          "nearest_farm": 0.0075478777291643805
+        },
+        {
+          "hex": "8a1f16186d5ffff",
+          "nearest_farm": 0.009033724019087211
+        },
+        {
+          "hex": "8a1f16186d67fff",
+          "nearest_farm": 0.00952049870818153
+        },
+        {
+          "hex": "8a1f16186d6ffff",
+          "nearest_farm": 0.007783946941420708
+        },
+        {
+          "hex": "8a1f16186d77fff",
+          "nearest_farm": 0.01091797025122746
+        },
+        {
+          "hex": "8a1f16194a47fff",
+          "nearest_farm": 0.02214924051184151
+        },
+        {
+          "hex": "8a1f16194a4ffff",
+          "nearest_farm": 0.021726580377574137
+        },
+        {
+          "hex": "8a1f16194a5ffff",
+          "nearest_farm": 0.022910991828470922
+        },
+        {
+          "hex": "8a1f16194a67fff",
+          "nearest_farm": 0.021419123335262177
+        },
+        {
+          "hex": "8a1f16194a6ffff",
+          "nearest_farm": 0.020930395641532287
+        },
+        {
+          "hex": "8a1f16194a77fff",
+          "nearest_farm": 0.0227060927009561
+        },
+        {
+          "hex": "8a1f16194b27fff",
+          "nearest_farm": 0.02419125558580253
+        },
+        {
+          "hex": "8a1f16194b47fff",
+          "nearest_farm": 0.02141884846175794
+        },
+        {
+          "hex": "8a1f16194b4ffff",
+          "nearest_farm": 0.020723982233836053
+        },
+        {
+          "hex": "8a1f16194b5ffff",
+          "nearest_farm": 0.022043355897722813
+        },
+        {
+          "hex": "8a1f16194b6ffff",
+          "nearest_farm": 0.020067450417312973
+        },
+        {
+          "hex": "8a1f1619504ffff",
+          "nearest_farm": 0.008928994515657212
+        },
+        {
+          "hex": "8a1f1619505ffff",
+          "nearest_farm": 0.009976474681932287
+        },
+        {
+          "hex": "8a1f1619510ffff",
+          "nearest_farm": 0.011308777439246583
+        },
+        {
+          "hex": "8a1f1619512ffff",
+          "nearest_farm": 0.01111974628874281
+        },
+        {
+          "hex": "8a1f16195147fff",
+          "nearest_farm": 0.008643715886505903
+        },
+        {
+          "hex": "8a1f16195157fff",
+          "nearest_farm": 0.010117136340412659
+        },
+        {
+          "hex": "8a1f16195167fff",
+          "nearest_farm": 0.008287552337101753
+        },
+        {
+          "hex": "8a1f16195177fff",
+          "nearest_farm": 0.009796139148315152
+        },
+        {
+          "hex": "8a1f16195227fff",
+          "nearest_farm": 0.010300420339738183
+        },
+        {
+          "hex": "8a1f16195237fff",
+          "nearest_farm": 0.010632726724392992
+        },
+        {
+          "hex": "8a1f16195307fff",
+          "nearest_farm": 0.00843840168414759
+        },
+        {
+          "hex": "8a1f1619530ffff",
+          "nearest_farm": 0.009180398774672208
+        },
+        {
+          "hex": "8a1f16195317fff",
+          "nearest_farm": 0.009059974870149232
+        },
+        {
+          "hex": "8a1f1619531ffff",
+          "nearest_farm": 0.009532768103360477
+        },
+        {
+          "hex": "8a1f16195327fff",
+          "nearest_farm": 0.007352120020126158
+        },
+        {
+          "hex": "8a1f1619532ffff",
+          "nearest_farm": 0.008060697487207197
+        },
+        {
+          "hex": "8a1f16195337fff",
+          "nearest_farm": 0.00803542623660052
+        },
+        {
+          "hex": "8a1f16195357fff",
+          "nearest_farm": 0.010187615900398385
+        },
+        {
+          "hex": "8a1f16195367fff",
+          "nearest_farm": 0.009221015414444124
+        },
+        {
+          "hex": "8a1f16195377fff",
+          "nearest_farm": 0.009073632055700581
+        },
+        {
+          "hex": "8a1f16195387fff",
+          "nearest_farm": 0.010862583628416692
+        },
+        {
+          "hex": "8a1f161953a7fff",
+          "nearest_farm": 0.009879482905959538
+        },
+        {
+          "hex": "8a1f161953affff",
+          "nearest_farm": 0.010105068547291214
+        },
+        {
+          "hex": "8a1f161953b7fff",
+          "nearest_farm": 0.010852166144839647
+        },
+        {
+          "hex": "8a1f16195437fff",
+          "nearest_farm": 0.02366565458278187
+        },
+        {
+          "hex": "8a1f16195517fff",
+          "nearest_farm": 0.024831794466218825
+        },
+        {
+          "hex": "8a1f1619551ffff",
+          "nearest_farm": 0.023460870109920585
+        },
+        {
+          "hex": "8a1f16195537fff",
+          "nearest_farm": 0.024731260797017835
+        },
+        {
+          "hex": "8a1f161958dffff",
+          "nearest_farm": 0.009596166223706253
+        },
+        {
+          "hex": "8a1f16195a4ffff",
+          "nearest_farm": 0.008017157123649537
+        },
+        {
+          "hex": "8a1f16195a5ffff",
+          "nearest_farm": 0.007644945858313157
+        },
+        {
+          "hex": "8a1f16195a6ffff",
+          "nearest_farm": 0.006940039410246958
+        },
+        {
+          "hex": "8a1f16195acffff",
+          "nearest_farm": 0.008151467349763129
+        },
+        {
+          "hex": "8a1f16195aeffff",
+          "nearest_farm": 0.007097851025660783
+        },
+        {
+          "hex": "8a1f16195c07fff",
+          "nearest_farm": 0.021740087841851496
+        },
+        {
+          "hex": "8a1f16195c0ffff",
+          "nearest_farm": 0.02015868848864157
+        },
+        {
+          "hex": "8a1f16195c17fff",
+          "nearest_farm": 0.023202063670200977
+        },
+        {
+          "hex": "8a1f16195c1ffff",
+          "nearest_farm": 0.021664385421203428
+        },
+        {
+          "hex": "8a1f16195c2ffff",
+          "nearest_farm": 0.02024895691257537
+        },
+        {
+          "hex": "8a1f16195c47fff",
+          "nearest_farm": 0.01710249278011332
+        },
+        {
+          "hex": "8a1f16195c57fff",
+          "nearest_farm": 0.018615763333089758
+        },
+        {
+          "hex": "8a1f16195c5ffff",
+          "nearest_farm": 0.017121721157930016
+        },
+        {
+          "hex": "8a1f16195c77fff",
+          "nearest_farm": 0.01865586590548898
+        },
+        {
+          "hex": "8a1f16195c97fff",
+          "nearest_farm": 0.02606874946556305
+        },
+        {
+          "hex": "8a1f16195c9ffff",
+          "nearest_farm": 0.0246813204251127
+        },
+        {
+          "hex": "8a1f16195caffff",
+          "nearest_farm": 0.023172391515665795
+        },
+        {
+          "hex": "8a1f16195cc7fff",
+          "nearest_farm": 0.020164859332140395
+        },
+        {
+          "hex": "8a1f16195ccffff",
+          "nearest_farm": 0.018737691297253986
+        },
+        {
+          "hex": "8a1f16195cd7fff",
+          "nearest_farm": 0.021686820037236838
+        },
+        {
+          "hex": "8a1f16195cdffff",
+          "nearest_farm": 0.02026124541516496
+        },
+        {
+          "hex": "8a1f16195ce7fff",
+          "nearest_farm": 0.02013056867904801
+        },
+        {
+          "hex": "8a1f16195ceffff",
+          "nearest_farm": 0.01864313637170936
+        },
+        {
+          "hex": "8a1f16195cf7fff",
+          "nearest_farm": 0.02164658138086927
+        },
+        {
+          "hex": "8a1f16195d07fff",
+          "nearest_farm": 0.02039576481198721
+        },
+        {
+          "hex": "8a1f16195d17fff",
+          "nearest_farm": 0.021446051202316633
+        },
+        {
+          "hex": "8a1f16195d1ffff",
+          "nearest_farm": 0.0213132694462162
+        },
+        {
+          "hex": "8a1f16195d27fff",
+          "nearest_farm": 0.019499577017198764
+        },
+        {
+          "hex": "8a1f16195d37fff",
+          "nearest_farm": 0.02058682924835325
+        },
+        {
+          "hex": "8a1f16195d47fff",
+          "nearest_farm": 0.018936054061004286
+        },
+        {
+          "hex": "8a1f16195d4ffff",
+          "nearest_farm": 0.017283589013915635
+        },
+        {
+          "hex": "8a1f16195d5ffff",
+          "nearest_farm": 0.018763009455973558
+        },
+        {
+          "hex": "8a1f16195da7fff",
+          "nearest_farm": 0.022550427443573873
+        },
+        {
+          "hex": "8a1f16195daffff",
+          "nearest_farm": 0.02232853118581793
+        },
+        {
+          "hex": "8a1f16195db7fff",
+          "nearest_farm": 0.023701328927481356
+        },
+        {
+          "hex": "8a1f161a2597fff",
+          "nearest_farm": 0.017761026789032654
+        },
+        {
+          "hex": "8a1f161a2697fff",
+          "nearest_farm": 0.017535782509463426
+        },
+        {
+          "hex": "8a1f161b0007fff",
+          "nearest_farm": 0.020731071421639956
+        },
+        {
+          "hex": "8a1f161b000ffff",
+          "nearest_farm": 0.01955294737834963
+        },
+        {
+          "hex": "8a1f161b0017fff",
+          "nearest_farm": 0.02223850766353549
+        },
+        {
+          "hex": "8a1f161b001ffff",
+          "nearest_farm": 0.021043033238819092
+        },
+        {
+          "hex": "8a1f161b0027fff",
+          "nearest_farm": 0.020475806166149108
+        },
+        {
+          "hex": "8a1f161b002ffff",
+          "nearest_farm": 0.01922615594773174
+        },
+        {
+          "hex": "8a1f161b0037fff",
+          "nearest_farm": 0.02199257472606013
+        },
+        {
+          "hex": "8a1f161b0047fff",
+          "nearest_farm": 0.01702140205786312
+        },
+        {
+          "hex": "8a1f161b004ffff",
+          "nearest_farm": 0.016106677030429256
+        },
+        {
+          "hex": "8a1f161b0057fff",
+          "nearest_farm": 0.01847416514272246
+        },
+        {
+          "hex": "8a1f161b005ffff",
+          "nearest_farm": 0.017513096523153436
+        },
+        {
+          "hex": "8a1f161b0067fff",
+          "nearest_farm": 0.016590984919958605
+        },
+        {
+          "hex": "8a1f161b006ffff",
+          "nearest_farm": 0.015582166668270891
+        },
+        {
+          "hex": "8a1f161b0077fff",
+          "nearest_farm": 0.018068430659628883
+        },
+        {
+          "hex": "8a1f161b0087fff",
+          "nearest_farm": 0.02403574692857554
+        },
+        {
+          "hex": "8a1f161b008ffff",
+          "nearest_farm": 0.02288770625996119
+        },
+        {
+          "hex": "8a1f161b0097fff",
+          "nearest_farm": 0.025536896106720757
+        },
+        {
+          "hex": "8a1f161b009ffff",
+          "nearest_farm": 0.024371730325913506
+        },
+        {
+          "hex": "8a1f161b00a7fff",
+          "nearest_farm": 0.02374797987656179
+        },
+        {
+          "hex": "8a1f161b00affff",
+          "nearest_farm": 0.02253757861618661
+        },
+        {
+          "hex": "8a1f161b00b7fff",
+          "nearest_farm": 0.02525911856946118
+        },
+        {
+          "hex": "8a1f161b00c7fff",
+          "nearest_farm": 0.020376526070340992
+        },
+        {
+          "hex": "8a1f161b00cffff",
+          "nearest_farm": 0.019454757098262263
+        },
+        {
+          "hex": "8a1f161b00d7fff",
+          "nearest_farm": 0.021826889865280447
+        },
+        {
+          "hex": "8a1f161b00dffff",
+          "nearest_farm": 0.020866608455094974
+        },
+        {
+          "hex": "8a1f161b00e7fff",
+          "nearest_farm": 0.01993749333360507
+        },
+        {
+          "hex": "8a1f161b00effff",
+          "nearest_farm": 0.018937648973927915
+        },
+        {
+          "hex": "8a1f161b00f7fff",
+          "nearest_farm": 0.021409215057593065
+        },
+        {
+          "hex": "8a1f161b0107fff",
+          "nearest_farm": 0.021666963923323405
+        },
+        {
+          "hex": "8a1f161b010ffff",
+          "nearest_farm": 0.020279376742524162
+        },
+        {
+          "hex": "8a1f161b0117fff",
+          "nearest_farm": 0.023190412162292787
+        },
+        {
+          "hex": "8a1f161b011ffff",
+          "nearest_farm": 0.021801576443084975
+        },
+        {
+          "hex": "8a1f161b0127fff",
+          "nearest_farm": 0.021589790166239325
+        },
+        {
+          "hex": "8a1f161b012ffff",
+          "nearest_farm": 0.020143502590323638
+        },
+        {
+          "hex": "8a1f161b0137fff",
+          "nearest_farm": 0.023110560265208174
+        },
+        {
+          "hex": "8a1f161b0147fff",
+          "nearest_farm": 0.017445751502952418
+        },
+        {
+          "hex": "8a1f161b014ffff",
+          "nearest_farm": 0.01622671972987353
+        },
+        {
+          "hex": "8a1f161b0157fff",
+          "nearest_farm": 0.018960103639999816
+        },
+        {
+          "hex": "8a1f161b015ffff",
+          "nearest_farm": 0.017724409738300063
+        },
+        {
+          "hex": "8a1f161b0167fff",
+          "nearest_farm": 0.017235624353951266
+        },
+        {
+          "hex": "8a1f161b016ffff",
+          "nearest_farm": 0.015933141916129583
+        },
+        {
+          "hex": "8a1f161b0177fff",
+          "nearest_farm": 0.018757373198205807
+        },
+        {
+          "hex": "8a1f161b0187fff",
+          "nearest_farm": 0.024846401847448723
+        },
+        {
+          "hex": "8a1f161b018ffff",
+          "nearest_farm": 0.023510198171629762
+        },
+        {
+          "hex": "8a1f161b0197fff",
+          "nearest_farm": 0.026368969761841086
+        },
+        {
+          "hex": "8a1f161b019ffff",
+          "nearest_farm": 0.025028516463762453
+        },
+        {
+          "hex": "8a1f161b01a7fff",
+          "nearest_farm": 0.02471384514108105
+        },
+        {
+          "hex": "8a1f161b01affff",
+          "nearest_farm": 0.023323929033374713
+        },
+        {
+          "hex": "8a1f161b01b7fff",
+          "nearest_farm": 0.026237261196880093
+        },
+        {
+          "hex": "8a1f161b0207fff",
+          "nearest_farm": 0.015255623583271267
+        },
+        {
+          "hex": "8a1f161b020ffff",
+          "nearest_farm": 0.013966992102299366
+        },
+        {
+          "hex": "8a1f161b0217fff",
+          "nearest_farm": 0.016356231106920645
+        },
+        {
+          "hex": "8a1f161b021ffff",
+          "nearest_farm": 0.014868882172886082
+        },
+        {
+          "hex": "8a1f161b0227fff",
+          "nearest_farm": 0.01439232874597609
+        },
+        {
+          "hex": "8a1f161b022ffff",
+          "nearest_farm": 0.01423325063119414
+        },
+        {
+          "hex": "8a1f161b0237fff",
+          "nearest_farm": 0.015542580807357856
+        },
+        {
+          "hex": "8a1f161b0247fff",
+          "nearest_farm": 0.011553928539135118
+        },
+        {
+          "hex": "8a1f161b024ffff",
+          "nearest_farm": 0.009985532093191024
+        },
+        {
+          "hex": "8a1f161b0257fff",
+          "nearest_farm": 0.012270889526122795
+        },
+        {
+          "hex": "8a1f161b025ffff",
+          "nearest_farm": 0.010607022194441772
+        },
+        {
+          "hex": "8a1f161b0267fff",
+          "nearest_farm": 0.012529564572063138
+        },
+        {
+          "hex": "8a1f161b026ffff",
+          "nearest_farm": 0.011002475361777977
+        },
+        {
+          "hex": "8a1f161b0277fff",
+          "nearest_farm": 0.013179993800404497
+        },
+        {
+          "hex": "8a1f161b0287fff",
+          "nearest_farm": 0.016941747202615667
+        },
+        {
+          "hex": "8a1f161b028ffff",
+          "nearest_farm": 0.015154961058893393
+        },
+        {
+          "hex": "8a1f161b0297fff",
+          "nearest_farm": 0.018081888657656232
+        },
+        {
+          "hex": "8a1f161b029ffff",
+          "nearest_farm": 0.016288729250407436
+        },
+        {
+          "hex": "8a1f161b02a7fff",
+          "nearest_farm": 0.017520329108789996
+        },
+        {
+          "hex": "8a1f161b02affff",
+          "nearest_farm": 0.015866076261391325
+        },
+        {
+          "hex": "8a1f161b02b7fff",
+          "nearest_farm": 0.018729875697877384
+        },
+        {
+          "hex": "8a1f161b02c7fff",
+          "nearest_farm": 0.012330165703902184
+        },
+        {
+          "hex": "8a1f161b02cffff",
+          "nearest_farm": 0.01057531290687812
+        },
+        {
+          "hex": "8a1f161b02d7fff",
+          "nearest_farm": 0.013370060982553895
+        },
+        {
+          "hex": "8a1f161b02dffff",
+          "nearest_farm": 0.011587924919453865
+        },
+        {
+          "hex": "8a1f161b02e7fff",
+          "nearest_farm": 0.013126257371824717
+        },
+        {
+          "hex": "8a1f161b02effff",
+          "nearest_farm": 0.011399548548283171
+        },
+        {
+          "hex": "8a1f161b02f7fff",
+          "nearest_farm": 0.014094848224388461
+        },
+        {
+          "hex": "8a1f161b0307fff",
+          "nearest_farm": 0.014042861414303328
+        },
+        {
+          "hex": "8a1f161b030ffff",
+          "nearest_farm": 0.013566766507703443
+        },
+        {
+          "hex": "8a1f161b0317fff",
+          "nearest_farm": 0.015347934232249102
+        },
+        {
+          "hex": "8a1f161b031ffff",
+          "nearest_farm": 0.014769238183826644
+        },
+        {
+          "hex": "8a1f161b0327fff",
+          "nearest_farm": 0.01337110407619445
+        },
+        {
+          "hex": "8a1f161b032ffff",
+          "nearest_farm": 0.012786244823428466
+        },
+        {
+          "hex": "8a1f161b0337fff",
+          "nearest_farm": 0.014723595377203856
+        },
+        {
+          "hex": "8a1f161b0347fff",
+          "nearest_farm": 0.01233712533089226
+        },
+        {
+          "hex": "8a1f161b034ffff",
+          "nearest_farm": 0.012498797106075765
+        },
+        {
+          "hex": "8a1f161b0357fff",
+          "nearest_farm": 0.013317281963401649
+        },
+        {
+          "hex": "8a1f161b035ffff",
+          "nearest_farm": 0.013307165012074998
+        },
+        {
+          "hex": "8a1f161b0367fff",
+          "nearest_farm": 0.011394798043932671
+        },
+        {
+          "hex": "8a1f161b036ffff",
+          "nearest_farm": 0.011476207611903832
+        },
+        {
+          "hex": "8a1f161b0377fff",
+          "nearest_farm": 0.012434927416387886
+        },
+        {
+          "hex": "8a1f161b0387fff",
+          "nearest_farm": 0.017326468301079583
+        },
+        {
+          "hex": "8a1f161b038ffff",
+          "nearest_farm": 0.01675254745918379
+        },
+        {
+          "hex": "8a1f161b0397fff",
+          "nearest_farm": 0.018660356760894965
+        },
+        {
+          "hex": "8a1f161b039ffff",
+          "nearest_farm": 0.018010191132172525
+        },
+        {
+          "hex": "8a1f161b03a7fff",
+          "nearest_farm": 0.016690093330647606
+        },
+        {
+          "hex": "8a1f161b03affff",
+          "nearest_farm": 0.01602644446621054
+        },
+        {
+          "hex": "8a1f161b03b7fff",
+          "nearest_farm": 0.018061066427310906
+        },
+        {
+          "hex": "8a1f161b0407fff",
+          "nearest_farm": 0.03131543713784743
+        },
+        {
+          "hex": "8a1f161b040ffff",
+          "nearest_farm": 0.030053720296362
+        },
+        {
+          "hex": "8a1f161b0417fff",
+          "nearest_farm": 0.03283162672036106
+        },
+        {
+          "hex": "8a1f161b041ffff",
+          "nearest_farm": 0.031562711801431796
+        },
+        {
+          "hex": "8a1f161b0427fff",
+          "nearest_farm": 0.031106629653687594
+        },
+        {
+          "hex": "8a1f161b042ffff",
+          "nearest_farm": 0.02979995901423649
+        },
+        {
+          "hex": "8a1f161b0437fff",
+          "nearest_farm": 0.032627012468624005
+        },
+        {
+          "hex": "8a1f161b0447fff",
+          "nearest_farm": 0.027352755126724047
+        },
+        {
+          "hex": "8a1f161b044ffff",
+          "nearest_farm": 0.026227733721307777
+        },
+        {
+          "hex": "8a1f161b0457fff",
+          "nearest_farm": 0.02884840710210882
+        },
+        {
+          "hex": "8a1f161b045ffff",
+          "nearest_farm": 0.02770686227755396
+        },
+        {
+          "hex": "8a1f161b0467fff",
+          "nearest_farm": 0.027040525516745156
+        },
+        {
+          "hex": "8a1f161b046ffff",
+          "nearest_farm": 0.025860330360888535
+        },
+        {
+          "hex": "8a1f161b0477fff",
+          "nearest_farm": 0.02854623926335075
+        },
+        {
+          "hex": "8a1f161b0487fff",
+          "nearest_farm": 0.03458442207027146
+        },
+        {
+          "hex": "8a1f161b048ffff",
+          "nearest_farm": 0.03335034601677933
+        },
+        {
+          "hex": "8a1f161b049ffff",
+          "nearest_farm": 0.03485490069818241
+        },
+        {
+          "hex": "8a1f161b04a7fff",
+          "nearest_farm": 0.034348430247996255
+        },
+        {
+          "hex": "8a1f161b04affff",
+          "nearest_farm": 0.03307300360171846
+        },
+        {
+          "hex": "8a1f161b04c7fff",
+          "nearest_farm": 0.030678088492323327
+        },
+        {
+          "hex": "8a1f161b04cffff",
+          "nearest_farm": 0.029571236859147046
+        },
+        {
+          "hex": "8a1f161b04d7fff",
+          "nearest_farm": 0.032168981260986614
+        },
+        {
+          "hex": "8a1f161b04dffff",
+          "nearest_farm": 0.031046348027866877
+        },
+        {
+          "hex": "8a1f161b04e7fff",
+          "nearest_farm": 0.030346805393829387
+        },
+        {
+          "hex": "8a1f161b04effff",
+          "nearest_farm": 0.029190534857858143
+        },
+        {
+          "hex": "8a1f161b04f7fff",
+          "nearest_farm": 0.03184755881067988
+        },
+        {
+          "hex": "8a1f161b0507fff",
+          "nearest_farm": 0.032330733907952616
+        },
+        {
+          "hex": "8a1f161b050ffff",
+          "nearest_farm": 0.030937067050462452
+        },
+        {
+          "hex": "8a1f161b0517fff",
+          "nearest_farm": 0.03385405039309135
+        },
+        {
+          "hex": "8a1f161b051ffff",
+          "nearest_farm": 0.03245985491960051
+        },
+        {
+          "hex": "8a1f161b0527fff",
+          "nearest_farm": 0.032240105289895994
+        },
+        {
+          "hex": "8a1f161b052ffff",
+          "nearest_farm": 0.03080739613388847
+        },
+        {
+          "hex": "8a1f161b0537fff",
+          "nearest_farm": 0.033762189617948676
+        },
+        {
+          "hex": "8a1f161b0547fff",
+          "nearest_farm": 0.028066770317375457
+        },
+        {
+          "hex": "8a1f161b054ffff",
+          "nearest_farm": 0.026771637313491498
+        },
+        {
+          "hex": "8a1f161b0557fff",
+          "nearest_farm": 0.02958653213865405
+        },
+        {
+          "hex": "8a1f161b055ffff",
+          "nearest_farm": 0.028285310712902984
+        },
+        {
+          "hex": "8a1f161b0567fff",
+          "nearest_farm": 0.027891613138004548
+        },
+        {
+          "hex": "8a1f161b056ffff",
+          "nearest_farm": 0.02654740611199862
+        },
+        {
+          "hex": "8a1f161b0577fff",
+          "nearest_farm": 0.029414316403193076
+        },
+        {
+          "hex": "8a1f161b058ffff",
+          "nearest_farm": 0.03414763915664009
+        },
+        {
+          "hex": "8a1f161b05a7fff",
+          "nearest_farm": 0.03537734513574585
+        },
+        {
+          "hex": "8a1f161b05affff",
+          "nearest_farm": 0.0339826716716578
+        },
+        {
+          "hex": "8a1f161b0607fff",
+          "nearest_farm": 0.023569217281950956
+        },
+        {
+          "hex": "8a1f161b060ffff",
+          "nearest_farm": 0.02178524705154711
+        },
+        {
+          "hex": "8a1f161b0617fff",
+          "nearest_farm": 0.024865321899317838
+        },
+        {
+          "hex": "8a1f161b061ffff",
+          "nearest_farm": 0.023088796610368938
+        },
+        {
+          "hex": "8a1f161b0627fff",
+          "nearest_farm": 0.023359582677276232
+        },
+        {
+          "hex": "8a1f161b062ffff",
+          "nearest_farm": 0.022301839896395944
+        },
+        {
+          "hex": "8a1f161b0637fff",
+          "nearest_farm": 0.02475078564575423
+        },
+        {
+          "hex": "8a1f161b0647fff",
+          "nearest_farm": 0.018722894506868357
+        },
+        {
+          "hex": "8a1f161b064ffff",
+          "nearest_farm": 0.016934771574842775
+        },
+        {
+          "hex": "8a1f161b0657fff",
+          "nearest_farm": 0.020003013463842846
+        },
+        {
+          "hex": "8a1f161b065ffff",
+          "nearest_farm": 0.018223030120261958
+        },
+        {
+          "hex": "8a1f161b0667fff",
+          "nearest_farm": 0.01927505763195863
+        },
+        {
+          "hex": "8a1f161b066ffff",
+          "nearest_farm": 0.017481821629504457
+        },
+        {
+          "hex": "8a1f161b0677fff",
+          "nearest_farm": 0.020511996964863843
+        },
+        {
+          "hex": "8a1f161b0687fff",
+          "nearest_farm": 0.025768283076541457
+        },
+        {
+          "hex": "8a1f161b068ffff",
+          "nearest_farm": 0.024014288543112508
+        },
+        {
+          "hex": "8a1f161b0697fff",
+          "nearest_farm": 0.027137065122976978
+        },
+        {
+          "hex": "8a1f161b069ffff",
+          "nearest_farm": 0.02539334297944924
+        },
+        {
+          "hex": "8a1f161b06a7fff",
+          "nearest_farm": 0.026185884093692186
+        },
+        {
+          "hex": "8a1f161b06affff",
+          "nearest_farm": 0.024417788849981602
+        },
+        {
+          "hex": "8a1f161b06b7fff",
+          "nearest_farm": 0.027527380088147004
+        },
+        {
+          "hex": "8a1f161b06c7fff",
+          "nearest_farm": 0.020894656559759264
+        },
+        {
+          "hex": "8a1f161b06cffff",
+          "nearest_farm": 0.019142030780965522
+        },
+        {
+          "hex": "8a1f161b06d7fff",
+          "nearest_farm": 0.02226660564659277
+        },
+        {
+          "hex": "8a1f161b06dffff",
+          "nearest_farm": 0.020526850196333428
+        },
+        {
+          "hex": "8a1f161b06e7fff",
+          "nearest_farm": 0.021315139399201623
+        },
+        {
+          "hex": "8a1f161b06effff",
+          "nearest_farm": 0.019545134871001714
+        },
+        {
+          "hex": "8a1f161b06f7fff",
+          "nearest_farm": 0.02265370636364505
+        },
+        {
+          "hex": "8a1f161b0707fff",
+          "nearest_farm": 0.023731771004713763
+        },
+        {
+          "hex": "8a1f161b070ffff",
+          "nearest_farm": 0.022805062014642347
+        },
+        {
+          "hex": "8a1f161b0717fff",
+          "nearest_farm": 0.025180356103823947
+        },
+        {
+          "hex": "8a1f161b071ffff",
+          "nearest_farm": 0.0242207000951059
+        },
+        {
+          "hex": "8a1f161b0727fff",
+          "nearest_farm": 0.023286589303990017
+        },
+        {
+          "hex": "8a1f161b072ffff",
+          "nearest_farm": 0.022293165269858112
+        },
+        {
+          "hex": "8a1f161b0737fff",
+          "nearest_farm": 0.024753968341206172
+        },
+        {
+          "hex": "8a1f161b0747fff",
+          "nearest_farm": 0.02063331490968133
+        },
+        {
+          "hex": "8a1f161b074ffff",
+          "nearest_farm": 0.01987515927751506
+        },
+        {
+          "hex": "8a1f161b0757fff",
+          "nearest_farm": 0.021985922586480477
+        },
+        {
+          "hex": "8a1f161b075ffff",
+          "nearest_farm": 0.02106838005698322
+        },
+        {
+          "hex": "8a1f161b0767fff",
+          "nearest_farm": 0.02002133680449776
+        },
+        {
+          "hex": "8a1f161b076ffff",
+          "nearest_farm": 0.019306190875735138
+        },
+        {
+          "hex": "8a1f161b0777fff",
+          "nearest_farm": 0.02140423593666244
+        },
+        {
+          "hex": "8a1f161b078ffff",
+          "nearest_farm": 0.0261567281394083
+        },
+        {
+          "hex": "8a1f161b0797fff",
+          "nearest_farm": 0.028534294415455227
+        },
+        {
+          "hex": "8a1f161b079ffff",
+          "nearest_farm": 0.027575151618750203
+        },
+        {
+          "hex": "8a1f161b07a7fff",
+          "nearest_farm": 0.026637288272865135
+        },
+        {
+          "hex": "8a1f161b07affff",
+          "nearest_farm": 0.025648693302850842
+        },
+        {
+          "hex": "8a1f161b07b7fff",
+          "nearest_farm": 0.028101265227384025
+        },
+        {
+          "hex": "8a1f161b0807fff",
+          "nearest_farm": 0.020221781248807757
+        },
+        {
+          "hex": "8a1f161b081ffff",
+          "nearest_farm": 0.020108735288487153
+        },
+        {
+          "hex": "8a1f161b0827fff",
+          "nearest_farm": 0.02039589074915507
+        },
+        {
+          "hex": "8a1f161b082ffff",
+          "nearest_farm": 0.01874299781910356
+        },
+        {
+          "hex": "8a1f161b0837fff",
+          "nearest_farm": 0.021860824357200135
+        },
+        {
+          "hex": "8a1f161b0847fff",
+          "nearest_farm": 0.015531487078557945
+        },
+        {
+          "hex": "8a1f161b084ffff",
+          "nearest_farm": 0.013994531172984142
+        },
+        {
+          "hex": "8a1f161b0857fff",
+          "nearest_farm": 0.017037642014570687
+        },
+        {
+          "hex": "8a1f161b085ffff",
+          "nearest_farm": 0.015511852073938018
+        },
+        {
+          "hex": "8a1f161b0867fff",
+          "nearest_farm": 0.015631672349375927
+        },
+        {
+          "hex": "8a1f161b086ffff",
+          "nearest_farm": 0.014029076824772516
+        },
+        {
+          "hex": "8a1f161b0877fff",
+          "nearest_farm": 0.01711855216923825
+        },
+        {
+          "hex": "8a1f161b0887fff",
+          "nearest_farm": 0.023113696018062135
+        },
+        {
+          "hex": "8a1f161b088ffff",
+          "nearest_farm": 0.021570669954799202
+        },
+        {
+          "hex": "8a1f161b0897fff",
+          "nearest_farm": 0.024620016639357253
+        },
+        {
+          "hex": "8a1f161b089ffff",
+          "nearest_farm": 0.023084928626521898
+        },
+        {
+          "hex": "8a1f161b08a7fff",
+          "nearest_farm": 0.023196658447853364
+        },
+        {
+          "hex": "8a1f161b08affff",
+          "nearest_farm": 0.021609755664587223
+        },
+        {
+          "hex": "8a1f161b08b7fff",
+          "nearest_farm": 0.024690657468064703
+        },
+        {
+          "hex": "8a1f161b08c7fff",
+          "nearest_farm": 0.018549527632146776
+        },
+        {
+          "hex": "8a1f161b08cffff",
+          "nearest_farm": 0.01709655316886237
+        },
+        {
+          "hex": "8a1f161b08d7fff",
+          "nearest_farm": 0.020069411809146714
+        },
+        {
+          "hex": "8a1f161b08dffff",
+          "nearest_farm": 0.018620031038638307
+        },
+        {
+          "hex": "8a1f161b08e7fff",
+          "nearest_farm": 0.01854662323370169
+        },
+        {
+          "hex": "8a1f161b08effff",
+          "nearest_farm": 0.01703027660497657
+        },
+        {
+          "hex": "8a1f161b08f7fff",
+          "nearest_farm": 0.020057787214232792
+        },
+        {
+          "hex": "8a1f161b094ffff",
+          "nearest_farm": 0.015810874392549603
+        },
+        {
+          "hex": "8a1f161b095ffff",
+          "nearest_farm": 0.01727197139008215
+        },
+        {
+          "hex": "8a1f161b0967fff",
+          "nearest_farm": 0.017787939337596866
+        },
+        {
+          "hex": "8a1f161b096ffff",
+          "nearest_farm": 0.016066447097111382
+        },
+        {
+          "hex": "8a1f161b0a0ffff",
+          "nearest_farm": 0.009426774132224076
+        },
+        {
+          "hex": "8a1f161b0a2ffff",
+          "nearest_farm": 0.008871561457103785
+        },
+        {
+          "hex": "8a1f161b0a47fff",
+          "nearest_farm": 0.007665676354210721
+        },
+        {
+          "hex": "8a1f161b0a4ffff",
+          "nearest_farm": 0.007645220213234428
+        },
+        {
+          "hex": "8a1f161b0a57fff",
+          "nearest_farm": 0.008821984048150171
+        },
+        {
+          "hex": "8a1f161b0a5ffff",
+          "nearest_farm": 0.008557399662724863
+        },
+        {
+          "hex": "8a1f161b0a67fff",
+          "nearest_farm": 0.006841669097957142
+        },
+        {
+          "hex": "8a1f161b0a6ffff",
+          "nearest_farm": 0.006658964848528969
+        },
+        {
+          "hex": "8a1f161b0a77fff",
+          "nearest_farm": 0.008094095382707361
+        },
+        {
+          "hex": "8a1f161b0a87fff",
+          "nearest_farm": 0.01366650475868644
+        },
+        {
+          "hex": "8a1f161b0a97fff",
+          "nearest_farm": 0.015122690246494892
+        },
+        {
+          "hex": "8a1f161b0a9ffff",
+          "nearest_farm": 0.014160592314073961
+        },
+        {
+          "hex": "8a1f161b0ab7fff",
+          "nearest_farm": 0.0147343305639937
+        },
+        {
+          "hex": "8a1f161b0ad7fff",
+          "nearest_farm": 0.012059509190347496
+        },
+        {
+          "hex": "8a1f161b0aeffff",
+          "nearest_farm": 0.009625635951640031
+        },
+        {
+          "hex": "8a1f161b0b07fff",
+          "nearest_farm": 0.011002732151391376
+        },
+        {
+          "hex": "8a1f161b0b0ffff",
+          "nearest_farm": 0.00963533667022791
+        },
+        {
+          "hex": "8a1f161b0b17fff",
+          "nearest_farm": 0.012526149127862039
+        },
+        {
+          "hex": "8a1f161b0b27fff",
+          "nearest_farm": 0.010965074073244952
+        },
+        {
+          "hex": "8a1f161b0b2ffff",
+          "nearest_farm": 0.009479381140050076
+        },
+        {
+          "hex": "8a1f161b0b37fff",
+          "nearest_farm": 0.012478725577117423
+        },
+        {
+          "hex": "8a1f161b0b47fff",
+          "nearest_farm": 0.006958833570767449
+        },
+        {
+          "hex": "8a1f161b0b4ffff",
+          "nearest_farm": 0.0061128177444190815
+        },
+        {
+          "hex": "8a1f161b0b57fff",
+          "nearest_farm": 0.00842956308129309
+        },
+        {
+          "hex": "8a1f161b0b5ffff",
+          "nearest_farm": 0.007464162751740567
+        },
+        {
+          "hex": "8a1f161b0b67fff",
+          "nearest_farm": 0.006606755850724783
+        },
+        {
+          "hex": "8a1f161b0b6ffff",
+          "nearest_farm": 0.005516958737963675
+        },
+        {
+          "hex": "8a1f161b0b77fff",
+          "nearest_farm": 0.008119285021954165
+        },
+        {
+          "hex": "8a1f161b0b87fff",
+          "nearest_farm": 0.014193250409789866
+        },
+        {
+          "hex": "8a1f161b0b8ffff",
+          "nearest_farm": 0.012915633983025133
+        },
+        {
+          "hex": "8a1f161b0b97fff",
+          "nearest_farm": 0.015714211420604054
+        },
+        {
+          "hex": "8a1f161b0b9ffff",
+          "nearest_farm": 0.014422831007799255
+        },
+        {
+          "hex": "8a1f161b0ba7fff",
+          "nearest_farm": 0.014049602538595357
+        },
+        {
+          "hex": "8a1f161b0baffff",
+          "nearest_farm": 0.012672912985994607
+        },
+        {
+          "hex": "8a1f161b0bb7fff",
+          "nearest_farm": 0.015573074408272027
+        },
+        {
+          "hex": "8a1f161b0c47fff",
+          "nearest_farm": 0.026116598868905272
+        },
+        {
+          "hex": "8a1f161b0c4ffff",
+          "nearest_farm": 0.02463164494405561
+        },
+        {
+          "hex": "8a1f161b0c57fff",
+          "nearest_farm": 0.02763365633370781
+        },
+        {
+          "hex": "8a1f161b0c5ffff",
+          "nearest_farm": 0.0261529849789058
+        },
+        {
+          "hex": "8a1f161b0c67fff",
+          "nearest_farm": 0.026128301518375655
+        },
+        {
+          "hex": "8a1f161b0c6ffff",
+          "nearest_farm": 0.024600304537509166
+        },
+        {
+          "hex": "8a1f161b0c8ffff",
+          "nearest_farm": 0.0321882930463671
+        },
+        {
+          "hex": "8a1f161b0c97fff",
+          "nearest_farm": 0.03520492178146729
+        },
+        {
+          "hex": "8a1f161b0c9ffff",
+          "nearest_farm": 0.0337073887878104
+        },
+        {
+          "hex": "8a1f161b0cc7fff",
+          "nearest_farm": 0.029196255907365156
+        },
+        {
+          "hex": "8a1f161b0ccffff",
+          "nearest_farm": 0.027760659032022923
+        },
+        {
+          "hex": "8a1f161b0cd7fff",
+          "nearest_farm": 0.03071812088344643
+        },
+        {
+          "hex": "8a1f161b0cdffff",
+          "nearest_farm": 0.029284037619045376
+        },
+        {
+          "hex": "8a1f161b0ceffff",
+          "nearest_farm": 0.02767453416052769
+        },
+        {
+          "hex": "8a1f161b0d47fff",
+          "nearest_farm": 0.027783383596710304
+        },
+        {
+          "hex": "8a1f161b0d4ffff",
+          "nearest_farm": 0.026188027038658895
+        },
+        {
+          "hex": "8a1f161b0d6ffff",
+          "nearest_farm": 0.026295446790616676
+        },
+        {
+          "hex": "8a1f161b1007fff",
+          "nearest_farm": 0.01234949366714872
+        },
+        {
+          "hex": "8a1f161b100ffff",
+          "nearest_farm": 0.013290062082269138
+        },
+        {
+          "hex": "8a1f161b1017fff",
+          "nearest_farm": 0.01096833471344821
+        },
+        {
+          "hex": "8a1f161b101ffff",
+          "nearest_farm": 0.011837816233577134
+        },
+        {
+          "hex": "8a1f161b1027fff",
+          "nearest_farm": 0.01293822579647247
+        },
+        {
+          "hex": "8a1f161b102ffff",
+          "nearest_farm": 0.013760852107530096
+        },
+        {
+          "hex": "8a1f161b1037fff",
+          "nearest_farm": 0.011611757435685769
+        },
+        {
+          "hex": "8a1f161b1047fff",
+          "nearest_farm": 0.015893540639205433
+        },
+        {
+          "hex": "8a1f161b104ffff",
+          "nearest_farm": 0.01479691056564842
+        },
+        {
+          "hex": "8a1f161b1057fff",
+          "nearest_farm": 0.014393760000052384
+        },
+        {
+          "hex": "8a1f161b105ffff",
+          "nearest_farm": 0.015329288016316223
+        },
+        {
+          "hex": "8a1f161b1067fff",
+          "nearest_farm": 0.016234125224447338
+        },
+        {
+          "hex": "8a1f161b106ffff",
+          "nearest_farm": 0.015829272090896705
+        },
+        {
+          "hex": "8a1f161b1077fff",
+          "nearest_farm": 0.014756805799863887
+        },
+        {
+          "hex": "8a1f161b1087fff",
+          "nearest_farm": 0.009004798879615897
+        },
+        {
+          "hex": "8a1f161b108ffff",
+          "nearest_farm": 0.009938935816042783
+        },
+        {
+          "hex": "8a1f161b1097fff",
+          "nearest_farm": 0.007650510827158781
+        },
+        {
+          "hex": "8a1f161b109ffff",
+          "nearest_farm": 0.008481788827305345
+        },
+        {
+          "hex": "8a1f161b10a7fff",
+          "nearest_farm": 0.009630365598741964
+        },
+        {
+          "hex": "8a1f161b10affff",
+          "nearest_farm": 0.010406128948167172
+        },
+        {
+          "hex": "8a1f161b10b7fff",
+          "nearest_farm": 0.008356344450261085
+        },
+        {
+          "hex": "8a1f161b10c7fff",
+          "nearest_farm": 0.012597218252045666
+        },
+        {
+          "hex": "8a1f161b10cffff",
+          "nearest_farm": 0.013912189333418784
+        },
+        {
+          "hex": "8a1f161b10d7fff",
+          "nearest_farm": 0.011086783426017145
+        },
+        {
+          "hex": "8a1f161b10dffff",
+          "nearest_farm": 0.012389088539749208
+        },
+        {
+          "hex": "8a1f161b10e7fff",
+          "nearest_farm": 0.012899690343781207
+        },
+        {
+          "hex": "8a1f161b10effff",
+          "nearest_farm": 0.014110594139712931
+        },
+        {
+          "hex": "8a1f161b10f7fff",
+          "nearest_farm": 0.01141356470641987
+        },
+        {
+          "hex": "8a1f161b1107fff",
+          "nearest_farm": 0.013092929176166975
+        },
+        {
+          "hex": "8a1f161b110ffff",
+          "nearest_farm": 0.013594002260005456
+        },
+        {
+          "hex": "8a1f161b1117fff",
+          "nearest_farm": 0.011949354706648239
+        },
+        {
+          "hex": "8a1f161b111ffff",
+          "nearest_farm": 0.012323679574533326
+        },
+        {
+          "hex": "8a1f161b1127fff",
+          "nearest_farm": 0.013909995856047087
+        },
+        {
+          "hex": "8a1f161b112ffff",
+          "nearest_farm": 0.014307604669689219
+        },
+        {
+          "hex": "8a1f161b1137fff",
+          "nearest_farm": 0.012825419359855698
+        },
+        {
+          "hex": "8a1f161b1147fff",
+          "nearest_farm": 0.01569915895274788
+        },
+        {
+          "hex": "8a1f161b114ffff",
+          "nearest_farm": 0.016643327796541804
+        },
+        {
+          "hex": "8a1f161b1157fff",
+          "nearest_farm": 0.014304119622514157
+        },
+        {
+          "hex": "8a1f161b115ffff",
+          "nearest_farm": 0.015194004208315664
+        },
+        {
+          "hex": "8a1f161b1167fff",
+          "nearest_farm": 0.01626593762212917
+        },
+        {
+          "hex": "8a1f161b116ffff",
+          "nearest_farm": 0.017116225476154278
+        },
+        {
+          "hex": "8a1f161b1177fff",
+          "nearest_farm": 0.014911942797247425
+        },
+        {
+          "hex": "8a1f161b1187fff",
+          "nearest_farm": 0.009998024636705152
+        },
+        {
+          "hex": "8a1f161b118ffff",
+          "nearest_farm": 0.01033988797378035
+        },
+        {
+          "hex": "8a1f161b1197fff",
+          "nearest_farm": 0.00899840433552455
+        },
+        {
+          "hex": "8a1f161b119ffff",
+          "nearest_farm": 0.00914541292922782
+        },
+        {
+          "hex": "8a1f161b11a7fff",
+          "nearest_farm": 0.010899274060272404
+        },
+        {
+          "hex": "8a1f161b11affff",
+          "nearest_farm": 0.011117299743696418
+        },
+        {
+          "hex": "8a1f161b11b7fff",
+          "nearest_farm": 0.009972254459541332
+        },
+        {
+          "hex": "8a1f161b1207fff",
+          "nearest_farm": 0.009646026622308922
+        },
+        {
+          "hex": "8a1f161b120ffff",
+          "nearest_farm": 0.00858243678570437
+        },
+        {
+          "hex": "8a1f161b1217fff",
+          "nearest_farm": 0.009827821999733142
+        },
+        {
+          "hex": "8a1f161b121ffff",
+          "nearest_farm": 0.008538868770303215
+        },
+        {
+          "hex": "8a1f161b1227fff",
+          "nearest_farm": 0.010755999511318537
+        },
+        {
+          "hex": "8a1f161b122ffff",
+          "nearest_farm": 0.009703140597828848
+        },
+        {
+          "hex": "8a1f161b1237fff",
+          "nearest_farm": 0.01090287420754612
+        },
+        {
+          "hex": "8a1f161b1247fff",
+          "nearest_farm": 0.008389772385256088
+        },
+        {
+          "hex": "8a1f161b124ffff",
+          "nearest_farm": 0.008256300992211677
+        },
+        {
+          "hex": "8a1f161b1257fff",
+          "nearest_farm": 0.007791661431174322
+        },
+        {
+          "hex": "8a1f161b125ffff",
+          "nearest_farm": 0.00736215163615404
+        },
+        {
+          "hex": "8a1f161b1267fff",
+          "nearest_farm": 0.009438604962061541
+        },
+        {
+          "hex": "8a1f161b126ffff",
+          "nearest_farm": 0.009203951622435619
+        },
+        {
+          "hex": "8a1f161b1277fff",
+          "nearest_farm": 0.008890995828621979
+        },
+        {
+          "hex": "8a1f161b1287fff",
+          "nearest_farm": 0.00923885399078255
+        },
+        {
+          "hex": "8a1f161b128ffff",
+          "nearest_farm": 0.00771684864731783
+        },
+        {
+          "hex": "8a1f161b1297fff",
+          "nearest_farm": 0.00992703651506473
+        },
+        {
+          "hex": "8a1f161b129ffff",
+          "nearest_farm": 0.008273681162841315
+        },
+        {
+          "hex": "8a1f161b12a7fff",
+          "nearest_farm": 0.010235793942658975
+        },
+        {
+          "hex": "8a1f161b12affff",
+          "nearest_farm": 0.008764231632202238
+        },
+        {
+          "hex": "8a1f161b12b7fff",
+          "nearest_farm": 0.010844435436693273
+        },
+        {
+          "hex": "8a1f161b12c7fff",
+          "nearest_farm": 0.006341073175272451
+        },
+        {
+          "hex": "8a1f161b12cffff",
+          "nearest_farm": 0.005618423060684686
+        },
+        {
+          "hex": "8a1f161b12d7fff",
+          "nearest_farm": 0.00633892081121737
+        },
+        {
+          "hex": "8a1f161b12dffff",
+          "nearest_farm": 0.005220446551677032
+        },
+        {
+          "hex": "8a1f161b12e7fff",
+          "nearest_farm": 0.0074617437765712715
+        },
+        {
+          "hex": "8a1f161b12effff",
+          "nearest_farm": 0.00669942186310915
+        },
+        {
+          "hex": "8a1f161b12f7fff",
+          "nearest_farm": 0.007435788515700845
+        },
+        {
+          "hex": "8a1f161b1307fff",
+          "nearest_farm": 0.013076019427613892
+        },
+        {
+          "hex": "8a1f161b130ffff",
+          "nearest_farm": 0.011867994481821229
+        },
+        {
+          "hex": "8a1f161b1317fff",
+          "nearest_farm": 0.01334505470592642
+        },
+        {
+          "hex": "8a1f161b131ffff",
+          "nearest_farm": 0.011986301504750965
+        },
+        {
+          "hex": "8a1f161b1327fff",
+          "nearest_farm": 0.01417057417312466
+        },
+        {
+          "hex": "8a1f161b132ffff",
+          "nearest_farm": 0.012981489039263733
+        },
+        {
+          "hex": "8a1f161b1337fff",
+          "nearest_farm": 0.014406752599165821
+        },
+        {
+          "hex": "8a1f161b1347fff",
+          "nearest_farm": 0.011102495208104761
+        },
+        {
+          "hex": "8a1f161b134ffff",
+          "nearest_farm": 0.010502292656213934
+        },
+        {
+          "hex": "8a1f161b1357fff",
+          "nearest_farm": 0.010823848414458473
+        },
+        {
+          "hex": "8a1f161b135ffff",
+          "nearest_farm": 0.00999508057319717
+        },
+        {
+          "hex": "8a1f161b1367fff",
+          "nearest_farm": 0.01221233085209538
+        },
+        {
+          "hex": "8a1f161b136ffff",
+          "nearest_farm": 0.011576738243701394
+        },
+        {
+          "hex": "8a1f161b1377fff",
+          "nearest_farm": 0.011944555988772244
+        },
+        {
+          "hex": "8a1f161b1387fff",
+          "nearest_farm": 0.012776953645211647
+        },
+        {
+          "hex": "8a1f161b138ffff",
+          "nearest_farm": 0.011256060109167966
+        },
+        {
+          "hex": "8a1f161b1397fff",
+          "nearest_farm": 0.013416671748012476
+        },
+        {
+          "hex": "8a1f161b139ffff",
+          "nearest_farm": 0.011797032180751604
+        },
+        {
+          "hex": "8a1f161b13a7fff",
+          "nearest_farm": 0.013778368334457164
+        },
+        {
+          "hex": "8a1f161b13affff",
+          "nearest_farm": 0.012293843303690676
+        },
+        {
+          "hex": "8a1f161b13b7fff",
+          "nearest_farm": 0.014361089925016158
+        },
+        {
+          "hex": "8a1f161b1407fff",
+          "nearest_farm": 0.004961040139006972
+        },
+        {
+          "hex": "8a1f161b140ffff",
+          "nearest_farm": 0.004327813141286061
+        },
+        {
+          "hex": "8a1f161b1417fff",
+          "nearest_farm": 0.004991788036642148
+        },
+        {
+          "hex": "8a1f161b141ffff",
+          "nearest_farm": 0.0038407982832609146
+        },
+        {
+          "hex": "8a1f161b1427fff",
+          "nearest_farm": 0.006081483120157362
+        },
+        {
+          "hex": "8a1f161b142ffff",
+          "nearest_farm": 0.0053804955830619285
+        },
+        {
+          "hex": "8a1f161b1437fff",
+          "nearest_farm": 0.0060770830517425005
+        },
+        {
+          "hex": "8a1f161b1447fff",
+          "nearest_farm": 0.0056738311407541
+        },
+        {
+          "hex": "8a1f161b144ffff",
+          "nearest_farm": 0.006593177223390943
+        },
+        {
+          "hex": "8a1f161b1457fff",
+          "nearest_farm": 0.0043914949419371265
+        },
+        {
+          "hex": "8a1f161b145ffff",
+          "nearest_farm": 0.005126192580084048
+        },
+        {
+          "hex": "8a1f161b1467fff",
+          "nearest_farm": 0.006373306211548197
+        },
+        {
+          "hex": "8a1f161b146ffff",
+          "nearest_farm": 0.007052951310507751
+        },
+        {
+          "hex": "8a1f161b1477fff",
+          "nearest_farm": 0.005229944984583952
+        },
+        {
+          "hex": "8a1f161b1487fff",
+          "nearest_farm": 0.004552661060476512
+        },
+        {
+          "hex": "8a1f161b148ffff",
+          "nearest_farm": 0.0029033337275088263
+        },
+        {
+          "hex": "8a1f161b1497fff",
+          "nearest_farm": 0.005538907447498505
+        },
+        {
+          "hex": "8a1f161b149ffff",
+          "nearest_farm": 0.0037547927915185905
+        },
+        {
+          "hex": "8a1f161b14a7fff",
+          "nearest_farm": 0.005465125032042432
+        },
+        {
+          "hex": "8a1f161b14affff",
+          "nearest_farm": 0.003926498746777139
+        },
+        {
+          "hex": "8a1f161b14b7fff",
+          "nearest_farm": 0.006281769176172645
+        },
+        {
+          "hex": "8a1f161b14c7fff",
+          "nearest_farm": 0.0024140020471441525
+        },
+        {
+          "hex": "8a1f161b14cffff",
+          "nearest_farm": 0.0032692374355133115
+        },
+        {
+          "hex": "8a1f161b14d7fff",
+          "nearest_farm": 0.0016026988042654492
+        },
+        {
+          "hex": "8a1f161b14dffff",
+          "nearest_farm": 0.0017733472108689128
+        },
+        {
+          "hex": "8a1f161b14e7fff",
+          "nearest_farm": 0.003320014980687487
+        },
+        {
+          "hex": "8a1f161b14effff",
+          "nearest_farm": 0.0037054553400536565
+        },
+        {
+          "hex": "8a1f161b14f7fff",
+          "nearest_farm": 0.0027210196649017906
+        },
+        {
+          "hex": "8a1f161b1507fff",
+          "nearest_farm": 0.00827610580734948
+        },
+        {
+          "hex": "8a1f161b150ffff",
+          "nearest_farm": 0.007202028186294251
+        },
+        {
+          "hex": "8a1f161b1517fff",
+          "nearest_farm": 0.008506770461427502
+        },
+        {
+          "hex": "8a1f161b151ffff",
+          "nearest_farm": 0.007173303963905722
+        },
+        {
+          "hex": "8a1f161b1527fff",
+          "nearest_farm": 0.00938316453324706
+        },
+        {
+          "hex": "8a1f161b152ffff",
+          "nearest_farm": 0.008322629628559695
+        },
+        {
+          "hex": "8a1f161b1537fff",
+          "nearest_farm": 0.009568475734423033
+        },
+        {
+          "hex": "8a1f161b1547fff",
+          "nearest_farm": 0.007143040280927626
+        },
+        {
+          "hex": "8a1f161b154ffff",
+          "nearest_farm": 0.007180375520507734
+        },
+        {
+          "hex": "8a1f161b1557fff",
+          "nearest_farm": 0.006456138425579296
+        },
+        {
+          "hex": "8a1f161b155ffff",
+          "nearest_farm": 0.006158864742763811
+        },
+        {
+          "hex": "8a1f161b1567fff",
+          "nearest_farm": 0.008162504434728175
+        },
+        {
+          "hex": "8a1f161b156ffff",
+          "nearest_farm": 0.008062789030849912
+        },
+        {
+          "hex": "8a1f161b1577fff",
+          "nearest_farm": 0.007544923063910393
+        },
+        {
+          "hex": "8a1f161b1587fff",
+          "nearest_farm": 0.00803497005198014
+        },
+        {
+          "hex": "8a1f161b158ffff",
+          "nearest_farm": 0.006443679155881583
+        },
+        {
+          "hex": "8a1f161b1597fff",
+          "nearest_farm": 0.008836156658750738
+        },
+        {
+          "hex": "8a1f161b159ffff",
+          "nearest_farm": 0.007124212107626941
+        },
+        {
+          "hex": "8a1f161b15a7fff",
+          "nearest_farm": 0.00899330785865944
+        },
+        {
+          "hex": "8a1f161b15affff",
+          "nearest_farm": 0.007462364007663281
+        },
+        {
+          "hex": "8a1f161b15b7fff",
+          "nearest_farm": 0.009697269114420091
+        },
+        {
+          "hex": "8a1f161b1607fff",
+          "nearest_farm": 0.010891505860978107
+        },
+        {
+          "hex": "8a1f161b160ffff",
+          "nearest_farm": 0.012562107242459214
+        },
+        {
+          "hex": "8a1f161b1617fff",
+          "nearest_farm": 0.009430602484417343
+        },
+        {
+          "hex": "8a1f161b161ffff",
+          "nearest_farm": 0.011127984172111525
+        },
+        {
+          "hex": "8a1f161b1627fff",
+          "nearest_farm": 0.010767073977923605
+        },
+        {
+          "hex": "8a1f161b162ffff",
+          "nearest_farm": 0.012367673353815656
+        },
+        {
+          "hex": "8a1f161b1637fff",
+          "nearest_farm": 0.009267219598981297
+        },
+        {
+          "hex": "8a1f161b1647fff",
+          "nearest_farm": 0.010009831216934736
+        },
+        {
+          "hex": "8a1f161b164ffff",
+          "nearest_farm": 0.008244530745671889
+        },
+        {
+          "hex": "8a1f161b1657fff",
+          "nearest_farm": 0.011092120696280048
+        },
+        {
+          "hex": "8a1f161b165ffff",
+          "nearest_farm": 0.009301921130780988
+        },
+        {
+          "hex": "8a1f161b1667fff",
+          "nearest_farm": 0.0107879758089532
+        },
+        {
+          "hex": "8a1f161b166ffff",
+          "nearest_farm": 0.009055543323731215
+        },
+        {
+          "hex": "8a1f161b1677fff",
+          "nearest_farm": 0.011783857626070631
+        },
+        {
+          "hex": "8a1f161b1687fff",
+          "nearest_farm": 0.008355858806448228
+        },
+        {
+          "hex": "8a1f161b168ffff",
+          "nearest_farm": 0.010128316935942343
+        },
+        {
+          "hex": "8a1f161b1697fff",
+          "nearest_farm": 0.00705569090842048
+        },
+        {
+          "hex": "8a1f161b169ffff",
+          "nearest_farm": 0.008846465095428389
+        },
+        {
+          "hex": "8a1f161b16a7fff",
+          "nearest_farm": 0.007993322671119615
+        },
+        {
+          "hex": "8a1f161b16affff",
+          "nearest_farm": 0.009721285237017263
+        },
+        {
+          "hex": "8a1f161b16b7fff",
+          "nearest_farm": 0.006595112242306303
+        },
+        {
+          "hex": "8a1f161b16c7fff",
+          "nearest_farm": 0.011728864583582773
+        },
+        {
+          "hex": "8a1f161b16cffff",
+          "nearest_farm": 0.009946123092106502
+        },
+        {
+          "hex": "8a1f161b16d7fff",
+          "nearest_farm": 0.011907263974147618
+        },
+        {
+          "hex": "8a1f161b16dffff",
+          "nearest_farm": 0.011275088962628828
+        },
+        {
+          "hex": "8a1f161b16e7fff",
+          "nearest_farm": 0.012268573665840585
+        },
+        {
+          "hex": "8a1f161b16effff",
+          "nearest_farm": 0.010474913111933963
+        },
+        {
+          "hex": "8a1f161b16f7fff",
+          "nearest_farm": 0.011469583777554084
+        },
+        {
+          "hex": "8a1f161b1707fff",
+          "nearest_farm": 0.009343870219001038
+        },
+        {
+          "hex": "8a1f161b170ffff",
+          "nearest_farm": 0.01075857349178595
+        },
+        {
+          "hex": "8a1f161b1717fff",
+          "nearest_farm": 0.007822106501432906
+        },
+        {
+          "hex": "8a1f161b171ffff",
+          "nearest_farm": 0.009237889356135634
+        },
+        {
+          "hex": "8a1f161b1727fff",
+          "nearest_farm": 0.009580668938568949
+        },
+        {
+          "hex": "8a1f161b172ffff",
+          "nearest_farm": 0.010866273049394172
+        },
+        {
+          "hex": "8a1f161b1737fff",
+          "nearest_farm": 0.008081276670442603
+        },
+        {
+          "hex": "8a1f161b1747fff",
+          "nearest_farm": 0.01334337989443585
+        },
+        {
+          "hex": "8a1f161b174ffff",
+          "nearest_farm": 0.011622253025533403
+        },
+        {
+          "hex": "8a1f161b1757fff",
+          "nearest_farm": 0.012272903428358423
+        },
+        {
+          "hex": "8a1f161b175ffff",
+          "nearest_farm": 0.012537791161655196
+        },
+        {
+          "hex": "8a1f161b1767fff",
+          "nearest_farm": 0.01380220405179809
+        },
+        {
+          "hex": "8a1f161b176ffff",
+          "nearest_farm": 0.012501426977529364
+        },
+        {
+          "hex": "8a1f161b1777fff",
+          "nearest_farm": 0.012280102074478456
+        },
+        {
+          "hex": "8a1f161b1787fff",
+          "nearest_farm": 0.006201466254135305
+        },
+        {
+          "hex": "8a1f161b178ffff",
+          "nearest_farm": 0.007776783586004447
+        },
+        {
+          "hex": "8a1f161b1797fff",
+          "nearest_farm": 0.00468888237792434
+        },
+        {
+          "hex": "8a1f161b179ffff",
+          "nearest_farm": 0.0063024334057494875
+        },
+        {
+          "hex": "8a1f161b17a7fff",
+          "nearest_farm": 0.006301426946628356
+        },
+        {
+          "hex": "8a1f161b17affff",
+          "nearest_farm": 0.0077185341042238335
+        },
+        {
+          "hex": "8a1f161b17b7fff",
+          "nearest_farm": 0.004782842067500108
+        },
+        {
+          "hex": "8a1f161b1807fff",
+          "nearest_farm": 0.01527500197304118
+        },
+        {
+          "hex": "8a1f161b180ffff",
+          "nearest_farm": 0.01705670193412074
+        },
+        {
+          "hex": "8a1f161b1817fff",
+          "nearest_farm": 0.014250846999028404
+        },
+        {
+          "hex": "8a1f161b181ffff",
+          "nearest_farm": 0.016012622823431525
+        },
+        {
+          "hex": "8a1f161b1827fff",
+          "nearest_farm": 0.014586254870491191
+        },
+        {
+          "hex": "8a1f161b182ffff",
+          "nearest_farm": 0.016377164718183138
+        },
+        {
+          "hex": "8a1f161b1837fff",
+          "nearest_farm": 0.013496702919061866
+        },
+        {
+          "hex": "8a1f161b1847fff",
+          "nearest_farm": 0.019543175346205522
+        },
+        {
+          "hex": "8a1f161b184ffff",
+          "nearest_farm": 0.020202730819433495
+        },
+        {
+          "hex": "8a1f161b1857fff",
+          "nearest_farm": 0.018275645764829353
+        },
+        {
+          "hex": "8a1f161b185ffff",
+          "nearest_farm": 0.018866015187329072
+        },
+        {
+          "hex": "8a1f161b1867fff",
+          "nearest_farm": 0.019337179594381294
+        },
+        {
+          "hex": "8a1f161b186ffff",
+          "nearest_farm": 0.02084509575199958
+        },
+        {
+          "hex": "8a1f161b1877fff",
+          "nearest_farm": 0.01816879596659753
+        },
+        {
+          "hex": "8a1f161b1887fff",
+          "nearest_farm": 0.014187685646601072
+        },
+        {
+          "hex": "8a1f161b188ffff",
+          "nearest_farm": 0.014766941953852959
+        },
+        {
+          "hex": "8a1f161b1897fff",
+          "nearest_farm": 0.013442592594135421
+        },
+        {
+          "hex": "8a1f161b189ffff",
+          "nearest_farm": 0.013737073583793497
+        },
+        {
+          "hex": "8a1f161b18a7fff",
+          "nearest_farm": 0.013322693496588513
+        },
+        {
+          "hex": "8a1f161b18affff",
+          "nearest_farm": 0.015050712487338892
+        },
+        {
+          "hex": "8a1f161b18b7fff",
+          "nearest_farm": 0.012511915272536967
+        },
+        {
+          "hex": "8a1f161b18c7fff",
+          "nearest_farm": 0.016291604484442373
+        },
+        {
+          "hex": "8a1f161b18cffff",
+          "nearest_farm": 0.016888134712870678
+        },
+        {
+          "hex": "8a1f161b18d7fff",
+          "nearest_farm": 0.015070818626555866
+        },
+        {
+          "hex": "8a1f161b18dffff",
+          "nearest_farm": 0.015576763966152742
+        },
+        {
+          "hex": "8a1f161b18e7fff",
+          "nearest_farm": 0.017050172038690293
+        },
+        {
+          "hex": "8a1f161b18effff",
+          "nearest_farm": 0.01755985818220617
+        },
+        {
+          "hex": "8a1f161b18f7fff",
+          "nearest_farm": 0.015876488623702938
+        },
+        {
+          "hex": "8a1f161b1907fff",
+          "nearest_farm": 0.012159126522626637
+        },
+        {
+          "hex": "8a1f161b1917fff",
+          "nearest_farm": 0.011007980947671
+        },
+        {
+          "hex": "8a1f161b191ffff",
+          "nearest_farm": 0.01279636356077834
+        },
+        {
+          "hex": "8a1f161b1927fff",
+          "nearest_farm": 0.011595396821582405
+        },
+        {
+          "hex": "8a1f161b192ffff",
+          "nearest_farm": 0.013385046723592892
+        },
+        {
+          "hex": "8a1f161b1937fff",
+          "nearest_farm": 0.010364650499711543
+        },
+        {
+          "hex": "8a1f161b1947fff",
+          "nearest_farm": 0.016967467709022268
+        },
+        {
+          "hex": "8a1f161b194ffff",
+          "nearest_farm": 0.01875965062132835
+        },
+        {
+          "hex": "8a1f161b195ffff",
+          "nearest_farm": 0.017542644724686057
+        },
+        {
+          "hex": "8a1f161b1967fff",
+          "nearest_farm": 0.016448610942774264
+        },
+        {
+          "hex": "8a1f161b196ffff",
+          "nearest_farm": 0.01823276452551301
+        },
+        {
+          "hex": "8a1f161b1987fff",
+          "nearest_farm": 0.010759786474892568
+        },
+        {
+          "hex": "8a1f161b198ffff",
+          "nearest_farm": 0.012498386339042008
+        },
+        {
+          "hex": "8a1f161b1997fff",
+          "nearest_farm": 0.009937563491244746
+        },
+        {
+          "hex": "8a1f161b199ffff",
+          "nearest_farm": 0.011614844742474636
+        },
+        {
+          "hex": "8a1f161b19a7fff",
+          "nearest_farm": 0.009957565419911095
+        },
+        {
+          "hex": "8a1f161b19affff",
+          "nearest_farm": 0.0117233462267675
+        },
+        {
+          "hex": "8a1f161b19b7fff",
+          "nearest_farm": 0.009043037348867203
+        },
+        {
+          "hex": "8a1f161b1a07fff",
+          "nearest_farm": 0.017444672460520727
+        },
+        {
+          "hex": "8a1f161b1a0ffff",
+          "nearest_farm": 0.016427339491656676
+        },
+        {
+          "hex": "8a1f161b1a17fff",
+          "nearest_farm": 0.017474131176630818
+        },
+        {
+          "hex": "8a1f161b1a1ffff",
+          "nearest_farm": 0.016327877670892266
+        },
+        {
+          "hex": "8a1f161b1a27fff",
+          "nearest_farm": 0.018561929583202304
+        },
+        {
+          "hex": "8a1f161b1a2ffff",
+          "nearest_farm": 0.017548017535936725
+        },
+        {
+          "hex": "8a1f161b1a37fff",
+          "nearest_farm": 0.018579976202786744
+        },
+        {
+          "hex": "8a1f161b1a47fff",
+          "nearest_farm": 0.01593827300337683
+        },
+        {
+          "hex": "8a1f161b1a4ffff",
+          "nearest_farm": 0.01538625289021613
+        },
+        {
+          "hex": "8a1f161b1a57fff",
+          "nearest_farm": 0.015551151709312216
+        },
+        {
+          "hex": "8a1f161b1a5ffff",
+          "nearest_farm": 0.014841133871226153
+        },
+        {
+          "hex": "8a1f161b1a67fff",
+          "nearest_farm": 0.01703846517104214
+        },
+        {
+          "hex": "8a1f161b1a6ffff",
+          "nearest_farm": 0.016457963032368718
+        },
+        {
+          "hex": "8a1f161b1a77fff",
+          "nearest_farm": 0.016666152601353623
+        },
+        {
+          "hex": "8a1f161b1a87fff",
+          "nearest_farm": 0.016553510001849958
+        },
+        {
+          "hex": "8a1f161b1a8ffff",
+          "nearest_farm": 0.015268923152156513
+        },
+        {
+          "hex": "8a1f161b1a97fff",
+          "nearest_farm": 0.016872914311872027
+        },
+        {
+          "hex": "8a1f161b1a9ffff",
+          "nearest_farm": 0.015476776625449237
+        },
+        {
+          "hex": "8a1f161b1aa7fff",
+          "nearest_farm": 0.017635721758774075
+        },
+        {
+          "hex": "8a1f161b1aaffff",
+          "nearest_farm": 0.016370300395998974
+        },
+        {
+          "hex": "8a1f161b1ab7fff",
+          "nearest_farm": 0.017925864975846237
+        },
+        {
+          "hex": "8a1f161b1ac7fff",
+          "nearest_farm": 0.014185960133802761
+        },
+        {
+          "hex": "8a1f161b1acffff",
+          "nearest_farm": 0.013323979740518549
+        },
+        {
+          "hex": "8a1f161b1ad7fff",
+          "nearest_farm": 0.014096125174651595
+        },
+        {
+          "hex": "8a1f161b1adffff",
+          "nearest_farm": 0.013065260531201148
+        },
+        {
+          "hex": "8a1f161b1ae7fff",
+          "nearest_farm": 0.015306653447550656
+        },
+        {
+          "hex": "8a1f161b1aeffff",
+          "nearest_farm": 0.014437020439814967
+        },
+        {
+          "hex": "8a1f161b1af7fff",
+          "nearest_farm": 0.015211649492916686
+        },
+        {
+          "hex": "8a1f161b1b0ffff",
+          "nearest_farm": 0.019679568402965978
+        },
+        {
+          "hex": "8a1f161b1b17fff",
+          "nearest_farm": 0.02090668223635012
+        },
+        {
+          "hex": "8a1f161b1b1ffff",
+          "nearest_farm": 0.01968749416538044
+        },
+        {
+          "hex": "8a1f161b1b47fff",
+          "nearest_farm": 0.01889813955946847
+        },
+        {
+          "hex": "8a1f161b1b4ffff",
+          "nearest_farm": 0.018141152864045277
+        },
+        {
+          "hex": "8a1f161b1b57fff",
+          "nearest_farm": 0.01866868702569552
+        },
+        {
+          "hex": "8a1f161b1b5ffff",
+          "nearest_farm": 0.01778185743414097
+        },
+        {
+          "hex": "8a1f161b1b6ffff",
+          "nearest_farm": 0.01924590521070265
+        },
+        {
+          "hex": "8a1f161b1b77fff",
+          "nearest_farm": 0.019789347531919153
+        },
+        {
+          "hex": "8a1f161b1b87fff",
+          "nearest_farm": 0.01905118516542414
+        },
+        {
+          "hex": "8a1f161b1b8ffff",
+          "nearest_farm": 0.018722459932667697
+        },
+        {
+          "hex": "8a1f161b1b97fff",
+          "nearest_farm": 0.01764769646472611
+        },
+        {
+          "hex": "8a1f161b1b9ffff",
+          "nearest_farm": 0.018550277982084327
+        },
+        {
+          "hex": "8a1f161b1ba7fff",
+          "nearest_farm": 0.01960340584763911
+        },
+        {
+          "hex": "8a1f161b1baffff",
+          "nearest_farm": 0.019812977838291543
+        },
+        {
+          "hex": "8a1f161b1bb7fff",
+          "nearest_farm": 0.018232617297374475
+        },
+        {
+          "hex": "8a1f161b1c07fff",
+          "nearest_farm": 0.010918897947950656
+        },
+        {
+          "hex": "8a1f161b1c0ffff",
+          "nearest_farm": 0.011959198847377072
+        },
+        {
+          "hex": "8a1f161b1c17fff",
+          "nearest_farm": 0.011022907532538765
+        },
+        {
+          "hex": "8a1f161b1c1ffff",
+          "nearest_farm": 0.01168457813403426
+        },
+        {
+          "hex": "8a1f161b1c27fff",
+          "nearest_farm": 0.00980524188612826
+        },
+        {
+          "hex": "8a1f161b1c2ffff",
+          "nearest_farm": 0.0110265760694298
+        },
+        {
+          "hex": "8a1f161b1c37fff",
+          "nearest_farm": 0.009902815340798855
+        },
+        {
+          "hex": "8a1f161b1c47fff",
+          "nearest_farm": 0.011997095992055921
+        },
+        {
+          "hex": "8a1f161b1c4ffff",
+          "nearest_farm": 0.011838054669784628
+        },
+        {
+          "hex": "8a1f161b1c57fff",
+          "nearest_farm": 0.011336152972570368
+        },
+        {
+          "hex": "8a1f161b1c5ffff",
+          "nearest_farm": 0.01097416182320388
+        },
+        {
+          "hex": "8a1f161b1c67fff",
+          "nearest_farm": 0.012835978124002142
+        },
+        {
+          "hex": "8a1f161b1c6ffff",
+          "nearest_farm": 0.012806112295069852
+        },
+        {
+          "hex": "8a1f161b1c77fff",
+          "nearest_farm": 0.012388192497342743
+        },
+        {
+          "hex": "8a1f161b1c87fff",
+          "nearest_farm": 0.011724911498170287
+        },
+        {
+          "hex": "8a1f161b1c8ffff",
+          "nearest_farm": 0.01049312933522784
+        },
+        {
+          "hex": "8a1f161b1c97fff",
+          "nearest_farm": 0.01203787150922622
+        },
+        {
+          "hex": "8a1f161b1c9ffff",
+          "nearest_farm": 0.010642300253787502
+        },
+        {
+          "hex": "8a1f161b1ca7fff",
+          "nearest_farm": 0.011332767851482567
+        },
+        {
+          "hex": "8a1f161b1caffff",
+          "nearest_farm": 0.011605163187912826
+        },
+        {
+          "hex": "8a1f161b1cb7fff",
+          "nearest_farm": 0.011832308129172714
+        },
+        {
+          "hex": "8a1f161b1cc7fff",
+          "nearest_farm": 0.009744244324817464
+        },
+        {
+          "hex": "8a1f161b1ccffff",
+          "nearest_farm": 0.009205536540556936
+        },
+        {
+          "hex": "8a1f161b1cd7fff",
+          "nearest_farm": 0.009443263433011408
+        },
+        {
+          "hex": "8a1f161b1cdffff",
+          "nearest_farm": 0.008641879438774393
+        },
+        {
+          "hex": "8a1f161b1ce7fff",
+          "nearest_farm": 0.010850365949384532
+        },
+        {
+          "hex": "8a1f161b1ceffff",
+          "nearest_farm": 0.010264951194202098
+        },
+        {
+          "hex": "8a1f161b1cf7fff",
+          "nearest_farm": 0.010563915775147195
+        },
+        {
+          "hex": "8a1f161b1d07fff",
+          "nearest_farm": 0.007663234056543191
+        },
+        {
+          "hex": "8a1f161b1d0ffff",
+          "nearest_farm": 0.008693412333143673
+        },
+        {
+          "hex": "8a1f161b1d17fff",
+          "nearest_farm": 0.008035852298134277
+        },
+        {
+          "hex": "8a1f161b1d1ffff",
+          "nearest_farm": 0.008782899961912291
+        },
+        {
+          "hex": "8a1f161b1d27fff",
+          "nearest_farm": 0.006543939990856995
+        },
+        {
+          "hex": "8a1f161b1d2ffff",
+          "nearest_farm": 0.007584207709064896
+        },
+        {
+          "hex": "8a1f161b1d37fff",
+          "nearest_farm": 0.0069508275545019284
+        },
+        {
+          "hex": "8a1f161b1d47fff",
+          "nearest_farm": 0.010306914333104203
+        },
+        {
+          "hex": "8a1f161b1d4ffff",
+          "nearest_farm": 0.011842634783698658
+        },
+        {
+          "hex": "8a1f161b1d57fff",
+          "nearest_farm": 0.009943084864251606
+        },
+        {
+          "hex": "8a1f161b1d5ffff",
+          "nearest_farm": 0.011339923262270995
+        },
+        {
+          "hex": "8a1f161b1d67fff",
+          "nearest_farm": 0.009294251411578561
+        },
+        {
+          "hex": "8a1f161b1d6ffff",
+          "nearest_farm": 0.010874080866593819
+        },
+        {
+          "hex": "8a1f161b1d77fff",
+          "nearest_farm": 0.008868855707015335
+        },
+        {
+          "hex": "8a1f161b1d87fff",
+          "nearest_farm": 0.009705747970307436
+        },
+        {
+          "hex": "8a1f161b1d8ffff",
+          "nearest_farm": 0.010229059557755509
+        },
+        {
+          "hex": "8a1f161b1d97fff",
+          "nearest_farm": 0.010473747568281214
+        },
+        {
+          "hex": "8a1f161b1d9ffff",
+          "nearest_farm": 0.010763190274092485
+        },
+        {
+          "hex": "8a1f161b1da7fff",
+          "nearest_farm": 0.00866425285642994
+        },
+        {
+          "hex": "8a1f161b1daffff",
+          "nearest_farm": 0.009129518931388162
+        },
+        {
+          "hex": "8a1f161b1db7fff",
+          "nearest_farm": 0.0094977889824326
+        },
+        {
+          "hex": "8a1f161b224ffff",
+          "nearest_farm": 0.02564210163653865
+        },
+        {
+          "hex": "8a1f161b2267fff",
+          "nearest_farm": 0.02714829798159787
+        },
+        {
+          "hex": "8a1f161b226ffff",
+          "nearest_farm": 0.025616947269998604
+        },
+        {
+          "hex": "8a1f161b234ffff",
+          "nearest_farm": 0.02721045028583245
+        },
+        {
+          "hex": "8a1f161b2367fff",
+          "nearest_farm": 0.028945531184908675
+        },
+        {
+          "hex": "8a1f161b236ffff",
+          "nearest_farm": 0.02731851664136269
+        },
+        {
+          "hex": "8a1f161b284ffff",
+          "nearest_farm": 0.03665758497003712
+        },
+        {
+          "hex": "8a1f161b2867fff",
+          "nearest_farm": 0.037610083540503866
+        },
+        {
+          "hex": "8a1f161b286ffff",
+          "nearest_farm": 0.036361000334022654
+        },
+        {
+          "hex": "8a1f161b2907fff",
+          "nearest_farm": 0.04299348134332014
+        },
+        {
+          "hex": "8a1f161b290ffff",
+          "nearest_farm": 0.04159698229677394
+        },
+        {
+          "hex": "8a1f161b2917fff",
+          "nearest_farm": 0.0445166394338315
+        },
+        {
+          "hex": "8a1f161b2927fff",
+          "nearest_farm": 0.042896050295816356
+        },
+        {
+          "hex": "8a1f161b292ffff",
+          "nearest_farm": 0.04147029994610689
+        },
+        {
+          "hex": "8a1f161b2937fff",
+          "nearest_farm": 0.04441850047819974
+        },
+        {
+          "hex": "8a1f161b2957fff",
+          "nearest_farm": 0.040231975189833256
+        },
+        {
+          "hex": "8a1f161b295ffff",
+          "nearest_farm": 0.03890177709065644
+        },
+        {
+          "hex": "8a1f161b2967fff",
+          "nearest_farm": 0.03855123160077812
+        },
+        {
+          "hex": "8a1f161b2977fff",
+          "nearest_farm": 0.04007410509613679
+        },
+        {
+          "hex": "8a1f161b2a07fff",
+          "nearest_farm": 0.03305109679320689
+        },
+        {
+          "hex": "8a1f161b2a0ffff",
+          "nearest_farm": 0.031328981029747204
+        },
+        {
+          "hex": "8a1f161b2a1ffff",
+          "nearest_farm": 0.03274871354682453
+        },
+        {
+          "hex": "8a1f161b2a27fff",
+          "nearest_farm": 0.033341534494439745
+        },
+        {
+          "hex": "8a1f161b2a2ffff",
+          "nearest_farm": 0.031650620716346445
+        },
+        {
+          "hex": "8a1f161b2a37fff",
+          "nearest_farm": 0.034780422108025975
+        },
+        {
+          "hex": "8a1f161b2a47fff",
+          "nearest_farm": 0.0281959766965118
+        },
+        {
+          "hex": "8a1f161b2a4ffff",
+          "nearest_farm": 0.0264818559721328
+        },
+        {
+          "hex": "8a1f161b2a57fff",
+          "nearest_farm": 0.029615335039280957
+        },
+        {
+          "hex": "8a1f161b2a5ffff",
+          "nearest_farm": 0.02791172152811336
+        },
+        {
+          "hex": "8a1f161b2a67fff",
+          "nearest_farm": 0.028521498173610407
+        },
+        {
+          "hex": "8a1f161b2a6ffff",
+          "nearest_farm": 0.02678801272478983
+        },
+        {
+          "hex": "8a1f161b2a77fff",
+          "nearest_farm": 0.029919405907848674
+        },
+        {
+          "hex": "8a1f161b2ac7fff",
+          "nearest_farm": 0.030798272926016078
+        },
+        {
+          "hex": "8a1f161b2acffff",
+          "nearest_farm": 0.02912738329973866
+        },
+        {
+          "hex": "8a1f161b2ae7fff",
+          "nearest_farm": 0.031044521288754703
+        },
+        {
+          "hex": "8a1f161b2aeffff",
+          "nearest_farm": 0.02935096671905597
+        },
+        {
+          "hex": "8a1f161b2b07fff",
+          "nearest_farm": 0.034009298371018314
+        },
+        {
+          "hex": "8a1f161b2b0ffff",
+          "nearest_farm": 0.032917149649796994
+        },
+        {
+          "hex": "8a1f161b2b17fff",
+          "nearest_farm": 0.03549606873659173
+        },
+        {
+          "hex": "8a1f161b2b1ffff",
+          "nearest_farm": 0.03438891258205833
+        },
+        {
+          "hex": "8a1f161b2b27fff",
+          "nearest_farm": 0.03366276613882137
+        },
+        {
+          "hex": "8a1f161b2b2ffff",
+          "nearest_farm": 0.032525895993579045
+        },
+        {
+          "hex": "8a1f161b2b37fff",
+          "nearest_farm": 0.035159071278227406
+        },
+        {
+          "hex": "8a1f161b2b47fff",
+          "nearest_farm": 0.03044243368510012
+        },
+        {
+          "hex": "8a1f161b2b4ffff",
+          "nearest_farm": 0.02888688963545782
+        },
+        {
+          "hex": "8a1f161b2b57fff",
+          "nearest_farm": 0.03188854868744268
+        },
+        {
+          "hex": "8a1f161b2b67fff",
+          "nearest_farm": 0.029989045317119684
+        },
+        {
+          "hex": "8a1f161b2b6ffff",
+          "nearest_farm": 0.02900422112251533
+        },
+        {
+          "hex": "8a1f161b2b77fff",
+          "nearest_farm": 0.031450286310429613
+        },
+        {
+          "hex": "8a1f161b2baffff",
+          "nearest_farm": 0.03586496877053948
+        },
+        {
+          "hex": "8a1f161b3007fff",
+          "nearest_farm": 0.01120934053562479
+        },
+        {
+          "hex": "8a1f161b300ffff",
+          "nearest_farm": 0.01023983992495781
+        },
+        {
+          "hex": "8a1f161b3017fff",
+          "nearest_farm": 0.012687717688044014
+        },
+        {
+          "hex": "8a1f161b301ffff",
+          "nearest_farm": 0.011657669012735374
+        },
+        {
+          "hex": "8a1f161b3027fff",
+          "nearest_farm": 0.01085868188855382
+        },
+        {
+          "hex": "8a1f161b302ffff",
+          "nearest_farm": 0.009744900429078185
+        },
+        {
+          "hex": "8a1f161b3037fff",
+          "nearest_farm": 0.012364432626992177
+        },
+        {
+          "hex": "8a1f161b3087fff",
+          "nearest_farm": 0.014557573109048696
+        },
+        {
+          "hex": "8a1f161b308ffff",
+          "nearest_farm": 0.013591074588076641
+        },
+        {
+          "hex": "8a1f161b309ffff",
+          "nearest_farm": 0.015013670136994216
+        },
+        {
+          "hex": "8a1f161b30a7fff",
+          "nearest_farm": 0.014175664091828659
+        },
+        {
+          "hex": "8a1f161b30affff",
+          "nearest_farm": 0.013099269447230751
+        },
+        {
+          "hex": "8a1f161b30b7fff",
+          "nearest_farm": 0.015670446885827534
+        },
+        {
+          "hex": "8a1f161b30d7fff",
+          "nearest_farm": 0.01280414675189276
+        },
+        {
+          "hex": "8a1f161b30e7fff",
+          "nearest_farm": 0.010828624884973008
+        },
+        {
+          "hex": "8a1f161b30f7fff",
+          "nearest_farm": 0.012192901277875992
+        },
+        {
+          "hex": "8a1f161b3107fff",
+          "nearest_farm": 0.012009246695814017
+        },
+        {
+          "hex": "8a1f161b310ffff",
+          "nearest_farm": 0.010615372986435083
+        },
+        {
+          "hex": "8a1f161b3117fff",
+          "nearest_farm": 0.013531869895701504
+        },
+        {
+          "hex": "8a1f161b311ffff",
+          "nearest_farm": 0.0121364668545668
+        },
+        {
+          "hex": "8a1f161b3127fff",
+          "nearest_farm": 0.011985977438412978
+        },
+        {
+          "hex": "8a1f161b312ffff",
+          "nearest_farm": 0.010486884884998576
+        },
+        {
+          "hex": "8a1f161b3137fff",
+          "nearest_farm": 0.013497880223775488
+        },
+        {
+          "hex": "8a1f161b3147fff",
+          "nearest_farm": 0.007867813866482304
+        },
+        {
+          "hex": "8a1f161b3157fff",
+          "nearest_farm": 0.009358703459131977
+        },
+        {
+          "hex": "8a1f161b3167fff",
+          "nearest_farm": 0.007576185023571171
+        },
+        {
+          "hex": "8a1f161b3177fff",
+          "nearest_farm": 0.00909510777111114
+        },
+        {
+          "hex": "8a1f161b3187fff",
+          "nearest_farm": 0.015180114190192703
+        },
+        {
+          "hex": "8a1f161b318ffff",
+          "nearest_farm": 0.013874068232797417
+        },
+        {
+          "hex": "8a1f161b3197fff",
+          "nearest_farm": 0.016702388113448992
+        },
+        {
+          "hex": "8a1f161b319ffff",
+          "nearest_farm": 0.015386437898092608
+        },
+        {
+          "hex": "8a1f161b31a7fff",
+          "nearest_farm": 0.015054667648528454
+        },
+        {
+          "hex": "8a1f161b31affff",
+          "nearest_farm": 0.013658104223213518
+        },
+        {
+          "hex": "8a1f161b31b7fff",
+          "nearest_farm": 0.01657758501743125
+        },
+        {
+          "hex": "8a1f161b3407fff",
+          "nearest_farm": 0.02168949043864134
+        },
+        {
+          "hex": "8a1f161b340ffff",
+          "nearest_farm": 0.020485880942404357
+        },
+        {
+          "hex": "8a1f161b3417fff",
+          "nearest_farm": 0.02320032229476959
+        },
+        {
+          "hex": "8a1f161b341ffff",
+          "nearest_farm": 0.021982090484698114
+        },
+        {
+          "hex": "8a1f161b3427fff",
+          "nearest_farm": 0.02145157370744432
+        },
+        {
+          "hex": "8a1f161b342ffff",
+          "nearest_farm": 0.02018053727028347
+        },
+        {
+          "hex": "8a1f161b3437fff",
+          "nearest_farm": 0.022970197030030528
+        },
+        {
+          "hex": "8a1f161b3447fff",
+          "nearest_farm": 0.017908737998329215
+        },
+        {
+          "hex": "8a1f161b3457fff",
+          "nearest_farm": 0.019373746844233274
+        },
+        {
+          "hex": "8a1f161b345ffff",
+          "nearest_farm": 0.01836971392077604
+        },
+        {
+          "hex": "8a1f161b3467fff",
+          "nearest_farm": 0.017507528743306574
+        },
+        {
+          "hex": "8a1f161b3477fff",
+          "nearest_farm": 0.01899399017281258
+        },
+        {
+          "hex": "8a1f161b348ffff",
+          "nearest_farm": 0.023812776564060542
+        },
+        {
+          "hex": "8a1f161b34a7fff",
+          "nearest_farm": 0.024712683692533526
+        },
+        {
+          "hex": "8a1f161b34affff",
+          "nearest_farm": 0.0234817884422229
+        },
+        {
+          "hex": "8a1f161b34c7fff",
+          "nearest_farm": 0.02126143795786011
+        },
+        {
+          "hex": "8a1f161b34cffff",
+          "nearest_farm": 0.020298417224715135
+        },
+        {
+          "hex": "8a1f161b34d7fff",
+          "nearest_farm": 0.022722504046494976
+        },
+        {
+          "hex": "8a1f161b34e7fff",
+          "nearest_farm": 0.02084713040982018
+        },
+        {
+          "hex": "8a1f161b34effff",
+          "nearest_farm": 0.01980976362795527
+        },
+        {
+          "hex": "8a1f161b34f7fff",
+          "nearest_farm": 0.022327225729911488
+        },
+        {
+          "hex": "8a1f161b3507fff",
+          "nearest_farm": 0.022669868555124865
+        },
+        {
+          "hex": "8a1f161b350ffff",
+          "nearest_farm": 0.02127017359341302
+        },
+        {
+          "hex": "8a1f161b3517fff",
+          "nearest_farm": 0.024193011557162296
+        },
+        {
+          "hex": "8a1f161b351ffff",
+          "nearest_farm": 0.022792966130015316
+        },
+        {
+          "hex": "8a1f161b3527fff",
+          "nearest_farm": 0.022601787164251375
+        },
+        {
+          "hex": "8a1f161b352ffff",
+          "nearest_farm": 0.02114674281066105
+        },
+        {
+          "hex": "8a1f161b3537fff",
+          "nearest_farm": 0.02412175139761295
+        },
+        {
+          "hex": "8a1f161b3547fff",
+          "nearest_farm": 0.01841665954488513
+        },
+        {
+          "hex": "8a1f161b354ffff",
+          "nearest_farm": 0.017170274110648708
+        },
+        {
+          "hex": "8a1f161b3557fff",
+          "nearest_farm": 0.019933666782954704
+        },
+        {
+          "hex": "8a1f161b355ffff",
+          "nearest_farm": 0.018673924284645753
+        },
+        {
+          "hex": "8a1f161b3567fff",
+          "nearest_farm": 0.018224853634414145
+        },
+        {
+          "hex": "8a1f161b356ffff",
+          "nearest_farm": 0.016900800963300287
+        },
+        {
+          "hex": "8a1f161b3577fff",
+          "nearest_farm": 0.019747460702046173
+        },
+        {
+          "hex": "8a1f161b358ffff",
+          "nearest_farm": 0.024489398851684985
+        },
+        {
+          "hex": "8a1f161b35a7fff",
+          "nearest_farm": 0.025716164346130506
+        },
+        {
+          "hex": "8a1f161b35affff",
+          "nearest_farm": 0.02431581869044015
+        },
+        {
+          "hex": "8a1f161b3617fff",
+          "nearest_farm": 0.016972291712182418
+        },
+        {
+          "hex": "8a1f161b3637fff",
+          "nearest_farm": 0.016197600974195158
+        },
+        {
+          "hex": "8a1f161b3687fff",
+          "nearest_farm": 0.018950724265787776
+        },
+        {
+          "hex": "8a1f161b3697fff",
+          "nearest_farm": 0.02016514824568784
+        },
+        {
+          "hex": "8a1f161b369ffff",
+          "nearest_farm": 0.019753898586288687
+        },
+        {
+          "hex": "8a1f161b36a7fff",
+          "nearest_farm": 0.018181248210285595
+        },
+        {
+          "hex": "8a1f161b36affff",
+          "nearest_farm": 0.01778396216373392
+        },
+        {
+          "hex": "8a1f161b36b7fff",
+          "nearest_farm": 0.019434491157325408
+        },
+        {
+          "hex": "8a1f161b3727fff",
+          "nearest_farm": 0.014154773041923889
+        },
+        {
+          "hex": "8a1f161b372ffff",
+          "nearest_farm": 0.013481072611171282
+        },
+        {
+          "hex": "8a1f161b3787fff",
+          "nearest_farm": 0.01809351088382337
+        },
+        {
+          "hex": "8a1f161b378ffff",
+          "nearest_farm": 0.017449926752850203
+        },
+        {
+          "hex": "8a1f161b3797fff",
+          "nearest_farm": 0.01945343542388831
+        },
+        {
+          "hex": "8a1f161b379ffff",
+          "nearest_farm": 0.018742468233889992
+        },
+        {
+          "hex": "8a1f161b37b7fff",
+          "nearest_farm": 0.018886082593380697
+        },
+        {
+          "hex": "8a1f161b3807fff",
+          "nearest_farm": 0.01114729137770592
+        },
+        {
+          "hex": "8a1f161b380ffff",
+          "nearest_farm": 0.009401925530420921
+        },
+        {
+          "hex": "8a1f161b3817fff",
+          "nearest_farm": 0.012532704411013288
+        },
+        {
+          "hex": "8a1f161b381ffff",
+          "nearest_farm": 0.010812977408249541
+        },
+        {
+          "hex": "8a1f161b3827fff",
+          "nearest_farm": 0.011580880660810918
+        },
+        {
+          "hex": "8a1f161b382ffff",
+          "nearest_farm": 0.009802947791953506
+        },
+        {
+          "hex": "8a1f161b3837fff",
+          "nearest_farm": 0.012905946913596221
+        },
+        {
+          "hex": "8a1f161b3847fff",
+          "nearest_farm": 0.006274310865017502
+        },
+        {
+          "hex": "8a1f161b3857fff",
+          "nearest_farm": 0.007678926305957602
+        },
+        {
+          "hex": "8a1f161b3867fff",
+          "nearest_farm": 0.006728706016153468
+        },
+        {
+          "hex": "8a1f161b386ffff",
+          "nearest_farm": 0.004940757820058738
+        },
+        {
+          "hex": "8a1f161b3877fff",
+          "nearest_farm": 0.008032089570325774
+        },
+        {
+          "hex": "8a1f161b3887fff",
+          "nearest_farm": 0.013707506526048333
+        },
+        {
+          "hex": "8a1f161b388ffff",
+          "nearest_farm": 0.012067257355152693
+        },
+        {
+          "hex": "8a1f161b3897fff",
+          "nearest_farm": 0.015177162444815772
+        },
+        {
+          "hex": "8a1f161b389ffff",
+          "nearest_farm": 0.01355682630491206
+        },
+        {
+          "hex": "8a1f161b38a7fff",
+          "nearest_farm": 0.013946945298125402
+        },
+        {
+          "hex": "8a1f161b38affff",
+          "nearest_farm": 0.012251002672083722
+        },
+        {
+          "hex": "8a1f161b38b7fff",
+          "nearest_farm": 0.015382057349755982
+        },
+        {
+          "hex": "8a1f161b38c7fff",
+          "nearest_farm": 0.008973974805444408
+        },
+        {
+          "hex": "8a1f161b38d7fff",
+          "nearest_farm": 0.010477439129118159
+        },
+        {
+          "hex": "8a1f161b38dffff",
+          "nearest_farm": 0.00896493026521427
+        },
+        {
+          "hex": "8a1f161b38e7fff",
+          "nearest_farm": 0.009121823190259165
+        },
+        {
+          "hex": "8a1f161b38f7fff",
+          "nearest_farm": 0.010587350824584587
+        },
+        {
+          "hex": "8a1f161b3907fff",
+          "nearest_farm": 0.013895763997734805
+        },
+        {
+          "hex": "8a1f161b390ffff",
+          "nearest_farm": 0.012103077352832295
+        },
+        {
+          "hex": "8a1f161b3917fff",
+          "nearest_farm": 0.015147979931784518
+        },
+        {
+          "hex": "8a1f161b391ffff",
+          "nearest_farm": 0.013363059142202888
+        },
+        {
+          "hex": "8a1f161b3927fff",
+          "nearest_farm": 0.014495727425369115
+        },
+        {
+          "hex": "8a1f161b392ffff",
+          "nearest_farm": 0.012702955725593787
+        },
+        {
+          "hex": "8a1f161b3937fff",
+          "nearest_farm": 0.015688706395051814
+        },
+        {
+          "hex": "8a1f161b3947fff",
+          "nearest_farm": 0.009118678019797426
+        },
+        {
+          "hex": "8a1f161b394ffff",
+          "nearest_farm": 0.007327811282917096
+        },
+        {
+          "hex": "8a1f161b3957fff",
+          "nearest_farm": 0.010310787022448876
+        },
+        {
+          "hex": "8a1f161b395ffff",
+          "nearest_farm": 0.008519151810366176
+        },
+        {
+          "hex": "8a1f161b3967fff",
+          "nearest_farm": 0.009810066878458186
+        },
+        {
+          "hex": "8a1f161b396ffff",
+          "nearest_farm": 0.008039334734681151
+        },
+        {
+          "hex": "8a1f161b3977fff",
+          "nearest_farm": 0.01091053436019406
+        },
+        {
+          "hex": "8a1f161b3987fff",
+          "nearest_farm": 0.016020943168347342
+        },
+        {
+          "hex": "8a1f161b398ffff",
+          "nearest_farm": 0.014270673037347834
+        },
+        {
+          "hex": "8a1f161b3997fff",
+          "nearest_farm": 0.01739777482477205
+        },
+        {
+          "hex": "8a1f161b399ffff",
+          "nearest_farm": 0.015664689586636325
+        },
+        {
+          "hex": "8a1f161b39a7fff",
+          "nearest_farm": 0.01644603217523286
+        },
+        {
+          "hex": "8a1f161b39affff",
+          "nearest_farm": 0.014673109351888348
+        },
+        {
+          "hex": "8a1f161b39b7fff",
+          "nearest_farm": 0.01777987810198792
+        },
+        {
+          "hex": "8a1f161b3a07fff",
+          "nearest_farm": 0.002890277528439784
+        },
+        {
+          "hex": "8a1f161b3a0ffff",
+          "nearest_farm": 0.004188096081745733
+        },
+        {
+          "hex": "8a1f161b3a27fff",
+          "nearest_farm": 0.0017715383517165914
+        },
+        {
+          "hex": "8a1f161b3a2ffff",
+          "nearest_farm": 0.003189397597130356
+        },
+        {
+          "hex": "8a1f161b3a47fff",
+          "nearest_farm": 0.00659927159937221
+        },
+        {
+          "hex": "8a1f161b3a57fff",
+          "nearest_farm": 0.005758752680995383
+        },
+        {
+          "hex": "8a1f161b3a5ffff",
+          "nearest_farm": 0.00743122482672459
+        },
+        {
+          "hex": "8a1f161b3a67fff",
+          "nearest_farm": 0.005864328890632711
+        },
+        {
+          "hex": "8a1f161b3a6ffff",
+          "nearest_farm": 0.007653923666158095
+        },
+        {
+          "hex": "8a1f161b3a77fff",
+          "nearest_farm": 0.004862395202361849
+        },
+        {
+          "hex": "8a1f161b3b07fff",
+          "nearest_farm": 0.001411057246349287
+        },
+        {
+          "hex": "8a1f161b3b0ffff",
+          "nearest_farm": 0.0006601280188417381
+        },
+        {
+          "hex": "8a1f161b3b1ffff",
+          "nearest_farm": 0.0015940555392717972
+        },
+        {
+          "hex": "8a1f161b3b27fff",
+          "nearest_farm": 0.001988437899286962
+        },
+        {
+          "hex": "8a1f161b3b2ffff",
+          "nearest_farm": 0.0004958752681198633
+        },
+        {
+          "hex": "8a1f161b3b37fff",
+          "nearest_farm": 0.003159573490757811
+        },
+        {
+          "hex": "8a1f161b3b47fff",
+          "nearest_farm": 0.0034842887051275235
+        },
+        {
+          "hex": "8a1f161b3b4ffff",
+          "nearest_farm": 0.005267155871558018
+        },
+        {
+          "hex": "8a1f161b3b57fff",
+          "nearest_farm": 0.0023058862473845014
+        },
+        {
+          "hex": "8a1f161b3b5ffff",
+          "nearest_farm": 0.0040786342150915325
+        },
+        {
+          "hex": "8a1f161b3b67fff",
+          "nearest_farm": 0.0031871373892396995
+        },
+        {
+          "hex": "8a1f161b3b6ffff",
+          "nearest_farm": 0.004858810968065132
+        },
+        {
+          "hex": "8a1f161b3b77fff",
+          "nearest_farm": 0.0017247136937473745
+        },
+        {
+          "hex": "8a1f161b3c07fff",
+          "nearest_farm": 0.02124577123527825
+        },
+        {
+          "hex": "8a1f161b3c0ffff",
+          "nearest_farm": 0.019635343238276197
+        },
+        {
+          "hex": "8a1f161b3c17fff",
+          "nearest_farm": 0.0227305699619745
+        },
+        {
+          "hex": "8a1f161b3c1ffff",
+          "nearest_farm": 0.02113202278240819
+        },
+        {
+          "hex": "8a1f161b3c27fff",
+          "nearest_farm": 0.021417679802387072
+        },
+        {
+          "hex": "8a1f161b3c2ffff",
+          "nearest_farm": 0.019766826979711122
+        },
+        {
+          "hex": "8a1f161b3c37fff",
+          "nearest_farm": 0.02288345992961912
+        },
+        {
+          "hex": "8a1f161b3c47fff",
+          "nearest_farm": 0.01655447740503541
+        },
+        {
+          "hex": "8a1f161b3c4ffff",
+          "nearest_farm": 0.015012123441984774
+        },
+        {
+          "hex": "8a1f161b3c57fff",
+          "nearest_farm": 0.01805947430737688
+        },
+        {
+          "hex": "8a1f161b3c5ffff",
+          "nearest_farm": 0.016528056983837934
+        },
+        {
+          "hex": "8a1f161b3c67fff",
+          "nearest_farm": 0.016656482641923452
+        },
+        {
+          "hex": "8a1f161b3c6ffff",
+          "nearest_farm": 0.015053182023182751
+        },
+        {
+          "hex": "8a1f161b3c77fff",
+          "nearest_farm": 0.018143097060129447
+        },
+        {
+          "hex": "8a1f161b3c87fff",
+          "nearest_farm": 0.024135361922407266
+        },
+        {
+          "hex": "8a1f161b3c8ffff",
+          "nearest_farm": 0.022589217752200914
+        },
+        {
+          "hex": "8a1f161b3c97fff",
+          "nearest_farm": 0.02564084373588669
+        },
+        {
+          "hex": "8a1f161b3c9ffff",
+          "nearest_farm": 0.02410249387416319
+        },
+        {
+          "hex": "8a1f161b3ca7fff",
+          "nearest_farm": 0.024220141794147533
+        },
+        {
+          "hex": "8a1f161b3caffff",
+          "nearest_farm": 0.022632251163801558
+        },
+        {
+          "hex": "8a1f161b3cb7fff",
+          "nearest_farm": 0.025713652833228885
+        },
+        {
+          "hex": "8a1f161b3cc7fff",
+          "nearest_farm": 0.01956339973876809
+        },
+        {
+          "hex": "8a1f161b3ccffff",
+          "nearest_farm": 0.018100585551373723
+        },
+        {
+          "hex": "8a1f161b3cd7fff",
+          "nearest_farm": 0.021082297798272698
+        },
+        {
+          "hex": "8a1f161b3cdffff",
+          "nearest_farm": 0.019623644114112947
+        },
+        {
+          "hex": "8a1f161b3ce7fff",
+          "nearest_farm": 0.019567312864974436
+        },
+        {
+          "hex": "8a1f161b3ceffff",
+          "nearest_farm": 0.01804524857739746
+        },
+        {
+          "hex": "8a1f161b3cf7fff",
+          "nearest_farm": 0.021077377851020183
+        },
+        {
+          "hex": "8a1f161b3d07fff",
+          "nearest_farm": 0.02334827668332389
+        },
+        {
+          "hex": "8a1f161b3d0ffff",
+          "nearest_farm": 0.021646361140229192
+        },
+        {
+          "hex": "8a1f161b3d17fff",
+          "nearest_farm": 0.02477897857936347
+        },
+        {
+          "hex": "8a1f161b3d1ffff",
+          "nearest_farm": 0.02308983544621467
+        },
+        {
+          "hex": "8a1f161b3d27fff",
+          "nearest_farm": 0.02365707575618183
+        },
+        {
+          "hex": "8a1f161b3d2ffff",
+          "nearest_farm": 0.021930037583231962
+        },
+        {
+          "hex": "8a1f161b3d37fff",
+          "nearest_farm": 0.025062979972388193
+        },
+        {
+          "hex": "8a1f161b3d47fff",
+          "nearest_farm": 0.018513984397473406
+        },
+        {
+          "hex": "8a1f161b3d4ffff",
+          "nearest_farm": 0.01683269641854804
+        },
+        {
+          "hex": "8a1f161b3d57fff",
+          "nearest_farm": 0.019960508324279612
+        },
+        {
+          "hex": "8a1f161b3d5ffff",
+          "nearest_farm": 0.01829516323412284
+        },
+        {
+          "hex": "8a1f161b3d67fff",
+          "nearest_farm": 0.018797227401365236
+        },
+        {
+          "hex": "8a1f161b3d6ffff",
+          "nearest_farm": 0.01708081999872575
+        },
+        {
+          "hex": "8a1f161b3d77fff",
+          "nearest_farm": 0.020214597714653677
+        },
+        {
+          "hex": "8a1f161b3d87fff",
+          "nearest_farm": 0.026004083846451274
+        },
+        {
+          "hex": "8a1f161b3d8ffff",
+          "nearest_farm": 0.024356289879447466
+        },
+        {
+          "hex": "8a1f161b3d97fff",
+          "nearest_farm": 0.027471953862378235
+        },
+        {
+          "hex": "8a1f161b3d9ffff",
+          "nearest_farm": 0.02583495958163754
+        },
+        {
+          "hex": "8a1f161b3da7fff",
+          "nearest_farm": 0.02622009892990215
+        },
+        {
+          "hex": "8a1f161b3daffff",
+          "nearest_farm": 0.024542949805355516
+        },
+        {
+          "hex": "8a1f161b3db7fff",
+          "nearest_farm": 0.027670005834743855
+        },
+        {
+          "hex": "8a1f161b4247fff",
+          "nearest_farm": 0.017771920941329785
+        },
+        {
+          "hex": "8a1f161b424ffff",
+          "nearest_farm": 0.015980687281308754
+        },
+        {
+          "hex": "8a1f161b425ffff",
+          "nearest_farm": 0.017252400587781238
+        },
+        {
+          "hex": "8a1f161b426ffff",
+          "nearest_farm": 0.016551013088606226
+        },
+        {
+          "hex": "8a1f161b42c7fff",
+          "nearest_farm": 0.019902166297952453
+        },
+        {
+          "hex": "8a1f161b42cffff",
+          "nearest_farm": 0.018144538019381134
+        },
+        {
+          "hex": "8a1f161b42effff",
+          "nearest_farm": 0.018562058635437154
+        },
+        {
+          "hex": "8a1f161b4607fff",
+          "nearest_farm": 0.03204553107048889
+        },
+        {
+          "hex": "8a1f161b460ffff",
+          "nearest_farm": 0.030320320397354623
+        },
+        {
+          "hex": "8a1f161b4617fff",
+          "nearest_farm": 0.0334537096586548
+        },
+        {
+          "hex": "8a1f161b461ffff",
+          "nearest_farm": 0.03173760083488524
+        },
+        {
+          "hex": "8a1f161b4627fff",
+          "nearest_farm": 0.03238934629579363
+        },
+        {
+          "hex": "8a1f161b462ffff",
+          "nearest_farm": 0.030648339869494234
+        },
+        {
+          "hex": "8a1f161b4637fff",
+          "nearest_farm": 0.03377789631987146
+        },
+        {
+          "hex": "8a1f161b4667fff",
+          "nearest_farm": 0.027519699384045547
+        },
+        {
+          "hex": "8a1f161b4677fff",
+          "nearest_farm": 0.02891380182338283
+        },
+        {
+          "hex": "8a1f161b470ffff",
+          "nearest_farm": 0.03276791583295647
+        },
+        {
+          "hex": "8a1f161b471ffff",
+          "nearest_farm": 0.034135829236113455
+        },
+        {
+          "hex": "8a1f161b472ffff",
+          "nearest_farm": 0.0331800489894526
+        },
+        {
+          "hex": "8a1f161b4747fff",
+          "nearest_farm": 0.029651891592229536
+        },
+        {
+          "hex": "8a1f161b474ffff",
+          "nearest_farm": 0.0278935280079216
+        },
+        {
+          "hex": "8a1f161b4757fff",
+          "nearest_farm": 0.031013424130091918
+        },
+        {
+          "hex": "8a1f161b475ffff",
+          "nearest_farm": 0.029263713745963364
+        },
+        {
+          "hex": "8a1f161b4767fff",
+          "nearest_farm": 0.030076852559679446
+        },
+        {
+          "hex": "8a1f161b476ffff",
+          "nearest_farm": 0.028306829148440633
+        },
+        {
+          "hex": "8a1f161b4777fff",
+          "nearest_farm": 0.03141427976560169
+        },
+        {
+          "hex": "8a1f161b5007fff",
+          "nearest_farm": 0.00496918130224848
+        },
+        {
+          "hex": "8a1f161b500ffff",
+          "nearest_farm": 0.004705609061064437
+        },
+        {
+          "hex": "8a1f161b5017fff",
+          "nearest_farm": 0.004685729592411679
+        },
+        {
+          "hex": "8a1f161b501ffff",
+          "nearest_farm": 0.0038883619605529747
+        },
+        {
+          "hex": "8a1f161b5027fff",
+          "nearest_farm": 0.006064438357659782
+        },
+        {
+          "hex": "8a1f161b502ffff",
+          "nearest_farm": 0.005663383398957559
+        },
+        {
+          "hex": "8a1f161b5037fff",
+          "nearest_farm": 0.00580370674702916
+        },
+        {
+          "hex": "8a1f161b5047fff",
+          "nearest_farm": 0.006479851528863123
+        },
+        {
+          "hex": "8a1f161b504ffff",
+          "nearest_farm": 0.007523751493331409
+        },
+        {
+          "hex": "8a1f161b5057fff",
+          "nearest_farm": 0.005102268238085461
+        },
+        {
+          "hex": "8a1f161b505ffff",
+          "nearest_farm": 0.00603026235671677
+        },
+        {
+          "hex": "8a1f161b5067fff",
+          "nearest_farm": 0.007079828101515341
+        },
+        {
+          "hex": "8a1f161b506ffff",
+          "nearest_farm": 0.007911324001435025
+        },
+        {
+          "hex": "8a1f161b5077fff",
+          "nearest_farm": 0.0058147126651577775
+        },
+        {
+          "hex": "8a1f161b5087fff",
+          "nearest_farm": 0.0038737374196013913
+        },
+        {
+          "hex": "8a1f161b508ffff",
+          "nearest_farm": 0.0024568860608574286
+        },
+        {
+          "hex": "8a1f161b5097fff",
+          "nearest_farm": 0.00468137463248013
+        },
+        {
+          "hex": "8a1f161b509ffff",
+          "nearest_farm": 0.002942725357502243
+        },
+        {
+          "hex": "8a1f161b50a7fff",
+          "nearest_farm": 0.004885036494535836
+        },
+        {
+          "hex": "8a1f161b50affff",
+          "nearest_farm": 0.0035693784766250725
+        },
+        {
+          "hex": "8a1f161b50b7fff",
+          "nearest_farm": 0.005514988221168882
+        },
+        {
+          "hex": "8a1f161b50c7fff",
+          "nearest_farm": 0.00313275685111362
+        },
+        {
+          "hex": "8a1f161b50cffff",
+          "nearest_farm": 0.004243970134162665
+        },
+        {
+          "hex": "8a1f161b50d7fff",
+          "nearest_farm": 0.001872587883421214
+        },
+        {
+          "hex": "8a1f161b50dffff",
+          "nearest_farm": 0.0027233945897093925
+        },
+        {
+          "hex": "8a1f161b50e7fff",
+          "nearest_farm": 0.0038370322491157187
+        },
+        {
+          "hex": "8a1f161b50effff",
+          "nearest_farm": 0.004557036617762101
+        },
+        {
+          "hex": "8a1f161b50f7fff",
+          "nearest_farm": 0.0028385339142972615
+        },
+        {
+          "hex": "8a1f161b5107fff",
+          "nearest_farm": 0.008041807507497835
+        },
+        {
+          "hex": "8a1f161b510ffff",
+          "nearest_farm": 0.00716751237559222
+        },
+        {
+          "hex": "8a1f161b5117fff",
+          "nearest_farm": 0.008093530909673451
+        },
+        {
+          "hex": "8a1f161b511ffff",
+          "nearest_farm": 0.006922516801611923
+        },
+        {
+          "hex": "8a1f161b5127fff",
+          "nearest_farm": 0.009161398635162764
+        },
+        {
+          "hex": "8a1f161b512ffff",
+          "nearest_farm": 0.008275273504802685
+        },
+        {
+          "hex": "8a1f161b5137fff",
+          "nearest_farm": 0.009187402350089531
+        },
+        {
+          "hex": "8a1f161b5147fff",
+          "nearest_farm": 0.007543183768662268
+        },
+        {
+          "hex": "8a1f161b514ffff",
+          "nearest_farm": 0.007795541032571729
+        },
+        {
+          "hex": "8a1f161b5157fff",
+          "nearest_farm": 0.00667204666644774
+        },
+        {
+          "hex": "8a1f161b515ffff",
+          "nearest_farm": 0.0066407631277355375
+        },
+        {
+          "hex": "8a1f161b5177fff",
+          "nearest_farm": 0.00771165143146393
+        },
+        {
+          "hex": "8a1f161b5187fff",
+          "nearest_farm": 0.007412783516684833
+        },
+        {
+          "hex": "8a1f161b518ffff",
+          "nearest_farm": 0.005935720510647243
+        },
+        {
+          "hex": "8a1f161b5197fff",
+          "nearest_farm": 0.008088820737293747
+        },
+        {
+          "hex": "8a1f161b519ffff",
+          "nearest_farm": 0.006436340851464654
+        },
+        {
+          "hex": "8a1f161b51a7fff",
+          "nearest_farm": 0.008425179428120348
+        },
+        {
+          "hex": "8a1f161b51affff",
+          "nearest_farm": 0.0070080922127464945
+        },
+        {
+          "hex": "8a1f161b51b7fff",
+          "nearest_farm": 0.009005868001093308
+        },
+        {
+          "hex": "8a1f161b5207fff",
+          "nearest_farm": 0.011920406509269873
+        },
+        {
+          "hex": "8a1f161b520ffff",
+          "nearest_farm": 0.013587932868447342
+        },
+        {
+          "hex": "8a1f161b5217fff",
+          "nearest_farm": 0.01045694435175375
+        },
+        {
+          "hex": "8a1f161b521ffff",
+          "nearest_farm": 0.01214887681447207
+        },
+        {
+          "hex": "8a1f161b5227fff",
+          "nearest_farm": 0.011794405614559652
+        },
+        {
+          "hex": "8a1f161b522ffff",
+          "nearest_farm": 0.013397421878273662
+        },
+        {
+          "hex": "8a1f161b5237fff",
+          "nearest_farm": 0.010295704886995794
+        },
+        {
+          "hex": "8a1f161b5257fff",
+          "nearest_farm": 0.015284278570010298
+        },
+        {
+          "hex": "8a1f161b5287fff",
+          "nearest_farm": 0.009352056774390783
+        },
+        {
+          "hex": "8a1f161b528ffff",
+          "nearest_farm": 0.011116359785367281
+        },
+        {
+          "hex": "8a1f161b5297fff",
+          "nearest_farm": 0.008022654285638435
+        },
+        {
+          "hex": "8a1f161b529ffff",
+          "nearest_farm": 0.00980753682594395
+        },
+        {
+          "hex": "8a1f161b52b7fff",
+          "nearest_farm": 0.007601921550563157
+        },
+        {
+          "hex": "8a1f161b52c7fff",
+          "nearest_farm": 0.014228387168944376
+        },
+        {
+          "hex": "8a1f161b52cffff",
+          "nearest_farm": 0.01599155508143044
+        },
+        {
+          "hex": "8a1f161b52d7fff",
+          "nearest_farm": 0.012889019575142779
+        },
+        {
+          "hex": "8a1f161b52e7fff",
+          "nearest_farm": 0.013866647911325384
+        },
+        {
+          "hex": "8a1f161b52effff",
+          "nearest_farm": 0.01560173009318966
+        },
+        {
+          "hex": "8a1f161b52f7fff",
+          "nearest_farm": 0.012474190466113096
+        },
+        {
+          "hex": "8a1f161b5307fff",
+          "nearest_farm": 0.01033645743540069
+        },
+        {
+          "hex": "8a1f161b5317fff",
+          "nearest_farm": 0.008812837968863972
+        },
+        {
+          "hex": "8a1f161b531ffff",
+          "nearest_farm": 0.010255069623560204
+        },
+        {
+          "hex": "8a1f161b5337fff",
+          "nearest_farm": 0.009027465151144132
+        },
+        {
+          "hex": "8a1f161b538ffff",
+          "nearest_farm": 0.008805748623808689
+        },
+        {
+          "hex": "8a1f161b53a7fff",
+          "nearest_farm": 0.007289421994142371
+        },
+        {
+          "hex": "8a1f161b53affff",
+          "nearest_farm": 0.008737740869701237
+        },
+        {
+          "hex": "8a1f161b5407fff",
+          "nearest_farm": 0.01015167712190706
+        },
+        {
+          "hex": "8a1f161b540ffff",
+          "nearest_farm": 0.008396759346581798
+        },
+        {
+          "hex": "8a1f161b5417fff",
+          "nearest_farm": 0.011524956700698533
+        },
+        {
+          "hex": "8a1f161b541ffff",
+          "nearest_farm": 0.009797393378745849
+        },
+        {
+          "hex": "8a1f161b5427fff",
+          "nearest_farm": 0.010613018564503472
+        },
+        {
+          "hex": "8a1f161b542ffff",
+          "nearest_farm": 0.008827872281413327
+        },
+        {
+          "hex": "8a1f161b5437fff",
+          "nearest_farm": 0.011918312071002201
+        },
+        {
+          "hex": "8a1f161b5447fff",
+          "nearest_farm": 0.0052762106528682655
+        },
+        {
+          "hex": "8a1f161b544ffff",
+          "nearest_farm": 0.003528540549038366
+        },
+        {
+          "hex": "8a1f161b5457fff",
+          "nearest_farm": 0.006662834826211207
+        },
+        {
+          "hex": "8a1f161b545ffff",
+          "nearest_farm": 0.004971930955368503
+        },
+        {
+          "hex": "8a1f161b5467fff",
+          "nearest_farm": 0.005785198037696729
+        },
+        {
+          "hex": "8a1f161b546ffff",
+          "nearest_farm": 0.003990874350886192
+        },
+        {
+          "hex": "8a1f161b5477fff",
+          "nearest_farm": 0.007047365346741249
+        },
+        {
+          "hex": "8a1f161b5487fff",
+          "nearest_farm": 0.012684010776191558
+        },
+        {
+          "hex": "8a1f161b548ffff",
+          "nearest_farm": 0.011041643715811131
+        },
+        {
+          "hex": "8a1f161b5497fff",
+          "nearest_farm": 0.014152580630117411
+        },
+        {
+          "hex": "8a1f161b549ffff",
+          "nearest_farm": 0.012531767205764857
+        },
+        {
+          "hex": "8a1f161b54a7fff",
+          "nearest_farm": 0.012931950271765939
+        },
+        {
+          "hex": "8a1f161b54affff",
+          "nearest_farm": 0.011230101510000043
+        },
+        {
+          "hex": "8a1f161b54b7fff",
+          "nearest_farm": 0.014362745355679633
+        },
+        {
+          "hex": "8a1f161b54c7fff",
+          "nearest_farm": 0.007949212288964263
+        },
+        {
+          "hex": "8a1f161b54cffff",
+          "nearest_farm": 0.006433134987531321
+        },
+        {
+          "hex": "8a1f161b54d7fff",
+          "nearest_farm": 0.009454623303297681
+        },
+        {
+          "hex": "8a1f161b54dffff",
+          "nearest_farm": 0.007956148241118018
+        },
+        {
+          "hex": "8a1f161b54e7fff",
+          "nearest_farm": 0.008098873896095926
+        },
+        {
+          "hex": "8a1f161b54effff",
+          "nearest_farm": 0.006452387071956977
+        },
+        {
+          "hex": "8a1f161b54f7fff",
+          "nearest_farm": 0.009562078401331301
+        },
+        {
+          "hex": "8a1f161b5507fff",
+          "nearest_farm": 0.0129624535588983
+        },
+        {
+          "hex": "8a1f161b550ffff",
+          "nearest_farm": 0.011168155022221411
+        },
+        {
+          "hex": "8a1f161b5517fff",
+          "nearest_farm": 0.014190201883707081
+        },
+        {
+          "hex": "8a1f161b551ffff",
+          "nearest_farm": 0.01240079483447369
+        },
+        {
+          "hex": "8a1f161b5527fff",
+          "nearest_farm": 0.01359347481120988
+        },
+        {
+          "hex": "8a1f161b552ffff",
+          "nearest_farm": 0.011803857193038197
+        },
+        {
+          "hex": "8a1f161b5537fff",
+          "nearest_farm": 0.014756739730959431
+        },
+        {
+          "hex": "8a1f161b5547fff",
+          "nearest_farm": 0.008230723280671476
+        },
+        {
+          "hex": "8a1f161b554ffff",
+          "nearest_farm": 0.006450610471166372
+        },
+        {
+          "hex": "8a1f161b5557fff",
+          "nearest_farm": 0.009373844912856916
+        },
+        {
+          "hex": "8a1f161b555ffff",
+          "nearest_farm": 0.007579524769796608
+        },
+        {
+          "hex": "8a1f161b5567fff",
+          "nearest_farm": 0.008975082945661086
+        },
+        {
+          "hex": "8a1f161b556ffff",
+          "nearest_farm": 0.007229377689900574
+        },
+        {
+          "hex": "8a1f161b5577fff",
+          "nearest_farm": 0.010015907917675732
+        },
+        {
+          "hex": "8a1f161b5587fff",
+          "nearest_farm": 0.0150270126447875
+        },
+        {
+          "hex": "8a1f161b558ffff",
+          "nearest_farm": 0.013270220053731314
+        },
+        {
+          "hex": "8a1f161b5597fff",
+          "nearest_farm": 0.01639481704199705
+        },
+        {
+          "hex": "8a1f161b559ffff",
+          "nearest_farm": 0.014655840785535236
+        },
+        {
+          "hex": "8a1f161b55a7fff",
+          "nearest_farm": 0.01547063991701649
+        },
+        {
+          "hex": "8a1f161b55affff",
+          "nearest_farm": 0.01369212409735766
+        },
+        {
+          "hex": "8a1f161b55b7fff",
+          "nearest_farm": 0.01679171180107732
+        },
+        {
+          "hex": "8a1f161b5607fff",
+          "nearest_farm": 0.0032278881604886262
+        },
+        {
+          "hex": "8a1f161b560ffff",
+          "nearest_farm": 0.004789869857310613
+        },
+        {
+          "hex": "8a1f161b5617fff",
+          "nearest_farm": 0.0031920853424986274
+        },
+        {
+          "hex": "8a1f161b561ffff",
+          "nearest_farm": 0.00429262878416263
+        },
+        {
+          "hex": "8a1f161b5627fff",
+          "nearest_farm": 0.002218925149759888
+        },
+        {
+          "hex": "8a1f161b562ffff",
+          "nearest_farm": 0.003910746969540179
+        },
+        {
+          "hex": "8a1f161b5637fff",
+          "nearest_farm": 0.002082147549015348
+        },
+        {
+          "hex": "8a1f161b5647fff",
+          "nearest_farm": 0.007440054302284183
+        },
+        {
+          "hex": "8a1f161b564ffff",
+          "nearest_farm": 0.009221976807565492
+        },
+        {
+          "hex": "8a1f161b5657fff",
+          "nearest_farm": 0.00647350444747336
+        },
+        {
+          "hex": "8a1f161b565ffff",
+          "nearest_farm": 0.008204244588904498
+        },
+        {
+          "hex": "8a1f161b5667fff",
+          "nearest_farm": 0.006775749867643115
+        },
+        {
+          "hex": "8a1f161b566ffff",
+          "nearest_farm": 0.00857019089398714
+        },
+        {
+          "hex": "8a1f161b5677fff",
+          "nearest_farm": 0.005666052629800231
+        },
+        {
+          "hex": "8a1f161b5687fff",
+          "nearest_farm": 0.004829978760273859
+        },
+        {
+          "hex": "8a1f161b568ffff",
+          "nearest_farm": 0.005425241052519498
+        },
+        {
+          "hex": "8a1f161b5697fff",
+          "nearest_farm": 0.0057224527383947545
+        },
+        {
+          "hex": "8a1f161b569ffff",
+          "nearest_farm": 0.005879224954526589
+        },
+        {
+          "hex": "8a1f161b56a7fff",
+          "nearest_farm": 0.0038215383706188895
+        },
+        {
+          "hex": "8a1f161b56affff",
+          "nearest_farm": 0.004307592294055372
+        },
+        {
+          "hex": "8a1f161b56b7fff",
+          "nearest_farm": 0.004864491250768242
+        },
+        {
+          "hex": "8a1f161b56c7fff",
+          "nearest_farm": 0.0067657932229717305
+        },
+        {
+          "hex": "8a1f161b56cffff",
+          "nearest_farm": 0.008309372047123115
+        },
+        {
+          "hex": "8a1f161b56d7fff",
+          "nearest_farm": 0.006478970575776742
+        },
+        {
+          "hex": "8a1f161b56dffff",
+          "nearest_farm": 0.007807707739576013
+        },
+        {
+          "hex": "8a1f161b56e7fff",
+          "nearest_farm": 0.0057535641525009945
+        },
+        {
+          "hex": "8a1f161b56effff",
+          "nearest_farm": 0.007363428016148782
+        },
+        {
+          "hex": "8a1f161b56f7fff",
+          "nearest_farm": 0.0053801396799481776
+        },
+        {
+          "hex": "8a1f161b5707fff",
+          "nearest_farm": 0.00040313293966004617
+        },
+        {
+          "hex": "8a1f161b570ffff",
+          "nearest_farm": 0.001392726808512498
+        },
+        {
+          "hex": "8a1f161b5717fff",
+          "nearest_farm": 0.0018713911316129569
+        },
+        {
+          "hex": "8a1f161b571ffff",
+          "nearest_farm": 0.0009965268053643299
+        },
+        {
+          "hex": "8a1f161b5727fff",
+          "nearest_farm": 0.0013577980184164243
+        },
+        {
+          "hex": "8a1f161b572ffff",
+          "nearest_farm": 0.001211348406940454
+        },
+        {
+          "hex": "8a1f161b5737fff",
+          "nearest_farm": 0.002196594814178098
+        },
+        {
+          "hex": "8a1f161b5747fff",
+          "nearest_farm": 0.00447601992752839
+        },
+        {
+          "hex": "8a1f161b574ffff",
+          "nearest_farm": 0.006243291564456376
+        },
+        {
+          "hex": "8a1f161b5757fff",
+          "nearest_farm": 0.003186956515955737
+        },
+        {
+          "hex": "8a1f161b575ffff",
+          "nearest_farm": 0.004981332693986262
+        },
+        {
+          "hex": "8a1f161b5777fff",
+          "nearest_farm": 0.0027442719847841613
+        },
+        {
+          "hex": "8a1f161b5787fff",
+          "nearest_farm": 0.003610134182556011
+        },
+        {
+          "hex": "8a1f161b578ffff",
+          "nearest_farm": 0.002896824761847945
+        },
+        {
+          "hex": "8a1f161b5797fff",
+          "nearest_farm": 0.005100905843771316
+        },
+        {
+          "hex": "8a1f161b579ffff",
+          "nearest_farm": 0.004134267500612206
+        },
+        {
+          "hex": "8a1f161b57a7fff",
+          "nearest_farm": 0.00338908598892898
+        },
+        {
+          "hex": "8a1f161b57affff",
+          "nearest_farm": 0.0021658566273448196
+        },
+        {
+          "hex": "8a1f161b57b7fff",
+          "nearest_farm": 0.004910568854388621
+        },
+        {
+          "hex": "8a1f161b5897fff",
+          "nearest_farm": 0.011582497540126241
+        },
+        {
+          "hex": "8a1f161b589ffff",
+          "nearest_farm": 0.01028701317811364
+        },
+        {
+          "hex": "8a1f161b5a97fff",
+          "nearest_farm": 0.008431027893244007
+        },
+        {
+          "hex": "8a1f161b5c47fff",
+          "nearest_farm": 0.010954140362874957
+        },
+        {
+          "hex": "8a1f161b5c4ffff",
+          "nearest_farm": 0.009461991119293535
+        },
+        {
+          "hex": "8a1f161b5c57fff",
+          "nearest_farm": 0.0115777149443203
+        },
+        {
+          "hex": "8a1f161b5c5ffff",
+          "nearest_farm": 0.00996462442728162
+        },
+        {
+          "hex": "8a1f161b5c6ffff",
+          "nearest_farm": 0.010515995801546505
+        },
+        {
+          "hex": "8a1f161b5c8ffff",
+          "nearest_farm": 0.014284666732642533
+        },
+        {
+          "hex": "8a1f161b5c9ffff",
+          "nearest_farm": 0.015384173746626215
+        },
+        {
+          "hex": "8a1f161b5cc7fff",
+          "nearest_farm": 0.011521823220504582
+        },
+        {
+          "hex": "8a1f161b5ccffff",
+          "nearest_farm": 0.009791376093484426
+        },
+        {
+          "hex": "8a1f161b5cd7fff",
+          "nearest_farm": 0.01250784404889207
+        },
+        {
+          "hex": "8a1f161b5cdffff",
+          "nearest_farm": 0.010736833029675048
+        },
+        {
+          "hex": "8a1f161b5ce7fff",
+          "nearest_farm": 0.012358673774704917
+        },
+        {
+          "hex": "8a1f161b5ceffff",
+          "nearest_farm": 0.010663091816506366
+        },
+        {
+          "hex": "8a1f161b5cf7fff",
+          "nearest_farm": 0.013269248907049341
+        },
+        {
+          "hex": "8a1f161b6207fff",
+          "nearest_farm": 0.04126544945061887
+        },
+        {
+          "hex": "8a1f161b620ffff",
+          "nearest_farm": 0.039753818083493875
+        },
+        {
+          "hex": "8a1f161b6227fff",
+          "nearest_farm": 0.04129026368799625
+        },
+        {
+          "hex": "8a1f161b622ffff",
+          "nearest_farm": 0.03975248023960287
+        },
+        {
+          "hex": "8a1f161b6247fff",
+          "nearest_farm": 0.03674655833004448
+        },
+        {
+          "hex": "8a1f161b624ffff",
+          "nearest_farm": 0.03528435772426947
+        },
+        {
+          "hex": "8a1f161b625ffff",
+          "nearest_farm": 0.03680659613554787
+        },
+        {
+          "hex": "8a1f161b6267fff",
+          "nearest_farm": 0.03672067001763908
+        },
+        {
+          "hex": "8a1f161b626ffff",
+          "nearest_farm": 0.03522682568354077
+        },
+        {
+          "hex": "8a1f161b6277fff",
+          "nearest_farm": 0.038236991604406675
+        },
+        {
+          "hex": "8a1f161b6287fff",
+          "nearest_farm": 0.044306782671242814
+        },
+        {
+          "hex": "8a1f161b628ffff",
+          "nearest_farm": 0.042827763736499
+        },
+        {
+          "hex": "8a1f161b629ffff",
+          "nearest_farm": 0.0443485040438083
+        },
+        {
+          "hex": "8a1f161b62affff",
+          "nearest_farm": 0.04278876033148291
+        },
+        {
+          "hex": "8a1f161b62dffff",
+          "nearest_farm": 0.03994709541238869
+        },
+        {
+          "hex": "8a1f161b631ffff",
+          "nearest_farm": 0.04284793984749001
+        },
+        {
+          "hex": "8a1f161b635ffff",
+          "nearest_farm": 0.03824029780049245
+        },
+        {
+          "hex": "8a1f161b664ffff",
+          "nearest_farm": 0.0459409734940962
+        },
+        {
+          "hex": "8a1f161b666ffff",
+          "nearest_farm": 0.045869380068814164
+        }
+      ],
+      "extruded": false,
+      "filled": true,
+      "getFillColor": "@@=[255 * (Value*100), 255 * (1 - Value*100), 0, 255]",
+      "getHexagon": "@@=hex",
+      "getLineColor": [
+        255,
+        255,
+        255
+      ],
+      "id": "65d3c6e7-ff7a-40d2-b089-9f38cc554296",
+      "lineWidthMinPixels": 2,
+      "opacity": 0.7,
+      "pickable": true,
+      "stroked": true
+    }
+  ],
+  "mapProvider": "carto",
+  "mapStyle": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  "views": [
+    {
+      "@@type": "MapView",
+      "controller": true
+    }
+  ]
+};
+    const tooltip = {'text': 'Count: {Value}'};
+    const customLibraries = null;
+    const configuration = null;
+
+    const deckInstance = createDeck({
+                  container,
+      jsonInput,
+      tooltip,
+      customLibraries,
+      configuration
+    });
+
+  </script>
+</html>
