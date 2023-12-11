@@ -158,16 +158,16 @@ if __name__ == "__main__":
 # # Create a dictionary mapping array names to their corresponding numpy arrays
 # all_arrays = {'Farm': array1, 'Road': array2, 'Fake': array3}
 
-# # # import sys
-# # import leafmap.foliumap as leafmap
+# # import sys
+# import leafmap.foliumap as leafmap
 
-# # # sys.path
+# # sys.path
 
-# # raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_complete_3857.tif'
+# raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_complete_3857.tif'
 
-# # m = leafmap.Map()
-# # m.add_basemap()
-# # m.add_raster(raster_file, cmap="viridis", layer_name="Raster Layer")
+# m = leafmap.Map()
+# m.add_basemap()
+# m.add_raster(raster_file, cmap="viridis", layer_name="Raster Layer")
 
-# # m.to_streamlit()
+# m.to_streamlit()
 
