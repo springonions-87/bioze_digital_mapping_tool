@@ -8,6 +8,7 @@ import numpy as np
 import os
 import pickle
 import random
+from pyscipopt import Model, quicksum, multidict
 
 
 def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
@@ -86,6 +87,50 @@ def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacit
     
     return total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index # assignment_matrix,
 
+def flp_scip(I, J, d, M, f, c, p):
+    """
+    flp_percentage_demand -- model for the capacitated facility location problem with a percentage of demand constraint
+    Parameters:
+         - I: set of customers
+         - J: set of facilities
+         - d[i]: demand for customer i
+         - M[j]: capacity of facility j
+         - f[j]: fixed cost for using a facility in point j
+         - c[i,j]: unit cost of servicing demand point i from facility j
+         - p: percentage of total demand to be met
+    Returns a model, ready to be solved.
+    """
+    model = Model("flp_percentage_demand")
+    
+    x, y, z = {}, {}, {}
+    total_demand = sum(d[i] for i in I)
+    target_demand = total_demand * p
+
+    for j in J:
+        y[j] = model.addVar(vtype="B", name="y(%s)" % j)
+        for i in I:
+            x[i, j] = model.addVar(vtype="C", name="x(%s,%s)" % (i, j))
+            z[i, j] = model.addVar(vtype="B", name="z(%s,%s)" % (i, j))
+
+    for i in I:
+        model.addCons(quicksum(x[i, j] for j in J) == d[i] * z[i, j], "Demand(%s)" % i)
+
+    for j in M:
+        model.addCons(quicksum(x[i, j] for i in I) <= M[j] * y[j], "Capacity(%s)" % j)
+
+    for (i, j) in x:
+        model.addCons(x[i, j] <= d[i] * y[j], "Strong(%s,%s)" % (i, j))
+
+    model.addCons(quicksum(x[i, j] for i in I for j in J) >= target_demand, "PercentageDemand")
+
+    model.setObjective(
+        quicksum(f[j] * y[j] for j in J) +
+        quicksum(c[i, j] * x[i, j] for i in I for j in J),
+        "minimize"
+    )
+
+    model.data = x, y, z
+    return model
 
 def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index):
     """
@@ -184,6 +229,25 @@ def plot_result(Plant, potential_digester_location, assignment_decision, farm, F
         plt.savefig(filename, dpi=400, bbox_extra_artists=(legend,), bbox_inches='tight')
     
     plt.show()
+
+
+def flp_get_result(m):
+    EPS = 1.e-6
+    x,y,z = m.data
+    assignment = [(i,j) for (i,j) in x if m.getVal(x[i,j]) > EPS]
+    facilities = [j for j in y if m.getVal(y[j]) > EPS]
+    
+    total_cost = m.getObjVal()
+
+    # Create a dictionary to store the results
+    result_dict = {f: [] for f in facilities}
+    # Iterate over edges and populate the result_dict
+    for (i, j) in assignment:
+        if j in facilities:
+            result_dict[j].append(i)
+
+    return total_cost, result_dict
+
 
 
 def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):

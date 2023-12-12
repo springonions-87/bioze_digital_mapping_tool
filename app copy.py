@@ -3,8 +3,8 @@ import pandas as pd
 import geopandas as gpd
 import pydeck as pdk
 import random
-# import rasterio
-# from pulp import *
+import rasterio
+from pulp import *
 from cflp_function import *
 from shapely.geometry import mapping
 from datetime import date
@@ -62,8 +62,7 @@ def load_data():
     # f_j       fixed cost of establishing each j
     fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
     # C_ij      transportation matrix 
-    # transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle') - cflp version
-    transport_cost = load_data_from_pickle(folder_path, 'c.pickle') # scip flp version
+    transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle')
 
     # Float
     # alpha     total manure production
@@ -74,7 +73,7 @@ def load_data():
     farm = pd.read_csv(r"./farm/farm_mock.csv")
     return Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm
     
-I, plant, d, M, f, c, total_manure, potential_digester_location, farm = load_data()
+Farm, plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm = load_data()
 Plant_all = ['All'] + plant.copy()
 
 hex_df = load_csv('./hex/df_hex_7.csv')
@@ -116,63 +115,50 @@ with st.sidebar:
 
 ########## FORM ##########
 @st.cache_data
-def filter_Plant(original_dict, J):
+def filter_Plant(original_dict, Plant):
     # Extract key-value pairs where the key is not in the list
-    filtered_dict = {key: value for key, value in original_dict.items() if key in J}
+    filtered_dict = {key: value for key, value in original_dict.items() if key in Plant}
     return filtered_dict
 
 with st.expander('Select Locations'):
     with st.form('select_plant'):
-        J = st.multiselect(" ", Plant_all)
-        if "All" in J:
-            J = plant
+        Plant = st.multiselect(" ", Plant_all)
+        if "All" in Plant:
+            Plant = plant
         submit = st.form_submit_button("Submit")
-M = filter_Plant(M, J)
-f = filter_Plant(f, J)
-c = {(i, j): value for (i, j), value in c.items() if j in J}
+max_capacity = filter_Plant(max_capacity, Plant)
+fixed_cost = filter_Plant(fixed_cost, Plant)
+transport_cost = filter_Plant(transport_cost, Plant)
 # max_capacity
 # fixed_cost
 #############################
 
 ########## RUN CFLP MODEL ##########
 # Run the model 
-# total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
-#                                                                                                 Farm, 
-#                                                                                                 fixed_cost, 
-#                                                                                                 transport_cost, 
-#                                                                                                 manure_production, 
-#                                                                                                 max_capacity, 
-#                                                                                                 target, total_manure)
-m = flp_scip(I, J, d, M, f, c, target)
-m.optimize()
-total_cost, assignment_decision = flp_get_result(m)
-
-# # Check the optimization status
-# if m.getStatus() == "optimal":
-#     print("Optimal solution found!")
-#     # Access the optimal solution values using m.getVal(var) for each variable var
-#     # Example: value_of_x = m.getVal(x_variable)
-# elif m.getStatus() == "infeasible":
-#     print("The problem is infeasible.")
-# elif m.getStatus() == "timelimit":
-#     print("Optimization stopped due to reaching the time limit.")
+total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
+                                                                                                Farm, 
+                                                                                                fixed_cost, 
+                                                                                                transport_cost, 
+                                                                                                manure_production, 
+                                                                                                max_capacity, 
+                                                                                                target, total_manure)
 
 #############################
 
-# raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
+raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_4326.tif'
 #'/Users/wenyuc/Desktop/UT/data/raster/fuzzy_and_complete_1_4326.tif'
 
 arc_layer_df = get_arc(assignment_decision, potential_digester_location, farm)
-color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in J}
+color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in Plant}
 digester_df, assigned_farms_df, unassigned_farms_df = get_plot_variables(assignment_decision, potential_digester_location, farm, color_mapping)
 
 ##### OUTCOME INDICATORS #####
-total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
+# total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
 
-# Display metrics side by side 
-col1, col2 = st.columns(2)
-col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-col2.metric(label="Total Biogas Production", value="{:,.2f} m³".format(total_biogas))
+# # Display metrics side by side 
+# col1, col2 = st.columns(2)
+# col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
+# col2.metric(label="Total Biogas Production", value="{:,.2f} m³".format(total_biogas))
 #############################
 
 ##### PLOT PYDECK LAYERS #####
