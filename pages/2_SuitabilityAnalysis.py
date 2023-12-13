@@ -2,6 +2,7 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 import numpy as np
+from cflp_function import get_fill_color
 
 padding = 0
 
@@ -20,32 +21,47 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+colormap_name = 'viridis'
+
 ### LOAD DATA ##################################
 @st.cache_data
-def load_data(csv_path):
+def load_data(csv_path, colormap_name):
     df = pd.read_csv(csv_path)
+    # get color for plotting
+    get_fill_color(df, "value", colormap_name)
     return df
 
-d_to_farm = load_data('./hex/d_to_farm_hex.csv')
-d_to_road = load_data('./hex/d_to_road_hex.csv')
-fake = load_data("./hex/fake_hex.csv")
+d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv', colormap_name)
+d_to_road = load_data('./hex/d_to_road_hex_complete.csv', colormap_name)
+d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv', colormap_name)
+d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_name)
+
+# get_fill_color(d_to_farm, "value", colormap_name)
+# get_fill_color(d_to_road, "value", colormap_name)
+# get_fill_color(d_to_industry, "value", colormap_name)
+# get_fill_color(d_to_nature, "value", colormap_name)
 
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
 def fuzzify(df):
-    df_array = np.array(df['Value'])
+    df_array = np.array(df['value'])
     fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     return fuzzified_array
 
 fuzzy_farm = fuzzify(d_to_farm)
 fuzzy_road = fuzzify(d_to_road)
-fuzzy_fake = fuzzify(fake)
+fuzzy_industry = fuzzify(d_to_industry)
+fuzzy_nature = fuzzify(d_to_nature)
 
-all_arrays = {'Farm': fuzzy_farm, 'Road': fuzzy_road, 'Fake': fuzzy_fake}
+all_arrays = {'Farm':fuzzy_farm, 
+              'Road':fuzzy_road, 
+              'Industry':fuzzy_industry, 
+              'Nature':fuzzy_nature}
 
 ### CREATE EMPTY LAYER ##################################
 def create_empty_layer(d_to_farm):
     df_empty = d_to_farm[['hex9']]
+    df_empty['color'] = None
     return df_empty
 
 ### UPDATE EMPTY DF ##################################
@@ -62,6 +78,7 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     
     hex_df = create_empty_layer(d_to_farm)
     hex_df['fuzzy'] = result_array
+    get_fill_color(hex_df, 'fuzzy', colormap_name)
     return hex_df
 
 ### CREATE STREAMLIT ##################################
@@ -78,9 +95,9 @@ def main():
     
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     
-    view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=10, bearing=0, pitch=0)
+    view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     # Plot Map 1
     with col1:
         st.markdown("**Distance to Farm**")
@@ -96,16 +113,16 @@ def main():
                     extruded=False,
                     opacity=0.7,
                     get_hexagon="hex9",
-                    get_fill_color ='[255, 255, 255]', 
-                    get_line_color=[255, 255, 255],
-                    line_width_min_pixels=2
+                    get_fill_color ='color', 
+                    # get_line_color=[255, 255, 255],
+                    # line_width_min_pixels=1
                 ),
             ],
-            tooltip={"text": "Distance to farm: {Value}"}
+            tooltip={"text": "Distance to farm: {value}"}
         ), use_container_width=True)
 
     # Plot Map 2
-    with col2:
+    with col1:
         st.markdown("**Distance to Road**")
         st.pydeck_chart(pdk.Deck(
             initial_view_state=view_state,
@@ -119,15 +136,60 @@ def main():
                     extruded=False,
                     opacity=0.7,
                     get_hexagon="hex9",
-                    get_fill_color ='[255, 255, 255]', 
-                    get_line_color=[255, 255, 255],
-                    line_width_min_pixels=2
+                    get_fill_color ='color', 
+                    # get_line_color=[255, 255, 255],
+                    # line_width_min_pixels=1
                 ),
             ],
-            tooltip={"text": "Distance to road: {Value}"}
+            tooltip={"text": "Distance to road: {value}"}
+        ), use_container_width=True)
+
+    with col2:
+        st.markdown("**Distance to Industry**")
+        st.pydeck_chart(pdk.Deck(
+            initial_view_state=view_state,
+            layers=[
+                pdk.Layer(
+                    "H3HexagonLayer",
+                    d_to_industry,
+                    pickable=True,
+                    stroked=True,
+                    filled=True,
+                    extruded=False,
+                    opacity=0.7,
+                    get_hexagon="hex9",
+                    get_fill_color ='color', 
+                    # get_line_color=[255, 255, 255],
+                    # line_width_min_pixels=1
+                ),
+            ],
+            tooltip={"text": "Distance to industry: {value}"}
+        ), use_container_width=True)
+    
+    with col3:
+        st.markdown("**Distance to Nature and Water**")
+        st.pydeck_chart(pdk.Deck(
+            initial_view_state=view_state,
+            layers=[
+                pdk.Layer(
+                    "H3HexagonLayer",
+                    d_to_nature,
+                    pickable=True,
+                    stroked=True,
+                    filled=True,
+                    extruded=False,
+                    opacity=0.7,
+                    get_hexagon="hex9",
+                    get_fill_color ='color', 
+                    # get_line_color=[255, 255, 255],
+                    # line_width_min_pixels=1
+                ),
+            ],
+            tooltip={"text": "Distance to nature and water: {value}"}
         ), use_container_width=True)
 
     # Define a layer to display on a map
+    st.title("**Suitability Map**")
     hex_fuzzy = pdk.Layer(
         "H3HexagonLayer",
         hex_df,
@@ -137,11 +199,15 @@ def main():
         extruded=False,
         opacity=0.7,
         get_hexagon="hex9",
-        get_fill_color ='[255 * fuzzy, 255 * (1 - fuzzy), 0, 255]', 
-        get_line_color=[255, 255, 255],
-        line_width_min_pixels=2)
+        get_fill_color='color', 
+        # get_line_color=[255, 255, 255],
+        # line_width_min_pixels=2
+        )
 
-    deck = pdk.Deck(layers=[hex_fuzzy], initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
+    deck = pdk.Deck(layers=[hex_fuzzy], 
+                    initial_view_state=view_state, 
+                    # map_style='mapbox://styles/mapbox/streets-v12',
+                    tooltip={"text": "Suitability: {fuzzy}"})
     st.pydeck_chart(deck, use_container_width=True)
     
 
