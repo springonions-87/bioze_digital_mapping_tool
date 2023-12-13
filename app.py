@@ -275,7 +275,7 @@ def configure_deck(potential_digester_location, _suitability_layer, _digesters_l
     deck = pdk.Deck(
         layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer, _polygon_layer],
         initial_view_state=view_state, 
-        map_style='mapbox://styles/mapbox/light-v11',
+        map_style='mapbox://styles/mapbox/streets-v12',
         tooltip=
         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
         {"text": "Suitability: {Value}"}

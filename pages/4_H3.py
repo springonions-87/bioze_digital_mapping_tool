@@ -26,6 +26,7 @@ def load_data(csv_path):
 df_7 = load_data('./hex/df_hex_7.csv')
 df_8 = load_data('./hex/df_hex_8.csv')
 df_9 = load_data('./hex/df_hex_9.csv')
+df_10 = load_data('./hex/d_to_farm_hex_complete.csv')
 
 # Define a layer to display on a map
 hex_7 = pdk.Layer(
@@ -56,14 +57,14 @@ hex_8 = pdk.Layer(
 
 hex_9 = pdk.Layer(
     "H3HexagonLayer",
-    df_9,
+    df_10,
     pickable=True,
     stroked=True,
     filled=True,
     extruded=False,
     opacity=0.7,
-    get_hexagon="hex9",
-    get_fill_color ='[255 * Value, 255 * (1 - Value), 0, 255]', 
+    get_hexagon="h3",
+    get_fill_color = [255, 255, 255], #'[255 * Value, 255 * (1 - Value), 0, 255]', 
     get_line_color=[255, 255, 255],
     line_width_min_pixels=2)
 
