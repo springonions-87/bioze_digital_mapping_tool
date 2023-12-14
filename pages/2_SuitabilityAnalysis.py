@@ -165,11 +165,13 @@ def main():
 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
-        fuzzy_cut_off = st.slider('Select suitability range to filter potential digester locations', 0.0, 1.0, (0.8, 1.0), step=0.05)
-        submit_button_loi = st.form_submit_button("Submit")
+        fuzzy_cut_off = st.slider('Select suitability range to filter potential digester locations', 0.0, 1.0, (0.8, 1.0), step=0.01)
+        submit_button_loi = st.form_submit_button("Filter")
     
     if submit_button_loi:
         loi = filter_loi(fuzzy_cut_off, hex_df)
+        # st.write(loi.head())
+        loi.to_csv('./hex/loi.csv')
         st.markdown(f"**Number of Potential Locations:{len(loi)}**")
         loi_plot = pdk.Layer(
             "H3HexagonLayer",

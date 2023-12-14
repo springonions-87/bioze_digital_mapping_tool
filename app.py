@@ -52,7 +52,7 @@ def load_data():
     # set F     set of farm locations (list)
     Farm = load_data_from_pickle(folder_path, 'Farm_test.pickle')
     # set P     set of potential digester locations
-    Plant = load_data_from_pickle(folder_path, 'Plant_test.pickle')
+    Plant = load_data_from_pickle(folder_path, 'Plant_test_2.pickle')
 
     # Dictionary 
     # p_i       manure production of each i
@@ -63,7 +63,7 @@ def load_data():
     fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
     # C_ij      transportation matrix 
     # transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle') - cflp version
-    transport_cost = load_data_from_pickle(folder_path, 'c.pickle') # scip flp version
+    transport_cost = load_data_from_pickle(folder_path, 'c_test.pickle') # scip flp version
 
     # Float
     # alpha     total manure production
@@ -75,7 +75,7 @@ def load_data():
     return Farm, Plant, manure_production, max_capacity, fixed_cost, transport_cost, total_manure, potential_digester_location, farm
     
 I, plant, d, M, f, c, total_manure, potential_digester_location, farm = load_data()
-Plant_all = ['All'] + plant.copy()
+Plant_all = ['All'] + [str(x) for x in plant]
 
 hex_df = load_csv('./hex/df_hex_7.csv')
 
