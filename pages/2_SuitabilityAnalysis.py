@@ -43,15 +43,25 @@ d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_n
 
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
-def fuzzify(df):
+def fuzzify(df, type="close"):
     df_array = np.array(df['value'])
-    fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+    if type == "close":
+        fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+    elif type == "far":
+        fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+    else:
+        raise ValueError("Invalid type. Choose 'close' or 'far'.")
     return fuzzified_array
 
-fuzzy_farm = fuzzify(d_to_farm)
-fuzzy_road = fuzzify(d_to_road)
-fuzzy_industry = fuzzify(d_to_industry)
-fuzzy_nature = fuzzify(d_to_nature)
+#def fuzzify(df):
+#     df_array = np.array(df['value'])
+#     fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+#     return fuzzified_array
+
+fuzzy_farm = fuzzify(d_to_farm, type='close')
+fuzzy_road = fuzzify(d_to_road, type='close')
+fuzzy_industry = fuzzify(d_to_industry, type='close')
+fuzzy_nature = fuzzify(d_to_nature, type='far')
 
 all_arrays = {'Farm':fuzzy_farm, 
               'Road':fuzzy_road, 
@@ -81,10 +91,52 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     get_fill_color(hex_df, 'fuzzy', colormap_name)
     return hex_df
 
+### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
+def filter_loi(fuzzy_cut_off, fuzzy_df):
+    loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+    return loi
+
+### PLOT PYDECK MAPS ##################################
+view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
+@st.cache_data
+def generate_pydeck(df, layer_info, view_state=view_state):
+    return pdk.Deck(initial_view_state=view_state,
+                    layers=[
+                        pdk.Layer(
+                            "H3HexagonLayer",
+                            df,
+                            pickable=True,
+                            stroked=True,
+                            filled=True,
+                            extruded=False,
+                            opacity=0.7,
+                            get_hexagon="hex9",
+                            get_fill_color ='color', 
+                            # get_line_color=[255, 255, 255],
+                            # line_width_min_pixels=1
+                        ),
+                    ],
+                    tooltip={"text": f"{layer_info}: {{value}}"})
+
 ### CREATE STREAMLIT ##################################
 def main():
     st.markdown("### Analysis for Identifying Suitable Digester Sites")
+    # Plotting suitability variables
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("**Distance to Farm**")
+        st.pydeck_chart(generate_pydeck(d_to_farm, "Distance to farm"), use_container_width=True)
+    with col1:
+        st.markdown("**Distance to Road**")
+        st.pydeck_chart(generate_pydeck(d_to_road, "Distance to road"), use_container_width=True)
+    with col2:
+        st.markdown("**Distance to Industry**")
+        st.pydeck_chart(generate_pydeck(d_to_industry, "Distance to industry"), use_container_width=True)
+    with col3:
+        st.markdown("**Distance to Nature and Water**")
+        st.pydeck_chart(generate_pydeck(d_to_nature, "Distance to nature and water"), use_container_width=True)
 
+    # Suitability analysis section
     with st.sidebar.form("suitability_analysis_form"):
         selected_variables = st.multiselect("Select Criteria", list(all_arrays.keys()))
         submit_button = st.form_submit_button("Build Suitability Map")
@@ -94,135 +146,60 @@ def main():
         return
     
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
-    
-    view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 
-    col1, col2, col3 = st.columns(3)
-    # Plot Map 1
-    with col1:
-        st.markdown("**Distance to Farm**")
-        st.pydeck_chart(pdk.Deck(
-            initial_view_state=view_state,
-            layers=[
-                pdk.Layer(
-                    "H3HexagonLayer",
-                    d_to_farm,
-                    pickable=True,
-                    stroked=True,
-                    filled=True,
-                    extruded=False,
-                    opacity=0.7,
-                    get_hexagon="hex9",
-                    get_fill_color ='color', 
-                    # get_line_color=[255, 255, 255],
-                    # line_width_min_pixels=1
-                ),
-            ],
-            tooltip={"text": "Distance to farm: {value}"}
-        ), use_container_width=True)
-
-    # Plot Map 2
-    with col1:
-        st.markdown("**Distance to Road**")
-        st.pydeck_chart(pdk.Deck(
-            initial_view_state=view_state,
-            layers=[
-                pdk.Layer(
-                    "H3HexagonLayer",
-                    d_to_road,
-                    pickable=True,
-                    stroked=True,
-                    filled=True,
-                    extruded=False,
-                    opacity=0.7,
-                    get_hexagon="hex9",
-                    get_fill_color ='color', 
-                    # get_line_color=[255, 255, 255],
-                    # line_width_min_pixels=1
-                ),
-            ],
-            tooltip={"text": "Distance to road: {value}"}
-        ), use_container_width=True)
-
-    with col2:
-        st.markdown("**Distance to Industry**")
-        st.pydeck_chart(pdk.Deck(
-            initial_view_state=view_state,
-            layers=[
-                pdk.Layer(
-                    "H3HexagonLayer",
-                    d_to_industry,
-                    pickable=True,
-                    stroked=True,
-                    filled=True,
-                    extruded=False,
-                    opacity=0.7,
-                    get_hexagon="hex9",
-                    get_fill_color ='color', 
-                    # get_line_color=[255, 255, 255],
-                    # line_width_min_pixels=1
-                ),
-            ],
-            tooltip={"text": "Distance to industry: {value}"}
-        ), use_container_width=True)
-    
-    with col3:
-        st.markdown("**Distance to Nature and Water**")
-        st.pydeck_chart(pdk.Deck(
-            initial_view_state=view_state,
-            layers=[
-                pdk.Layer(
-                    "H3HexagonLayer",
-                    d_to_nature,
-                    pickable=True,
-                    stroked=True,
-                    filled=True,
-                    extruded=False,
-                    opacity=0.7,
-                    get_hexagon="hex9",
-                    get_fill_color ='color', 
-                    # get_line_color=[255, 255, 255],
-                    # line_width_min_pixels=1
-                ),
-            ],
-            tooltip={"text": "Distance to nature and water: {value}"}
-        ), use_container_width=True)
-
-    # Define a layer to display on a map
+    # Plot suitability map
     st.title("**Suitability Map**")
     hex_fuzzy = pdk.Layer(
-        "H3HexagonLayer",
-        hex_df,
-        pickable=True,
-        stroked=True,
-        filled=True,
-        extruded=False,
-        opacity=0.7,
-        get_hexagon="hex9",
-        get_fill_color='color', 
-        # get_line_color=[255, 255, 255],
-        # line_width_min_pixels=2
+            "H3HexagonLayer",
+            hex_df,
+            pickable=True,
+            stroked=True,
+            filled=True,
+            extruded=False,
+            opacity=0.7,
+            get_hexagon="hex9",
+            get_fill_color='color', 
+            # get_line_color=[255, 255, 255],
+            # line_width_min_pixels=2
         )
 
-    deck = pdk.Deck(layers=[hex_fuzzy], 
-                    initial_view_state=view_state, 
-                    # map_style='mapbox://styles/mapbox/streets-v12',
-                    tooltip={"text": "Suitability: {fuzzy}"})
-    st.pydeck_chart(deck, use_container_width=True)
+    # Filtering location of interest (loi) section
+    with st.sidebar.form("select_loi"):
+        fuzzy_cut_off = st.slider('Select suitability range to filter potential digester locations', 0.0, 1.0, (0.8, 1.0), step=0.05)
+        submit_button_loi = st.form_submit_button("Submit")
     
+    if submit_button_loi:
+        loi = filter_loi(fuzzy_cut_off, hex_df)
+        st.markdown(f"**Number of Potential Locations:{len(loi)}**")
+        loi_plot = pdk.Layer(
+            "H3HexagonLayer",
+            loi,
+            pickable=True,
+            stroked=True,
+            filled=True,
+            extruded=False,
+            opacity=0.7,
+            get_hexagon="hex9",
+            get_fill_color=[0,0,0,0], 
+            get_line_color=[255, 0, 0],
+            line_width_min_pixels=1
+            )
+        deck = pdk.Deck(layers=[hex_fuzzy, loi_plot], 
+                        initial_view_state=view_state, 
+                        # map_style='mapbox://styles/mapbox/streets-v12',
+                        tooltip={"text": "Suitability: {fuzzy}"})
+        st.pydeck_chart(deck, use_container_width=True)
+    else:
+        deck = pdk.Deck(layers=[hex_fuzzy], 
+                        initial_view_state=view_state, 
+                        # map_style='mapbox://styles/mapbox/streets-v12',
+                        tooltip={"text": "Suitability: {fuzzy}"})
+        st.pydeck_chart(deck, use_container_width=True)
+
 
 # Run the Streamlit app
 if __name__ == "__main__":
     main()
-
-
-# # Create multiple arrays
-# array1 = np.array([1, 5, 3, 8])
-# array2 = np.array([2, 4, 1, 7])
-# array3 = np.array([0, 6, 2, 9])
-
-# # Create a dictionary mapping array names to their corresponding numpy arrays
-# all_arrays = {'Farm': array1, 'Road': array2, 'Fake': array3}
 
 # # import sys
 # import leafmap.foliumap as leafmap
