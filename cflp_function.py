@@ -9,7 +9,19 @@ import numpy as np
 import os
 import pickle
 import random
-from pyscipopt import Model, quicksum, multidict
+from pyscipopt import Model, quicksum
+
+def random_M_f(J):
+    medium = [78480, 209249] # [capacity, cost]
+    large = [150560, 252616]
+
+    # Randomly assign medium or large factory to each index in J
+    digester_sizes = random.choices(["medium", "large"], k=len(J))
+
+    # Create dictionaries M and f based on the assigned values
+    M = {index: medium[0] if size == "medium" else large[0] for index, size in zip(J, digester_sizes)}
+    f = {index: medium[1] if size == "medium" else large[1] for index, size in zip(J, digester_sizes)}
+    return M, f
 
 
 def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
@@ -133,7 +145,7 @@ def flp_scip(I, J, d, M, f, c, p):
     model.data = x, y, z
     return model
 
-def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index):
+# def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index):
     """
     Input:
         assignment_decision         dictionary of model output {plant:[all the assigned farms]}
@@ -193,7 +205,7 @@ def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_p
     return plant_in_use, farm_not_in_solution 
 
 
-def plot_result(Plant, potential_digester_location, assignment_decision, farm, Farm, use_plant_index, target, total_cost, filename, save_fig=False):
+# def plot_result(Plant, potential_digester_location, assignment_decision, farm, Farm, use_plant_index, target, total_cost, filename, save_fig=False):
     
     # Get farm_not_in_solution 
     plant_in_use, farm_not_in_solution = find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index)
@@ -255,7 +267,7 @@ def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
 
     # Map digesters to colors
     digester_df['color'] = digester_df.index.map(color_mapping)
-    digester_df['color'] = digester_df['color'].fillna('[128, 128, 128]') # the color doesn't really work here
+    digester_df['color'] = digester_df['color'].fillna('[0, 0, 0,0]') # the color doesn't really work here
 
     # Map assigned farms to colors
     assigned_farms_df = farm[farm.index.isin([i for indices in assignment_decision.values() for i in indices])]
