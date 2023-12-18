@@ -170,8 +170,6 @@ def main():
     
     if submit_button_loi:
         loi = filter_loi(fuzzy_cut_off, hex_df)
-        # st.write(loi.head())
-        loi.to_csv('./hex/loi.csv')
         st.markdown(f"**Number of Potential Locations:{len(loi)}**")
         loi_plot = pdk.Layer(
             "H3HexagonLayer",
@@ -197,7 +195,22 @@ def main():
                         # map_style='mapbox://styles/mapbox/streets-v12',
                         tooltip={"text": "Suitability: {fuzzy}"})
         st.pydeck_chart(deck, use_container_width=True)
+    
+    # Filtering location of interest (loi) section
+    # with st.sidebar.expander("Save Suitability Analysis Results"):
+    with st.sidebar.form("save_loi_form"):
+        st.markdown("Save Suitability Analysis Results")
+        save_loi = st.form_submit_button("Save")
+    if save_loi:
+        loi.to_csv('./hex/loi.csv')
 
+
+    # st.download_button(
+    #     label="Save Suitable Areas",
+    #     data=loi,
+    #     file_name='./hex/loi.csv',
+    #     mime='text/csv',
+    # )    
 
 # Run the Streamlit app
 if __name__ == "__main__":
