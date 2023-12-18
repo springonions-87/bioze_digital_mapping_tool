@@ -11,7 +11,7 @@ today = date.today()
 # import os
 # print("Current working directory: ", os.getcwd())
 
-########## PAGE CONFIGURATIONS ##########
+### PAGE CONFIGURATIONS #######################################
 # st.title('BIOZE Digital Mapping Tool')
 # st.text('This is an interactive mapping tool on biogas.')
 st.set_page_config(page_title="Bioze Mapping Tool", layout="wide")
@@ -107,6 +107,7 @@ def configure_main_deck(avg_lat, avg_lon,_suitability_layer, _digesters_layer, _
         )
     return deck
 
+### SESSION STATE INITIALIZATION #######################################
 @st.cache_data
 def session_load():
     main_crs ='EPSG:4326'
@@ -136,7 +137,6 @@ def session_load():
     # Load location of interest
     # polygons = load_gdf('./suitable_polygon_plot.shp')
     # polygons['coordinates'] = polygons['geometry'].apply(lambda geom: mapping(geom)['coordinates'][0])    
-
     data_dict = {
         'loi_gdf':loi_gdf,
         'c':c,
@@ -149,19 +149,11 @@ def session_load():
         'farm':farm,
         'hex_df':hex_df,
     }
-    
     return data_dict
 
-# Function to perform the one-time calculation
+### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
 def perform_initial_setup():
-
     data_name = ['loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
-
-    # Store the loaded data in session_state
-    # for key, value in loaded_data.items():
-    #     if key not in st.session_state:
-    #         st.session_state[key] = value
-
     # Check if any key in data_names is missing in st.session_state.keys()
     missing_keys = [key for key in data_name if key not in st.session_state.keys()]
     # st.write(missing_keys)
@@ -170,10 +162,9 @@ def perform_initial_setup():
         for key, value in loaded_data.items():
             st.session_state[key] = value
 
-
-# Function to display the main content of the app
+### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
 def main_content():
-    #### ACCESS INITIAL SESSION VARIABLES ##################################
+    ### ACCESS INITIAL SESSION VARIABLES ##################################
     I = st.session_state['I']
     d = st.session_state['d']
     # total_manure = st.session_state.total_manure
@@ -185,13 +176,13 @@ def main_content():
     f = st.session_state['f']
     Plant_all = st.session_state['Plant_all']
     loi_gdf = st.session_state['loi_gdf']
-    st.write(M)
-    #### SIDEBAR ##################################
+
+    ### SIDEBAR ##################################
     with st.sidebar:
         target = (st.slider('Manure Utilization target (%):', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 
         with st.container():
-            st.write("**Layers**")
+            st.markdown("**Layers**")
             show_farm = st.sidebar.checkbox('Farms', value=True)
             show_digester = st.sidebar.checkbox('Digesters', value=True)
             show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
@@ -215,7 +206,8 @@ def main_content():
     M = filter_Plant(M, J)
     f = filter_Plant(f, J)
     c = {(i, j): value for (i, j), value in c.items() if j in J}
-    st.write(M)
+
+    ### RUN MODEL ##########################################
     m = flp_scip(I, J, d, M, f, c, target)
     m.optimize()
     total_cost, assignment_decision = flp_get_result(m)
@@ -225,6 +217,7 @@ def main_content():
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in J}
 
     digester_df, assigned_farms_df, unassigned_farms_df = get_plot_variables(assignment_decision, loi_gdf, farm, color_mapping)
+    
     ### OUTCOME INDICATORS ##########################################
     # total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
     # # Display metrics side by side 
@@ -314,7 +307,7 @@ def main_content():
     deck.layers[2].visible = show_farm
     deck.layers[3].visible = show_farm
     deck.layers[-2].visible = show_arcs
-    deck.layers[-1].visible = show_polygon
+    # deck.layers[-1].visible = show_polygon
 
     # Rendering the map 
     st.pydeck_chart(deck, use_container_width=True)
@@ -339,12 +332,5 @@ def main():
     #                                                                                                 target, total_manure)
            
 
-
 if __name__ == "__main__":
     main()
-
-
-# filename = f"./outputs/cflp_v{6}_{int(target*100)}%manure.png"  # You can choose the file extension (e.g., .png, .jpg, .pdf)
-# plot_result(Plant, 
-#             potential_digester_location, 
-#             assignment_decision, farm, Farm, use_plant_index, target, total_cost, filename, save_fig=False)
