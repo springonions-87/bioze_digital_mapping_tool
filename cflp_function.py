@@ -301,10 +301,8 @@ def get_arc(assignment_decision, potential_digester_location, farm):
                 'farm_number': farm_index,
                 'material_quantity': farm_coords[2]  # Add the material quantity to the dictionary
             })
-
     # Create a DataFrame from the list of dictionaries
     arc_layer_df = pd.DataFrame(arc_data)
-
     return arc_layer_df
 
 def get_fill_color(df, value_column, colormap_name):

@@ -87,18 +87,60 @@ def filter_Plant(original_dict, J):
     filtered_dict = {key: value for key, value in original_dict.items() if key in J}
     return filtered_dict
 
-def configure_main_deck(avg_lat, avg_lon,_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
-    """
-    Configure the view state and deck property for the main plot of the model visualisation
-    """
+# def configure_main_deck(avg_lat, avg_lon,_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
+#     """
+#     Configure the view state and deck property for the main plot of the model visualisation
+#     """
+#     view_state=pdk.ViewState(
+#         latitude=avg_lat,
+#         longitude=avg_lon,
+#         zoom=9,
+#         )
+#     deck = pdk.Deck(
+#         layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
+#         initial_view_state=view_state, 
+#         map_style='mapbox://styles/mapbox/streets-v12',
+#         tooltip=
+#         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
+#         {"text": "Suitability: {Value}"}
+#         )
+#     return deck
+
+def initialize_map(digester_df, farm_df, suitability_df):
+    digester_layer = pdk.Layer(type='ScatterplotLayer',
+                                data=digester_df,
+                                get_position=['x', 'y'],
+                                get_radius=800,
+                                get_fill_color='color',
+                                pickable=True,
+                                auto_highlight=True, 
+                                get_line_color=[255, 255, 255],
+                                get_line_width=3)
+    farm_layer = pdk.Layer(type='ScatterplotLayer',
+                           data=farm_df,
+                           get_position=['x', 'y'],
+                                       get_radius=300,
+                                       get_fill_color='color',
+                                       pickable=False,
+                                       auto_highlight=True)
+    hex_layer = pdk.Layer(type="H3HexagonLayer",
+        data=suitability_df,
+        pickable=True,
+        filled=True,
+        extruded=False,
+        opacity=0.5,
+        get_hexagon="he7",
+        # get_fill_color ='[255 * Value, 255 * (100 - Value), 0, 255]',
+        get_fill_color ='[0, 0, 255*Value, 255]',
+        auto_highlight=True)
+    
     view_state=pdk.ViewState(
-        latitude=avg_lat,
-        longitude=avg_lon,
+        latitude=farm_df['y'].mean(),
+        longitude=farm_df['x'].mean(),
         zoom=9,
-        # pitch=0
         )
     deck = pdk.Deck(
-        layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
+        layers=[hex_layer, digester_layer, farm_layer],
         initial_view_state=view_state, 
         map_style='mapbox://styles/mapbox/streets-v12',
         tooltip=
@@ -107,31 +149,70 @@ def configure_main_deck(avg_lat, avg_lon,_suitability_layer, _digesters_layer, _
         )
     return deck
 
+def update_digester_layer_color(digester_df, J, deck):
+    # Update the color of digester to grey if not selected 
+    digester_df_copy = digester_df.copy()
+    digester_df_copy.loc[~digester_df_copy.index.isin(J), 'color'] ='[169, 169, 169]'
+    deck.layers[1].data = digester_df_copy
+    return deck
+
+def update_farm_layer_color(farm_df, digester_df, assignment_decision, deck): 
+    # Update the color of farms to match the color of digester assigned to
+    farm_df_copy = farm_df.copy()
+    farm_df_copy['color'] = farm_df_copy.index.map({index: digester_df['color'].iloc[farm_index] for farm_index, indices in assignment_decision.items() for index in indices})
+    deck.layers[2].data = farm_df_copy
+    return deck
+
+def update_map(farm_df, digester_df, assignment_decision, deck):
+    arc_layer_df = get_arc(assignment_decision, digester_df, farm_df)
+    arc_layer = pdk.Layer(
+        'ArcLayer',
+        data=arc_layer_df,
+        get_width=2,          # Width of the arcs
+        get_source_position=['start_lon', 'start_lat'],
+        get_target_position=['end_lon', 'end_lat'],
+        get_source_color=[0, 255, 0, 160],   # RGBA color of the starting points
+        get_target_color=[255, 0, 0, 160],   # RGBA color of the ending points
+        pickable=True,
+        auto_highlight=True
+    )
+    # Add the ArcLayer to the existing deck
+    deck.layers.append(arc_layer)
+
+    # Update the map with the modified deck
+    return deck
+
 ### SESSION STATE INITIALIZATION #######################################
 @st.cache_data
 def session_load():
     main_crs ='EPSG:4326'
+
+    # Load data and calculate od matrix
     loi = load_csv('./hex/loi.csv')
+    loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
+    loi_gdf['y'] = loi_gdf['geometry'].y
+    loi_gdf['x'] = loi_gdf['geometry'].x
+
     farm_gdf = load_gdf("./farm/farm_new.shp")
     n = load_gdf("./osm_network/G_n.shp")
     n = n.to_crs(main_crs)
 
-    loi_gdf = loi_to_gdf(loi)    
-    loi_gdf['y'] = loi_gdf['geometry'].y
-    loi_gdf['x'] = loi_gdf['geometry'].x
     find_closest_osmid(farm_gdf, n)
     find_closest_osmid(loi_gdf, n)
-
     c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
 
     Plant_all = ['All'] + plant
     # Plant_all = ['All'] + [str(x) for x in plant]
-    M, f = random_M_f(plant)
+    M, f = random_M_f(plant) # random M and f generator for the time being
 
     I, d, total_manure  = load_pickle()
 
+    color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
+    loi_gdf['color'] = loi_gdf.index.map(color_mapping)
+
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")
+    farm['color'] = '[169, 169, 169]'
     hex_df = load_csv('./hex/df_hex_7.csv')
 
     # Load location of interest
@@ -147,7 +228,7 @@ def session_load():
         'I':I,
         'd':d,
         'farm':farm,
-        'hex_df':hex_df,
+        'hex_df':hex_df
     }
     return data_dict
 
@@ -161,6 +242,9 @@ def perform_initial_setup():
         loaded_data = session_load()
         for key, value in loaded_data.items():
             st.session_state[key] = value
+        # Initialize session_state if it doesn't exist
+    if 'target' not in st.session_state:
+        st.session_state['target'] = 0  # Set a default value, adjust as needed
 
 ### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
 def main_content():
@@ -176,6 +260,8 @@ def main_content():
     f = st.session_state['f']
     Plant_all = st.session_state['Plant_all']
     loi_gdf = st.session_state['loi_gdf']
+    target = st.session_state['target']
+    deck = initialize_map(loi_gdf, farm, hex_df)
 
     ### SIDEBAR ##################################
     with st.sidebar:
@@ -187,7 +273,7 @@ def main_content():
             show_digester = st.sidebar.checkbox('Digesters', value=True)
             show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
             show_suitability = st.sidebar.checkbox('Suitability', value=False)
-            show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
+            # show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
 
         with st.expander("Click to learn more about this dashboard"):
             st.markdown(f"""
@@ -195,121 +281,42 @@ def main_content():
             *Updated on {str(today)}.*  
             """)
 
-    ### SELECT PLANT FORM ##########################################
-    with st.expander('Select Locations'):
-        with st.form('select_plant'):
-            J = st.multiselect(" ", Plant_all)
-            if "All" in J:
-                J = plant
-            submit_select_loi = st.form_submit_button("Submit")
-    # if submit_select_loi:
-    M = filter_Plant(M, J)
-    f = filter_Plant(f, J)
-    c = {(i, j): value for (i, j), value in c.items() if j in J}
-
-    ### RUN MODEL ##########################################
-    m = flp_scip(I, J, d, M, f, c, target)
-    m.optimize()
-    total_cost, assignment_decision = flp_get_result(m)
-
-    arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
-
-    color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in J}
-
-    digester_df, assigned_farms_df, unassigned_farms_df = get_plot_variables(assignment_decision, loi_gdf, farm, color_mapping)
-    
-    ### OUTCOME INDICATORS ##########################################
-    # total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
-    # # Display metrics side by side 
-    # col1, col2 = st.columns(2)
-    # col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-    # col2.metric(label="Total Biogas Production", value="{:,.2f} m³".format(total_biogas))
-
-    ### PLOT PYDECK LAYERS ###############################################
-    # Create a Pydeck layer for digesters
-    avg_lat=farm['y'].mean()
-    avg_lon=farm['x'].mean()
-    digesters_layer = pdk.Layer(
-        type='ScatterplotLayer',
-        data=digester_df,
-        get_position=['x', 'y'],
-        get_radius=800,
-        get_fill_color='color',
-        pickable=True,
-        auto_highlight=True, 
-        get_line_color=[255, 255, 255],
-        get_line_width=3,
-    )
-
-    # Create a Pydeck layer for assigned farms
-    assigned_farms_layer = pdk.Layer(
-        type='ScatterplotLayer',
-        data=assigned_farms_df,
-        get_position=['x', 'y'],
-        get_radius=300,
-        get_fill_color='color',
-        pickable=True,
-        auto_highlight=True
-    )
-
-    # Create a Pydeck layer for unassigned farms
-    unassigned_farms_layer = pdk.Layer(
-        type='ScatterplotLayer',
-        data=unassigned_farms_df,
-        get_position=['x', 'y'],
-        get_radius=300,
-        get_fill_color=[128, 128, 128],
-        pickable=False,
-        auto_highlight=True
-    )
-
-    # Create ArcLayer
-    arc_layer = pdk.Layer(
-        'ArcLayer',
-        data=arc_layer_df,
-        get_width=2,          # Width of the arcs
-        get_source_position=['start_lon', 'start_lat'],
-        get_target_position=['end_lon', 'end_lat'],
-        get_source_color=[0, 255, 0, 160],   # RGBA color of the starting points
-        get_target_color=[255, 0, 0, 160],   # RGBA color of the ending points
-        pickable=True,
-        auto_highlight=True
-    )
-
-    # # Set up the Pydeck PolygonLayer
-    # polygon_layer = pdk.Layer(
-    #     "PolygonLayer",
-    #     data=polygons,
-    #     get_polygon='coordinates',
-    #     get_fill_color=[255, 0, 0, 150],  # Red color with 150 transparency
-    #     get_line_color=[255, 255, 255],
-    #     get_line_width=2,
-    #     pickable=True,
-    # )
-
-    hex_layer = pdk.Layer(
-        "H3HexagonLayer",
-        hex_df,
-        pickable=True,
-        filled=True,
-        extruded=False,
-        opacity=0.5,
-        get_hexagon="hex7",
-        # get_fill_color ='[255 * Value, 255 * (100 - Value), 0, 255]',
-        get_fill_color ='[0, 0, 255*Value, 255]',
-        auto_highlight=True)
-
-    deck = configure_main_deck(avg_lat, avg_lon, hex_layer, digesters_layer, assigned_farms_layer, unassigned_farms_layer, arc_layer)
-
     # Toggle the visibility of the ArcLayer based on the checkbox
     deck.layers[0].visible = show_suitability
     deck.layers[1].visible = show_digester
     deck.layers[2].visible = show_farm
-    deck.layers[3].visible = show_farm
-    deck.layers[-2].visible = show_arcs
+    # deck.layers[3].visible = show_farm
     # deck.layers[-1].visible = show_polygon
 
+    ### SELECT PLANT FORM ##########################################
+    with st.expander('Select Locations'):
+        with st.form('select_plant'):
+            J = st.multiselect(" ", Plant_all)
+            if "All" in J or not J:
+                J = plant
+            submit_select_loi = st.form_submit_button("Submit")
+
+    if submit_select_loi and st.session_state['target'] == 0:
+        deck = update_digester_layer_color(loi_gdf, J, deck)
+
+    if submit_select_loi or st.session_state['target'] != target:
+        st.session_state['target'] = target # Update the session state with the new target value
+        M = filter_Plant(M, J)
+        f = filter_Plant(f, J)
+        c = {(i, j): value for (i, j), value in c.items() if j in J}
+
+        ### RUN MODEL ##########################################
+        m = flp_scip(I, J, d, M, f, c, target)
+        m.optimize()
+        total_cost, assignment_decision = flp_get_result(m)
+
+        # arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
+        deck = update_digester_layer_color(loi_gdf, J, deck)
+        deck = update_farm_layer_color(farm, loi_gdf, assignment_decision, deck)
+        deck = update_map(farm, loi_gdf, assignment_decision, deck)
+
     # Rendering the map 
+    deck.layers[-1].visible = show_arcs
     st.pydeck_chart(deck, use_container_width=True)
 
         
@@ -318,10 +325,9 @@ def main():
     ### INITIALIZE SESSION STATE ##########################################
     perform_initial_setup()
 
-    # Display the main content of the app
+    ### DISPLAY MAIN CONTENT OF THE APP ##########################################
     main_content()
 
-    ### RUN FLP MODEL ##########################################
     # Run the model 
     # total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
     #                                                                                                 Farm, 

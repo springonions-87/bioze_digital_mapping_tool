@@ -26,11 +26,10 @@ def cell_to_shaply_point(h3_index):
     return Point(lon, lat)
 
 def loi_to_gdf(loi):
+    
     loi['geometry'] = loi['hex9'].apply(cell_to_shaply_point) # can change the function here
     loi_gdf = gpd.GeoDataFrame(loi, geometry='geometry', crs=4326)
     return loi_gdf
-
-# convert ot gdf
 
 def find_closest_osmid(gdf, n):
     gdf['closest_osmid'] = gdf['geometry'].apply(
