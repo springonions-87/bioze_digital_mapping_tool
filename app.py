@@ -16,21 +16,21 @@ today = date.today()
 # st.title('BIOZE Digital Mapping Tool')
 # st.text('This is an interactive mapping tool on biogas.')
 st.set_page_config(page_title="Bioze Mapping Tool", layout="wide")
-st.markdown(
-    """
-    <style>
-    #root .block-container {
-        max-width: none;
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .stFrame {
-        width: 100vw !important;
-        height: 100vh !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True)
+# st.markdown(
+#     """
+#     <style>
+#     #root .block-container {
+#         max-width: none;
+#         padding-left: 0;
+#         padding-right: 0;
+#     }
+#     .stFrame {
+#         width: 100vw !important;
+#         height: 100vh !important;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True)
 
 
 ### FUNCTIONS #######################################
@@ -114,8 +114,9 @@ def initialize_map(digester_df, farm_df, suitability_df):
     farm_layer = pdk.Layer(type='ScatterplotLayer',
                            data=farm_df,
                            get_position=['x', 'y'],
-                                       get_radius=300,
+                           get_radius=300,
                                        get_fill_color='color',
+                                       get_line_color=[255, 255, 255],
                                        pickable=False,
                                        auto_highlight=True)
     hex_layer = pdk.Layer(type="H3HexagonLayer",
@@ -153,7 +154,9 @@ def initialize_map(digester_df, farm_df, suitability_df):
     deck = pdk.Deck(
         layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
         initial_view_state=view_state, 
-        map_style='mapbox://styles/mapbox/streets-v12',
+        map_style= 
+        #'mapbox://styles/mapbox/satellite-v9',
+        'mapbox://styles/mapbox/streets-v12',
         tooltip=
         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
         {"text": "Suitability: {Value}"}
@@ -276,19 +279,22 @@ def main_content():
 
     ### SIDEBAR ##################################
     with st.sidebar:
-        target = (st.slider('Manure Utilization target (%):', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
+        target = (st.slider('**Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 
         with st.container():
-            st.markdown("**Layers**")
+            st.write("**Map Layers**")
             show_farm = st.sidebar.checkbox('Farms', value=True)
             show_digester = st.sidebar.checkbox('Digesters', value=True)
             show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
             show_suitability = st.sidebar.checkbox('Suitability', value=False)
             # show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
 
+        st.markdown("")
+        st.markdown("")
+        st.markdown("")
         with st.expander("Click to learn more about this dashboard"):
             st.markdown(f"""
-            Introduce Bioze
+            Introduce Bioze...
             *Updated on {str(today)}.*  
             """)
 
@@ -300,9 +306,9 @@ def main_content():
     # deck.layers[-1].visible = show_polygon
 
     ### SELECT PLANT FORM ##########################################
-    with st.expander('Select Locations'):
+    with st.expander('Customize Site Selection'):
         with st.form('select_plant'):
-            J = st.multiselect(" ", Plant_all)
+            J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
             if "All" in J or not J:
                 J = plant
             submit_select_loi = st.form_submit_button("Submit")
@@ -325,10 +331,10 @@ def main_content():
             ### OUTCOME INDICATORS ##########################################
             total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
             # Display metrics side by side 
-            col1, col2 = st.columns(2)
+            col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
             col1.metric(label="Total Biogas Production", value="{:,.2f} m³".format(total_biogas))
-            with col2:
+            with col3:
             # Plot bar chart
                 st.markdown("Digester Utilization Percentage")
                 st.bar_chart(percentage_utilization)

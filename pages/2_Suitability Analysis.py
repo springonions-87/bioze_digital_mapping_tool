@@ -4,7 +4,7 @@ import streamlit as st
 import numpy as np
 from cflp_function import get_fill_color
 
-padding = 0
+padding=0
 st.set_page_config(layout="wide")
 # st.markdown(
 #     """
@@ -27,7 +27,8 @@ st.markdown(
             text-align: end;
         } 
     </style>
-    """,unsafe_allow_html=True
+    """,
+    unsafe_allow_html=True
 )
 
 colormap_name = 'viridis'
@@ -93,6 +94,7 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     hex_df = create_empty_layer(d_to_farm)
     hex_df['fuzzy'] = result_array
     get_fill_color(hex_df, 'fuzzy', colormap_name)
+    hex_df['fuzzy'] = hex_df['fuzzy'].round(3)
     return hex_df
 
 ### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
@@ -113,7 +115,7 @@ def generate_pydeck(df, layer_info, view_state=view_state):
                             stroked=True,
                             filled=True,
                             extruded=False,
-                            opacity=0.7,
+                            opacity=0.6,
                             get_hexagon="hex9",
                             get_fill_color ='color', 
                             # get_line_color=[255, 255, 255],
@@ -124,7 +126,17 @@ def generate_pydeck(df, layer_info, view_state=view_state):
 
 ### CREATE STREAMLIT ##################################
 def main():
-    st.markdown("### Analysis for Identifying Suitable Digester Sites")
+    st.markdown("### Biogas Digester Site: Suitability Analysis")
+    st.markdown(
+        "This analysis identifies potential sites for biogas digesters based on five key criteria: "
+        "distance to major roads, farms, industrial areas, and nature and water bodies."
+    )
+    st.markdown(
+        "You have the flexibility to select specific criteria for the suitability analysis. "
+        "The resulting suitability map will be displayed below for your exploration."
+    )
+    st.markdown("")
+    st.markdown("")
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -137,19 +149,23 @@ def main():
         st.markdown("**Distance to Industry**")
         st.pydeck_chart(generate_pydeck(d_to_industry, "Distance to industry"), use_container_width=True)
     with col3:
-        st.markdown("**Distance to Nature and Water**")
+        st.markdown("**Distance to Nature and Water Bodies**")
         st.pydeck_chart(generate_pydeck(d_to_nature, "Distance to nature and water"), use_container_width=True)
+   
+    st.markdown("")
+    "---"
+    st.markdown("")
 
     # Suitability analysis section
     with st.sidebar.form("suitability_analysis_form"):
-        selected_variables = st.multiselect("Select Criteria", list(all_arrays.keys()))
+        selected_variables = st.multiselect("Select criteria", list(all_arrays.keys()))
         submit_button = st.form_submit_button("Build Suitability Map")
 
     if submit_button and not selected_variables:
         st.warning("No variable selected.")
         return
     
-    st.title("**Suitability Map**")
+    st.markdown("### **Suitability Map**")
     # if submit_button:
     #     with st.spinner('Building suitability map...'):
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
@@ -161,7 +177,7 @@ def main():
             stroked=True,
             filled=True,
             extruded=False,
-            opacity=0.7,
+            opacity=0.6,
             get_hexagon="hex9",
             get_fill_color='color', 
             # get_line_color=[255, 255, 255],
@@ -171,7 +187,7 @@ def main():
 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
-        fuzzy_cut_off = st.slider('Select suitability range to filter potential digester locations', 0.0, 1.0, (0.8, 1.0), step=0.01)
+        fuzzy_cut_off = st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01)
         submit_button_loi = st.form_submit_button("Filter")
     
     if submit_button_loi:
@@ -181,7 +197,7 @@ def main():
         with col1:
             st.markdown(f"**Number of Potential Locations:{len(loi)}**")
         with col4:
-            save_loi = st.button("Save Suitability Analysis Result")
+            save_loi = st.button("Save Results")
             if save_loi:
                 loi.to_csv('./hex/loi.csv')
         loi_plot = pdk.Layer(
@@ -191,7 +207,7 @@ def main():
             stroked=True,
             filled=True,
             extruded=False,
-            opacity=0.7,
+            opacity=0.6,
             get_hexagon="hex9",
             get_fill_color=[0,0,0,0], 
             get_line_color=[255, 0, 0],
