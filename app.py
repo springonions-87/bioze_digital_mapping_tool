@@ -6,6 +6,7 @@ from cflp_function import *
 from calculate_od import *
 from shapely.geometry import mapping
 from datetime import date
+from pydeck.types import String
 
 today = date.today()
 # import os
@@ -73,12 +74,6 @@ def load_pickle():
 
     return I, d, total_manure
 
-# @st.cache_data
-# def filter_Plant(original_dict, selected_plant):
-#     # Extract key-value pairs where the key is not in the list
-#     filtered_dict = {key: value for key, value in original_dict.items() if key in selected_plant}
-#     return filtered_dict
-
 @st.cache_data
 def filter_Plant(original_dict, J):
     """
@@ -134,13 +129,29 @@ def initialize_map(digester_df, farm_df, suitability_df):
         get_fill_color ='[0, 0, 255*Value, 255]',
         auto_highlight=True)
     
+    digester_df['name'] = digester_df.index.astype(str)
+    # Define a layer to display on a map
+    digester_label_layer = pdk.Layer(
+        "TextLayer",
+        digester_df,
+        pickable=True,
+        get_position=['x', 'y'],
+        get_text="name",
+        get_size=18,
+        get_color=[255,255,255],
+        get_angle=0,
+        # Note that string constants in pydeck are explicitly passed as strings
+        # This distinguishes them from columns in a data set
+        get_text_anchor=String("middle"),
+        get_alignment_baseline=String("center"))
+    
     view_state=pdk.ViewState(
         latitude=farm_df['y'].mean(),
         longitude=farm_df['x'].mean(),
         zoom=9,
         )
     deck = pdk.Deck(
-        layers=[hex_layer, digester_layer, farm_layer],
+        layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
         initial_view_state=view_state, 
         map_style='mapbox://styles/mapbox/streets-v12',
         tooltip=
@@ -153,14 +164,14 @@ def update_digester_layer_color(digester_df, J, deck):
     # Update the color of digester to grey if not selected 
     digester_df_copy = digester_df.copy()
     digester_df_copy.loc[~digester_df_copy.index.isin(J), 'color'] ='[169, 169, 169]'
-    deck.layers[1].data = digester_df_copy
+    deck.layers[2].data = digester_df_copy
     return deck
 
 def update_farm_layer_color(farm_df, digester_df, assignment_decision, deck): 
     # Update the color of farms to match the color of digester assigned to
     farm_df_copy = farm_df.copy()
     farm_df_copy['color'] = farm_df_copy.index.map({index: digester_df['color'].iloc[farm_index] for farm_index, indices in assignment_decision.items() for index in indices})
-    deck.layers[2].data = farm_df_copy
+    deck.layers[1].data = farm_df_copy
     return deck
 
 def update_map(farm_df, digester_df, assignment_decision, deck):
@@ -282,9 +293,9 @@ def main_content():
             """)
 
     # Toggle the visibility of the ArcLayer based on the checkbox
-    deck.layers[0].visible = show_suitability
-    deck.layers[1].visible = show_digester
-    deck.layers[2].visible = show_farm
+    # deck.layers[0].visible = show_suitability
+    # deck.layers[1].visible = show_digester
+    # deck.layers[2].visible = show_farm
     # deck.layers[3].visible = show_farm
     # deck.layers[-1].visible = show_polygon
 
@@ -300,30 +311,44 @@ def main_content():
         deck = update_digester_layer_color(loi_gdf, J, deck)
 
     if submit_select_loi or st.session_state['target'] != target:
-        st.session_state['target'] = target # Update the session state with the new target value
-        M = filter_Plant(M, J)
-        f = filter_Plant(f, J)
-        c = {(i, j): value for (i, j), value in c.items() if j in J}
+        with st.spinner('Running the model...'):
+            st.session_state['target'] = target # Update the session state with the new target value
+            M = filter_Plant(M, J)
+            f = filter_Plant(f, J)
+            c = {(i, j): value for (i, j), value in c.items() if j in J}
 
         ### RUN MODEL ##########################################
-        m = flp_scip(I, J, d, M, f, c, target)
-        m.optimize()
-        total_cost, assignment_decision = flp_get_result(m)
+            m, total_manure = flp_scip(I, J, d, M, f, c, target)
+            m.optimize()
+            total_cost, assignment_decision, percentage_utilization = flp_get_result(m, I, J, M)
 
-        # arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
-        deck = update_digester_layer_color(loi_gdf, J, deck)
-        deck = update_farm_layer_color(farm, loi_gdf, assignment_decision, deck)
-        deck = update_map(farm, loi_gdf, assignment_decision, deck)
+            ### OUTCOME INDICATORS ##########################################
+            total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
+            # Display metrics side by side 
+            col1, col2 = st.columns(2)
+            col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
+            col1.metric(label="Total Biogas Production", value="{:,.2f} m³".format(total_biogas))
+            with col2:
+            # Plot bar chart
+                st.markdown("Digester Utilization Percentage")
+                st.bar_chart(percentage_utilization)
+
+            # arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
+            deck = update_digester_layer_color(loi_gdf, J, deck)
+            deck = update_farm_layer_color(farm, loi_gdf, assignment_decision, deck)
+            deck = update_map(farm, loi_gdf, assignment_decision, deck)
+        # st.success('Optimal solution found!')
 
     # Rendering the map 
-    deck.layers[-1].visible = show_arcs
+    # deck.layers[-1].visible = show_arcs
     st.pydeck_chart(deck, use_container_width=True)
 
         
 ### CREATE STREAMLIT ##################################
 def main():
     ### INITIALIZE SESSION STATE ##########################################
-    perform_initial_setup()
+    with st.spinner("Computing the OD matrix"):
+        perform_initial_setup()
 
     ### DISPLAY MAIN CONTENT OF THE APP ##########################################
     main_content()

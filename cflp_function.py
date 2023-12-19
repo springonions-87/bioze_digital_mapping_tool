@@ -143,7 +143,7 @@ def flp_scip(I, J, d, M, f, c, p):
     )
 
     model.data = x, y, z
-    return model
+    return model, total_demand
 
 # def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index):
     """
@@ -244,7 +244,7 @@ def flp_scip(I, J, d, M, f, c, p):
     plt.show()
 
 
-def flp_get_result(m):
+def flp_get_result(m, I, J, M):
     EPS = 1.e-6
     x,y,z = m.data
     assignment = [(i,j) for (i,j) in x if m.getVal(x[i,j]) > EPS]
@@ -259,9 +259,13 @@ def flp_get_result(m):
         if j in facilities:
             result_dict[j].append(i)
 
-    return total_cost, result_dict
+    # Get percentage of utilization
+    x_values = {(i, j): m.getVal(x[i, j]) for (i, j) in x if m.getVal(x[i, j]) > EPS} # get how much is flowing between every assignment
+    flow_matrix = np.array([[x_values.get((i, j), 0) for j in J] for i in I]) # create a flow matrix (len(farm)xlen(plant))
+    column_sum = np.sum(flow_matrix, axis=0) # sum of total flow going to every plant
+    percentage_utilization = (column_sum/np.array(list(M.values())))*100
 
-
+    return total_cost, result_dict, percentage_utilization
 
 def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
 

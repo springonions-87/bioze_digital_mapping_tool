@@ -5,20 +5,29 @@ import numpy as np
 from cflp_function import get_fill_color
 
 padding = 0
-
 st.set_page_config(layout="wide")
+# st.markdown(
+#     """
+#     <style>
+#     .small-font {
+#         font-size:12px;
+#         font-style: italic;
+#         color: #b1a7a6;
+#     }
+#     </style>
+#     """,
+#     unsafe_allow_html=True,
+# )
 
 st.markdown(
     """
     <style>
-    .small-font {
-        font-size:12px;
-        font-style: italic;
-        color: #b1a7a6;
-    }
+        div[data-testid="column"]:nth-of-type(4)
+        {
+            text-align: end;
+        } 
     </style>
-    """,
-    unsafe_allow_html=True,
+    """,unsafe_allow_html=True
 )
 
 colormap_name = 'viridis'
@@ -52,11 +61,6 @@ def fuzzify(df, type="close"):
     else:
         raise ValueError("Invalid type. Choose 'close' or 'far'.")
     return fuzzified_array
-
-#def fuzzify(df):
-#     df_array = np.array(df['value'])
-#     fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-#     return fuzzified_array
 
 fuzzy_farm = fuzzify(d_to_farm, type='close')
 fuzzy_road = fuzzify(d_to_road, type='close')
@@ -145,10 +149,11 @@ def main():
         st.warning("No variable selected.")
         return
     
-    hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
-
-    # Plot suitability map
     st.title("**Suitability Map**")
+    # if submit_button:
+    #     with st.spinner('Building suitability map...'):
+    hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
+    # Plot suitability map
     hex_fuzzy = pdk.Layer(
             "H3HexagonLayer",
             hex_df,
@@ -162,6 +167,7 @@ def main():
             # get_line_color=[255, 255, 255],
             # line_width_min_pixels=2
         )
+            # st.success('Done!')
 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
@@ -170,7 +176,14 @@ def main():
     
     if submit_button_loi:
         loi = filter_loi(fuzzy_cut_off, hex_df)
-        st.markdown(f"**Number of Potential Locations:{len(loi)}**")
+        # loi.to_csv('./hex/loi.csv')
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.markdown(f"**Number of Potential Locations:{len(loi)}**")
+        with col4:
+            save_loi = st.button("Save Suitability Analysis Result")
+            if save_loi:
+                loi.to_csv('./hex/loi.csv')
         loi_plot = pdk.Layer(
             "H3HexagonLayer",
             loi,
@@ -189,6 +202,7 @@ def main():
                         # map_style='mapbox://styles/mapbox/streets-v12',
                         tooltip={"text": "Suitability: {fuzzy}"})
         st.pydeck_chart(deck, use_container_width=True)
+        # Save Button
     else:
         deck = pdk.Deck(layers=[hex_fuzzy], 
                         initial_view_state=view_state, 
@@ -198,11 +212,11 @@ def main():
     
     # Filtering location of interest (loi) section
     # with st.sidebar.expander("Save Suitability Analysis Results"):
-    with st.sidebar.form("save_loi_form"):
-        st.markdown("Save Suitability Analysis Results")
-        save_loi = st.form_submit_button("Save")
-    if save_loi:
-        loi.to_csv('./hex/loi.csv')
+    # with st.sidebar.form("save_loi_form"):
+    #     st.markdown("Save Suitability Analysis Results")
+    #     save_loi = st.form_submit_button("Save")
+    # if save_loi:
+    #     loi.to_csv('./hex/loi.csv')
 
 
     # st.download_button(
