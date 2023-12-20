@@ -45,6 +45,7 @@ d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv', colormap_name)
 d_to_road = load_data('./hex/d_to_road_hex_complete.csv', colormap_name)
 d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv', colormap_name)
 d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_name)
+d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv', colormap_name)
 
 # get_fill_color(d_to_farm, "value", colormap_name)
 # get_fill_color(d_to_road, "value", colormap_name)
@@ -67,9 +68,11 @@ fuzzy_farm = fuzzify(d_to_farm, type='close')
 fuzzy_road = fuzzify(d_to_road, type='close')
 fuzzy_industry = fuzzify(d_to_industry, type='close')
 fuzzy_nature = fuzzify(d_to_nature, type='far')
+fuzzy_urban = fuzzify(d_to_urban, type='far')
 
 all_arrays = {'Farm':fuzzy_farm, 
-              'Road':fuzzy_road, 
+              'Road':fuzzy_road,
+              'Urban':fuzzy_urban, 
               'Industry':fuzzy_industry, 
               'Nature':fuzzy_nature}
 
@@ -140,14 +143,17 @@ def main():
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**Distance to Farm**")
+        st.markdown("**Distance to Farms**")
         st.pydeck_chart(generate_pydeck(d_to_farm, "Distance to farm"), use_container_width=True)
     with col1:
-        st.markdown("**Distance to Road**")
+        st.markdown("**Distance to Roads**")
         st.pydeck_chart(generate_pydeck(d_to_road, "Distance to road"), use_container_width=True)
     with col2:
-        st.markdown("**Distance to Industry**")
+        st.markdown("**Distance to Industrial Areas**")
         st.pydeck_chart(generate_pydeck(d_to_industry, "Distance to industry"), use_container_width=True)
+    with col2:
+        st.markdown("**Distance to Urban Areas**")
+        st.pydeck_chart(generate_pydeck(d_to_urban, "Distance to urban"), use_container_width=True)
     with col3:
         st.markdown("**Distance to Nature and Water Bodies**")
         st.pydeck_chart(generate_pydeck(d_to_nature, "Distance to nature and water"), use_container_width=True)

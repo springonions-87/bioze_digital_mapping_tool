@@ -11,18 +11,33 @@ import pickle
 import random
 from pyscipopt import Model, quicksum
 
+# def random_M_f(J):
+#     small = [7848, 209249] # [capacity, cost]
+#     medium = [15056, 252616]
+#     large = [120000, 12000000]
+
+#     # Randomly assign medium or large factory to each index in J
+#     digester_sizes = random.choices(["medium", "large"], k=len(J))
+
+#     # Create dictionaries M and f based on the assigned values
+#     M = {index: medium[0] if size == "medium" else large[0] for index, size in zip(J, digester_sizes)}
+#     f = {index: medium[1] if size == "medium" else large[1] for index, size in zip(J, digester_sizes)}
+#     return M, f
+
 def random_M_f(J):
-    medium = [78480, 209249] # [capacity, cost]
-    large = [150560, 252616]
+    small = [7848, 209249]  # [capacity, cost]
+    medium = [15056, 252616]
+    large = [120000, 12000000]
 
-    # Randomly assign medium or large factory to each index in J
-    digester_sizes = random.choices(["medium", "large"], k=len(J))
+    # Ensure the first and last indices in J are set to 'large'
+    M = {J[0]: large[0], J[-1]: large[0]}
+    f = {J[0]: large[1], J[-1]: large[1]}
 
-    # Create dictionaries M and f based on the assigned values
-    M = {index: medium[0] if size == "medium" else large[0] for index, size in zip(J, digester_sizes)}
-    f = {index: medium[1] if size == "medium" else large[1] for index, size in zip(J, digester_sizes)}
+    # For the indices in between (excluding the first and last), assign 'medium'
+    for index in J[1:-1]:
+        M[index] = medium[0]
+        f[index] = medium[1]
     return M, f
-
 
 def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
     """
