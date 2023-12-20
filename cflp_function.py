@@ -1,7 +1,7 @@
 # Capacitated Facility Location Problem - Functions
 # Latest version = 6
 
-from pulp import *
+# from pulp import *
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -39,7 +39,7 @@ def random_M_f(J):
         f[index] = medium[1]
     return M, f
 
-def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
+# def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
     """
     Input
     * Plant: list (sets/array) of facility indices
