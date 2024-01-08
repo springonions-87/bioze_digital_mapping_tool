@@ -68,7 +68,7 @@ dependencies:
 #   - parso=0.8.3=pyhd8ed1ab_0
 #   - pcre2=10.42=h0ff8eda_0
 #   - pickleshare=0.7.5=py_1003
-#   - pip=23.3.1=py38haa95532_0
+  - pip=23.3.1=py38haa95532_0
 #   - platformdirs=3.10.0=py38haa95532_0
 #   - pluggy=1.0.0=py38haa95532_1
 #   - prompt-toolkit=3.0.41=pyha770c72_0
