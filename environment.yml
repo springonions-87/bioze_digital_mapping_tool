@@ -1,4 +1,4 @@
-name: base
+name: scip
 channels:
   - conda-forge
   - defaults
