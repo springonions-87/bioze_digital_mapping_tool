@@ -26,8 +26,8 @@ from pyscipopt import Model, quicksum
 
 def random_M_f(J):
     small = [7848, 209249]  # [capacity, cost]
-    medium = [15056, 252616]
-    large = [120000, 12000000]
+    medium = [150560, 252616]
+    large = [1200000, 12000000]
 
     # Ensure the first and last indices in J are set to 'large'
     M = {J[0]: large[0], J[-1]: large[0]}
