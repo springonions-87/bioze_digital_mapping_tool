@@ -3,6 +3,9 @@ import pydeck as pdk
 import streamlit as st
 import numpy as np
 from cflp_function import get_fill_color
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
 padding=0
 st.set_page_config(layout="wide")
@@ -32,6 +35,7 @@ st.markdown(
 )
 
 colormap_name = 'viridis'
+colormap_name_suitability_map = 'plasma'
 
 ### LOAD DATA ##################################
 @st.cache_data
@@ -46,11 +50,6 @@ d_to_road = load_data('./hex/d_to_road_hex_complete.csv', colormap_name)
 d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv', colormap_name)
 d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_name)
 d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv', colormap_name)
-
-# get_fill_color(d_to_farm, "value", colormap_name)
-# get_fill_color(d_to_road, "value", colormap_name)
-# get_fill_color(d_to_industry, "value", colormap_name)
-# get_fill_color(d_to_nature, "value", colormap_name)
 
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
@@ -96,7 +95,7 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     
     hex_df = create_empty_layer(d_to_farm)
     hex_df['fuzzy'] = result_array
-    get_fill_color(hex_df, 'fuzzy', colormap_name)
+    get_fill_color(hex_df, 'fuzzy', colormap_name_suitability_map)
     hex_df['fuzzy'] = hex_df['fuzzy'].round(3)
     return hex_df
 
@@ -126,6 +125,42 @@ def generate_pydeck(df, layer_info, view_state=view_state):
                         ),
                     ],
                     tooltip={"text": f"{layer_info}: {{value}}"})
+
+### CREATE VARIABLE LEGEND ##################################
+def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.cm.viridis):
+    # Create Viridis colormap image
+    gradient = np.linspace(0, 1, 256)
+    gradient = np.vstack((gradient, gradient))
+
+    # Create Matplotlib figure and axis
+    fig, ax = plt.subplots(figsize=(4, 0.5))
+    ax.imshow(gradient, aspect='auto', cmap=cmap)
+    ax.axis('off') 
+
+    # Add labels "Far" and "Near"
+    ax.text(-10, 0.5, label_left, verticalalignment='center', horizontalalignment='center', fontsize=12)
+    ax.text(266, 0.5, label_right, verticalalignment='center', horizontalalignment='center', fontsize=12)
+
+    # Save Matplotlib figure as PNG image
+    buffer = BytesIO()
+    fig.savefig(buffer, format='png', bbox_inches='tight', pad_inches=0)
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    plt.close(fig)    # Close Matplotlib figure
+    # Convert Matplotlib PNG image to Base64 string
+    image_base64 = base64.b64encode(image_png).decode()
+
+    # Create HTML content with image and labels
+    legend_html = f'''
+        <div style="width: 100%; height: 300px; overflow: auto; padding: 10px;">
+            <img src="data:image/png;base64,{image_base64}" alt="Colorbar" style="max-width: 100%; max-height: 100%; height: auto; width: auto; display: block; margin-left: auto; margin-right: auto;">
+        </div>
+    '''
+    return legend_html
+
+variable_legend_html = generate_colormap_legend()
+suitability_map_legend_html = generate_colormap_legend(label_left='Least Suitable', label_right='Most Suitable', cmap=plt.cm.plasma)
+
 
 ### CREATE STREAMLIT ##################################
 def main():
@@ -157,6 +192,8 @@ def main():
     with col3:
         st.markdown("**Distance to Nature and Water Bodies**")
         st.pydeck_chart(generate_pydeck(d_to_nature, "Distance to nature and water"), use_container_width=True)
+    with col3:
+        st.markdown(variable_legend_html, unsafe_allow_html=True)
    
     st.markdown("")
     "---"
@@ -224,14 +261,15 @@ def main():
                         # map_style='mapbox://styles/mapbox/streets-v12',
                         tooltip={"text": "Suitability: {fuzzy}"})
         st.pydeck_chart(deck, use_container_width=True)
-        # Save Button
     else:
         deck = pdk.Deck(layers=[hex_fuzzy], 
                         initial_view_state=view_state, 
                         # map_style='mapbox://styles/mapbox/streets-v12',
                         tooltip={"text": "Suitability: {fuzzy}"})
         st.pydeck_chart(deck, use_container_width=True)
-    
+        # col1, col2, col3 = st.columns(3)
+        # with col1:
+        st.markdown(suitability_map_legend_html, unsafe_allow_html=True)
     # Filtering location of interest (loi) section
     # with st.sidebar.expander("Save Suitability Analysis Results"):
     # with st.sidebar.form("save_loi_form"):
