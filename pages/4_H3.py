@@ -54,23 +54,19 @@ st.write("original df", d_to_farm)
 #     return fuzzified_array
 
 @st.cache_data
-def fuzzify_close(df, colormap_name):
+def fuzzify_close(df):
     df_array = np.array(df['value'])
     # close
     fuzzified_array_close = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     df['fuzzy'] = fuzzified_array_close
-    get_fill_color(df, "fuzzy", colormap_name)
-
     return df
 
 @st.cache_data
-def fuzzify_far(df, colormap_name): 
+def fuzzify_far(df): 
     df_array = np.array(df['value'])
     # far
     fuzzified_array_far = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     df['fuzzy'] = fuzzified_array_far
-    get_fill_color(df, "fuzzy", colormap_name) 
-
     return df
 
 # fuzzy_farm = fuzzify(d_to_farm, type='close')
@@ -79,10 +75,10 @@ def fuzzify_far(df, colormap_name):
 # fuzzy_nature = fuzzify(d_to_nature, type='far')
 # fuzzy_urban = fuzzify(d_to_urban, type='far')
 
-fuzzy_farm_close = fuzzify_close(d_to_farm, colormap_name)
-st.write(fuzzy_farm_close)
-fuzzy_farm_far = fuzzify_far(d_to_farm, colormap_name)
-st.write(fuzzy_farm_far)
+fuzzy_farm_close = fuzzify_close(d_to_farm)
+# st.write(fuzzy_farm_close)
+fuzzy_farm_far = fuzzify_far(d_to_farm)
+# st.write(fuzzy_farm_far)
 
 def initialize_session_state():
     if 'dist_choice' not in st.session_state:
