@@ -23,18 +23,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-colormap_name = 'viridis'
+colormap_name = 'Reds'
 colormap_name_suitability_map = 'plasma'
 
 ### LOAD DATA ##################################
 @st.cache_data
-def load_data(csv_path):
+def load_data(csv_path, colormap_name):
     df = pd.read_csv(csv_path)
     # get color for plotting
-    # get_fill_color(df, "value", colormap_name, color_column_name='color')
+    get_fill_color(df, "value", colormap_name)
     return df
 
-d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv')
+d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv', colormap_name)
+st.write("original df", d_to_farm)
 # d_to_road = load_data('./hex/d_to_road_hex_complete.csv', colormap_name)
 # d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv', colormap_name)
 # d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_name)
@@ -42,15 +43,15 @@ d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv')
 
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
-def fuzzify(df, type="close"):
-    df_array = np.array(df['value'])
-    if type == "close":
-        fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-    elif type == "far":
-        fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-    else:
-        raise ValueError("Invalid type. Choose 'close' or 'far'.")
-    return fuzzified_array
+# def fuzzify(df, type="close"):
+#     df_array = np.array(df['value'])
+#     if type == "close":
+#         fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+#     elif type == "far":
+#         fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+#     else:
+#         raise ValueError("Invalid type. Choose 'close' or 'far'.")
+#     return fuzzified_array
 
 @st.cache_data
 def fuzzify_close(df, colormap_name):
@@ -58,16 +59,18 @@ def fuzzify_close(df, colormap_name):
     # close
     fuzzified_array_close = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     df['fuzzy'] = fuzzified_array_close
-    get_fill_color(df, "fuzzy", colormap_name, color_column_name='color')
+    get_fill_color(df, "fuzzy", colormap_name)
+
     return df
 
 @st.cache_data
-def fuzzify_far(df, colormap_name):
+def fuzzify_far(df, colormap_name): 
     df_array = np.array(df['value'])
-    # close
+    # far
     fuzzified_array_far = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     df['fuzzy'] = fuzzified_array_far
-    get_fill_color(df, "fuzzy", colormap_name, color_column_name='color')
+    get_fill_color(df, "fuzzy", colormap_name) 
+
     return df
 
 # fuzzy_farm = fuzzify(d_to_farm, type='close')
@@ -82,9 +85,10 @@ fuzzy_farm_far = fuzzify_far(d_to_farm, colormap_name)
 st.write(fuzzy_farm_far)
 
 def initialize_session_state():
-    if 'dist_choice_button' not in st.session_state:
-        st.session_state.dist_choice_button = "Close"
+    if 'dist_choice' not in st.session_state:
+        st.session_state.dist_choice = "Close"
 
+# plot them in the same layer and just visualize what is what 
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
@@ -108,30 +112,58 @@ def generate_pydeck(df, layer_info, view_state=view_state):
                     ],
                     tooltip={"text": f"{layer_info}: {{fuzzy}}"})
 
+@st.cache_data
+def generate_pydeck_2(df_close, df_far, layer_info, choice, view_state=view_state):
+    st.write(choice)
+    if choice == "Close":
+        return pdk.Deck(initial_view_state=view_state,
+                        layers=[
+                            pdk.Layer(
+                                "H3HexagonLayer",
+                                df_close,
+                                pickable=True,
+                                stroked=True,
+                                filled=True,
+                                extruded=False,
+                                opacity=0.6,
+                                get_hexagon="hex9",
+                                get_fill_color='color', 
+                                # get_line_color=[255, 255, 255],
+                                # line_width_min_pixels=1
+                            ),
+                        ],
+                        tooltip={"text": f"{layer_info}: {{fuzzy}}"})
+    elif choice == "Far":
+        return pdk.Deck(initial_view_state=view_state,
+                    layers=[
+                        pdk.Layer(
+                            "H3HexagonLayer",
+                            df_far,
+                            pickable=True,
+                            stroked=True,
+                            filled=True,
+                            extruded=False,
+                            opacity=0.6,
+                            get_hexagon="hex9",
+                            get_fill_color='color', 
+                            # get_line_color=[255, 255, 255],
+                            # line_width_min_pixels=1
+                        ),
+                    ],
+                    tooltip={"text": f"{layer_info}: {{fuzzy}}"})
+
 def main():
     initialize_session_state
-    st.markdown("### Biogas Digester Site: Suitability Analysis")
-    st.markdown(
-        "This analysis identifies potential sites for biogas digesters based on five key criteria: "
-        "distance to major roads, farms, industrial areas, and nature and water bodies."
-    )
-    st.markdown(
-        "You have the flexibility to select specific criteria for the suitability analysis. "
-        "The resulting suitability map will be displayed below for your exploration."
-    )
-    st.markdown("")
-    st.markdown("")
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Distance to Farms**")
-        st.session_state.dist_choice_button = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed")
+        st.session_state.dist_choice = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed")
             # Plot selected DataFrame
-        if st.session_state.dist_choice_button == "Close":
-            plot_data = generate_pydeck(fuzzy_farm_close, "Distance to farm")
-        elif st.session_state.dist_choice_button == "Far":
-            plot_data = generate_pydeck(fuzzy_farm_far, "Distance to farm")
-        st.pydeck_chart(plot_data, use_container_width=True)
+        st.write(st.session_state.dist_choice)
+        st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, "Distance to farm", choice=st.session_state.dist_choice), use_container_width=True)
+    
+
                 # with col1:
     #     st.markdown("**Distance to Roads**")
     #     st.pydeck_chart(generate_pydeck(d_to_road, "Distance to road"), use_container_width=True)

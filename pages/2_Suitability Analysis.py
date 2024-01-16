@@ -34,7 +34,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-colormap_name = 'viridis'
+colormap_name = 'Reds'
 colormap_name_suitability_map = 'plasma'
 
 ### LOAD DATA ##################################
@@ -69,11 +69,11 @@ fuzzy_industry = fuzzify(d_to_industry, type='close')
 fuzzy_nature = fuzzify(d_to_nature, type='far')
 fuzzy_urban = fuzzify(d_to_urban, type='far')
 
-all_arrays = {'Farm':fuzzy_farm, 
-              'Road':fuzzy_road,
-              'Urban':fuzzy_urban, 
-              'Industry':fuzzy_industry, 
-              'Nature':fuzzy_nature}
+all_arrays = {'Distance to feedstocks':fuzzy_farm, 
+              'Distance to road infrastructure':fuzzy_road,
+              'Distance to urban and residential areas':fuzzy_urban, 
+              'Distance to industrial areas':fuzzy_industry, 
+              'Distance to nature and water bodies':fuzzy_nature}
 
 ### CREATE EMPTY LAYER ##################################
 def create_empty_layer(d_to_farm):
@@ -107,7 +107,7 @@ def filter_loi(fuzzy_cut_off, fuzzy_df):
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 @st.cache_data
-def generate_pydeck(df, layer_info, view_state=view_state):
+def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
                         pdk.Layer(
@@ -124,7 +124,7 @@ def generate_pydeck(df, layer_info, view_state=view_state):
                             # line_width_min_pixels=1
                         ),
                     ],
-                    tooltip={"text": f"{layer_info}: {{value}}"})
+                    tooltip={"text": "Suitability: {fuzzy}"})
 
 ### CREATE VARIABLE LEGEND ##################################
 def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.cm.viridis):
@@ -179,19 +179,19 @@ def main():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Distance to Farms**")
-        st.pydeck_chart(generate_pydeck(d_to_farm, "Distance to farm"), use_container_width=True)
+        st.pydeck_chart(generate_pydeck(d_to_farm), use_container_width=True)
     with col1:
         st.markdown("**Distance to Roads**")
-        st.pydeck_chart(generate_pydeck(d_to_road, "Distance to road"), use_container_width=True)
+        st.pydeck_chart(generate_pydeck(d_to_road), use_container_width=True)
     with col2:
         st.markdown("**Distance to Industrial Areas**")
-        st.pydeck_chart(generate_pydeck(d_to_industry, "Distance to industry"), use_container_width=True)
+        st.pydeck_chart(generate_pydeck(d_to_industry), use_container_width=True)
     with col2:
         st.markdown("**Distance to Urban Areas**")
-        st.pydeck_chart(generate_pydeck(d_to_urban, "Distance to urban"), use_container_width=True)
+        st.pydeck_chart(generate_pydeck(d_to_urban), use_container_width=True)
     with col3:
         st.markdown("**Distance to Nature and Water Bodies**")
-        st.pydeck_chart(generate_pydeck(d_to_nature, "Distance to nature and water"), use_container_width=True)
+        st.pydeck_chart(generate_pydeck(d_to_nature), use_container_width=True)
     with col3:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
    
