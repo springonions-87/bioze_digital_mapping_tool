@@ -324,7 +324,7 @@ def get_arc(assignment_decision, potential_digester_location, farm):
     arc_layer_df = pd.DataFrame(arc_data)
     return arc_layer_df
 
-def get_fill_color(df, value_column, colormap_name):
+def get_fill_color(df, value_column, colormap_name, color_column_name):
     # Calculate min, max, and diff
     min_value = df[value_column].min()
     max_value = df[value_column].max()
@@ -342,7 +342,7 @@ def get_fill_color(df, value_column, colormap_name):
         return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
 
     # Apply the function to the DataFrame to get RGB values
-    df['color'] = df[value_column].apply(get_rgb_reversed)
+    df[color_column_name] = df[value_column].apply(get_rgb_reversed)
 
 
 def store_data_to_pickle(data, folder_path, file_name):
