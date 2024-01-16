@@ -132,7 +132,7 @@ def generate_pydeck_2(df_close, df_far, layer_info, choice, view_state=view_stat
                                 # line_width_min_pixels=1
                             ),
                         ],
-                        tooltip={"text": f"{layer_info}: {{fuzzy}}"})
+                        tooltip={"text": "Suitability: {Value}"})
     elif choice == "Far":
         return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -150,7 +150,7 @@ def generate_pydeck_2(df_close, df_far, layer_info, choice, view_state=view_stat
                             # line_width_min_pixels=1
                         ),
                     ],
-                    tooltip={"text": f"{layer_info}: {{fuzzy}}"})
+                    tooltip={"text": "Suitability: {Value}"})
 
 def main():
     initialize_session_state

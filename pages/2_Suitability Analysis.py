@@ -124,7 +124,7 @@ def generate_pydeck(df, view_state=view_state):
                             # line_width_min_pixels=1
                         ),
                     ],
-                    tooltip={"text": "Suitability: {fuzzy}"})
+                    tooltip={"text": "Suitability: {Value}"})
 
 ### CREATE VARIABLE LEGEND ##################################
 def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.cm.viridis):
