@@ -10,7 +10,6 @@ import base64
 padding=0
 st.set_page_config(layout="wide")
 
-
 st.markdown(
     """
     <style>
@@ -28,16 +27,15 @@ colormap_name_suitability_map = 'plasma'
 
 ### LOAD DATA ##################################
 @st.cache_data
-def load_data(csv_path, colormap_name):
+def load_data(csv_path):
     df = pd.read_csv(csv_path)
     # get color for plotting
     get_fill_color(df, "value", colormap_name)
     return df
 
-d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv', colormap_name)
-st.write("original df", d_to_farm)
+d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv')
 # d_to_road = load_data('./hex/d_to_road_hex_complete.csv', colormap_name)
-# d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv', colormap_name)
+d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv')
 # d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_name)
 # d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv', colormap_name)
 
@@ -52,37 +50,37 @@ st.write("original df", d_to_farm)
 #     else:
 #         raise ValueError("Invalid type. Choose 'close' or 'far'.")
 #     return fuzzified_array
-
-@st.cache_data
-def fuzzify_close(df):
+def fuzzify_close(df, colormap_name=colormap_name):
     df_array = np.array(df['value'])
-    # close
     fuzzified_array_close = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-    df['fuzzy'] = fuzzified_array_close
+    df['fuzzy'] = fuzzified_array_close.round(3)
+    get_fill_color(df, 'fuzzy', colormap_name)
     return df
 
-@st.cache_data
-def fuzzify_far(df): 
+def fuzzify_far(df, colormap_name=colormap_name): 
     df_array = np.array(df['value'])
-    # far
     fuzzified_array_far = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-    df['fuzzy'] = fuzzified_array_far
+    df['fuzzy'] = fuzzified_array_far.round(3)
+    get_fill_color(df, 'fuzzy', colormap_name)
     return df
 
 # fuzzy_farm = fuzzify(d_to_farm, type='close')
 # fuzzy_road = fuzzify(d_to_road, type='close')
-# fuzzy_industry = fuzzify(d_to_industry, type='close')
+fuzzy_industry_c = fuzzify_close(d_to_industry)
+fuzzy_industry_f = fuzzify_close(d_to_industry)
 # fuzzy_nature = fuzzify(d_to_nature, type='far')
 # fuzzy_urban = fuzzify(d_to_urban, type='far')
 
 fuzzy_farm_close = fuzzify_close(d_to_farm)
-# st.write(fuzzy_farm_close)
 fuzzy_farm_far = fuzzify_far(d_to_farm)
 # st.write(fuzzy_farm_far)
 
 def initialize_session_state():
     if 'dist_choice' not in st.session_state:
         st.session_state.dist_choice = "Close"
+    if 'choice_industry' not in st.session_state:
+        st.session_state.choice_industry = "Close"
+
 
 # plot them in the same layer and just visualize what is what 
 
@@ -128,7 +126,7 @@ def generate_pydeck_2(df_close, df_far, layer_info, choice, view_state=view_stat
                                 # line_width_min_pixels=1
                             ),
                         ],
-                        tooltip={"text": "Suitability: {Value}"})
+                        tooltip={"text": "Suitability:" f"{{fuzzy}}"})
     elif choice == "Far":
         return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -146,7 +144,7 @@ def generate_pydeck_2(df_close, df_far, layer_info, choice, view_state=view_stat
                             # line_width_min_pixels=1
                         ),
                     ],
-                    tooltip={"text": "Suitability: {Value}"})
+                    tooltip={"text": "Suitability:" f"{{fuzzy}}"})
 
 def main():
     initialize_session_state
@@ -154,20 +152,20 @@ def main():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Distance to Farms**")
-        st.session_state.dist_choice = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed")
-            # Plot selected DataFrame
-        st.write(st.session_state.dist_choice)
+        st.session_state.dist_choice = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
         st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, "Distance to farm", choice=st.session_state.dist_choice), use_container_width=True)
-    
+    with col2:
+        st.markdown("**Distance to Industrial Areas**")
+        st.session_state.choice_industry = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="choice_industry_key")
+        st.pydeck_chart(generate_pydeck_2(fuzzy_industry_c, fuzzy_industry_f, "Distance to industry", choice=st.session_state.choice_industry), use_container_width=True)
+
 
                 # with col1:
     #     st.markdown("**Distance to Roads**")
     #     st.pydeck_chart(generate_pydeck(d_to_road, "Distance to road"), use_container_width=True)
+
     # with col2:
-    #     st.markdown("**Distance to Industrial Areas**")
-    #     st.pydeck_chart(generate_pydeck(d_to_industry, "Distance to industry"), use_container_width=True)
-    # with col2:
-    #     st.markdown("**Distance to Urban Areas**")
+    #     st.markdown("**Distance to Urban Areas**"
     #     st.pydeck_chart(generate_pydeck(d_to_urban, "Distance to urban"), use_container_width=True)
     # with col3:
     #     st.markdown("**Distance to Nature and Water Bodies**")

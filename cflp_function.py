@@ -343,6 +343,7 @@ def get_fill_color(df, value_column, colormap_name):
 
     # Apply the function to the DataFrame to get RGB values
     df['color'] = df[value_column].apply(get_rgb_reversed)
+    return df
 
 
 def store_data_to_pickle(data, folder_path, file_name):
