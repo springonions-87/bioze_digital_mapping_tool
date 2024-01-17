@@ -50,10 +50,8 @@ d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv')
 
 
 ### GENERATE COLORMAP ##################################
-
 colormap = 'magma'
 color_mapping = generate_color_mapping(colormap)
-
 
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data

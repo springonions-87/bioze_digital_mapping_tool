@@ -2,7 +2,7 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 import numpy as np
-from cflp_function import get_fill_color
+from cflp_function import *
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
@@ -30,7 +30,6 @@ colormap_name_suitability_map = 'plasma'
 def load_data(csv_path):
     df = pd.read_csv(csv_path)
     # get color for plotting
-    get_fill_color(df, "value", colormap_name)
     return df
 
 d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv')
@@ -39,29 +38,25 @@ d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv')
 # d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv', colormap_name)
 # d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv', colormap_name)
 
+### GENERATE COLORMAP ##################################
+colormap = 'magma'
+color_mapping = generate_color_mapping(colormap)
+
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
-# def fuzzify(df, type="close"):
-#     df_array = np.array(df['value'])
-#     if type == "close":
-#         fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-#     elif type == "far":
-#         fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-#     else:
-#         raise ValueError("Invalid type. Choose 'close' or 'far'.")
-#     return fuzzified_array
-def fuzzify_close(df, colormap_name=colormap_name):
+def fuzzify_close(df, colormap_name=color_mapping):
     df_array = np.array(df['value'])
     fuzzified_array_close = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     df['fuzzy'] = fuzzified_array_close.round(3)
-    get_fill_color(df, 'fuzzy', colormap_name)
+    apply_color_mapping(df, 'fuzzy', color_mapping)
     return df
 
-def fuzzify_far(df, colormap_name=colormap_name): 
+st.cache_data
+def fuzzify_far(df, colormap_name=color_mapping): 
     df_array = np.array(df['value'])
     fuzzified_array_far = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
     df['fuzzy'] = fuzzified_array_far.round(3)
-    get_fill_color(df, 'fuzzy', colormap_name)
+    apply_color_mapping(df, 'fuzzy', color_mapping)
     return df
 
 # fuzzy_farm = fuzzify(d_to_farm, type='close')
@@ -81,33 +76,91 @@ def initialize_session_state():
     if 'choice_industry' not in st.session_state:
         st.session_state.choice_industry = "Close"
 
+### FUZZIFY INPUT VARIABLES ################################## V1
+# @st.cache_data
+# def fuzzify(df, type="close", colormap_name=color_mapping):
+#     df_array = np.array(df['value'])
+#     if type == "close":
+#         fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+#         df['fuzzy'] = fuzzified_array.round(3)
+#         # get_fill_color(df, "fuzzy", colormap_name)
+#         apply_color_mapping(df, 'fuzzy', color_mapping)
+#     elif type == "far":
+#         fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+#         df['fuzzy'] = fuzzified_array.round(3)
+#         # get_fill_color(df, "fuzzy", colormap_name)
+#         apply_color_mapping(df, 'fuzzy', color_mapping)
+#     else:
+#         raise ValueError("Invalid type. Choose 'close' or 'far'.")
+#     return df
 
-# plot them in the same layer and just visualize what is what 
+# fuzzy_farm = fuzzify(d_to_farm, type='close')
+# fuzzy_road = fuzzify(d_to_road, type='close')
+# fuzzy_industry = fuzzify(d_to_industry, type='close')
+# fuzzy_nature = fuzzify(d_to_nature, type='far')
+# fuzzy_urban = fuzzify(d_to_urban, type='far')
+
+# all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']), 
+#               'Road infrastructure': np.array(fuzzy_road['fuzzy']),
+#               'Urban and residential areas': np.array(fuzzy_urban['fuzzy']), 
+#               'Industrial areas': np.array(fuzzy_industry['fuzzy']), 
+            #   'Nature and water bodies': np.array(fuzzy_nature['fuzzy'])}
+
+### CREATE EMPTY LAYER ##################################
+def create_empty_layer(d_to_farm):
+    df_empty = d_to_farm[['hex9']]
+    df_empty['color'] = None
+    return df_empty
+
+### UPDATE EMPTY DF ##################################
+def update_layer(selected_variables, all_arrays, d_to_farm):
+    if not selected_variables:
+        return create_empty_layer(d_to_farm)
+    
+    # Extract the selected variables (array) from the dictionary
+    selected_array_list = [all_arrays[key] for key in selected_variables]
+    
+    result_array = selected_array_list[0]
+    for arr in selected_array_list[1:]:
+        result_array = np.minimum(result_array, arr)
+    
+    hex_df = create_empty_layer(d_to_farm)
+    hex_df['fuzzy'] = result_array
+    # get_fill_color(hex_df, 'fuzzy', colormap_name_suitability_map)
+    apply_color_mapping(hex_df, 'fuzzy', color_mapping)
+    hex_df['fuzzy'] = hex_df['fuzzy'].round(3)
+    return hex_df
+
+### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
+def filter_loi(fuzzy_cut_off, fuzzy_df):
+    loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+    return loi
+
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
-@st.cache_data
-def generate_pydeck(df, layer_info, view_state=view_state):
-    return pdk.Deck(initial_view_state=view_state,
-                    layers=[
-                        pdk.Layer(
-                            "H3HexagonLayer",
-                            df,
-                            pickable=True,
-                            stroked=True,
-                            filled=True,
-                            extruded=False,
-                            opacity=0.6,
-                            get_hexagon="hex9",
-                            get_fill_color='color', 
-                            # get_line_color=[255, 255, 255],
-                            # line_width_min_pixels=1
-                        ),
-                    ],
-                    tooltip={"text": f"{layer_info}: {{fuzzy}}"})
+# @st.cache_data
+# def generate_pydeck(df, layer_info, view_state=view_state):
+#     return pdk.Deck(initial_view_state=view_state,
+#                     layers=[
+#                         pdk.Layer(
+#                             "H3HexagonLayer",
+#                             df,
+#                             pickable=True,
+#                             stroked=True,
+#                             filled=True,
+#                             extruded=False,
+#                             opacity=0.6,
+#                             get_hexagon="hex9",
+#                             get_fill_color='color', 
+#                             # get_line_color=[255, 255, 255],
+#                             # line_width_min_pixels=1
+#                         ),
+#                     ],
+#                     tooltip={"text": f"{layer_info}: {{fuzzy}}"})
 
 @st.cache_data
-def generate_pydeck_2(df_close, df_far, layer_info, choice, view_state=view_state):
+def generate_pydeck_2(df_close, df_far, choice, view_state=view_state):
     st.write(choice)
     if choice == "Close":
         return pdk.Deck(initial_view_state=view_state,
@@ -153,11 +206,11 @@ def main():
     with col1:
         st.markdown("**Distance to Farms**")
         st.session_state.dist_choice = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
-        st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, "Distance to farm", choice=st.session_state.dist_choice), use_container_width=True)
+        st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, choice=st.session_state.dist_choice), use_container_width=True)
     with col2:
         st.markdown("**Distance to Industrial Areas**")
         st.session_state.choice_industry = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="choice_industry_key")
-        st.pydeck_chart(generate_pydeck_2(fuzzy_industry_c, fuzzy_industry_f, "Distance to industry", choice=st.session_state.choice_industry), use_container_width=True)
+        st.pydeck_chart(generate_pydeck_2(fuzzy_industry_c, fuzzy_industry_f, choice=st.session_state.choice_industry), use_container_width=True)
 
 
                 # with col1:
