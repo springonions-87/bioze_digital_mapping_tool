@@ -70,6 +70,7 @@ fuzzy_farm_close = fuzzify_close(d_to_farm)
 fuzzy_farm_far = fuzzify_far(d_to_farm)
 # st.write(fuzzy_farm_far)
 
+### INITIALIZE SESSION STATE ##################################
 def initialize_session_state():
     if 'dist_choice' not in st.session_state:
         st.session_state.dist_choice = "Close"
@@ -200,15 +201,16 @@ def generate_pydeck_2(df_close, df_far, choice, view_state=view_state):
                     tooltip={"text": "Suitability:" f"{{fuzzy}}"})
 
 def main():
+
     initialize_session_state
-    # Plotting suitability variables
+
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**Distance to Farms**")
+        st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digesters determined by distance to feedstock locations.")
         st.session_state.dist_choice = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
         st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, choice=st.session_state.dist_choice), use_container_width=True)
     with col2:
-        st.markdown("**Distance to Industrial Areas**")
+        st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas.")
         st.session_state.choice_industry = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="choice_industry_key")
         st.pydeck_chart(generate_pydeck_2(fuzzy_industry_c, fuzzy_industry_f, choice=st.session_state.choice_industry), use_container_width=True)
 
