@@ -202,7 +202,7 @@ def main():
     "---"
     st.markdown("")
 
-    # Suitability analysis section
+    # Suitability analysis section 
     with st.sidebar.form("suitability_analysis_form"):
         selected_variables = st.multiselect("Select criteria", list(all_arrays.keys()))
         submit_button = st.form_submit_button("Build Suitability Map")
