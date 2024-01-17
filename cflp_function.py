@@ -345,6 +345,25 @@ def get_fill_color(df, value_column, colormap_name):
     df['color'] = df[value_column].apply(get_rgb_reversed)
     return df
 
+def generate_color_mapping(colormap_name):
+    # Define a colormap (you can change it to any other available colormap)
+    cmap = plt.get_cmap(colormap_name)
+
+    # Create a normalization function for the data range (reversed)
+    norm = mcolors.Normalize(vmin=0, vmax=1)
+
+    # Function to convert data values to RGB using reversed colormap
+    def get_rgb(value):
+        # rgba = cmap(1 - norm(value))
+        rgba = cmap(norm(value))
+        return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
+    return get_rgb
+
+def apply_color_mapping(df, value_column, color_mapping):
+    # Apply the color mapping to the DataFrame to get RGB values
+    df['color'] = df[value_column].apply(color_mapping)
+    return df
+
 
 def store_data_to_pickle(data, folder_path, file_name):
     """

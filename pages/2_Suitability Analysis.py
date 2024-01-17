@@ -2,7 +2,7 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 import numpy as np
-from cflp_function import get_fill_color
+from cflp_function import *
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
@@ -34,8 +34,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-colormap_name = 'cool'
-colormap_name_suitability_map = 'plasma'
 
 ### LOAD DATA ##################################
 @st.cache_data
@@ -50,18 +48,27 @@ d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv')
 d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv')
 d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv')
 
+
+### GENERATE COLORMAP ##################################
+
+colormap = 'magma'
+color_mapping = generate_color_mapping(colormap)
+
+
 ### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
-def fuzzify(df, type="close", colormap_name=colormap_name):
+def fuzzify(df, type="close", colormap_name=color_mapping):
     df_array = np.array(df['value'])
     if type == "close":
         fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
         df['fuzzy'] = fuzzified_array.round(3)
-        get_fill_color(df, "fuzzy", colormap_name)
+        # get_fill_color(df, "fuzzy", colormap_name)
+        apply_color_mapping(df, 'fuzzy', color_mapping)
     elif type == "far":
         fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
         df['fuzzy'] = fuzzified_array.round(3)
-        get_fill_color(df, "fuzzy", colormap_name)
+        # get_fill_color(df, "fuzzy", colormap_name)
+        apply_color_mapping(df, 'fuzzy', color_mapping)
     else:
         raise ValueError("Invalid type. Choose 'close' or 'far'.")
     return df
@@ -72,11 +79,11 @@ fuzzy_industry = fuzzify(d_to_industry, type='close')
 fuzzy_nature = fuzzify(d_to_nature, type='far')
 fuzzy_urban = fuzzify(d_to_urban, type='far')
 
-all_arrays = {'Distance to farms': np.array(fuzzy_farm['fuzzy']), 
-              'Distance to road infrastructure': np.array(fuzzy_road['fuzzy']),
-              'Distance to urban and residential areas': np.array(fuzzy_urban['fuzzy']), 
-              'Distance to industrial areas': np.array(fuzzy_industry['fuzzy']), 
-              'Distance to nature and water bodies': np.array(fuzzy_nature['fuzzy'])}
+all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']), 
+              'Road infrastructure': np.array(fuzzy_road['fuzzy']),
+              'Urban and residential areas': np.array(fuzzy_urban['fuzzy']), 
+              'Industrial areas': np.array(fuzzy_industry['fuzzy']), 
+              'Nature and water bodies': np.array(fuzzy_nature['fuzzy'])}
 
 ### CREATE EMPTY LAYER ##################################
 def create_empty_layer(d_to_farm):
@@ -98,7 +105,8 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     
     hex_df = create_empty_layer(d_to_farm)
     hex_df['fuzzy'] = result_array
-    get_fill_color(hex_df, 'fuzzy', colormap_name_suitability_map)
+    # get_fill_color(hex_df, 'fuzzy', colormap_name_suitability_map)
+    apply_color_mapping(hex_df, 'fuzzy', color_mapping)
     hex_df['fuzzy'] = hex_df['fuzzy'].round(3)
     return hex_df
 
@@ -130,7 +138,7 @@ def generate_pydeck(df, view_state=view_state):
                     tooltip={"text": "Suitability:" f"{{fuzzy}}"})
 
 ### CREATE VARIABLE LEGEND ##################################
-def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.cm.cool):
+def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_cmap(colormap)):
     # Create Viridis colormap image
     gradient = np.linspace(0, 1, 256)
     gradient = np.vstack((gradient, gradient))
@@ -161,8 +169,8 @@ def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.cm.c
     '''
     return legend_html
 
-variable_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable',)
-suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
+variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)', label_right='Most Suitable (1)',)
+# suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
 
 
 ### CREATE STREAMLIT ##################################
@@ -181,19 +189,19 @@ def main():
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digester based on distance to feedstock locations.")
+        st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digesters determined by distance to feedstock locations.")
         st.pydeck_chart(generate_pydeck(fuzzy_farm), use_container_width=True)
     with col1:
-        st.markdown("**Road Infrastructure**", help="Suitability for locating digester based on distance to road infrastructure.")
+        st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure.")
         st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
     with col2:
-        st.markdown("**Industrial Areas**", help="Suitability for locating digester based on distance to industrial areas.")
+        st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas.")
         st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
     with col2:
-        st.markdown("**Urban and Residential Areas**", help="Suitability for locating digester based on distance to urban and residential areas.")
+        st.markdown("**Urban and Residential Areas**", help="Suitability for locating digesters determined by distance to urban and residential areas.")
         st.pydeck_chart(generate_pydeck(fuzzy_urban), use_container_width=True)
     with col3:
-        st.markdown("**Nature and Water Bodies**", help="Suitability for locating digester based on nature and water bodies, including canals etc...")
+        st.markdown("**Nature and Water Bodies**", help="Suitability for locating digesters determined by distance to nature and water bodies, including canals etc...")
         st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
     with col3:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
@@ -272,7 +280,7 @@ def main():
         st.pydeck_chart(deck, use_container_width=True)
         # col1, col2, col3 = st.columns(3)
         # with col1:
-        st.markdown(suitability_map_legend_html, unsafe_allow_html=True)
+        st.markdown(variable_legend_html, unsafe_allow_html=True)
     # Filtering location of interest (loi) section
     # with st.sidebar.expander("Save Suitability Analysis Results"):
     # with st.sidebar.form("save_loi_form"):
