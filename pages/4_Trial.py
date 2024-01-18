@@ -207,13 +207,16 @@ def main():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digesters determined by distance to feedstock locations.")
-        st.session_state.dist_choice = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
-        st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, choice=st.session_state.dist_choice), use_container_width=True)
+        farm_choice = st.radio("1", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
+        if st.session_state.dist_choice != farm_choice:
+            st.session_state.dist_choice = farm_choice
+            st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, choice=st.session_state.dist_choice), use_container_width=True)
     with col2:
         st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas.")
-        st.session_state.choice_industry = st.radio("", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="choice_industry_key")
+        st.session_state.choice_industry = st.radio("1", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="choice_industry_key")
         st.pydeck_chart(generate_pydeck_2(fuzzy_industry_c, fuzzy_industry_f, choice=st.session_state.choice_industry), use_container_width=True)
 
+    
 
                 # with col1:
     #     st.markdown("**Distance to Roads**")

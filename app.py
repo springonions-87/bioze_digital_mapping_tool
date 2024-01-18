@@ -1,380 +1,315 @@
-import streamlit as st
 import pandas as pd
-import geopandas as gpd
 import pydeck as pdk
+import streamlit as st
+import numpy as np
 from cflp_function import *
-from calculate_od import *
-from shapely.geometry import mapping
-from datetime import date
-from pydeck.types import String
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
-today = date.today()
-# import os
-# print("Current working directory: ", os.getcwd())
+padding=0
+st.set_page_config(page_title="Bioze Mapping Tool - Suitability Analysis", layout="wide")
 
-### PAGE CONFIGURATIONS #######################################
-# st.title('BIOZE Digital Mapping Tool')
-# st.text('This is an interactive mapping tool on biogas.')
-st.set_page_config(page_title="Bioze Mapping Tool", layout="wide")
 # st.markdown(
 #     """
 #     <style>
-#     #root .block-container {
-#         max-width: none;
-#         padding-left: 0;
-#         padding-right: 0;
-#     }
-#     .stFrame {
-#         width: 100vw !important;
-#         height: 100vh !important;
+#     .small-font {
+#         font-size:12px;
+#         font-style: italic;
+#         color: #b1a7a6;
 #     }
 #     </style>
 #     """,
-#     unsafe_allow_html=True)
+#     unsafe_allow_html=True,
+# )
+
+st.markdown(
+    """
+    <style>
+        div[data-testid="column"]:nth-of-type(4)
+        {
+            text-align: end;
+        } 
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
-### FUNCTIONS #######################################
+### LOAD DATA ##################################
 @st.cache_data
-def load_csv(csv_path):
+def load_data(csv_path):
     df = pd.read_csv(csv_path)
+    # get color for plotting
     return df
 
+d_to_farm = load_data('./hex/d_to_farm_hex_complete.csv')
+d_to_road = load_data('./hex/d_to_road_hex_complete.csv')
+d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv')
+d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv')
+d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv')
+
+
+### GENERATE COLORMAP ##################################
+colormap = 'magma'
+color_mapping = generate_color_mapping(colormap)
+
+### FUZZIFY INPUT VARIABLES ##################################
 @st.cache_data
-def load_gdf(gdf_path):
-    gdf = gpd.read_file(gdf_path)
-    return gdf
+def fuzzify(df, type="close", colormap_name=color_mapping):
+    df_array = np.array(df['value'])
+    if type == "close":
+        fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+        df['fuzzy'] = fuzzified_array.round(3)
+        # get_fill_color(df, "fuzzy", colormap_name)
+        apply_color_mapping(df, 'fuzzy', color_mapping)
+    elif type == "far":
+        fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+        df['fuzzy'] = fuzzified_array.round(3)
+        # get_fill_color(df, "fuzzy", colormap_name)
+        apply_color_mapping(df, 'fuzzy', color_mapping)
+    else:
+        raise ValueError("Invalid type. Choose 'close' or 'far'.")
+    return df
 
-@st.cache_data
-def load_pickle():
-    folder_path = 'app_data'
-    # List
-    # set F     set of farm locations (list)
-    I = load_data_from_pickle(folder_path, 'Farm_test.pickle')
-    # set P     set of potential digester locations
-    # Plant = load_data_from_pickle(folder_path, 'Plant_test_2.pickle')
+fuzzy_farm = fuzzify(d_to_farm, type='close')
+fuzzy_road = fuzzify(d_to_road, type='close')
+fuzzy_industry = fuzzify(d_to_industry, type='close')
+fuzzy_nature = fuzzify(d_to_nature, type='far')
+fuzzy_urban = fuzzify(d_to_urban, type='far')
 
-    # Dictionary 
-    # p_i       manure production of each i
-    d = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
-    # q_j       max capacity of each j 
-    # max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
-    # f_j       fixed cost of establishing each j
-    # fixed_cost = load_data_from_pickle(folder_path, 'fixed_cost_test.pickle')        
-    # C_ij      transportation matrix 
-    # transport_cost = load_data_from_pickle(folder_path, 'transportation_cost_test.pickle') - cflp version
-    # transport_cost = load_data_from_pickle(folder_path, 'c_test.pickle') # scip flp version
+all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']), 
+              'Road infrastructure': np.array(fuzzy_road['fuzzy']),
+              'Urban and residential areas': np.array(fuzzy_urban['fuzzy']), 
+              'Industrial areas': np.array(fuzzy_industry['fuzzy']), 
+              'Nature and water bodies': np.array(fuzzy_nature['fuzzy'])}
 
-    # Float
-    # alpha     total manure production
-    total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
+### CREATE EMPTY LAYER ##################################
+def create_empty_layer(d_to_farm):
+    df_empty = d_to_farm[['hex9']]
+    df_empty['color'] = None
+    return df_empty
+
+### UPDATE EMPTY DF ##################################
+def update_layer(selected_variables, all_arrays, d_to_farm):
+    if not selected_variables:
+        return create_empty_layer(d_to_farm)
     
-    # DataFrame
-    # potential_digester_location = load_csv(r'./farm/farm_cluster_mock_5.csv')
-    # farm = load_csv(r"./farm/farm_mock.csv")
-
-    return I, d, total_manure
-
-@st.cache_data
-def filter_Plant(original_dict, J):
-    """
-    Extract key-value pairs where the key is in the Plant selection
-    """
-    filtered_dict = {key: value for key, value in original_dict.items() if key in J}
-    return filtered_dict
-
-# def configure_main_deck(avg_lat, avg_lon,_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer):
-#     """
-#     Configure the view state and deck property for the main plot of the model visualisation
-#     """
-#     view_state=pdk.ViewState(
-#         latitude=avg_lat,
-#         longitude=avg_lon,
-#         zoom=9,
-#         )
-#     deck = pdk.Deck(
-#         layers=[_suitability_layer, _digesters_layer, _assigned_farms_layer, _unassigned_farms_layer, _arc_layer],
-#         initial_view_state=view_state, 
-#         map_style='mapbox://styles/mapbox/streets-v12',
-#         tooltip=
-#         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
-#         {"text": "Suitability: {Value}"}
-#         )
-#     return deck
-
-def initialize_map(digester_df, farm_df, suitability_df):
-    digester_layer = pdk.Layer(type='ScatterplotLayer',
-                                data=digester_df,
-                                get_position=['x', 'y'],
-                                get_radius=800,
-                                get_fill_color='color',
-                                pickable=True,
-                                auto_highlight=True, 
-                                get_line_color=[255, 255, 255],
-                                get_line_width=3)
-    farm_layer = pdk.Layer(type='ScatterplotLayer',
-                           data=farm_df,
-                           get_position=['x', 'y'],
-                           get_radius=300,
-                                       get_fill_color='color',
-                                       get_line_color=[0, 0, 0],
-                                       pickable=False,
-                                       auto_highlight=True)
-    hex_layer = pdk.Layer(type="H3HexagonLayer",
-        data=suitability_df,
-        pickable=True,
-        filled=True,
-        extruded=False,
-        opacity=0.5,
-        get_hexagon="he7",
-        # get_fill_color ='[255 * Value, 255 * (100 - Value), 0, 255]',
-        get_fill_color ='[0, 0, 255*Value, 255]',
-        auto_highlight=True)
+    # Extract the selected variables (array) from the dictionary
+    selected_array_list = [all_arrays[key] for key in selected_variables]
     
-    digester_df['name'] = digester_df.index.astype(str)
-    # Define a layer to display on a map
-    digester_label_layer = pdk.Layer(
-        "TextLayer",
-        digester_df,
-        pickable=True,
-        get_position=['x', 'y'],
-        get_text="name",
-        get_size=18,
-        get_color=[255,255,255],
-        get_angle=0,
-        # Note that string constants in pydeck are explicitly passed as strings
-        # This distinguishes them from columns in a data set
-        get_text_anchor=String("middle"),
-        get_alignment_baseline=String("center"))
+    result_array = selected_array_list[0]
+    for arr in selected_array_list[1:]:
+        result_array = np.minimum(result_array, arr)
     
-    view_state=pdk.ViewState(
-        latitude=farm_df['y'].mean(),
-        longitude=farm_df['x'].mean(),
-        zoom=9,
-        )
-    deck = pdk.Deck(
-        layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
-        initial_view_state=view_state, 
-        map_style= 
-        #'mapbox://styles/mapbox/satellite-v9',
-        'mapbox://styles/mapbox/streets-v12',
-        tooltip=
-        # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
-        {"text": "Suitability: {Value}"}
-        )
-    return deck
+    hex_df = create_empty_layer(d_to_farm)
+    hex_df['fuzzy'] = result_array
+    # get_fill_color(hex_df, 'fuzzy', colormap_name_suitability_map)
+    apply_color_mapping(hex_df, 'fuzzy', color_mapping)
+    hex_df['fuzzy'] = hex_df['fuzzy'].round(3)
+    return hex_df
 
-def update_digester_layer_color(digester_df, J, deck):
-    # Update the color of digester to grey if not selected 
-    digester_df_copy = digester_df.copy()
-    digester_df_copy.loc[~digester_df_copy.index.isin(J), 'color'] ='[169, 169, 169]'
-    deck.layers[2].data = digester_df_copy
-    return deck
+### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
+def filter_loi(fuzzy_cut_off, fuzzy_df):
+    loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+    return loi
 
-def update_farm_layer_color(farm_df, digester_df, assignment_decision, deck): 
-    # Update the color of farms to match the color of digester assigned to
-    farm_df_copy = farm_df.copy()
-    farm_df_copy['color'] = farm_df_copy.index.map({index: digester_df['color'].iloc[farm_index] for farm_index, indices in assignment_decision.items() for index in indices})
-    deck.layers[1].data = farm_df_copy
-    return deck
-
-def update_map(farm_df, digester_df, assignment_decision, deck):
-    arc_layer_df = get_arc(assignment_decision, digester_df, farm_df)
-    arc_layer = pdk.Layer(
-        'ArcLayer',
-        data=arc_layer_df,
-        get_width=2,          # Width of the arcs
-        get_source_position=['start_lon', 'start_lat'],
-        get_target_position=['end_lon', 'end_lat'],
-        get_source_color=[0, 255, 0, 160],   # RGBA color of the starting points
-        get_target_color=[255, 0, 0, 160],   # RGBA color of the ending points
-        pickable=True,
-        auto_highlight=True
-    )
-    # Add the ArcLayer to the existing deck
-    deck.layers.append(arc_layer)
-
-    # Update the map with the modified deck
-    return deck
-
-### SESSION STATE INITIALIZATION #######################################
+### PLOT PYDECK MAPS ##################################
+view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 @st.cache_data
-def session_load():
-    main_crs ='EPSG:4326'
+def generate_pydeck(df, view_state=view_state):
+    return pdk.Deck(initial_view_state=view_state,
+                    layers=[
+                        pdk.Layer(
+                            "H3HexagonLayer",
+                            df,
+                            pickable=True,
+                            stroked=True,
+                            filled=True,
+                            extruded=False,
+                            opacity=0.6,
+                            get_hexagon="hex9",
+                            get_fill_color ='color', 
+                            # get_line_color=[255, 255, 255],
+                            # line_width_min_pixels=1
+                        ),
+                    ],
+                    tooltip={"text": "Suitability:" f"{{fuzzy}}"})
 
-    # Load data and calculate od matrix
-    loi = load_csv('./hex/loi.csv')
-    loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
-    loi_gdf['y'] = loi_gdf['geometry'].y
-    loi_gdf['x'] = loi_gdf['geometry'].x
+### CREATE VARIABLE LEGEND ##################################
+def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_cmap(colormap)):
+    # Create Viridis colormap image
+    gradient = np.linspace(0, 1, 256)
+    gradient = np.vstack((gradient, gradient))
 
-    farm_gdf = load_gdf("./farm/farm_new.shp")
-    n = load_gdf("./osm_network/G_n.shp")
-    n = n.to_crs(main_crs)
+    # Create Matplotlib figure and axis
+    fig, ax = plt.subplots(figsize=(4, 0.5))
+    ax.imshow(gradient, aspect='auto', cmap=cmap)
+    ax.axis('off') 
 
-    find_closest_osmid(farm_gdf, n)
-    find_closest_osmid(loi_gdf, n)
-    c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
+    # Add labels "Far" and "Near"
+    ax.text(-10, 0.5, label_left, verticalalignment='center', horizontalalignment='center', fontsize=12)
+    ax.text(266, 0.5, label_right, verticalalignment='center', horizontalalignment='center', fontsize=12)
 
-    Plant_all = ['All'] + plant
-    # Plant_all = ['All'] + [str(x) for x in plant]
-    M, f = random_M_f(plant) # random M and f generator for the time being
+    # Save Matplotlib figure as PNG image
+    buffer = BytesIO()
+    fig.savefig(buffer, format='png', bbox_inches='tight', pad_inches=0)
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    plt.close(fig)    # Close Matplotlib figure
+    # Convert Matplotlib PNG image to Base64 string
+    image_base64 = base64.b64encode(image_png).decode()
 
-    I, d, total_manure  = load_pickle()
+    # Create HTML content with image and labels
+    legend_html = f'''
+        <div style="width: 100%; height: 300px; overflow: auto; padding: 10px;">
+            <img src="data:image/png;base64,{image_base64}" alt="Colorbar" style="max-width: 100%; max-height: 100%; height: auto; width: auto; display: block; margin-left: auto; margin-right: auto;">
+        </div>
+    '''
+    return legend_html
 
-    color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
-    loi_gdf['color'] = loi_gdf.index.map(color_mapping)
+variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)', label_right='Most Suitable (1)',)
+# suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
 
-    # Load suitability map
-    farm = load_csv("./farm/farm_mock.csv")
-    farm['color'] = '[169, 169, 169]'
-    hex_df = load_csv('./hex/df_hex_7.csv')
 
-    # Load location of interest
-    # polygons = load_gdf('./suitable_polygon_plot.shp')
-    # polygons['coordinates'] = polygons['geometry'].apply(lambda geom: mapping(geom)['coordinates'][0])    
-    data_dict = {
-        'loi_gdf':loi_gdf,
-        'c':c,
-        'plant':plant,
-        'Plant_all':Plant_all,
-        'M':M,
-        'f':f,
-        'I':I,
-        'd':d,
-        'farm':farm,
-        'hex_df':hex_df
-    }
-    return data_dict
-
-### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
-def perform_initial_setup():
-    data_name = ['loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
-    # Check if any key in data_names is missing in st.session_state.keys()
-    missing_keys = [key for key in data_name if key not in st.session_state.keys()]
-    # st.write(missing_keys)
-    if missing_keys:
-        loaded_data = session_load()
-        for key, value in loaded_data.items():
-            st.session_state[key] = value
-        # Initialize session_state if it doesn't exist
-    if 'target' not in st.session_state:
-        st.session_state['target'] = 0  # Set a default value, adjust as needed
-
-### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
-def main_content():
-    ### ACCESS INITIAL SESSION VARIABLES ##################################
-    I = st.session_state['I']
-    d = st.session_state['d']
-    # total_manure = st.session_state.total_manure
-    farm = st.session_state['farm']
-    hex_df = st.session_state['hex_df']
-    c = st.session_state['c']
-    plant = st.session_state['plant']
-    M = st.session_state['M']
-    f = st.session_state['f']
-    Plant_all = st.session_state['Plant_all']
-    loi_gdf = st.session_state['loi_gdf']
-    target = st.session_state['target']
-    deck = initialize_map(loi_gdf, farm, hex_df)
-
-    ### SIDEBAR ##################################
-    with st.sidebar:
-        target = (st.slider('**Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
-
-        with st.container():
-            st.write("**Map Layers**")
-            show_farm = st.sidebar.checkbox('Farms', value=True)
-            show_digester = st.sidebar.checkbox('Digesters', value=True)
-            show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
-            show_suitability = st.sidebar.checkbox('Suitability', value=False)
-            # show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
-
-        st.markdown("")
-        st.markdown("")
-        st.markdown("")
-        with st.expander("Click to learn more about this dashboard"):
-            st.markdown(f"""
-            Introduce Bioze...
-            *Updated on {str(today)}.*  
-            """)
-
-    # Toggle the visibility of the ArcLayer based on the checkbox
-    # deck.layers[0].visible = show_suitability
-    # deck.layers[1].visible = show_digester
-    # deck.layers[2].visible = show_farm
-    # deck.layers[3].visible = show_farm
-    # deck.layers[-1].visible = show_polygon
-
-    ### SELECT PLANT FORM ##########################################
-    with st.expander('Customize Site Selection'):
-        with st.form('select_plant'):
-            J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
-            if "All" in J or not J:
-                J = plant
-            submit_select_loi = st.form_submit_button("Submit")
-
-    if submit_select_loi and st.session_state['target'] == 0:
-        deck = update_digester_layer_color(loi_gdf, J, deck)
-
-    if submit_select_loi or st.session_state['target'] != target:
-        with st.spinner('Running the model...'):
-            st.session_state['target'] = target # Update the session state with the new target value
-            M = filter_Plant(M, J)
-            f = filter_Plant(f, J)
-            c = {(i, j): value for (i, j), value in c.items() if j in J}
-
-        ### RUN MODEL ##########################################
-            m, total_manure = flp_scip(I, J, d, M, f, c, target)
-            m.optimize()
-            total_cost, assignment_decision, percentage_utilization = flp_get_result(m, I, J, M)
-            ### OUTCOME INDICATORS ##########################################
-            # old
-            # total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
-            # new
-            total_biogas = (total_manure * target) * 50 # 1Mg cattle or pig manure (20% org. dry matter) 50 m³ biogas
-            # Methane savings (m3/yr)=Biogas yield potential (m3/yr)× Methane content of biogas (%)
-            methane_saving = total_biogas*0.6 # methane content of biogas is assumed 60%
-
-            # Display metrics side by side 
-            col1, col2, col3 = st.columns(3)
-            col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Used", value="{:,.2f} Mg/yr".format(total_manure))
-            col1.metric(label="Total Biogas Yield Potential", value="{:,.2f} m³/yr".format(total_biogas))
-            col1.metric(label="Total Methane Saving Potential", value="{:,.2f} m³/yr".format(methane_saving))
-            with col3:
-            # Plot bar chart
-                st.markdown("Digester Capacity Utilization Rate")
-                st.bar_chart(percentage_utilization)
-
-            # arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
-            deck = update_digester_layer_color(loi_gdf, J, deck)
-            deck = update_farm_layer_color(farm, loi_gdf, assignment_decision, deck)
-            deck = update_map(farm, loi_gdf, assignment_decision, deck)
-        # st.success('Optimal solution found!')
-
-    # Rendering the map 
-    # deck.layers[-1].visible = show_arcs
-    st.pydeck_chart(deck, use_container_width=True)
-
-        
 ### CREATE STREAMLIT ##################################
 def main():
-    ### INITIALIZE SESSION STATE ##########################################
-    with st.spinner("Constructing an origin/destination matrix..."):
-        perform_initial_setup()
+    st.markdown("### Biogas Digester Site: Suitability Analysis")
+    st.markdown(
+        "This analysis identifies potential sites for biogas digesters based on five key criteria: "
+        "distance to major roads, farms, industrial areas, and nature and water bodies."
+    )
+    st.markdown(
+        "You have the flexibility to select specific criteria for the suitability analysis. "
+        "The resulting suitability map will be displayed below for your exploration."
+    )
+    st.markdown("")
+    st.markdown("")
+    # Plotting suitability variables
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digesters determined by distance to feedstock locations.")
+        st.pydeck_chart(generate_pydeck(fuzzy_farm), use_container_width=True)
+    with col1:
+        st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure.")
+        st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
+    with col2:
+        st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas.")
+        st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
+    with col2:
+        st.markdown("**Urban and Residential Areas**", help="Suitability for locating digesters determined by distance to urban and residential areas.")
+        st.pydeck_chart(generate_pydeck(fuzzy_urban), use_container_width=True)
+    with col3:
+        st.markdown("**Nature and Water Bodies**", help="Suitability for locating digesters determined by distance to nature and water bodies, including canals etc...")
+        st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
+    with col3:
+        st.markdown(variable_legend_html, unsafe_allow_html=True)
+   
+    st.markdown("")
+    "---"
+    st.markdown("")
 
-    ### DISPLAY MAIN CONTENT OF THE APP ##########################################
-    main_content()
+    # Suitability analysis section 
+    with st.sidebar.form("suitability_analysis_form"):
+        selected_variables = st.multiselect("Select criteria", list(all_arrays.keys()))
+        submit_button = st.form_submit_button("Build Suitability Map")
 
-    # Run the model 
-    # total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
-    #                                                                                                 Farm, 
-    #                                                                                                 fixed_cost, 
-    #                                                                                                 transport_cost, 
-    #                                                                                                 manure_production, 
-    #                                                                                                 max_capacity, 
-    #                                                                                                 target, total_manure)
-           
+    if submit_button and not selected_variables:
+        st.warning("No variable selected.")
+        return
+    
+    st.markdown("### **Suitability Map**")
+    # if submit_button:
+    #     with st.spinner('Building suitability map...'):
+    hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
+    # Plot suitability map
+    hex_fuzzy = pdk.Layer(
+            "H3HexagonLayer",
+            hex_df,
+            pickable=True,
+            stroked=True,
+            filled=True,
+            extruded=False,
+            opacity=0.6,
+            get_hexagon="hex9",
+            get_fill_color='color', 
+            # get_line_color=[255, 255, 255],
+            # line_width_min_pixels=2
+        )
+            # st.success('Done!')
 
+    # Filtering location of interest (loi) section
+    with st.sidebar.form("select_loi"):
+        fuzzy_cut_off = st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01)
+        submit_button_loi = st.form_submit_button("Filter")
+    
+    if submit_button_loi:
+        loi = filter_loi(fuzzy_cut_off, hex_df)
+        # loi.to_csv('./hex/loi.csv')
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.markdown(f"**Number of Potential Locations:{len(loi)}**")
+        with col4:
+            save_loi = st.button("Save Results")
+            if save_loi:
+                loi.to_csv('./hex/loi.csv')
+        loi_plot = pdk.Layer(
+            "H3HexagonLayer",
+            loi,
+            pickable=True,
+            stroked=True,
+            filled=True,
+            extruded=False,
+            opacity=0.6,
+            get_hexagon="hex9",
+            get_fill_color=[0,0,0,0], 
+            get_line_color=[255, 0, 0],
+            line_width_min_pixels=1
+            )
+        deck = pdk.Deck(layers=[hex_fuzzy, loi_plot], 
+                        initial_view_state=view_state, 
+                        # map_style='mapbox://styles/mapbox/streets-v12',
+                        tooltip={"text": "Suitability: {fuzzy}"})
+        st.pydeck_chart(deck, use_container_width=True)
+    else:
+        deck = pdk.Deck(layers=[hex_fuzzy], 
+                        initial_view_state=view_state, 
+                        # map_style='mapbox://styles/mapbox/streets-v12',
+                        tooltip={"text": "Suitability: {fuzzy}"})
+        st.pydeck_chart(deck, use_container_width=True)
+        # col1, col2, col3 = st.columns(3)
+        # with col1:
+        st.markdown(variable_legend_html, unsafe_allow_html=True)
+    # Filtering location of interest (loi) section
+    # with st.sidebar.expander("Save Suitability Analysis Results"):
+    # with st.sidebar.form("save_loi_form"):
+    #     st.markdown("Save Suitability Analysis Results")
+    #     save_loi = st.form_submit_button("Save")
+    # if save_loi:
+    #     loi.to_csv('./hex/loi.csv')
+
+
+    # st.download_button(
+    #     label="Save Suitable Areas",
+    #     data=loi,
+    #     file_name='./hex/loi.csv',
+    #     mime='text/csv',
+    # )    
+
+# Run the Streamlit app
 if __name__ == "__main__":
     main()
+
+# # import sys
+# import leafmap.foliumap as leafmap
+
+# # sys.path
+
+# raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_complete_3857.tif'
+
+# m = leafmap.Map()
+# m.add_basemap()
+# m.add_raster(raster_file, cmap="viridis", layer_name="Raster Layer")
+
+# m.to_streamlit()
+
