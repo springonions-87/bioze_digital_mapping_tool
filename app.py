@@ -137,6 +137,7 @@ def generate_pydeck(df, view_state=view_state):
                     tooltip={"text": "Suitability:" f"{{fuzzy}}"})
 
 ### CREATE VARIABLE LEGEND ##################################
+@st.cache_data
 def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_cmap(colormap)):
     # Create Viridis colormap image
     gradient = np.linspace(0, 1, 256)
@@ -147,9 +148,9 @@ def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_
     ax.imshow(gradient, aspect='auto', cmap=cmap)
     ax.axis('off') 
 
-    # Add labels "Far" and "Near"
-    ax.text(-10, 0.5, label_left, verticalalignment='center', horizontalalignment='center', fontsize=12)
-    ax.text(266, 0.5, label_right, verticalalignment='center', horizontalalignment='center', fontsize=12)
+    # Add labels 
+    ax.text(-10, 0.5, label_left, verticalalignment='center', horizontalalignment='right', fontsize=12)
+    ax.text(266, 0.5, label_right, verticalalignment='center', horizontalalignment='left', fontsize=12)
 
     # Save Matplotlib figure as PNG image
     buffer = BytesIO()
@@ -171,6 +172,10 @@ def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_
 variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)', label_right='Most Suitable (1)',)
 # suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
 
+### INITIALIZE SESSION STATE ##################################
+# def initialize_session_state():
+#     if 'output' not in st.session_state:
+#         st.session_state.output = None
 
 ### CREATE STREAMLIT ##################################
 def main():
@@ -219,8 +224,13 @@ def main():
         return
     
     st.markdown("### **Suitability Map**")
-    # if submit_button:
-    #     with st.spinner('Building suitability map...'):
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown(f"**Number of Potential Locations:{len(loi)}**")
+    with col4:
+        if st.button('Save Result'):
+            st.session_state.list_of_locations = loi
+
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     # Plot suitability map
     hex_fuzzy = pdk.Layer(
@@ -245,14 +255,17 @@ def main():
     
     if submit_button_loi:
         loi = filter_loi(fuzzy_cut_off, hex_df)
-        # loi.to_csv('./hex/loi.csv')
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.markdown(f"**Number of Potential Locations:{len(loi)}**")
-        with col4:
-            save_loi = st.button("Save Results")
-            if save_loi:
-                loi.to_csv('./hex/loi.csv')
+        # # loi.to_csv('./hex/loi.csv')
+        # col1, col2, col3, col4 = st.columns(4)
+        # with col1:
+        #     st.markdown(f"**Number of Potential Locations:{len(loi)}**")
+        # with col4:
+        #     if st.button('Save Result'):
+        #         st.session_state.list_of_locations = loi
+            #pd.read_csv(('./hex/loi.csv'))
+            # save_result = st.button("Save Results")
+            # if save_result:
+            #     loi.to_csv('./hex/loi.csv')
         loi_plot = pdk.Layer(
             "H3HexagonLayer",
             loi,
@@ -277,9 +290,9 @@ def main():
                         # map_style='mapbox://styles/mapbox/streets-v12',
                         tooltip={"text": "Suitability: {fuzzy}"})
         st.pydeck_chart(deck, use_container_width=True)
-        # col1, col2, col3 = st.columns(3)
-        # with col1:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
+
+    
     # Filtering location of interest (loi) section
     # with st.sidebar.expander("Save Suitability Analysis Results"):
     # with st.sidebar.form("save_loi_form"):

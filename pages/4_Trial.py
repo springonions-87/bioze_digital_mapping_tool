@@ -51,7 +51,7 @@ def fuzzify_close(df, colormap_name=color_mapping):
     apply_color_mapping(df, 'fuzzy', color_mapping)
     return df
 
-st.cache_data
+@st.cache_data
 def fuzzify_far(df, colormap_name=color_mapping): 
     df_array = np.array(df['value'])
     fuzzified_array_far = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
@@ -76,6 +76,8 @@ def initialize_session_state():
         st.session_state.dist_choice = "Close"
     if 'choice_industry' not in st.session_state:
         st.session_state.choice_industry = "Close"
+    if 'output' not in st.session_state:
+        st.session_state.output = None
 
 ### FUZZIFY INPUT VARIABLES ################################## V1
 # @st.cache_data
@@ -201,21 +203,23 @@ def generate_pydeck_2(df_close, df_far, choice, view_state=view_state):
                     tooltip={"text": "Suitability:" f"{{fuzzy}}"})
 
 def main():
-
     initialize_session_state
-
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digesters determined by distance to feedstock locations.")
-        farm_choice = st.radio("1", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
-        if st.session_state.dist_choice != farm_choice:
-            st.session_state.dist_choice = farm_choice
-            st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, choice=st.session_state.dist_choice), use_container_width=True)
+        # farm_choice = st.radio("1", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
+        # if st.session_state.dist_choice != farm_choice:
+        #     st.session_state.dist_choice = farm_choice
+        st.session_state.dist_choice = st.radio("1", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="dist_choice_key")
+        st.pydeck_chart(generate_pydeck_2(fuzzy_farm_close, fuzzy_farm_far, choice=st.session_state.dist_choice), use_container_width=True)
     with col2:
         st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas.")
         st.session_state.choice_industry = st.radio("1", ["Close", "Far"], horizontal=True, label_visibility="collapsed", key="choice_industry_key")
         st.pydeck_chart(generate_pydeck_2(fuzzy_industry_c, fuzzy_industry_f, choice=st.session_state.choice_industry), use_container_width=True)
-
+    with col3:
+        if st.button('Load Data'):
+            st.session_state.output =d_to_farm
+            #pd.read_csv(('./hex/loi.csv'))
     
 
                 # with col1:

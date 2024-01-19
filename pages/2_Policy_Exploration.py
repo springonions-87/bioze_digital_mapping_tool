@@ -202,7 +202,7 @@ def session_load():
     main_crs ='EPSG:4326'
 
     # Load data and calculate od matrix
-    loi = load_csv('./hex/loi.csv')
+    loi = load_csv('./hex/loi.csv') #st.session_state.list_of_locations
     loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
     loi_gdf['y'] = loi_gdf['geometry'].y
     loi_gdf['x'] = loi_gdf['geometry'].x
@@ -262,6 +262,7 @@ def perform_initial_setup():
 
 ### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
 def main_content():
+        # Page 2
     ### ACCESS INITIAL SESSION VARIABLES ##################################
     I = st.session_state['I']
     d = st.session_state['d']
@@ -365,6 +366,8 @@ def main():
 
     ### DISPLAY MAIN CONTENT OF THE APP ##########################################
     main_content()
+    if st.button('Show Data'):
+        st.write('Data:', st.session_state.list_of_locations)
 
     # Run the model 
     # total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
