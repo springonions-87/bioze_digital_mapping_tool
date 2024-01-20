@@ -21,7 +21,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 colormap_name = 'Reds'
 colormap_name_suitability_map = 'plasma'
 
@@ -220,6 +219,19 @@ def main():
         if st.button('Load Data'):
             st.session_state.output =d_to_farm
             #pd.read_csv(('./hex/loi.csv'))
+
+    if 'name' not in st.session_state:
+        st.session_state['name'] = 'John Doe'
+
+    def change_name(name):
+        st.session_state['name'] = name
+
+    st.header(st.session_state['name'])
+
+    st.button('Jane', on_click=change_name, args=['Jane Doe'])
+    st.button('John', on_click=change_name, args=['John Doe'])
+
+    st.header(st.session_state['name'])
     
 
                 # with col1:

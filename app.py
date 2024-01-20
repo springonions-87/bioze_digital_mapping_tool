@@ -110,9 +110,15 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     return hex_df
 
 ### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
+# def filter_loi(fuzzy_cut_off, fuzzy_df):
+#     loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+#     return loi
+
+@st.cache_data
 def filter_loi(fuzzy_cut_off, fuzzy_df):
-    loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
-    return loi
+    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+    st.write(st.session_state.loi)
+    return 
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
@@ -172,13 +178,53 @@ def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_
 variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)', label_right='Most Suitable (1)',)
 # suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
 
+### 
+def plot_pydeck_layers(hex_df, loi_df=st.session_state.loi, view_state=view_state):
+    hex_fuzzy = pdk.Layer(
+        "H3HexagonLayer",
+        hex_df,
+        pickable=True,
+        stroked=True,
+        filled=True,
+        extruded=False,
+        opacity=0.6,
+        get_hexagon="hex9",
+        get_fill_color='color', 
+                    # get_line_color=[255, 255, 255],
+            # line_width_min_pixels=2
+    )
+
+    layers = [hex_fuzzy]
+
+    if len(loi_df) != 0:
+        loi_plot = pdk.Layer(
+            "H3HexagonLayer",
+            loi_df,
+            pickable=True,
+            stroked=True,
+            filled=True,
+            extruded=False,
+            opacity=0.6,
+            get_hexagon="hex9",
+            get_fill_color=[0, 0, 0, 0], 
+            get_line_color=[255, 0, 0],
+            line_width_min_pixels=1
+        )
+        layers.append(loi_plot)
+
+    deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
+    st.pydeck_chart(deck, use_container_width=True)
+    st.markdown(variable_legend_html, unsafe_allow_html=True)
+
+
 ### INITIALIZE SESSION STATE ##################################
-# def initialize_session_state():
-#     if 'output' not in st.session_state:
-#         st.session_state.output = None
+def initialize_session_state():
+    if 'loi' not in st.session_state:
+        st.session_state.loi = pd.DataFrame()
 
 ### CREATE STREAMLIT ##################################
 def main():
+    initialize_session_state()
     st.markdown("### Biogas Digester Site: Suitability Analysis")
     st.markdown(
         "This analysis identifies potential sites for biogas digesters based on five key criteria: "
@@ -224,73 +270,66 @@ def main():
         return
     
     st.markdown("### **Suitability Map**")
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(f"**Number of Potential Locations:{len(loi)}**")
-    with col4:
+        st.markdown(f"**Number of Potential Locations:{len(st.session_state['loi'])}**")
+    with col3:
         if st.button('Save Result'):
-            st.session_state.list_of_locations = loi
+            # st.session_state.list_of_locations = loi
+            st.write("Print!", st.session_state.loi)
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     # Plot suitability map
-    hex_fuzzy = pdk.Layer(
-            "H3HexagonLayer",
-            hex_df,
-            pickable=True,
-            stroked=True,
-            filled=True,
-            extruded=False,
-            opacity=0.6,
-            get_hexagon="hex9",
-            get_fill_color='color', 
-            # get_line_color=[255, 255, 255],
-            # line_width_min_pixels=2
-        )
-            # st.success('Done!')
+    # hex_fuzzy = pdk.Layer(
+    #         "H3HexagonLayer",
+    #         hex_df,
+    #         pickable=True,
+    #         stroked=True,
+    #         filled=True,
+    #         extruded=False,
+    #         opacity=0.6,
+    #         get_hexagon="hex9",
+    #         get_fill_color='color', 
+    #         # get_line_color=[255, 255, 255],
+    #         # line_width_min_pixels=2
+    #     )
+    
+    plot_pydeck_layers(hex_df, st.session_state.loi)
 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
         fuzzy_cut_off = st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01)
-        submit_button_loi = st.form_submit_button("Filter")
+        #submit_button_loi = 
+        st.form_submit_button("Filter", on_click=filter_loi, args=(fuzzy_cut_off, hex_df))
     
-    if submit_button_loi:
-        loi = filter_loi(fuzzy_cut_off, hex_df)
-        # # loi.to_csv('./hex/loi.csv')
-        # col1, col2, col3, col4 = st.columns(4)
-        # with col1:
-        #     st.markdown(f"**Number of Potential Locations:{len(loi)}**")
-        # with col4:
-        #     if st.button('Save Result'):
-        #         st.session_state.list_of_locations = loi
-            #pd.read_csv(('./hex/loi.csv'))
-            # save_result = st.button("Save Results")
-            # if save_result:
-            #     loi.to_csv('./hex/loi.csv')
-        loi_plot = pdk.Layer(
-            "H3HexagonLayer",
-            loi,
-            pickable=True,
-            stroked=True,
-            filled=True,
-            extruded=False,
-            opacity=0.6,
-            get_hexagon="hex9",
-            get_fill_color=[0,0,0,0], 
-            get_line_color=[255, 0, 0],
-            line_width_min_pixels=1
-            )
-        deck = pdk.Deck(layers=[hex_fuzzy, loi_plot], 
-                        initial_view_state=view_state, 
-                        # map_style='mapbox://styles/mapbox/streets-v12',
-                        tooltip={"text": "Suitability: {fuzzy}"})
-        st.pydeck_chart(deck, use_container_width=True)
-    else:
-        deck = pdk.Deck(layers=[hex_fuzzy], 
-                        initial_view_state=view_state, 
-                        # map_style='mapbox://styles/mapbox/streets-v12',
-                        tooltip={"text": "Suitability: {fuzzy}"})
-        st.pydeck_chart(deck, use_container_width=True)
-        st.markdown(variable_legend_html, unsafe_allow_html=True)
+    # if submit_button_loi:
+    #     st.session_state.loi = filter_loi(fuzzy_cut_off, hex_df)
+    #     loi_plot = pdk.Layer(
+    #         "H3HexagonLayer",
+    #         st.session_state.loi,
+    #         pickable=True,
+    #         stroked=True,
+    #         filled=True,
+    #         extruded=False,
+    #         opacity=0.6,
+    #         get_hexagon="hex9",
+    #         get_fill_color=[0,0,0,0], 
+    #         get_line_color=[255, 0, 0],
+    #         line_width_min_pixels=1
+    #         )
+    #     deck = pdk.Deck(layers=[hex_fuzzy, loi_plot], 
+    #                     initial_view_state=view_state, 
+    #                     # map_style='mapbox://styles/mapbox/streets-v12',
+    #                     tooltip={"text": "Suitability: {fuzzy}"})
+    #     st.pydeck_chart(deck, use_container_width=True)
+    #     st.markdown(variable_legend_html, unsafe_allow_html=True)
+    # else:
+    #     deck = pdk.Deck(layers=[hex_fuzzy], 
+    #                     initial_view_state=view_state, 
+    #                     # map_style='mapbox://styles/mapbox/streets-v12',
+    #                     tooltip={"text": "Suitability: {fuzzy}"})
+    #     st.pydeck_chart(deck, use_container_width=True)
+    #     st.markdown(variable_legend_html, unsafe_allow_html=True)
 
     
     # Filtering location of interest (loi) section
@@ -307,7 +346,7 @@ def main():
     #     data=loi,
     #     file_name='./hex/loi.csv',
     #     mime='text/csv',
-    # )    
+    # # )    
 
 # Run the Streamlit app
 if __name__ == "__main__":
