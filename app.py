@@ -114,12 +114,6 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
 #     loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
 #     return loi
 
-@st.cache_data
-def filter_loi(fuzzy_cut_off, fuzzy_df):
-    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
-    st.write(st.session_state.loi)
-    return 
-
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 @st.cache_data
@@ -179,7 +173,13 @@ variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)',
 # suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
 
 ### 
-def plot_pydeck_layers(hex_df, loi_df=st.session_state.loi, view_state=view_state):
+
+@st.cache_data
+def filter_loi(fuzzy_cut_off, fuzzy_df):
+    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+    return 
+
+def plot_pydeck_layers(hex_df, loi_df, view_state=view_state):
     hex_fuzzy = pdk.Layer(
         "H3HexagonLayer",
         hex_df,
@@ -275,7 +275,6 @@ def main():
         st.markdown(f"**Number of Potential Locations:{len(st.session_state['loi'])}**")
     with col3:
         if st.button('Save Result'):
-            # st.session_state.list_of_locations = loi
             st.write("Print!", st.session_state.loi)
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
@@ -293,15 +292,15 @@ def main():
     #         # get_line_color=[255, 255, 255],
     #         # line_width_min_pixels=2
     #     )
-    
-    plot_pydeck_layers(hex_df, st.session_state.loi)
+
 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
         fuzzy_cut_off = st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01)
         #submit_button_loi = 
         st.form_submit_button("Filter", on_click=filter_loi, args=(fuzzy_cut_off, hex_df))
-    
+    st.write(len(st.session_state.loi))
+    plot_pydeck_layers(hex_df, loi_df=st.session_state.loi)
     # if submit_button_loi:
     #     st.session_state.loi = filter_loi(fuzzy_cut_off, hex_df)
     #     loi_plot = pdk.Layer(
