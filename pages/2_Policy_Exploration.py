@@ -362,7 +362,6 @@ def main_content():
         
 ### CREATE STREAMLIT ##################################
 def main():
-    st.write(st.session_state.loi)
     ### INITIALIZE SESSION STATE ##########################################
     with st.spinner("Constructing an origin/destination matrix..."):
         perform_initial_setup(loi=st.session_state.loi)

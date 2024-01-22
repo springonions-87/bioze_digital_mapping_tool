@@ -257,7 +257,7 @@ def main():
         st.markdown(f"**Number of Potential Locations:{len(st.session_state['loi'])}**")
     with col3:
         if st.button('Save Result'):
-            st.write("Saved!", st.session_state.loi)
+            st.write("Saved Successfully!")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
