@@ -219,19 +219,20 @@ def main():
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**Farms/Feedstock Locations**", help="Suitability for locating digesters determined by distance to feedstock locations.")
+        st.markdown("**Farms/Feedstock Locations**", 
+                    help="Suitability for locating digesters determined by distance to the locations of available feedstocks. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to feedstocks the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_farm), use_container_width=True)
     with col1:
-        st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure.")
+        st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes major roads only.")
         st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
     with col2:
-        st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas.")
+        st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to industrial areas the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
     with col2:
-        st.markdown("**Urban and Residential Areas**", help="Suitability for locating digesters determined by distance to urban and residential areas.")
+        st.markdown("**Urban and Residential Areas**", help="Suitability for locating digesters determined by distance to urban and residential areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from urban and residential areas the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_urban), use_container_width=True)
     with col3:
-        st.markdown("**Nature and Water Bodies**", help="Suitability for locating digesters determined by distance to nature and water bodies, including canals etc...")
+        st.markdown("**Nature and Water Bodies**", help="Suitability for locating digesters determined by distance to natural areas and water bodies. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from natural areas and water bodies the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
     with col3:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
@@ -254,8 +255,8 @@ def main():
     with col1:
         st.markdown(f"**Number of Potential Locations:{len(st.session_state['loi'])}**")
     with col3:
-        if st.button('Save Result'):
-            st.write("Saved Successfully!")
+        if st.button('Save Result', help="Click to save the current filtered locations for further exploration in the ***Policy Exploration*** page. Please ensure that the number of saved locations does not exceed **10**."):
+            st.write("Saved successfully!")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)

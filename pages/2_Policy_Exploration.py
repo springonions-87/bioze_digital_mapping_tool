@@ -361,13 +361,26 @@ def main_content():
 ### CREATE STREAMLIT ##################################
 def main():
     ### INITIALIZE SESSION STATE ##########################################
-    with st.spinner("Constructing an origin/destination matrix..."):
-        perform_initial_setup(loi=st.session_state.loi)
+
+    # Buttons for choosing between "Use Saved Results" and "Use Trial Selection"
+    use_saved_button = st.button("Explore with Saved Digester Sites", help="Continue with the saved filtered suitable locations from previous section.")
+    use_trial_button = st.button("Explore with Random Digester Sites", help="Continue with random locations.")
+
+    if use_saved_button:
+        with st.spinner("Preparing the data..."):
+            perform_initial_setup(loi=st.session_state.loi)
+            main_content()
+    elif use_trial_button:
+        with st.spinner("Preparing the data..."):
+            perform_initial_setup(loi=load_csv('./hex/loi.csv')) # Replace with your function to generate trial selection
+            main_content()
+    
+    
+        # perform_initial_setup(loi=st.session_state.loi)
 
     ### DISPLAY MAIN CONTENT OF THE APP ##########################################
-    main_content()
-    if st.button('Show Data'):
-        st.write('Data:', st.session_state.list_of_locations)
+    # if st.button('Show Data'):
+    #     st.write('Data:', st.session_state.list_of_locations)
 
     # Run the model 
     # total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
