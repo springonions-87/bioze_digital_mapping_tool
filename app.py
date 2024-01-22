@@ -87,7 +87,7 @@ all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']),
 ### CREATE EMPTY LAYER ##################################
 def create_empty_layer(d_to_farm):
     df_empty = d_to_farm[['hex9']]
-    df_empty['color'] = None
+    df_empty['color'] = '[0,0,0,0]'
     return df_empty
 
 ### UPDATE EMPTY DF ##################################
@@ -174,12 +174,11 @@ variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)',
 
 ### 
 
-@st.cache_data
 def filter_loi(fuzzy_cut_off, fuzzy_df):
-    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
-    return 
+    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
 
-def plot_pydeck_layers(hex_df, loi_df, view_state=view_state):
+@st.cache_data
+def get_layers(hex_df):
     hex_fuzzy = pdk.Layer(
         "H3HexagonLayer",
         hex_df,
@@ -195,32 +194,15 @@ def plot_pydeck_layers(hex_df, loi_df, view_state=view_state):
     )
 
     layers = [hex_fuzzy]
+    return layers
 
-    if len(loi_df) != 0:
-        loi_plot = pdk.Layer(
-            "H3HexagonLayer",
-            loi_df,
-            pickable=True,
-            stroked=True,
-            filled=True,
-            extruded=False,
-            opacity=0.6,
-            get_hexagon="hex9",
-            get_fill_color=[0, 0, 0, 0], 
-            get_line_color=[255, 0, 0],
-            line_width_min_pixels=1
-        )
-        layers.append(loi_plot)
-
-    deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
-    st.pydeck_chart(deck, use_container_width=True)
-    st.markdown(variable_legend_html, unsafe_allow_html=True)
 
 
 ### INITIALIZE SESSION STATE ##################################
 def initialize_session_state():
     if 'loi' not in st.session_state:
         st.session_state.loi = pd.DataFrame()
+
 
 ### CREATE STREAMLIT ##################################
 def main():
@@ -275,77 +257,37 @@ def main():
         st.markdown(f"**Number of Potential Locations:{len(st.session_state['loi'])}**")
     with col3:
         if st.button('Save Result'):
-            st.write("Print!", st.session_state.loi)
+            st.write("Saved!", st.session_state.loi)
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
-    # Plot suitability map
-    # hex_fuzzy = pdk.Layer(
-    #         "H3HexagonLayer",
-    #         hex_df,
-    #         pickable=True,
-    #         stroked=True,
-    #         filled=True,
-    #         extruded=False,
-    #         opacity=0.6,
-    #         get_hexagon="hex9",
-    #         get_fill_color='color', 
-    #         # get_line_color=[255, 255, 255],
-    #         # line_width_min_pixels=2
-    #     )
+    layers = get_layers(hex_df)
 
 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
-        fuzzy_cut_off = st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01)
-        #submit_button_loi = 
-        st.form_submit_button("Filter", on_click=filter_loi, args=(fuzzy_cut_off, hex_df))
-    st.write(len(st.session_state.loi))
-    plot_pydeck_layers(hex_df, loi_df=st.session_state.loi)
-    # if submit_button_loi:
-    #     st.session_state.loi = filter_loi(fuzzy_cut_off, hex_df)
-    #     loi_plot = pdk.Layer(
-    #         "H3HexagonLayer",
-    #         st.session_state.loi,
-    #         pickable=True,
-    #         stroked=True,
-    #         filled=True,
-    #         extruded=False,
-    #         opacity=0.6,
-    #         get_hexagon="hex9",
-    #         get_fill_color=[0,0,0,0], 
-    #         get_line_color=[255, 0, 0],
-    #         line_width_min_pixels=1
-    #         )
-    #     deck = pdk.Deck(layers=[hex_fuzzy, loi_plot], 
-    #                     initial_view_state=view_state, 
-    #                     # map_style='mapbox://styles/mapbox/streets-v12',
-    #                     tooltip={"text": "Suitability: {fuzzy}"})
-    #     st.pydeck_chart(deck, use_container_width=True)
-    #     st.markdown(variable_legend_html, unsafe_allow_html=True)
-    # else:
-    #     deck = pdk.Deck(layers=[hex_fuzzy], 
-    #                     initial_view_state=view_state, 
-    #                     # map_style='mapbox://styles/mapbox/streets-v12',
-    #                     tooltip={"text": "Suitability: {fuzzy}"})
-    #     st.pydeck_chart(deck, use_container_width=True)
-    #     st.markdown(variable_legend_html, unsafe_allow_html=True)
+        st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
+        # st.form_submit_button("Filter", on_click=filter_loi, args=(st.session_state.myslider, hex_df))
+        on_click_filter_loi = lambda: filter_loi(st.session_state.myslider, hex_df)
+        st.form_submit_button("Filter", on_click=on_click_filter_loi)
 
+    loi_plot = pdk.Layer(
+        "H3HexagonLayer",
+        st.session_state.loi,
+        pickable=True,
+        stroked=True,
+        filled=True,
+        extruded=False,
+        opacity=0.6,
+        get_hexagon="hex9",
+        get_fill_color=[0, 0, 0, 0], 
+        get_line_color=[255, 0, 0],
+        line_width_min_pixels=1)
+    layers.append(loi_plot)
     
-    # Filtering location of interest (loi) section
-    # with st.sidebar.expander("Save Suitability Analysis Results"):
-    # with st.sidebar.form("save_loi_form"):
-    #     st.markdown("Save Suitability Analysis Results")
-    #     save_loi = st.form_submit_button("Save")
-    # if save_loi:
-    #     loi.to_csv('./hex/loi.csv')
+    deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
+    st.pydeck_chart(deck, use_container_width=True)
+    st.markdown(variable_legend_html, unsafe_allow_html=True)
 
-
-    # st.download_button(
-    #     label="Save Suitable Areas",
-    #     data=loi,
-    #     file_name='./hex/loi.csv',
-    #     mime='text/csv',
-    # # )    
 
 # Run the Streamlit app
 if __name__ == "__main__":
