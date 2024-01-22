@@ -278,8 +278,6 @@ def main_content():
     target = st.session_state['target']
     deck = initialize_map(loi_gdf, farm, hex_df)
 
-    st.write(len(st.session_state.loi))
-
     ### SIDEBAR ##################################
     with st.sidebar:
         target = (st.slider('**Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)

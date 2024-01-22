@@ -98,9 +98,13 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     # Extract the selected variables (array) from the dictionary
     selected_array_list = [all_arrays[key] for key in selected_variables]
     
-    result_array = selected_array_list[0]
-    for arr in selected_array_list[1:]:
-        result_array = np.minimum(result_array, arr)
+    # METHOD 1 NP.MINIMUM
+    # result_array = selected_array_list[0] 
+    # for arr in selected_array_list[1:]:
+    #     result_array = np.minimum(result_array, arr)
+    
+    # METHOD 2 AVERAGE
+    result_array = np.mean(selected_array_list, axis=0)
     
     hex_df = create_empty_layer(d_to_farm)
     hex_df['fuzzy'] = result_array
@@ -110,9 +114,8 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
     return hex_df
 
 ### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
-# def filter_loi(fuzzy_cut_off, fuzzy_df):
-#     loi = fuzzy_df[(fuzzy_df['fuzzy'] >= fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
-#     return loi
+def filter_loi(fuzzy_cut_off, fuzzy_df):
+    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
@@ -174,9 +177,6 @@ variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)',
 
 ### 
 
-def filter_loi(fuzzy_cut_off, fuzzy_df):
-    st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
-
 @st.cache_data
 def get_layers(hex_df):
     hex_fuzzy = pdk.Layer(
@@ -195,8 +195,6 @@ def get_layers(hex_df):
 
     layers = [hex_fuzzy]
     return layers
-
-
 
 ### INITIALIZE SESSION STATE ##################################
 def initialize_session_state():
