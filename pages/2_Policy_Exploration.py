@@ -198,12 +198,13 @@ def update_map(farm_df, digester_df, assignment_decision, deck):
 
 ### SESSION STATE INITIALIZATION #######################################
 @st.cache_data
-def session_load():
+def session_load(loi):
     main_crs ='EPSG:4326'
 
     # Load data and calculate od matrix
-    loi = load_csv('./hex/loi.csv') #st.session_state.list_of_locations
-    loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
+    # loi = load_csv('./hex/loi.csv') #st.session_state.list_of_locations
+    # loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
+    loi_gdf = loi_to_gdf(loi.reset_index(drop=True))
     loi_gdf['y'] = loi_gdf['geometry'].y
     loi_gdf['x'] = loi_gdf['geometry'].x
 
@@ -247,13 +248,13 @@ def session_load():
     return data_dict
 
 ### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
-def perform_initial_setup():
+def perform_initial_setup(loi):
     data_name = ['loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
     # Check if any key in data_names is missing in st.session_state.keys()
     missing_keys = [key for key in data_name if key not in st.session_state.keys()]
     # st.write(missing_keys)
     if missing_keys:
-        loaded_data = session_load()
+        loaded_data = session_load(loi)
         for key, value in loaded_data.items():
             st.session_state[key] = value
         # Initialize session_state if it doesn't exist
@@ -262,7 +263,6 @@ def perform_initial_setup():
 
 ### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
 def main_content():
-        # Page 2
     ### ACCESS INITIAL SESSION VARIABLES ##################################
     I = st.session_state['I']
     d = st.session_state['d']
@@ -277,6 +277,8 @@ def main_content():
     loi_gdf = st.session_state['loi_gdf']
     target = st.session_state['target']
     deck = initialize_map(loi_gdf, farm, hex_df)
+
+    st.write(len(st.session_state.loi))
 
     ### SIDEBAR ##################################
     with st.sidebar:
@@ -360,9 +362,10 @@ def main_content():
         
 ### CREATE STREAMLIT ##################################
 def main():
+    st.write(st.session_state.loi)
     ### INITIALIZE SESSION STATE ##########################################
     with st.spinner("Constructing an origin/destination matrix..."):
-        perform_initial_setup()
+        perform_initial_setup(loi=st.session_state.loi)
 
     ### DISPLAY MAIN CONTENT OF THE APP ##########################################
     main_content()
