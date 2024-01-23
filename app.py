@@ -205,9 +205,9 @@ def initialize_session_state():
 ### CREATE STREAMLIT ##################################
 def main():
     initialize_session_state()
-    st.markdown("### Biogas Digester Site: Suitability Analysis")
+    st.markdown("### BIOZE Digital Tool")
     st.markdown(
-        "This analysis identifies potential sites for biogas digesters based on five key criteria: "
+        "This suitability analysis identifies potential sites for biogas digesters based on five key criteria: "
         "distance to major roads, farms, industrial areas, and nature and water bodies."
     )
     st.markdown(
