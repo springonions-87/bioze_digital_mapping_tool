@@ -198,11 +198,11 @@ def update_map(farm_df, digester_df, assignment_decision, deck):
 
 ### SESSION STATE INITIALIZATION #######################################
 @st.cache_data
-def session_load():
+def session_load(loi):
     main_crs ='EPSG:4326'
 
     # Load data and calculate od matrix
-    loi = load_csv('./hex/loi.csv') #st.session_state.list_of_locations
+    # loi = load_csv('./hex/loi.csv') #st.session_state.list_of_locations
     # loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
     loi_gdf = loi_to_gdf(loi.reset_index(drop=True))
     loi_gdf['y'] = loi_gdf['geometry'].y
@@ -248,46 +248,59 @@ def session_load():
     return data_dict
 
 ### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
-def perform_initial_setup():
+def perform_initial_setup(loi, page_2_space):
     data_name = ['loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
     # Check if any key in data_names is missing in st.session_state.keys()
-    missing_keys = [key for key in data_name if key not in st.session_state.keys()]
+    missing_keys = [key for key in data_name if key not in page_2_space.keys()]
     # st.write(missing_keys)
     if missing_keys:
-        loaded_data = session_load()
+        loaded_data = session_load(loi)
         for key, value in loaded_data.items():
-            st.session_state[key] = value
+            page_2_space[key] = value
         # Initialize session_state if it doesn't exist
-    if 'target' not in st.session_state:
-        st.session_state['target'] = 0  # Set a default value, adjust as needed
+    if 'target' not in page_2_space:
+        page_2_space['target'] = 0  # Set a default value, adjust as needed
 
 ### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
-def main_content_random():
+def main_content(page_2_space):
     ### ACCESS INITIAL SESSION VARIABLES ##################################
-    I = st.session_state['I']
-    d = st.session_state['d']
-    # total_manure = st.session_state.total_manure
-    farm = st.session_state['farm']
-    hex_df = st.session_state['hex_df']
-    c = st.session_state['c']
-    plant = st.session_state['plant']
-    M = st.session_state['M']
-    f = st.session_state['f']
-    Plant_all = st.session_state['Plant_all']
-    loi_gdf = st.session_state['loi_gdf']
-    target = st.session_state['target']
+    # I = st.session_state['I']
+    # d = st.session_state['d']
+    # # total_manure = st.session_state.total_manure
+    # farm = st.session_state['farm']
+    # hex_df = st.session_state['hex_df']
+    # c = st.session_state['c']
+    # plant = st.session_state['plant']
+    # M = st.session_state['M']
+    # f = st.session_state['f']
+    # Plant_all = st.session_state['Plant_all']
+    # loi_gdf = st.session_state['loi_gdf']
+    # target = st.session_state['target']
+
+    I = page_2_space.get('I', None)  # Replace None with an appropriate default
+    d = page_2_space.get('d', None)
+    # total_manure = page_namespace.get('total_manure', None)
+    farm = page_2_space.get('farm', None)
+    hex_df = page_2_space.get('hex_df', None)
+    c = page_2_space.get('c', None)
+    plant = page_2_space.get('plant', None)
+    M = page_2_space.get('M', None)
+    f = page_2_space.get('f', None)
+    Plant_all = page_2_space.get('Plant_all', None)
+    loi_gdf = page_2_space.get('loi_gdf', None)
+    target = page_2_space.get('target', None)
     deck = initialize_map(loi_gdf, farm, hex_df)
 
     ### SIDEBAR ##################################
     with st.sidebar:
-        target = (st.slider('**Manure Utilization Target (%):**', min_value=0, max_value=100,step=10, key="target_random")/ 100) # Define manure use goal (mu)
+        target = (st.slider('**Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 
         with st.container():
             st.write("**Map Layers**")
-            show_farm = st.sidebar.checkbox('Farms', value=True, key="show_farm_random")
-            show_digester = st.sidebar.checkbox('Digesters', value=True, key="show_digester_random")
-            show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True, key="show_arcs_random")
-            show_suitability = st.sidebar.checkbox('Suitability', value=False, key="show_suitability_random")
+            show_farm = st.sidebar.checkbox('Farms', value=True)
+            show_digester = st.sidebar.checkbox('Digesters', value=True)
+            show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
+            show_suitability = st.sidebar.checkbox('Suitability', value=False)
             # show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
 
         st.markdown("")
@@ -308,18 +321,18 @@ def main_content_random():
 
     ### SELECT PLANT FORM ##########################################
     with st.expander('Customize Site Selection'):
-        with st.form('select_plant_random_form'):
-            J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all, key="select_plant_random")
+        with st.form('select_plant'):
+            J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
             if "All" in J or not J:
                 J = plant
             submit_select_loi = st.form_submit_button("Submit")
 
-    if submit_select_loi and st.session_state['target'] == 0:
+    if submit_select_loi and page_2_space['target'] == 0:
         deck = update_digester_layer_color(loi_gdf, J, deck)
 
-    if submit_select_loi or st.session_state['target'] != target:
+    if submit_select_loi or page_2_space['target'] != target:
         with st.spinner('Running the model...'):
-            st.session_state['target'] = target # Update the session state with the new target value
+            page_2_space['target'] = target # Update the session state with the new target value
             M = filter_Plant(M, J)
             f = filter_Plant(f, J)
             c = {(i, j): value for (i, j), value in c.items() if j in J}
@@ -361,24 +374,19 @@ def main_content_random():
 ### CREATE STREAMLIT ##################################
 def main():
     ### INITIALIZE SESSION STATE ##########################################
-
-    # # Buttons for choosing between "Use Saved Results" and "Use Trial Selection"
-    # use_saved_button = st.button("Explore with Saved Digester Sites", help="Continue with the saved filtered suitable locations from previous section.")
-    # use_trial_button = st.button("Explore with Random Digester Sites", help="Continue with random locations.")
-
-    # if use_saved_button:
-    #     with st.spinner("Preparing the data..."):
-    #         perform_initial_setup(loi=st.session_state.loi)
-    #         main_content()
-    # elif use_trial_button:
-    #     with st.spinner("Preparing the data..."):
-    #         perform_initial_setup(loi=load_csv('./hex/loi.csv')) # Replace with your function to generate trial selection
-    #         main_content()
-
-    with st.spinner("Preparing the data..."):
-        perform_initial_setup() # Replace with your function to generate trial selection
+    if 'page_2' not in st.session_state:
+        st.session_state.page_2 = {}
     
-    main_content_random()
+    page_2_space = st.session_state.page_2
+
+    if len(st.session_state.loi) == 0:
+        st.warning("No result has been saved. Return to suitability analysis.", icon="⚠️")
+        if st.button("Visit suitability analysis"):
+            st.switch_page("app.py")
+    else:
+        with st.spinner("Preparing the data..."):
+            perform_initial_setup(st.session_state.loi, page_2_space) # Replace with your function to generate trial selection
+            main_content(page_2_space)
 
     # with tab2:
     #     with st.spinner("Preparing the data..."):
