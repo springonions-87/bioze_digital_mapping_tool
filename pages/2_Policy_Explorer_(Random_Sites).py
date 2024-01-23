@@ -360,6 +360,10 @@ def main_content_random():
         
 ### CREATE STREAMLIT ##################################
 def main():
+    st.markdown("### Welcome to Policy Explorer!")
+    st.markdown("With 7 randomly generated sites, explore the optimal combinations of locations for digesters to process manure in the region.")
+    st.markdown("")
+    st.markdown("")
     ### INITIALIZE SESSION STATE ##########################################
 
     # # Buttons for choosing between "Use Saved Results" and "Use Trial Selection"

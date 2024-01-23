@@ -373,13 +373,18 @@ def main_content(page_2_space):
         
 ### CREATE STREAMLIT ##################################
 def main():
+    st.markdown("### Welcome to Policy Explorer!")
+    st.markdown("Dive into your saved digester sites from the suitability analysis. Explore the optimal combinations of locations for digesters to process manure in the region.")
+    st.markdown("")
+    st.markdown("")
+
     ### INITIALIZE SESSION STATE ##########################################
     if 'page_2' not in st.session_state:
         st.session_state.page_2 = {}
     
     page_2_space = st.session_state.page_2
 
-    if len(st.session_state.loi) == 0:
+    if "loi" not in st.session_state or len(st.session_state.loi) == 0:
         st.warning("No result has been saved. Return to suitability analysis.", icon="⚠️")
         if st.button("Visit suitability analysis"):
             st.switch_page("app.py")
