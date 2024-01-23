@@ -385,7 +385,7 @@ def main():
     page_2_space = st.session_state.page_2
 
     if "loi" not in st.session_state or len(st.session_state.loi) == 0:
-        st.warning("No result has been saved. Return to suitability analysis.", icon="⚠️")
+        st.warning("Oops! It looks like you haven't saved any results yet. Visit suitability snalysis page with the button below, to explore, filter suitable locations, and save your results.", icon="⚠️")
         if st.button("Visit suitability analysis"):
             st.switch_page("app.py")
     else:
