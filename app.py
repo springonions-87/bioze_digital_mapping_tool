@@ -253,7 +253,7 @@ def main():
     st.markdown("### **Suitability Map**")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(f"**Number of Potential Locations: {len(st.session_state['loi'])}**")
+        st.markdown(f"**Number of Candidate Sites: {len(st.session_state['loi'])}**")
     with col3:
         if st.button('Save Result', help="Click to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**."):
             st.write("Saved successfully!")
