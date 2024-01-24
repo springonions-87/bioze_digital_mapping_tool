@@ -209,14 +209,14 @@ def initialize_session_state():
 def main():
     initialize_session_state()
     st.markdown("### BIOZE Digital Tool")
+    # st.markdown(
+    #     "The suitability analysis identifies potential sites for biogas digesters based on five key criteria:"
+    #     "distance to major roads, farms, industrial areas, and nature and water bodies."
+    # )
     st.markdown(
-        "This suitability analysis identifies potential sites for biogas digesters based on five key criteria: "
-        "distance to major roads, farms, industrial areas, and nature and water bodies."
+        "Select criteria for the suitability analysis.The resulting suitability map will be displayed below for your exploration."
     )
-    st.markdown(
-        "You have the flexibility to select specific criteria for the suitability analysis. "
-        "The resulting suitability map will be displayed below for your exploration."
-    )
+    st.markdown("The six maps below each represents a pre-selected criterion deemed crucial for identifying suitable locations for building large-scale digesters (capacity 120,000 ton/yr).")
     st.markdown("")
     st.markdown("")
     # Plotting suitability variables
