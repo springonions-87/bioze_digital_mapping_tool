@@ -228,8 +228,6 @@ def main():
     with col1:
         st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes major roads only.")
         st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
-    with col1:
-        st.markdown(variable_legend_html, unsafe_allow_html=True)
     with col2:
         st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to industrial areas the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
@@ -241,8 +239,10 @@ def main():
         st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
     with col3:
         st.markdown("**Gas Inlets**", 
-                    help="Suitability for locating digesters determined by distance to randomly generated gas inlet points. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to inlets the ***higher*** the suitability. Currently, gas inlets is randomly generated data point due to lack of data, and ideally should be replaced by data of gas injection station or inlets to the gas grids.")
+                    help="Suitability for locating digesters determined by distance to randomly generated gas inlet points. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to inlets the ***higher*** the suitability. Currently, randomly generated data points are employed due to lack of data, and ideally should be replaced by real data of gas injection stations or other representations of inlets to gas grids.")
         st.pydeck_chart(generate_pydeck(fuzzy_inlet), use_container_width=True)
+    with col3:
+        st.markdown(variable_legend_html, unsafe_allow_html=True)
    
     st.markdown("")
     "---"
