@@ -266,6 +266,8 @@ def main():
     with col3:
         if st.button('Save Result', help="Click to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**."):
             st.write("Saved successfully!")
+    st.markdown("Click **Save Result** to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**.")
+
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
@@ -295,7 +297,6 @@ def main():
     deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
     st.pydeck_chart(deck, use_container_width=True)
     st.markdown(variable_legend_html, unsafe_allow_html=True)
-    st.markdown("Click **Save Result** to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**.")
 
 # Run the Streamlit app
 if __name__ == "__main__":
