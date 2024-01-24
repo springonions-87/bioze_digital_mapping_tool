@@ -48,6 +48,7 @@ d_to_road = load_data('./hex/d_to_road_hex_complete.csv')
 d_to_industry = load_data('./hex/proximity_to_industry_hex_complete.csv')
 d_to_nature = load_data('./hex/proximity_to_nature_hex_complete.csv')
 d_to_urban = load_data('./hex/proximity_to_urban_hex_complete.csv')
+d_to_inlet = load_data('./hex/d_to_inlet_hex_complete.csv')
 
 
 ### GENERATE COLORMAP ##################################
@@ -77,12 +78,14 @@ fuzzy_road = fuzzify(d_to_road, type='close')
 fuzzy_industry = fuzzify(d_to_industry, type='close')
 fuzzy_nature = fuzzify(d_to_nature, type='far')
 fuzzy_urban = fuzzify(d_to_urban, type='far')
+fuzzy_inlet = fuzzify(d_to_inlet, type='close')
 
 all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']), 
               'Road infrastructure': np.array(fuzzy_road['fuzzy']),
               'Urban and residential areas': np.array(fuzzy_urban['fuzzy']), 
               'Industrial areas': np.array(fuzzy_industry['fuzzy']), 
-              'Nature and water bodies': np.array(fuzzy_nature['fuzzy'])}
+              'Nature and water bodies': np.array(fuzzy_nature['fuzzy']),
+              'Gas Inlets': np.array(fuzzy_inlet['fuzzy'])}
 
 ### CREATE EMPTY LAYER ##################################
 def create_empty_layer(d_to_farm):
@@ -225,6 +228,8 @@ def main():
     with col1:
         st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes major roads only.")
         st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
+    with col1:
+        st.markdown(variable_legend_html, unsafe_allow_html=True)
     with col2:
         st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to industrial areas the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
@@ -235,7 +240,9 @@ def main():
         st.markdown("**Nature and Water Bodies**", help="Suitability for locating digesters determined by distance to natural areas and water bodies. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from natural areas and water bodies the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
     with col3:
-        st.markdown(variable_legend_html, unsafe_allow_html=True)
+        st.markdown("**Gas Inlets**", 
+                    help="Suitability for locating digesters determined by distance to randomly generated gas inlet points. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to inlets the ***higher*** the suitability. Currently, gas inlets is randomly generated data point due to lack of data, and ideally should be replaced by data of gas injection station or inlets to the gas grids.")
+        st.pydeck_chart(generate_pydeck(fuzzy_inlet), use_container_width=True)
    
     st.markdown("")
     "---"
