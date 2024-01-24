@@ -279,8 +279,8 @@ def main():
         opacity=0.6,
         get_hexagon="hex9",
         get_fill_color=[0, 0, 0, 0], 
-        get_line_color=[255, 0, 0],
-        line_width_min_pixels=1)
+        get_line_color=[0, 255, 0],
+        line_width_min_pixels=2)
     layers.append(loi_plot)
     
     deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
