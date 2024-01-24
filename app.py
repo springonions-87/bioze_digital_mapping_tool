@@ -261,7 +261,7 @@ def main():
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
 
-
+    # Filtering 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
         st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
