@@ -150,13 +150,16 @@ def initialize_map(digester_df, farm_df, suitability_df):
         longitude=farm_df['x'].mean(),
         zoom=9,
         )
+    TOOLTIP_TEXT = {
+        "html": "Manure: {material_quantity} ton/yr <br /> From: farm #<span style='color:white; font-weight:bold;'>{farm_number}</span> <br /> To: digester site #<span style='color:white; font-weight:bold;'>{digester_number}</span>"
+    }
     deck = pdk.Deck(
         layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
         initial_view_state=view_state, 
         map_style= 
         #'mapbox://styles/mapbox/satellite-v9',
         'mapbox://styles/mapbox/streets-v12',
-        # tooltip=
+        tooltip=TOOLTIP_TEXT
         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
         # {"text": "Suitability: {Value}"}
         )
@@ -178,6 +181,7 @@ def update_farm_layer_color(farm_df, digester_df, assignment_decision, deck):
 
 def update_map(farm_df, digester_df, assignment_decision, deck):
     arc_layer_df = get_arc(assignment_decision, digester_df, farm_df)
+    # st.write(arc_layer_df)
     arc_layer = pdk.Layer(
         'ArcLayer',
         data=arc_layer_df,
@@ -334,7 +338,7 @@ def main_content_random():
             total_biogas = (total_manure * target) * 50 # 1Mg cattle or pig manure (20% org. dry matter) 50 m³ biogas
             # Methane savings (m3/yr)=Biogas yield potential (m3/yr)× Methane content of biogas (%)
             methane_saving = total_biogas*0.6 # methane content of biogas is assumed 60%
-
+            
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")

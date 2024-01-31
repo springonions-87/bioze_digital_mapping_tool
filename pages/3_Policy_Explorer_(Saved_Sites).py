@@ -151,15 +151,16 @@ def initialize_map(digester_df, farm_df, suitability_df):
         longitude=farm_df['x'].mean(),
         zoom=9,
         )
+    TOOLTIP_TEXT = {
+        "html": "Manure: {material_quantity} ton/yr <br /> From: farm #<span style='color:white; font-weight:bold;'>{farm_number}</span> <br /> To: digester site #<span style='color:white; font-weight:bold;'>{digester_number}</span>"
+    }
     deck = pdk.Deck(
         layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
         initial_view_state=view_state, 
         map_style= 
         #'mapbox://styles/mapbox/satellite-v9',
         'mapbox://styles/mapbox/streets-v12',
-        tooltip=
-        # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
-        {"text": "Suitability: {Value}"}
+        tooltip=TOOLTIP_TEXT
         )
     return deck
 
