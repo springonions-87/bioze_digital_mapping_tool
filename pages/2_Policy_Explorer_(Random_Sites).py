@@ -145,7 +145,6 @@ def initialize_map(digester_df, farm_df, suitability_df):
         # This distinguishes them from columns in a data set
         get_text_anchor=String("middle"),
         get_alignment_baseline=String("center"))
-    
     view_state=pdk.ViewState(
         latitude=farm_df['y'].mean(),
         longitude=farm_df['x'].mean(),
@@ -157,9 +156,9 @@ def initialize_map(digester_df, farm_df, suitability_df):
         map_style= 
         #'mapbox://styles/mapbox/satellite-v9',
         'mapbox://styles/mapbox/streets-v12',
-        tooltip=
+        # tooltip=
         # {'html': '<b>Farm:</b> {farm_number}<br/><b>Digester:</b> {digester_number}<br/><b>Quantity:</b> {material_quantity}t','style': {'color': 'white'}}, 
-        {"text": "Suitability: {Value}"}
+        # {"text": "Suitability: {Value}"}
         )
     return deck
 
@@ -339,7 +338,7 @@ def main_content_random():
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Used", value="{:,.2f} Mg/yr".format(total_manure))
+            col1.metric(label="Total Manure Processed", value="{:,.2f} Mg/yr".format(total_manure))
             col1.metric(label="Total Biogas Yield Potential", value="{:,.2f} m³/yr".format(total_biogas))
             col1.metric(label="Total Methane Saving Potential", value="{:,.2f} m³/yr".format(methane_saving))
             with col3:
