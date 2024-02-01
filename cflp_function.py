@@ -1,7 +1,3 @@
-# Capacitated Facility Location Problem - Functions
-# Latest version = 6
-
-# from pulp import *
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -10,6 +6,13 @@ import os
 import pickle
 import random
 from pyscipopt import Model, quicksum
+# from pulp import *
+
+"""
+This notebook contains various functions required by the Streamlit app. 
+The functions are called by both Phase 1 and 2 of the app.
+
+"""
 
 # def random_M_f(J):
 #     small = [7848, 209249] # [capacity, cost]
@@ -39,94 +42,111 @@ def random_M_f(J):
         f[index] = medium[1]
     return M, f
 
-# def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
-    """
-    Input
-    * Plant: list (sets/array) of facility indices
-    * Farm: list (sets/array) of customer indices
-    * fixed_cost: dictionary of fixed cost of each Plant - {Plant:fixed cost}
-    * transport_cost: nested dictionary of shortest paths (OD matrix) from all Farm to all Plant - {Plant:{Farm:distance}}
-    * manure_production: quantity of manure in each Farm - {Farm:manure quantity}
-    * max_capacity: maximum capacity of each Plant - {Plant:max capacity}
-    * target: float of manure use goal defined as policy
-    * total_manure: total manure produced by all Farm
-    """
+# # def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
+#     """
+#     Input
+#     * Plant: list (sets/array) of facility indices
+#     * Farm: list (sets/array) of customer indices
+#     * fixed_cost: dictionary of fixed cost of each Plant - {Plant:fixed cost}
+#     * transport_cost: nested dictionary of shortest paths (OD matrix) from all Farm to all Plant - {Plant:{Farm:distance}}
+#     * manure_production: quantity of manure in each Farm - {Farm:manure quantity}
+#     * max_capacity: maximum capacity of each Plant - {Plant:max capacity}
+#     * target: float of manure use goal defined as policy
+#     * total_manure: total manure produced by all Farm
+#     """
 
-    # Setting the Problem
-    prob = LpProblem("Capacitated_Facility_Location_Problem", LpMinimize)
+#     # Setting the Problem
+#     prob = LpProblem("Capacitated_Facility_Location_Problem", LpMinimize)
 
-    # Defining our Decision Variables
-    use_plant = LpVariable.dicts("Plant", Plant, 0, 1, LpBinary) 
-    ser_farm = LpVariable.dicts("Farm_Plant", [(i, j) for i in Farm for j in Plant], 0, 1, LpBinary) 
+#     # Defining our Decision Variables
+#     use_plant = LpVariable.dicts("Plant", Plant, 0, 1, LpBinary) 
+#     ser_farm = LpVariable.dicts("Farm_Plant", [(i, j) for i in Farm for j in Plant], 0, 1, LpBinary) 
 
-    # Objective Function
-    prob += lpSum(fixed_cost[j]*use_plant[j] for j in Plant) + lpSum(transport_cost[j][i]*ser_farm[(i,j)] for j in Plant for i in Farm)
+#     # Objective Function
+#     prob += lpSum(fixed_cost[j]*use_plant[j] for j in Plant) + lpSum(transport_cost[j][i]*ser_farm[(i,j)] for j in Plant for i in Farm)
 
-    # Costraints
-    for i in Farm:
-        prob += lpSum(ser_farm[(i, j)] for j in Plant) <= 1 # Very strange, the model becomes infeasible  if it's == 1, maybe because now the constraint has relaxed and not all farms need to be assigned to facility, which will be the case if ==1
+#     # Costraints
+#     for i in Farm:
+#         prob += lpSum(ser_farm[(i, j)] for j in Plant) <= 1 # Very strange, the model becomes infeasible  if it's == 1, maybe because now the constraint has relaxed and not all farms need to be assigned to facility, which will be the case if ==1
 
-    # The capacity constraint here it differnt than the one in paper, but i think it does the work still
-    for j in Plant:
-        prob += lpSum(manure_production[i] * ser_farm[(i,j)] for i in Farm) <= max_capacity[j]*use_plant[j]
+#     # The capacity constraint here it differnt than the one in paper, but i think it does the work still
+#     for j in Plant:
+#         prob += lpSum(manure_production[i] * ser_farm[(i,j)] for i in Farm) <= max_capacity[j]*use_plant[j]
 
-    # Not really sure what this constraint does, I think it makes sure a farm can only be assigned to a facility given it's open, hence the value of xij is smaller or equal to yj 
-    for i in Farm:
-        for j in Plant:
-            prob += ser_farm[(i,j)] <= use_plant[j]
+#     # Not really sure what this constraint does, I think it makes sure a farm can only be assigned to a facility given it's open, hence the value of xij is smaller or equal to yj 
+#     for i in Farm:
+#         for j in Plant:
+#             prob += ser_farm[(i,j)] <= use_plant[j]
 
-    # Add a constraint to ensure at least x% of total manure production is sent to plants
-    prob += lpSum(manure_production[i] * ser_farm[(i, j)] for i in Farm for j in Plant) >= target * total_manure
+#     # Add a constraint to ensure at least x% of total manure production is sent to plants
+#     prob += lpSum(manure_production[i] * ser_farm[(i, j)] for i in Farm for j in Plant) >= target * total_manure
 
-    # Solve 
-    prob.solve()
-    print("Solution Status = ", LpStatus[prob.status])
+#     # Solve 
+#     prob.solve()
+#     print("Solution Status = ", LpStatus[prob.status])
 
-    """ Solution Outputs """
+#     """ Solution Outputs """
     
-    # # Solution matrix
-    # assignment_matrix = pd.DataFrame(index=Farm, columns=Plant)
-    # for i in Plant:
-    #     for j in Farm:
-    #         assignment_matrix.at[j, i] = ser_farm[(j, i)].varValue
+#     # # Solution matrix
+#     # assignment_matrix = pd.DataFrame(index=Farm, columns=Plant)
+#     # for i in Plant:
+#     #     for j in Farm:
+#     #         assignment_matrix.at[j, i] = ser_farm[(j, i)].varValue
 
-    # Solution dictionary
-    # Initialize lists to store assignment information
-    assignment_decision = {j: [] for j in Plant}
+#     # Solution dictionary
+#     # Initialize lists to store assignment information
+#     assignment_decision = {j: [] for j in Plant}
 
-    # Collect assigned farms
-    for i in Plant:
-        for j in Farm:
-            if ser_farm[(j,i)].varValue > 0.00001:
-                assignment_decision[i].append(j)
+#     # Collect assigned farms
+#     for i in Plant:
+#         for j in Farm:
+#             if ser_farm[(j,i)].varValue > 0.00001:
+#                 assignment_decision[i].append(j)
     
-    # Get total cost
-    total_cost = pulp.value(prob.objective)
+#     # Get total cost
+#     total_cost = pulp.value(prob.objective)
 
-    # Extracting the values of the decision variables
-    use_plant_index = {j: use_plant[j].varValue for j in Plant}
-    ser_farm_index = {(i, j): ser_farm[(i, j)].varValue for i in Farm for j in Plant}
+#     # Extracting the values of the decision variables
+#     use_plant_index = {j: use_plant[j].varValue for j in Plant}
+#     ser_farm_index = {(i, j): ser_farm[(i, j)].varValue for i in Farm for j in Plant}
 
-    # Calculating total fixed cost
-    total_fixed_cost = sum(fixed_cost[j] * use_plant_index[j] for j in Plant)
+#     # Calculating total fixed cost
+#     total_fixed_cost = sum(fixed_cost[j] * use_plant_index[j] for j in Plant)
 
-    # Calculating total transportation cost
-    total_transport_cost = sum(transport_cost[j][i] * ser_farm_index[(i, j)] for j in Plant for i in Farm)
+#     # Calculating total transportation cost
+#     total_transport_cost = sum(transport_cost[j][i] * ser_farm_index[(i, j)] for j in Plant for i in Farm)
     
-    return total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index # assignment_matrix,
+#     return total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index # assignment_matrix,
 
 def flp_scip(I, J, d, M, f, c, p):
+
     """
-    flp_percentage_demand -- model for the capacitated facility location problem with a percentage of demand constraint
-    Parameters:
-         - I: set of customers
-         - J: set of facilities
-         - d[i]: demand for customer i
-         - M[j]: capacity of facility j
-         - f[j]: fixed cost for using a facility in point j
-         - c[i,j]: unit cost of servicing demand point i from facility j
-         - p: percentage of total demand to be met
-    Returns a model, ready to be solved.
+    Model for defining and solving the capacitated facility location problem.
+
+    Parameters
+    ----------
+    I : list
+        set of feedstock locations (customers)
+    J : list
+        set of candidate digester sites (facilities)
+    d: list
+        d[i] is feedstock supply of farm i (demand of customer i)
+    M : list
+        M[j] is capacity of digester site j
+    f: list
+        f[j] is fixed cost for building a digester in site j
+    c: dict
+        c[i,j] is unit cost of transporting feedstock from farm i to digester j
+    p: float 
+        percentage of total demand to be met (manure utilization target, determined by user input through the slider in the app)
+
+    Outputs
+    ----------
+    model : dict
+
+    target_demand : float
+        The minimum amount of manure to be processed in the model.
+
     """
     model = Model("flp_percentage_demand")
     
@@ -158,7 +178,7 @@ def flp_scip(I, J, d, M, f, c, p):
     )
 
     model.data = x, y, z
-    return model, total_demand
+    return model, target_demand
 
 # def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index):
     """

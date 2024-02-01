@@ -66,13 +66,13 @@ def load_pickle():
 
     # Float
     # alpha     total manure production
-    total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
+    # total_manure = load_data_from_pickle(folder_path, 'total_manure_test.pickle')
     
     # DataFrame
     # potential_digester_location = load_csv(r'./farm/farm_cluster_mock_5.csv')
     # farm = load_csv(r"./farm/farm_mock.csv")
 
-    return I, d, total_manure
+    return I, d #, total_manure
 
 @st.cache_data
 def filter_Plant(original_dict, J):
@@ -223,7 +223,7 @@ def session_load():
     # Plant_all = ['All'] + [str(x) for x in plant]
     M, f = random_M_f(plant) # random M and f generator for the time being
 
-    I, d, total_manure  = load_pickle()
+    I, d  = load_pickle()
 
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
     loi_gdf['color'] = loi_gdf.index.map(color_mapping)
@@ -328,21 +328,21 @@ def main_content_random():
             c = {(i, j): value for (i, j), value in c.items() if j in J}
 
         ### RUN MODEL ##########################################
-            m, total_manure = flp_scip(I, J, d, M, f, c, target)
+            m, processed_manure = flp_scip(I, J, d, M, f, c, target)
             m.optimize()
             total_cost, assignment_decision, percentage_utilization = flp_get_result(m, I, J, M)
             ### OUTCOME INDICATORS ##########################################
             # old
             # total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
             # new
-            total_biogas = (total_manure * target) * 50 # 1Mg cattle or pig manure (20% org. dry matter) 50 m³ biogas
+            total_biogas = processed_manure * 50 # 1Mg cattle or pig manure (20% org. dry matter) 50 m³ biogas
             # Methane savings (m3/yr)=Biogas yield potential (m3/yr)× Methane content of biogas (%)
             methane_saving = total_biogas*0.6 # methane content of biogas is assumed 60%
             
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Processed", value="{:,.2f} Mg/yr".format(total_manure))
+            col1.metric(label="Total Manure Processed", value="{:,.2f} Mg/yr".format(processed_manure))
             col1.metric(label="Total Biogas Yield Potential", value="{:,.2f} m³/yr".format(total_biogas))
             col1.metric(label="Total Methane Saving Potential", value="{:,.2f} m³/yr".format(methane_saving))
             with col3:
