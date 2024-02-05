@@ -208,9 +208,6 @@ def session_load(loi):
     n = load_gdf("./osm_network/G_n.shp") # Road network nodes
     n = n.to_crs(main_crs)
 
-    M, f = random_M_f(plant) # random M and f generator for the time being
-    I, d  = load_pickle() # Load mock data for farm locations and manure production 
-
     ### CALCULATE OD MATRIX ###
     loi_gdf = range(1, len(loi_gdf) + 1) # Reset index to start with 1
     loi_gdf['y'] = loi_gdf['geometry'].y
@@ -223,6 +220,8 @@ def session_load(loi):
     Plant_all = ['All'] + plant # add "ALL" to the list of candidate sites as input labels for customizing which sites to include in analysis
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
     loi_gdf['color'] = loi_gdf.index.map(color_mapping)
+    M, f = random_M_f(plant) # random M and f generator for the time being
+    I, d  = load_pickle() # Load mock data for farm locations and manure production 
 
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")

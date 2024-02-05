@@ -207,10 +207,6 @@ def session_load():
     farm_gdf = load_gdf("./farm/farm_new.shp")
     n = load_gdf("./osm_network/G_n.shp") # Road network nodes
     n = n.to_crs(main_crs)
-
-    M, f = random_M_f(plant) # random M and f generator for the time being
-    I, d  = load_pickle() # Load mock data for farm locations and manure production 
-
     ### CALCULATE OD MATRIX ###
     loi.index = range(1, len(loi) +1) # Reset index to start with 1 (because users don't like 0 as the 1st value...)
     loi_gdf = loi_to_gdf(loi) # Find centroid of hexagons and convert to gdf
@@ -224,6 +220,8 @@ def session_load():
     Plant_all = ['All'] + plant # add "ALL" to the list of candidate sites as input labels for customizing which sites to include in analysis
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
     loi_gdf['color'] = loi_gdf.index.map(color_mapping)
+    M, f = random_M_f(plant) # random M and f generator for the time being
+    I, d  = load_pickle() # Load mock data for farm locations and manure production 
 
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")
