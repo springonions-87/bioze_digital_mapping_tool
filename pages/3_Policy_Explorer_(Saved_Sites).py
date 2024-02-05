@@ -203,7 +203,7 @@ def session_load(loi):
     main_crs ='EPSG:4326'
 
     ### LOAD DATA ###
-    loi_gdf = loi_to_gdf(loi)  # Find centroid of hexagons and convert to gdf
+    loi_gdf = loi_to_gdf(loi.reset_index(drop=True))  # Find centroid of hexagons and convert to gdf
     farm_gdf = load_gdf("./farm/farm_new.shp")
     n = load_gdf("./osm_network/G_n.shp") # Road network nodes
     n = n.to_crs(main_crs)
