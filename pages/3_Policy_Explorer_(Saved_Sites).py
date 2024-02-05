@@ -209,11 +209,11 @@ def session_load(loi):
     n = n.to_crs(main_crs)
 
     ### CALCULATE OD MATRIX ###
-    loi_gdf = range(1, len(loi_gdf) + 1) # Reset index to start with 1
     loi_gdf['y'] = loi_gdf['geometry'].y
     loi_gdf['x'] = loi_gdf['geometry'].x
     find_closest_osmid(farm_gdf, n)
     find_closest_osmid(loi_gdf, n)
+    # loi_gdf = range(1, len(loi_gdf) + 1) # Reset index to start with 1
     c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
 
     ### FORMAT DATA ###
