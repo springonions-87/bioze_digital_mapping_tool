@@ -9,8 +9,6 @@ from datetime import date
 from pydeck.types import String
 
 today = date.today()
-# import os
-# print("Current working directory: ", os.getcwd())
 
 ### PAGE CONFIGURATIONS #######################################
 # st.title('BIOZE Digital Mapping Tool')
@@ -204,27 +202,26 @@ def update_map(farm_df, digester_df, assignment_decision, deck):
 def session_load():
     main_crs ='EPSG:4326'
 
-    # Load data and calculate od matrix
-    loi = load_csv('./hex/loi.csv') #st.session_state.list_of_locations
-    # loi_gdf = loi_to_gdf(loi) # find centroid of hexagons and convert to gdf
-    loi_gdf = loi_to_gdf(loi.reset_index(drop=True))
-    loi_gdf['y'] = loi_gdf['geometry'].y
-    loi_gdf['x'] = loi_gdf['geometry'].x
-
+    ### LOAD DATA ###
+    loi = load_csv('./hex/loi.csv') # Mock candidate sites
     farm_gdf = load_gdf("./farm/farm_new.shp")
-    n = load_gdf("./osm_network/G_n.shp")
+    n = load_gdf("./osm_network/G_n.shp") # Road network nodes
     n = n.to_crs(main_crs)
 
+    M, f = random_M_f(plant) # random M and f generator for the time being
+    I, d  = load_pickle() # Load mock data for farm locations and manure production 
+
+    ### CALCULATE OD MATRIX ###
+    loi.index = range(1, len(loi) +1) # Reset index to start with 1 (because users don't like 0 as the 1st value...)
+    loi_gdf = loi_to_gdf(loi) # Find centroid of hexagons and convert to gdf
+    loi_gdf['y'] = loi_gdf['geometry'].y
+    loi_gdf['x'] = loi_gdf['geometry'].x
     find_closest_osmid(farm_gdf, n)
     find_closest_osmid(loi_gdf, n)
     c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
 
-    Plant_all = ['All'] + plant
-    # Plant_all = ['All'] + [str(x) for x in plant]
-    M, f = random_M_f(plant) # random M and f generator for the time being
-
-    I, d  = load_pickle()
-
+    ### FORMAT DATA ###
+    Plant_all = ['All'] + plant # add "ALL" to the list of candidate sites as input labels for customizing which sites to include in analysis
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
     loi_gdf['color'] = loi_gdf.index.map(color_mapping)
 
@@ -233,9 +230,6 @@ def session_load():
     farm['color'] = '[169, 169, 169]'
     hex_df = load_csv('./hex/df_hex_7.csv')
 
-    # Load location of interest
-    # polygons = load_gdf('./suitable_polygon_plot.shp')
-    # polygons['coordinates'] = polygons['geometry'].apply(lambda geom: mapping(geom)['coordinates'][0])    
     data_dict = {
         'loi_gdf':loi_gdf,
         'c':c,
@@ -246,8 +240,7 @@ def session_load():
         'I':I,
         'd':d,
         'farm':farm,
-        'hex_df':hex_df
-    }
+        'hex_df':hex_df}
     return data_dict
 
 ### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
@@ -386,11 +379,6 @@ def main():
         perform_initial_setup() # Replace with your function to generate trial selection
     
     main_content_random()
-
-    # with tab2:
-    #     with st.spinner("Preparing the data..."):
-    #         perform_initial_setup(loi=st.session_state.loi)
-    #         main_content_saved()
 
     ### DISPLAY MAIN CONTENT OF THE APP ##########################################
     # if st.button('Show Data'):
