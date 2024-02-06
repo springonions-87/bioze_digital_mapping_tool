@@ -281,12 +281,12 @@ def flp_scip(I, J, d, M, f, c, p):
 
 def flp_get_result(m, I, J, M):
     """
-    A function to retrieve model result.
+    Retrieve the results of a SCIP optimization model (PySCIPOpt).
 
     Parameters
     ----------
-    m : 
-
+    m : model
+        SCIP optimization model instance.
     I : list
         set of feedstock locations (customers)
     J : list
@@ -296,13 +296,12 @@ def flp_get_result(m, I, J, M):
 
     Outputs
     ----------
-    total_cost : int 
+    total_cost : float 
         Total cost of the solution.
     result_dict : dict
         Dictionary of the assignment of farms to digesters in the solution.
     used_capacity : list
-        
-
+        List of the percentage utilization of each digester site's capacity.
 
     """
     EPS = 1.e-6
@@ -327,20 +326,20 @@ def flp_get_result(m, I, J, M):
 
     return total_cost, result_dict, used_capacity
 
-def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
+# def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
 
-    # Map digesters to colors
-    digester_df['color'] = digester_df.index.map(color_mapping)
-    digester_df['color'] = digester_df['color'].fillna('[0, 0, 0,0]') # the color doesn't really work here
+#     # Map digesters to colors
+#     digester_df['color'] = digester_df.index.map(color_mapping)
+#     digester_df['color'] = digester_df['color'].fillna('[0, 0, 0,0]') # the color doesn't really work here
 
-    # Map assigned farms to colors
-    assigned_farms_df = farm[farm.index.isin([i for indices in assignment_decision.values() for i in indices])]
-    assigned_farms_df['color'] = assigned_farms_df.index.map({index: color_mapping[digester] for digester, indices in assignment_decision.items() for index in indices})
+#     # Map assigned farms to colors
+#     assigned_farms_df = farm[farm.index.isin([i for indices in assignment_decision.values() for i in indices])]
+#     assigned_farms_df['color'] = assigned_farms_df.index.map({index: color_mapping[digester] for digester, indices in assignment_decision.items() for index in indices})
 
-    # Map unassigned farms to a default color (e.g., grey)
-    unassigned_farms_df = farm[~farm.index.isin([index for indices in assignment_decision.values() for index in indices])]
+#     # Map unassigned farms to a default color (e.g., grey)
+#     unassigned_farms_df = farm[~farm.index.isin([index for indices in assignment_decision.values() for index in indices])]
 
-    return digester_df, assigned_farms_df, unassigned_farms_df
+#     return digester_df, assigned_farms_df, unassigned_farms_df
 
 
 def get_arc(assignment_decision, candidate_sites, farm):
@@ -371,7 +370,6 @@ def get_arc(assignment_decision, candidate_sites, farm):
         for farm_index in farm_indices:
             # Get coordinates for the current digester and farm
             farm_coords = farm[farm.index == farm_index][['x', 'y', 'manure_t']].values[0]
-
             # Append a dictionary with required columns for ArcLayer to the list
             arc_data.append({
                 'start_lon': farm_coords[0],
@@ -384,6 +382,7 @@ def get_arc(assignment_decision, candidate_sites, farm):
             })
     # Create a DataFrame from the list of dictionaries
     arc_layer_df = pd.DataFrame(arc_data)
+
     return arc_layer_df
 
 # def get_fill_color(df, value_column, colormap_name):
