@@ -203,7 +203,10 @@ def session_load(loi):
     main_crs ='EPSG:4326'
 
     ### LOAD DATA ###
+    st.write(loi)
     loi_gdf = loi_to_gdf(loi.reset_index(drop=True))  # Find centroid of hexagons and convert to gdf
+    loi_gdf.index = range(1, len(loi_gdf) + 1) # Reset index to start with 1
+    st.write(loi_gdf)
     farm_gdf = load_gdf("./farm/farm_new.shp")
     n = load_gdf("./osm_network/G_n.shp") # Road network nodes
     n = n.to_crs(main_crs)
@@ -213,7 +216,6 @@ def session_load(loi):
     loi_gdf['x'] = loi_gdf['geometry'].x
     find_closest_osmid(farm_gdf, n)
     find_closest_osmid(loi_gdf, n)
-    # loi_gdf = range(1, len(loi_gdf) + 1) # Reset index to start with 1
     c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
 
     ### FORMAT DATA ###
@@ -347,7 +349,7 @@ def main_content(page_2_space):
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Processed", value="{:,.2f} Mg/yr".format(processed_manure))
+            col1.metric(label="Total Manure Processed", value="{:,.2f} t/yr".format(processed_manure))
             col1.metric(label="Total Biogas Yield Potential", value="{:,.2f} m³/yr".format(total_biogas))
             col1.metric(label="Total Methane Saving Potential", value="{:,.2f} m³/yr".format(methane_saving))
             with col3:

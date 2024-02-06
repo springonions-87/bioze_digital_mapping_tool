@@ -321,7 +321,7 @@ def main_content_random():
         ### RUN MODEL ##########################################
             m, processed_manure = flp_scip(I, J, d, M, f, c, target)
             m.optimize()
-            total_cost, assignment_decision, percentage_utilization = flp_get_result(m, I, J, M)
+            total_cost, assignment_decision, used_capacity = flp_get_result(m, I, J, M)
             ### OUTCOME INDICATORS ##########################################
             # old
             # total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
@@ -333,13 +333,13 @@ def main_content_random():
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Processed", value="{:,.2f} Mg/yr".format(processed_manure))
+            col1.metric(label="Total Manure Processed", value="{:,.2f} t/yr".format(processed_manure))
             col1.metric(label="Total Biogas Yield Potential", value="{:,.2f} m³/yr".format(total_biogas))
             col1.metric(label="Total Methane Saving Potential", value="{:,.2f} m³/yr".format(methane_saving))
             with col3:
             # Plot bar chart
                 st.markdown("Digester Capacity Utilization Rate")
-                st.bar_chart(percentage_utilization)
+                st.bar_chart(used_capacity)
 
             # arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
             deck = update_digester_layer_color(loi_gdf, J, deck)

@@ -280,6 +280,31 @@ def flp_scip(I, J, d, M, f, c, p):
 
 
 def flp_get_result(m, I, J, M):
+    """
+    A function to retrieve model result.
+
+    Parameters
+    ----------
+    m : 
+
+    I : list
+        set of feedstock locations (customers)
+    J : list
+        set of candidate digester sites (facilities)
+    M : list
+        M[j] is capacity of digester site j
+
+    Outputs
+    ----------
+    total_cost : int 
+        Total cost of the solution.
+    result_dict : dict
+        Dictionary of the assignment of farms to digesters in the solution.
+    used_capacity : list
+        
+
+
+    """
     EPS = 1.e-6
     x,y,z = m.data
     assignment = [(i,j) for (i,j) in x if m.getVal(x[i,j]) > EPS]
@@ -298,9 +323,9 @@ def flp_get_result(m, I, J, M):
     x_values = {(i, j): m.getVal(x[i, j]) for (i, j) in x if m.getVal(x[i, j]) > EPS} # get how much is flowing between every assignment
     flow_matrix = np.array([[x_values.get((i, j), 0) for j in J] for i in I]) # create a flow matrix (len(farm)xlen(plant))
     column_sum = np.sum(flow_matrix, axis=0) # sum of total flow going to every plant
-    percentage_utilization = (column_sum/np.array(list(M.values())))*100
+    used_capacity = (column_sum/np.array(list(M.values())))*100
 
-    return total_cost, result_dict, percentage_utilization
+    return total_cost, result_dict, used_capacity
 
 def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
 
@@ -318,14 +343,31 @@ def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
     return digester_df, assigned_farms_df, unassigned_farms_df
 
 
-def get_arc(assignment_decision, potential_digester_location, farm):
+def get_arc(assignment_decision, candidate_sites, farm):
+    """
+    Generate a DataFrame for plotting ArcLayer on Pydeck. 
 
+    Parameters
+    ----------
+    assignment_decision : dict
+        Assignment of farms to digesters in the optimal solution.
+    candidate_sites : DataFrame
+        Dataframe of candidate sites of digesters.
+    farm : DataFrame
+        Dataframe of farm points.
+
+    Outputs
+    ----------
+    arc_layer_df : DataFrame 
+        A DataFrame for plotting an ArcLayer on Pydeck. 
+
+    """
     # Create a list to store dictionaries for the ArcLayer DataFrame
     arc_data = []
 
     # Iterate through the assignments dictionary
     for digester_number, farm_indices in assignment_decision.items():
-        digester_coords = potential_digester_location[potential_digester_location.index == digester_number][['x', 'y']].values[0]
+        digester_coords = candidate_sites[candidate_sites.index == digester_number][['x', 'y']].values[0]
         for farm_index in farm_indices:
             # Get coordinates for the current digester and farm
             farm_coords = farm[farm.index == farm_index][['x', 'y', 'manure_t']].values[0]
@@ -344,42 +386,69 @@ def get_arc(assignment_decision, potential_digester_location, farm):
     arc_layer_df = pd.DataFrame(arc_data)
     return arc_layer_df
 
-def get_fill_color(df, value_column, colormap_name):
-    # Calculate min, max, and diff
-    min_value = df[value_column].min()
-    max_value = df[value_column].max()
-    diff = max_value - min_value
+# def get_fill_color(df, value_column, colormap_name):
+#     # Calculate min, max, and diff
+#     min_value = df[value_column].min()
+#     max_value = df[value_column].max()
+#     diff = max_value - min_value
 
-    # Obtain colormap
-    cmap = plt.get_cmap(colormap_name)
+#     # Obtain colormap
+#     cmap = plt.get_cmap(colormap_name)
 
-    # Define a normalization function for the data range
-    norm = mcolors.Normalize(vmin=min_value, vmax=max_value)
+#     # Define a normalization function for the data range
+#     norm = mcolors.Normalize(vmin=min_value, vmax=max_value)
 
-    # Function to convert data values to RGB using reversed colormap
-    def get_rgb_reversed(value):
-        rgba = cmap(1 - norm(value))
-        return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
+#     # Function to convert data values to RGB using reversed colormap
+#     def get_rgb_reversed(value):
+#         rgba = cmap(1 - norm(value))
+#         return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
 
-    # Apply the function to the DataFrame to get RGB values
-    df['color'] = df[value_column].apply(get_rgb_reversed)
-    return df
+#     # Apply the function to the DataFrame to get RGB values
+#     df['color'] = df[value_column].apply(get_rgb_reversed)
+#     return df
 
 def generate_color_mapping(colormap_name):
-    # Define a colormap (you can change it to any other available colormap)
-    cmap = plt.get_cmap(colormap_name)
+    """
+    Generate a function that maps values to a Matplotlib color map.
 
+    Parameters
+    ----------
+    colormap_name : str
+        Any available colormap, I usually use Matplotlib colormap e.g. 'viridis'
+
+    Outputs
+    ----------
+    get_rgb : function 
+        A function that takes a value between 0 and 1 and returns its corresponding RGB color. 
+
+    """
+    # Define a colormap 
+    cmap = plt.get_cmap(colormap_name)
     # Create a normalization function for the data range (reversed)
     norm = mcolors.Normalize(vmin=0, vmax=1)
-
     # Function to convert data values to RGB using reversed colormap
     def get_rgb(value):
         # rgba = cmap(1 - norm(value))
         rgba = cmap(norm(value))
         return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
+    
     return get_rgb
 
+
 def apply_color_mapping(df, value_column, color_mapping):
+    """
+    Map values of a DataFrame to a Matplotlib color map. 
+
+    Parameters
+    ----------
+    df : DataFrame
+        The input DataFrame
+    value_column : str
+        Column name of the DataFrame to generate the color map from.
+    color_mapping :  
+        A color mapping function that converts values between 0 and 1 to RGB colors.
+
+    """
     # Apply the color mapping to the DataFrame to get RGB values
     df['color'] = df[value_column].apply(color_mapping)
     return df
@@ -387,15 +456,17 @@ def apply_color_mapping(df, value_column, color_mapping):
 
 def store_data_to_pickle(data, folder_path, file_name):
     """
-    Store data (dictionary or list) to a pickle file in a specific folder.
+    Store data to a pickle file in a specific folder.
 
-    Parameters:
-    data (dict or list): The data (dictionary or list) to be stored.
-    folder_path (str): The path of the folder to store the data.
-    file_name (str): The name of the file to store the data.
-
-    Returns:
-    None
+    Parameters
+    ----------
+    data : any
+        Data to be stored as a pickle file
+    folder_path : str
+        Path to the folder for storing the data.
+    file_name : str
+        Name given to the stored file.
+    
     """
     os.makedirs(folder_path, exist_ok=True)  # Create the folder if it doesn't exist
     file_path = os.path.join(folder_path, file_name)
@@ -406,12 +477,17 @@ def load_data_from_pickle(folder_path, file_name):
     """
     Load data from a pickle file in a specific folder.
 
-    Parameters:
-    folder_path (str): The path of the folder to load the data from.
-    file_name (str): The name of the file to load the data from.
+    Parameters
+    ----------
+    folder_path : str
+        Path to the folder that the data is stored in.
+    file_name : str
+        Name of the file to be loaded.
 
-    Returns:
-    The data (dictionary, list, or float) loaded from the pickle file.
+    Outputs
+    ----------
+    data : any 
+
     """
     file_path = os.path.join(folder_path, file_name)
     with open(file_path, 'rb') as f:
