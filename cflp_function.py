@@ -385,26 +385,26 @@ def get_arc(assignment_decision, candidate_sites, farm):
 
     return arc_layer_df
 
-# def get_fill_color(df, value_column, colormap_name):
-#     # Calculate min, max, and diff
-#     min_value = df[value_column].min()
-#     max_value = df[value_column].max()
-#     diff = max_value - min_value
+def get_fill_color(df, value_column, colormap_name):
+    # Calculate min, max, and diff
+    min_value = df[value_column].min()
+    max_value = df[value_column].max()
+    diff = max_value - min_value
 
-#     # Obtain colormap
-#     cmap = plt.get_cmap(colormap_name)
+    # Obtain colormap
+    cmap = plt.get_cmap(colormap_name)
 
-#     # Define a normalization function for the data range
-#     norm = mcolors.Normalize(vmin=min_value, vmax=max_value)
+    # Define a normalization function for the data range
+    norm = mcolors.Normalize(vmin=min_value, vmax=max_value)
 
-#     # Function to convert data values to RGB using reversed colormap
-#     def get_rgb_reversed(value):
-#         rgba = cmap(1 - norm(value))
-#         return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
+    # Function to convert data values to RGB using reversed colormap
+    def get_rgb_reversed(value):
+        rgba = cmap(1 - norm(value))
+        return [int(rgba[0] * 255), int(rgba[1] * 255), int(rgba[2] * 255)]
 
-#     # Apply the function to the DataFrame to get RGB values
-#     df['color'] = df[value_column].apply(get_rgb_reversed)
-#     return df
+    # Apply the function to the DataFrame to get RGB values
+    df['color'] = df[value_column].apply(get_rgb_reversed)
+    return df
 
 def generate_color_mapping(colormap_name):
     """

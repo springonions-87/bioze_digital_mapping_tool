@@ -14,16 +14,16 @@ The functions are called by the Policy Explorer notebooks (i.e. 'Policy_Explorer
 """
 
 
-# def cell_to_shapely_polygon(h3_index):
-#     """
-#     A function to convert H3 index to Shapely polygons
+def cell_to_shapely_polygon(h3_index):
+    """
+    A function to convert H3 index to Shapely polygons
 
-#     """
-#     # hex_center_coords = h3.h3_to_geo(h3_index)
-#     coords = h3.h3_to_geo_boundary(h3_index)
-#     flipped = tuple(coord[::-1] for coord in coords)
-#     # center_point = Point(hex_center_coords)
-#     return Polygon(flipped) #, center_point
+    """
+    # hex_center_coords = h3.h3_to_geo(h3_index)
+    coords = h3.h3_to_geo_boundary(h3_index)
+    flipped = tuple(coord[::-1] for coord in coords)
+    # center_point = Point(hex_center_coords)
+    return Polygon(flipped) #, center_point
 
 def cell_to_shaply_point(h3_index):
     """
