@@ -8,7 +8,7 @@ from io import BytesIO
 import base64
 
 padding=0
-st.set_page_config(page_title="Bioze Mapping Tool - Suitability Analysis", layout="wide")
+st.set_page_config(page_title="Suitability Analysis", layout="wide")
 
 # st.markdown(
 #     """
@@ -208,7 +208,7 @@ def initialize_session_state():
 ### CREATE STREAMLIT ##################################
 def main():
     initialize_session_state()
-    st.markdown("### BIOZE Digital Tool")
+    st.markdown("### Suitability Analysis: Identify Candidate Sites for Large-scale Digester")
     st.markdown("")
     # st.markdown(
     #     "The suitability analysis identifies potential sites for biogas digesters based on five key criteria:"
