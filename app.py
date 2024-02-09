@@ -48,7 +48,7 @@ def main():
         st.image("./two_phase.png")
 
     
-
+    st.markdown("")
     st.divider()
     st.markdown("This tool is developed for the EU Interreg Project: BIOmass skills for Net Zero (BIOZE), by University of Twente’s Faculty of Geo-Information Science and Earth Observation (ITC).")
 
