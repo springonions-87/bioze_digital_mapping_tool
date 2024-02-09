@@ -208,16 +208,24 @@ def initialize_session_state():
 ### CREATE STREAMLIT ##################################
 def main():
     initialize_session_state()
-    st.markdown("### Suitability Analysis: Identify Candidate Sites for Large-scale Digester")
+    st.markdown("### Phase 1: Suitability Analysis: Identify Candidate Sites for Large-scale Digester")
     st.markdown("")
-    # st.markdown(
-    #     "The suitability analysis identifies potential sites for biogas digesters based on five key criteria:"
-    #     "distance to major roads, farms, industrial areas, and nature and water bodies."
-    # )
     st.markdown(
-        "Select criteria for the suitability analysis. The resulting suitability map will be displayed below for your exploration."
+        "Examine the maps below, each represents a pre-selected criterion deemed crucial for determining suitable locations for large digesters."
+        " Each area in the region is given a suitability score between 0 and 1, representing least and most suitable respectively."
+        " Click the question mark icon :grey_question: on top of each map for more information."
     )
-    st.markdown("The maps below each represents a pre-selected criterion deemed crucial for identifying suitable locations for building large-scale digesters (capacity 120,000 ton/yr).")
+    st.markdown("**Step**:one:")
+    st.markdown(
+        "Select criteria of your interest and click **'Build Suitability Map'**. The selected criteria will be aggregated and the resulting suitability map will be displayed below."
+    )
+    st.markdown("**Step**:two:")
+    st.markdown(
+        "Next, given the your suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
+    )
+    st.markdown("**Step**:three:")
+    st.markdown("Once you are satisfied with the selected candidate sites, you are ready to move on to Phase:two: of the tool. Click **'Save Result'** to save your sites. :red[Please ensure that the number of candidate sites does not exceed **15**].")
+
     st.markdown("")
     st.markdown("")
     st.markdown("")
@@ -246,13 +254,12 @@ def main():
     with col3:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
    
-    st.markdown("")
     "---"
     st.markdown("")
 
     # Suitability analysis section 
     with st.sidebar.form("suitability_analysis_form"):
-        selected_variables = st.multiselect("Select criteria", list(all_arrays.keys()))
+        selected_variables = st.multiselect(":one: Select Criteria", list(all_arrays.keys()))
         submit_button = st.form_submit_button("Build Suitability Map")
 
     if submit_button and not selected_variables:
@@ -264,10 +271,8 @@ def main():
     with col1:
         st.markdown(f"**Number of Candidate Sites: {len(st.session_state['loi'])}**")
     with col3:
-        if st.button('Save Result', help="Click to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**."):
+        if st.button(':three: Save Result', help="Click to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**."):
             st.write("Saved successfully!")
-    st.markdown("Click **Save Result** to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**.")
-
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
@@ -275,7 +280,7 @@ def main():
     # Filtering 
     # Filtering location of interest (loi) section
     with st.sidebar.form("select_loi"):
-        st.slider('Filter potential digester sites with suitability score', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
+        st.slider(':two: Select Candidate Sites', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
         # st.form_submit_button("Filter", on_click=filter_loi, args=(st.session_state.myslider, hex_df))
         on_click_filter_loi = lambda: filter_loi(st.session_state.myslider, hex_df)
         st.form_submit_button("Filter", on_click=on_click_filter_loi)
