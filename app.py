@@ -30,10 +30,11 @@ def main():
     st.markdown("")
     st.markdown("")
 
-    st.subheader(":compass: How to use the tool...")    
+    st.subheader(":compass: How to use the tool...")
     st.markdown(":one: Suitability Analysis")
     st.markdown("")
     st.markdown(":two: Policy Explorer")
+    st.markdown("")
 
 
     st.divider()
