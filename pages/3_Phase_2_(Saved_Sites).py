@@ -290,7 +290,7 @@ def main_content(page_2_space):
 
     ### SIDEBAR ##################################
     with st.sidebar:
-        target = (st.slider('**Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
+        target = (st.slider(':two: **Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 
         with st.container():
             st.write("**Map Layers**")
@@ -317,7 +317,7 @@ def main_content(page_2_space):
     # deck.layers[-1].visible = show_polygon
 
     ### SELECT PLANT FORM ##########################################
-    with st.expander('Customize Site Selection'):
+    with st.expander(':one: Customize Site Selection'):
         with st.form('select_plant'):
             J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
             if "All" in J or not J:
@@ -370,10 +370,26 @@ def main_content(page_2_space):
         
 ### CREATE STREAMLIT ##################################
 def main():
-    st.markdown("### Welcome to Policy Explorer!")
+    st.markdown("### Phase 2: Policy Explorer (Saved Sites)")
     st.markdown("Dive into your saved digester sites from the suitability analysis. Explore the optimal combinations of locations for digesters to process manure in the region.")
     st.markdown("")
     st.markdown("")
+    st.markdown("**Step**:one:")
+    st.markdown(
+        "Select candidate sites to include/exclude in the analysis. By default all sites are included in the analysis."
+    )
+    st.markdown("**Step**:two:")
+    st.markdown(
+        "Select the proportion of manure produced in the region which you want to use for biogas production. The tool will find the most strategic scenario that achieves your target. "
+    )
+    st.markdown("")
+    with st.expander("**How to read the map :mag_right:**"):
+        st.markdown("Farms - :black_circle:")
+        st.markdown("Candidate digester sites - :rainbow[Colored] and numbered markers")
+        st.markdown("Assignment of farms to digester sites - **:green[green]** and **:red[red]** arcs")
+        st.markdown("Note: Color of farms will change to the color of the digester sites they are assigned to in the solution. If the farms are excluded in the solution, they will remain black.")
+    st.markdown("")
+    st.divider()
 
     ### INITIALIZE SESSION STATE ##########################################
     if 'page_2' not in st.session_state:
@@ -382,8 +398,8 @@ def main():
     page_2_space = st.session_state.page_2
 
     if "loi" not in st.session_state or len(st.session_state.loi) == 0:
-        st.warning("Oops! It looks like you haven't saved any results yet. Visit suitability analysis page with the button below to select your own suitable digester locations.", icon="⚠️")
-        if st.button("Visit suitability analysis"):
+        st.warning("Oops! It looks like you haven't saved any results yet. Go to **Phase 1** first.", icon="⚠️")
+        if st.button("Visit **Phase 1**"):
             st.switch_page("app.py")
     else:
         with st.spinner("Preparing the data..."):

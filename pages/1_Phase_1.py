@@ -208,12 +208,12 @@ def initialize_session_state():
 ### CREATE STREAMLIT ##################################
 def main():
     initialize_session_state()
-    st.markdown("### Phase 1: Suitability Analysis: Identify Candidate Sites for Large-scale Digester")
+    st.markdown("### Phase 1: Suitability Analysis - Identify Candidate Sites for Large-scale Digester")
     st.markdown("")
     st.markdown(
         "Examine the maps below, each represents a pre-selected criterion deemed crucial for determining suitable locations for large digesters."
         " Each area in the region is given a suitability score between 0 and 1, representing least and most suitable respectively."
-        " Click the question mark icon :grey_question: on top of each map for more information."
+        " Tip: Click the question mark icon :grey_question: on top of each map for more information."
     )
     st.markdown("**Step**:one:")
     st.markdown(
@@ -224,7 +224,7 @@ def main():
         "Next, given the your suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
     )
     st.markdown("**Step**:three:")
-    st.markdown("Once you are satisfied with the selected candidate sites, you are ready to move on to Phase:two: of the tool. Click **'Save Result'** to save your sites. :red[Please ensure that the number of candidate sites does not exceed **15**].")
+    st.markdown("Once you are satisfied with the selected candidate sites, you are ready to move on to **Phase 2** of the tool. Click **'Save Result'** to save your sites. :red[Please ensure that the number of candidate sites does not exceed **15**].")
 
     st.markdown("")
     st.markdown("")
