@@ -368,7 +368,7 @@ def main_content(page_2_space):
         
 ### CREATE STREAMLIT ##################################
 def main():
-    st.markdown("### Phase 2: Policy Explorer (Saved Sites)")
+    st.markdown("### Phase 2: Policy Explorer")
     st.markdown("Dive into your saved digester sites from the suitability analysis. Explore the optimal combinations of locations for digesters to process manure in the region.")
     st.markdown("")
     st.markdown("")
