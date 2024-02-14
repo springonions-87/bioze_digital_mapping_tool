@@ -271,7 +271,7 @@ def main():
     with col1:
         st.markdown(f"**Number of Candidate Sites: {len(st.session_state['loi'])}**")
     with col3:
-        if st.button(':three: Save Result', help="Click to save the current filtered locations for further exploration in the ***Policy Explorer (Saved Sites)*** page. Please ensure that the number of saved locations does not exceed **15**."):
+        if st.button(':three: Save Result', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer*** page. Please ensure that the number of saved locations does not exceed **15**."):
             st.write("Saved successfully!")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)

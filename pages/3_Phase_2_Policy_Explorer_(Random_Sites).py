@@ -8,12 +8,16 @@ from shapely.geometry import mapping
 from datetime import date
 from pydeck.types import String
 
+import os
+os.environ['USE_PYGEOS'] = '0'
+import geopandas
+
 today = date.today()
 
 ### PAGE CONFIGURATIONS #######################################
 # st.title('BIOZE Digital Mapping Tool')
 # st.text('This is an interactive mapping tool on biogas.')
-st.set_page_config(page_title="Bioze Mapping Tool - Policy Exploration (Random Sites)", layout="wide")
+st.set_page_config(page_title="BIOZE Tool - Policy Exploration (Random Sites)", layout="wide")
 # st.markdown(
 #     """
 #     <style>
@@ -173,11 +177,16 @@ def update_digester_layer_color(digester_df, J, deck):
 def update_farm_layer_color(farm_df, digester_df, assignment_decision, deck): 
     # Update the color of farms to match the color of digester assigned to
     farm_df_copy = farm_df.copy()
-    farm_df_copy['color'] = farm_df_copy.index.map({index: digester_df['color'].iloc[farm_index] for farm_index, indices in assignment_decision.items() for index in indices})
+    # farm_df_copy['color'] = farm_df_copy.index.map({index: digester_df['color'].iloc[farm_index] for farm_index, indices in assignment_decision.items() for index in indices})
+    for digester_index, farm_indices in assignment_decision.items():
+        digester_color = digester_df.loc[digester_index, 'color']
+        for farm_index in farm_indices:
+            farm_df_copy.at[farm_index, 'color'] = digester_color
     deck.layers[1].data = farm_df_copy
     return deck
 
 def update_map(farm_df, digester_df, assignment_decision, deck):
+    # st.write(digester_df)
     arc_layer_df = get_arc(assignment_decision, digester_df, farm_df)
     # st.write(arc_layer_df)
     arc_layer = pdk.Layer(
@@ -220,7 +229,7 @@ def session_load():
     Plant_all = ['All'] + plant # add "ALL" to the list of candidate sites as input labels for customizing which sites to include in analysis
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
     loi_gdf['color'] = loi_gdf.index.map(color_mapping)
-    M, f = random_M_f(plant) # random M and f generator for the time being
+    M, f = assign_capacity_capex(plant) # random M and f generator for the time being
     I, d  = load_pickle() # Load mock data for farm locations and manure production 
 
     # Load suitability map
@@ -321,31 +330,46 @@ def main_content_random():
         ### RUN MODEL ##########################################
             m, processed_manure = flp_scip(I, J, d, M, f, c, target)
             m.optimize()
-            total_cost, assignment_decision, used_capacity = flp_get_result(m, I, J, M)
+            total_cost, assignment_decision, used_capacity_df = flp_get_result(m, I, J, M, plant)
             ### OUTCOME INDICATORS ##########################################
-            # old
-            # total_biogas = (total_manure * target) * 1000 * 0.39 # ton of manure to biogas potential m3
-            # new
-            total_biogas = processed_manure * 50 # 1Mg cattle or pig manure (20% org. dry matter) 50 m³ biogas
+            total_biogas = processed_manure * 20 # 1 tonne manure yields around 20m³ biogas
             # Methane savings (m3/yr)=Biogas yield potential (m3/yr)× Methane content of biogas (%)
             methane_saving = total_biogas*0.6 # methane content of biogas is assumed 60%
             
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
-            col1.metric(label="Total Cost", value= "€{:,.2f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Processed", value="{:,.2f} t/yr".format(processed_manure))
-            col1.metric(label="Total Biogas Yield Potential", value="{:,.2f} m³/yr".format(total_biogas))
-            col1.metric(label="Total Methane Saving Potential", value="{:,.2f} m³/yr".format(methane_saving))
+            col1.metric(label="Total Cost", value= "€{:,.0f}".format(total_cost)) #, delta="1.2 °F")
+            col1.metric(label="Total Manure Processed", value="{:,.0f} t/yr".format(processed_manure))
+            col1.metric(label="Total Biogas Yield Potential", value="{:,.0f} m³/yr".format(total_biogas))
+            # col1.metric(label="Total Methane Saving Potential", value="{:,.0f} m³/yr".format(methane_saving))
             with col3:
             # Plot bar chart
                 st.markdown("Digester Capacity Utilization Rate")
-                st.bar_chart(used_capacity)
+                st.bar_chart(used_capacity_df)
 
-            # arc_layer_df = get_arc(assignment_decision, loi_gdf, farm)
+            # Find and list duplicates within lists in the assignment_decision dict aka when farm is assigned to more than one digester
+            # def find_duplicates_in_lists(d):
+            #     seen_values = set()
+            #     duplicates = set()
+
+            #     for values_list in d.values():
+            #         for value in values_list:
+            #             if value in seen_values:
+            #                 duplicates.add(value)
+            #             seen_values.add(value)
+
+            #     return list(duplicates)
+
+            # duplicates_list = find_duplicates_in_lists(assignment_decision)
+
+            # if duplicates_list:
+            #     st.write("Duplicates found within the lists in the dictionary:", duplicates_list)
+            # else:
+            #     st.write("There are no duplicates within the lists in the dictionary.")
+
             deck = update_digester_layer_color(loi_gdf, J, deck)
             deck = update_farm_layer_color(farm, loi_gdf, assignment_decision, deck)
             deck = update_map(farm, loi_gdf, assignment_decision, deck)
-        # st.success('Optimal solution found!')
 
     # Rendering the map 
     # deck.layers[-1].visible = show_arcs
@@ -373,7 +397,7 @@ def main():
         st.markdown("Note: Color of farms will change to the color of the digester sites they are assigned to in the solution. If the farms are excluded in the solution, they will remain black.")
     st.markdown("")
     st.divider()
-
+    st.markdown("")
     ### INITIALIZE SESSION STATE ##########################################
 
     # # Buttons for choosing between "Use Saved Results" and "Use Trial Selection"

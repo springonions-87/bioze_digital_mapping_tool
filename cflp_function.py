@@ -27,19 +27,12 @@ The functions are called by both Phase 1 and 2 of the app.
 #     f = {index: medium[1] if size == "medium" else large[1] for index, size in zip(J, digester_sizes)}
 #     return M, f
 
-def random_M_f(J):
-    small = [7848, 209249]  # [capacity, cost]
-    medium = [150560, 252616]
-    large = [1200000, 12000000]
+def assign_capacity_capex(J):
+    large = [119547, 6089160] # [capacity, CAPEX]
 
-    # Ensure the first and last indices in J are set to 'large'
-    M = {J[0]: large[0], J[-1]: large[0]}
-    f = {J[0]: large[1], J[-1]: large[1]}
+    M = {j: large[0] for j in J}
+    f = {j: large[1] for j in J}
 
-    # For the indices in between (excluding the first and last), assign 'medium'
-    for index in J[1:-1]:
-        M[index] = medium[0]
-        f[index] = medium[1]
     return M, f
 
 # # def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
@@ -279,7 +272,7 @@ def flp_scip(I, J, d, M, f, c, p):
     plt.show()
 
 
-def flp_get_result(m, I, J, M):
+def flp_get_result(m, I, J, M, plant):
     """
     Retrieve the results of a SCIP optimization model (PySCIPOpt).
 
@@ -323,8 +316,9 @@ def flp_get_result(m, I, J, M):
     flow_matrix = np.array([[x_values.get((i, j), 0) for j in J] for i in I]) # create a flow matrix (len(farm)xlen(plant))
     column_sum = np.sum(flow_matrix, axis=0) # sum of total flow going to every plant
     used_capacity = (column_sum/np.array(list(M.values())))*100
+    used_capacity_df = pd.DataFrame(used_capacity, index=plant)
 
-    return total_cost, result_dict, used_capacity
+    return total_cost, result_dict, used_capacity_df
 
 # def get_plot_variables(assignment_decision, digester_df, farm, color_mapping):
 
@@ -382,7 +376,6 @@ def get_arc(assignment_decision, candidate_sites, farm):
             })
     # Create a DataFrame from the list of dictionaries
     arc_layer_df = pd.DataFrame(arc_data)
-
     return arc_layer_df
 
 def get_fill_color(df, value_column, colormap_name):
