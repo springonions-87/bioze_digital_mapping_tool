@@ -103,7 +103,7 @@ def filter_Plant(original_dict, J):
 #         )
 #     return deck
 
-def initialize_map(digester_df, farm_df, suitability_df):
+def initialize_map(digester_df, farm_df, boundary):
     digester_layer = pdk.Layer(type='ScatterplotLayer',
                                 data=digester_df,
                                 get_position=['x', 'y'],
@@ -121,16 +121,15 @@ def initialize_map(digester_df, farm_df, suitability_df):
                                        get_line_color=[0, 0, 0],
                                        pickable=False,
                                        auto_highlight=True)
-    hex_layer = pdk.Layer(type="H3HexagonLayer",
-        data=suitability_df,
-        pickable=True,
-        filled=True,
-        extruded=False,
-        opacity=0.5,
-        get_hexagon="he7",
-        # get_fill_color ='[255 * Value, 255 * (100 - Value), 0, 255]',
-        get_fill_color ='[0, 0, 255*Value, 255]',
-        auto_highlight=True)
+
+    boundary_layer = pdk.Layer(
+        "GeoJsonLayer",
+        data=boundary,
+        stroked=True, 
+        filled=False,  
+        getLineColor = [128,128,128],
+        getLineWidth= 80
+    )
     
     digester_df['name'] = digester_df.index.astype(str)
     # Define a layer to display on a map
@@ -156,7 +155,7 @@ def initialize_map(digester_df, farm_df, suitability_df):
         "html": "Manure: {material_quantity} ton/yr <br /> From: farm #<span style='color:white; font-weight:bold;'>{farm_number}</span> <br /> To: digester site #<span style='color:white; font-weight:bold;'>{digester_number}</span>"
     }
     deck = pdk.Deck(
-        layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
+        layers=[boundary_layer, farm_layer, digester_layer, digester_label_layer],
         initial_view_state=view_state, 
         map_style= 
         #'mapbox://styles/mapbox/satellite-v9',
@@ -212,6 +211,7 @@ def session_load():
     main_crs ='EPSG:4326'
 
     ### LOAD DATA ###
+    boundary = load_gdf('./data/twente_4326.geojson')
     loi = load_csv('./hex/loi.csv') # Mock candidate sites
     farm_gdf = load_gdf("./farm/farm_new.shp")
     n = load_gdf("./osm_network/G_n.shp") # Road network nodes
@@ -235,9 +235,9 @@ def session_load():
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")
     farm['color'] = '[169, 169, 169]'
-    hex_df = load_csv('./hex/df_hex_7.csv')
 
     data_dict = {
+        'boundary':boundary,
         'loi_gdf':loi_gdf,
         'c':c,
         'plant':plant,
@@ -246,13 +246,12 @@ def session_load():
         'f':f,
         'I':I,
         'd':d,
-        'farm':farm,
-        'hex_df':hex_df}
+        'farm':farm}
     return data_dict
 
 ### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
 def perform_initial_setup():
-    data_name = ['loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
+    data_name = ['boundary', 'loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm']
     # Check if any key in data_names is missing in st.session_state.keys()
     missing_keys = [key for key in data_name if key not in st.session_state.keys()]
     # st.write(missing_keys)
@@ -267,11 +266,11 @@ def perform_initial_setup():
 ### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
 def main_content_random():
     ### ACCESS INITIAL SESSION VARIABLES ##################################
+    boundary = st.session_state['boundary']
     I = st.session_state['I']
     d = st.session_state['d']
     # total_manure = st.session_state.total_manure
     farm = st.session_state['farm']
-    hex_df = st.session_state['hex_df']
     c = st.session_state['c']
     plant = st.session_state['plant']
     M = st.session_state['M']
@@ -279,7 +278,7 @@ def main_content_random():
     Plant_all = st.session_state['Plant_all']
     loi_gdf = st.session_state['loi_gdf']
     target = st.session_state['target']
-    deck = initialize_map(loi_gdf, farm, hex_df)
+    deck = initialize_map(loi_gdf, farm, boundary)
 
     ### SIDEBAR ##################################
     with st.sidebar:

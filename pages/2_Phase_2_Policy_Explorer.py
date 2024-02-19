@@ -101,7 +101,7 @@ def filter_Plant(original_dict, J):
 #         )
 #     return deck
 
-def initialize_map(digester_df, farm_df, suitability_df):
+def initialize_map(digester_df, farm_df, suitability_df, boundary):
     digester_layer = pdk.Layer(type='ScatterplotLayer',
                                 data=digester_df,
                                 get_position=['x', 'y'],
@@ -130,8 +130,15 @@ def initialize_map(digester_df, farm_df, suitability_df):
         get_fill_color ='[0, 0, 255*Value, 255]',
         auto_highlight=True)
     
+    boundary_layer = pdk.Layer(
+        "GeoJsonLayer",
+        data=boundary,
+        stroked=True, 
+        filled=False,  
+        getLineColor = [128,128,128],
+        getLineWidth= 80)
+
     digester_df['name'] = digester_df.index.astype(str)
-    # Define a layer to display on a map
     digester_label_layer = pdk.Layer(
         "TextLayer",
         digester_df,
@@ -155,7 +162,7 @@ def initialize_map(digester_df, farm_df, suitability_df):
         "html": "Manure: {material_quantity} ton/yr <br /> From: farm #<span style='color:white; font-weight:bold;'>{farm_number}</span> <br /> To: digester site #<span style='color:white; font-weight:bold;'>{digester_number}</span>"
     }
     deck = pdk.Deck(
-        layers=[hex_layer, farm_layer, digester_layer, digester_label_layer],
+        layers=[hex_layer, farm_layer, digester_layer, digester_label_layer, boundary_layer],
         initial_view_state=view_state, 
         map_style= 
         #'mapbox://styles/mapbox/satellite-v9',
@@ -207,6 +214,7 @@ def session_load(loi):
     main_crs ='EPSG:4326'
 
     ### LOAD DATA ###
+    boundary = load_gdf('./data/twente_4326.geojson')
     loi_gdf = loi_to_gdf(loi.reset_index(drop=True))  # Find centroid of hexagons and convert to gdf
     loi_gdf.index = range(1, len(loi_gdf) + 1) # Reset index to start with 1
     # st.write(loi_gdf)
@@ -234,6 +242,7 @@ def session_load(loi):
     hex_df = load_csv('./hex/df_hex_7.csv')
 
     data_dict = {
+        'boundary':boundary,
         'loi_gdf':loi_gdf,
         'c':c,
         'plant':plant,
@@ -249,7 +258,7 @@ def session_load(loi):
 
 ### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
 def perform_initial_setup(loi, page_2_space):
-    data_name = ['loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
+    data_name = ['boundary', 'loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
     # Check if any key in data_names is missing in st.session_state.keys()
     missing_keys = [key for key in data_name if key not in page_2_space.keys()]
     # st.write(missing_keys)
@@ -276,7 +285,7 @@ def main_content(page_2_space):
     # Plant_all = st.session_state['Plant_all']
     # loi_gdf = st.session_state['loi_gdf']
     # target = st.session_state['target']
-
+    boundary = page_2_space.get('boundary', None)
     I = page_2_space.get('I', None)  # Replace None with an appropriate default
     d = page_2_space.get('d', None)
     # total_manure = page_namespace.get('total_manure', None)
@@ -289,7 +298,7 @@ def main_content(page_2_space):
     Plant_all = page_2_space.get('Plant_all', None)
     loi_gdf = page_2_space.get('loi_gdf', None)
     target = page_2_space.get('target', None)
-    deck = initialize_map(loi_gdf, farm, hex_df)
+    deck = initialize_map(loi_gdf, farm, hex_df, boundary)
 
     ### SIDEBAR ##################################
     with st.sidebar:
