@@ -239,7 +239,7 @@ def session_load(loi):
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")
     farm['color'] = '[169, 169, 169]'
-    hex_df = load_csv('./hex/df_hex_7.csv')
+    hex_df = load_csv('./hex/hex_df2.csv') # need to be changed later
 
     data_dict = {
         'boundary':boundary,
