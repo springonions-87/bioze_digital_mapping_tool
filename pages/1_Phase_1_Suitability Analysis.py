@@ -220,17 +220,17 @@ def main():
     st.markdown("### Phase 1: Suitability Analysis - Identify Candidate Sites for Large-scale Digester")
     st.markdown("")
     st.markdown(
-        "Examine the maps below, each represents a pre-selected criterion deemed crucial for determining suitable locations for large digesters."
+        "Examine the maps below, each represents a pre-selected criterion deemed crucial for determining how suitable an area is for large digesters."
         " Each area in the region is given a suitability score between 0 and 1, representing least and most suitable respectively."
         " Tip: Click the question mark icon :grey_question: on top of each map for more information."
     )
     st.markdown("**Step**:one:")
     st.markdown(
-        "Select criteria of your interest and click **'Build Suitability Map'**. The selected criteria will be aggregated and the resulting suitability map will be displayed below."
+        "Find areas that satisfy your needs by selecting the criteria of your interest and click **'Build Suitability Map'**. The tool outputs a new suitability map below by combining all your selected criteria. "
     )
     st.markdown("**Step**:two:")
     st.markdown(
-        "Next, given the your suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
+        "Next, given the your new suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
     )
     st.markdown("**Step**:three:")
     st.markdown("Once you are satisfied with the selected candidate sites, you are ready to move on to **Phase 2** of the tool. Click **'Save Result'** to save your sites. :red[Please ensure that the number of candidate sites does not exceed **15**].")
@@ -241,27 +241,29 @@ def main():
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**Farms/Feedstock Locations**", 
-                    help="Suitability for locating digesters determined by distance to the locations of available feedstocks. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to feedstocks the ***higher*** the suitability.")
+        st.markdown("**Farm Locations**", 
+                    help="Suitability for building large digesters determined by distance to locations of feedstocks. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to feedstocks the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_farm), use_container_width=True)
     with col1:
-        st.markdown("**Road Infrastructure**", help="Suitability for locating digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes major roads only.")
+        st.markdown("**Road Infrastructure**", 
+                    help="Suitability for building large digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes only major roads.")
         st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
     with col1:
-        st.markdown("**Water Bodies**", help="Suitability for locating digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes major roads only.")
+        st.markdown("**Water Bodies**", 
+                    help="Suitability for building large digesters determined by distance to inland and marine waters. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from water bodies the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_water), use_container_width=True)
     with col2:
-        st.markdown("**Industrial Areas**", help="Suitability for locating digesters determined by distance to industrial areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to industrial areas the ***higher*** the suitability.")
+        st.markdown("**Industrial Areas**", help="Suitability for building large digesters determined by distance to industrial areas, including industrial and commercial units, port areas, mines, dump sites, and construction sites. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to industrial areas the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
     with col2:
-        st.markdown("**Urban and Residential Areas**", help="Suitability for locating digesters determined by distance to urban and residential areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from urban and residential areas the ***higher*** the suitability.")
+        st.markdown("**Urban and Residential Areas**", help="Suitability for building large digesters determined by distance to urban and residential areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from urban and residential areas the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_urban), use_container_width=True)
     with col3:
-        st.markdown("**Nature and Forest**", help="Suitability for locating digesters determined by distance to natural areas and water bodies. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from natural areas and water bodies the ***higher*** the suitability.")
+        st.markdown("**Nature and Forest**", help="Suitability for locating digestersbuilding large digesters determined by distance to nature and forest areas, including also grasslands, wetlands, beaches, dunes, sands, and woodlands. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from natural areas and water bodies the ***higher*** the suitability.")
         st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
     with col3:
         st.markdown("**Gas Inlets**", 
-                    help="Suitability for locating digesters determined by distance to randomly generated gas inlet points. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to inlets the ***higher*** the suitability. Currently, randomly generated data points are employed due to lack of data, and ideally should be replaced by real data of gas injection stations or other representations of inlets to gas grids.")
+                    help="Suitability for building large digesters determined by distance to randomly generated gas inlet points. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to inlets the ***higher*** the suitability. Currently, randomly generated data points are employed due to lack of data, and ideally should be replaced by real data of gas injection stations or other representations of inlets to gas grids.")
         st.pydeck_chart(generate_pydeck(fuzzy_inlet), use_container_width=True)
     with col3:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
