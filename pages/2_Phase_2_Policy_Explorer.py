@@ -302,7 +302,7 @@ def main_content(page_2_space):
 
     ### SIDEBAR ##################################
     with st.sidebar:
-        target = (st.slider(':one: **Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
+        target = (st.slider(':dart: **Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 
         with st.container():
             st.write("**Map Layers**")
@@ -329,7 +329,7 @@ def main_content(page_2_space):
     # deck.layers[-1].visible = show_polygon
 
     ### SELECT PLANT FORM ##########################################
-    with st.expander(':two: Customize Site Selection'):
+    with st.expander(':white_check_mark: Customize Site Selection'):
         with st.form('select_plant'):
             J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
             if "All" in J or not J:
@@ -383,14 +383,13 @@ def main():
         " By utilizing manure from local farms, we can produce biogas as a substitute for natural gas, promoting renewable energy and preventing greenhouse gas emissions from manure. "
         " Investigate the best locations to build large digesters based on various policy goals concerning the amount of manure designated for biogas production.")
     st.markdown("")
-    st.markdown("**Step**:one:")
-    st.markdown(
-        "Determine how much of the manure in the region you would like to use for biogas production and indicate that amount with the **'Manure Utilization Target (%)'** slider. "
-        " The tool will find the most strategic locations to build large digesters to achieve your target."
+    st.markdown(":dart:"
+        " Determine how much of the manure in the region you would like to use for biogas production and indicate that amount with the **'Manure Utilization Target (%)'** slider. "
+        " The tool will find the most strategic locations to build large digesters to meet your target."
     )
-    st.markdown("**Step**:two:")
-    st.markdown(
-        "You can determine which candidate sites are included in the analysis by selecting them in **'Customize Site Selection'**. By default all sites are included in the analysis."
+    st.markdown("")
+    st.markdown(":white_check_mark:"
+        " You can determine which candidate sites are included in the analysis by selecting them in **'Customize Site Selection'**. By default all sites are included in the analysis."
     )
     st.markdown("")
     with st.expander("**How to read the map :mag_right:**"):
