@@ -28,7 +28,9 @@ The functions are called by both Phase 1 and 2 of the app.
 #     return M, f
 
 def assign_capacity_capex(J):
-    large = [119547, 6089160] # [capacity, CAPEX]
+    opex_12_yr = 1047200*12
+    capex = 6089160
+    large = [119547, capex + opex_12_yr] # [capacity, CAPEX]
 
     M = {j: large[0] for j in J}
     f = {j: large[1] for j in J}
@@ -272,7 +274,7 @@ def flp_scip(I, J, d, M, f, c, p):
     plt.show()
 
 
-def flp_get_result(m, I, J, M, plant):
+def flp_get_result(m, I, J, M, c, plant):
     """
     Retrieve the results of a SCIP optimization model (PySCIPOpt).
 
@@ -286,6 +288,8 @@ def flp_get_result(m, I, J, M, plant):
         set of candidate digester sites (facilities)
     M : list
         M[j] is capacity of digester site j
+    c : dict
+        c[i, j] is the transport cost from farm i to digester j
 
     Outputs
     ----------
@@ -317,6 +321,13 @@ def flp_get_result(m, I, J, M, plant):
     column_sum = np.sum(flow_matrix, axis=0) # sum of total flow going to every plant
     used_capacity = (column_sum/np.array(list(M.values())))*100
     used_capacity_df = pd.DataFrame(used_capacity, index=plant)
+
+    # Total costs
+    total_c = sum(c[key] for key in assignment if key in c)*365*12
+    total_capex = len(facilities)*6089160
+    total_opex = len(facilities)*(1047200*12)
+    total_cost = pd.DataFrame({'Category': ['CAPEX', 'OPEX', 'Transportation Costs'],
+        'Value': [total_capex, total_opex, total_c]})
 
     return total_cost, result_dict, used_capacity_df
 

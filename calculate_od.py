@@ -71,7 +71,7 @@ def find_closest_osmid(gdf, n):
         lambda location: n.loc[n['geometry'] == nearest_points(location, n.unary_union)[1], 'osmid'].iloc[0])
 
 
-def calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69):
+def calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69, frequency_per_day=1, lifetime_in_days=1):
     """
     A function to find the nearest road network node for each candidate site.
 
@@ -128,7 +128,7 @@ def calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69):
     transport_cost = {(farm, index): distance for farm, distances in restructured_od.items() for index, distance in distances.items()}
 
     # Convert from distance to cost
-    c = {key: value * cost_per_km for key, value in transport_cost.items()}
+    c = {key: value * cost_per_km * frequency_per_day * lifetime_in_days for key, value in transport_cost.items()}
     plant = loi_gdf.index.tolist()
 
     # store_data_to_pickle(transport_cost, 'app_data', transport_cost_file_name)

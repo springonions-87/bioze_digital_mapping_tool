@@ -102,7 +102,7 @@ all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']),
               'Gas Inlets': np.array(fuzzy_inlet['fuzzy'])}
 
 ### CREATE EMPTY LAYER ##################################
-st.cache_data
+
 def create_empty_layer(d_to_farm):
     df_empty = d_to_farm[['hex9']]
     df_empty['color'] = '[0,0,0,0]'
@@ -167,7 +167,6 @@ def get_sites(fuzzy_df, w, g, idx):
             max_node_index = max(eigenvector_centrality, key=eigenvector_centrality.get)
             # Append the node index to a list
             site_idx.append(max_node_index)
-        st.write(len(site_idx))
         st.session_state.all_loi = fuzzy_df.loc[site_idx].reset_index()
         st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
     else:
@@ -175,7 +174,7 @@ def get_sites(fuzzy_df, w, g, idx):
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
-# @st.cache_data
+st.cache_data
 def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -344,7 +343,7 @@ def main():
     if submit_button:
         hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
         get_sites(hex_df, st.session_state.w, st.session_state.g, idx)
-        fig = ff.create_distplot([st.session_state.all_loi['fuzzy'].tolist()], ['Run#2'], show_hist=False, bin_size=0.02)
+        fig = ff.create_distplot([st.session_state.all_loi['fuzzy'].tolist()], ['Distribution'], show_hist=False, bin_size=0.02)
         fig.update_layout(autosize=True,
                             width=600,
                             height=400)

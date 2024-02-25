@@ -7,6 +7,8 @@ from calculate_od import *
 from shapely.geometry import mapping
 from datetime import date
 from pydeck.types import String
+import plotly.express as px
+
 
 today = date.today()
 # import os
@@ -349,7 +351,7 @@ def main_content(page_2_space):
         ### RUN MODEL ##########################################
             m, processed_manure = flp_scip(I, J, d, M, f, c, target)
             m.optimize()
-            total_cost, assignment_decision, used_capacity_df = flp_get_result(m, I, J, M, plant)
+            total_cost, assignment_decision, used_capacity_df = flp_get_result(m, I, J, M, c, plant)
             ### OUTCOME INDICATORS ##########################################
             total_biogas = processed_manure * 20 # 1 tonne manure yields around 20m³ biogas
             # Methane savings (m3/yr)=Biogas yield potential (m3/yr)× Methane content of biogas (%)
@@ -357,9 +359,13 @@ def main_content(page_2_space):
 
             # Display metrics side by side 
             col1, col2, col3 = st.columns(3)
-            col1.metric(label="Total Cost", value= "€{:,.0f}".format(total_cost)) #, delta="1.2 °F")
-            col1.metric(label="Total Manure Processed", value="{:,.0f} t/yr".format(processed_manure))
-            col1.metric(label="Total Biogas Yield Potential", value="{:,.0f} m³/yr".format(total_biogas))
+            col1.metric(label="Total Cost over Lifetime (12 yr)", value="€{:,.2f}M".format(sum(total_cost['Value']) / 1000000))
+                        #value= "€{:,.0f}".format(sum(total_cost['Value']))) #, delta="1.2 °F")
+            with col1:
+                fig = px.pie(total_cost, names='Category', values='Value')
+                st.plotly_chart(fig, use_container_width=True)
+            col2.metric(label="Total Manure Processed", value="{:,.0f} t/yr".format(processed_manure))
+            col2.metric(label="Total Biogas Yield Potential", value="{:,.0f}M m³/yr".format(total_biogas/ 1000000))
             # col1.metric(label="Total Methane Saving Potential", value="{:,.0f} m³/yr".format(methane_saving))
             with col3:
             # Plot bar chart
