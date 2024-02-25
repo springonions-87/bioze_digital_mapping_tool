@@ -102,6 +102,7 @@ all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']),
               'Gas Inlets': np.array(fuzzy_inlet['fuzzy'])}
 
 ### CREATE EMPTY LAYER ##################################
+st.cache_data
 def create_empty_layer(d_to_farm):
     df_empty = d_to_farm[['hex9']]
     df_empty['color'] = '[0,0,0,0]'
@@ -252,6 +253,7 @@ def get_layers(hex_df):
     return layers
 
 ###
+@st.cache_data 
 def plot_result(fig):
     if fig is not None:
         st.plotly_chart(fig, theme="streamlit")
