@@ -1,4 +1,5 @@
 import pandas as pd
+import geopandas as gpd
 import pydeck as pdk
 import streamlit as st
 import numpy as np
@@ -9,6 +10,7 @@ import base64
 import networkx as nx
 from pysal.lib import weights
 from pysal.explore import esda
+import plotly.figure_factory as ff
 
 
 padding=0
@@ -46,6 +48,11 @@ def load_data(csv_path):
     df = pd.read_csv(csv_path)
     # get color for plotting
     return df
+
+@st.cache_data
+def load_gdf(gdf_path):
+    gdf = gpd.read_file(gdf_path)
+    return gdf
 
 d_to_farm = load_data('./hex/farm_v2.csv')
 d_to_road = load_data('./hex/road_v2.csv')
@@ -100,6 +107,9 @@ def create_empty_layer(d_to_farm):
     df_empty['color'] = '[0,0,0,0]'
     return df_empty
 
+idx = load_gdf('./h3_polygons.shp')
+idx = idx.set_index('hex9')
+
 ### UPDATE EMPTY DF ##################################
 def update_layer(selected_variables, all_arrays, d_to_farm):
     if not selected_variables:
@@ -125,39 +135,46 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
 
 ### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
 # def filter_loi(fuzzy_cut_off, fuzzy_df):
-#     st.session_state.loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
+#     st.session_state.all_loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
 
-def get_sites(fuzzy_df, w, g):
-    # 1. Compute loca moran's I
-    lisa = esda.Moran_Local(fuzzy_df['fuzzy'], w, seed=42)
-    # 2. Break observations into significant or not
-    # fuzzy_df['significant'] = lisa.p_sim < 0.01
-    # # 3. Store the quadrant they belong to
-    # fuzzy_df['quadrant'] = lisa.q
-    # # Get indices of H3 cells that are in the HH quadrant
-    # HH = fuzzy_df[(fuzzy_df['significant'] == True) & (fuzzy_df['quadrant'] == 1)].hex9.to_list()
-    HH = fuzzy_df[(lisa.q == 1) & (lisa.p_sim < 0.01)]
-    # Build sub graph that includes only the HH quadrant
-    H = g.subgraph(HH)
-    # Get sub components in the sub graphs
-    subH = list(nx.connected_components(H))
-    filter_subH = [component for component in subH if len(component) > 10]
-    # Calculate eigenvector centrality for each connected component
-    site_idx = []
-    for component in filter_subH:
-        # Create a subgraph for the current connected component
-        subgraph = H.subgraph(component)
-        # Calculate eigenvector centrality for a connected graph
-        eigenvector_centrality = nx.eigenvector_centrality(subgraph, max_iter=1000)
-        # Get the node index with the highest eigenvector centrality in that connected graph
-        max_node_index = max(eigenvector_centrality, key=eigenvector_centrality.get)
-        # Append the node index to a list
-        site_idx.append(max_node_index)
-    st.session_state.loi = pd.DataFrame({'hex9': site_idx})
+
+def get_sites(fuzzy_df, w, g, idx):
+    if 'fuzzy' in fuzzy_df.columns:
+        fuzzy_df = fuzzy_df.set_index('hex9').reindex(idx.index)
+        # 1. Compute loca moran's I
+        lisa = esda.Moran_Local(fuzzy_df['fuzzy'], w, seed=42)
+        # 2. Break observations into significant or not
+        # fuzzy_df['significant'] = lisa.p_sim < 0.01
+        # # 3. Store the quadrant they belong to
+        # fuzzy_df['quadrant'] = lisa.q
+        # # Get indices of H3 cells that are in the HH quadrant
+        # HH = fuzzy_df[(fuzzy_df['significant'] == True) & (fuzzy_df['quadrant'] == 1)].hex9.to_list()
+        HH = fuzzy_df[(lisa.q == 1) & (lisa.p_sim < 0.01)].index.to_list()
+        # Build sub graph that includes only the HH quadrant
+        H = g.subgraph(HH)
+        # Get sub components in the sub graphs
+        subH = list(nx.connected_components(H))
+        filter_subH = [component for component in subH if len(component) > 10]
+        # Calculate eigenvector centrality for each connected component
+        site_idx = []
+        for component in filter_subH:
+            # Create a subgraph for the current connected component
+            subgraph = H.subgraph(component)
+            # Calculate eigenvector centrality for a connected graph
+            eigenvector_centrality = nx.eigenvector_centrality(subgraph, max_iter=1000)
+            # Get the node index with the highest eigenvector centrality in that connected graph
+            max_node_index = max(eigenvector_centrality, key=eigenvector_centrality.get)
+            # Append the node index to a list
+            site_idx.append(max_node_index)
+        st.write(len(site_idx))
+        st.session_state.all_loi = fuzzy_df.loc[site_idx].reset_index()
+        st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
+    else:
+        return None
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
-@st.cache_data
+# @st.cache_data
 def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -219,7 +236,7 @@ variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)',
 def get_layers(hex_df):
     hex_fuzzy = pdk.Layer(
         "H3HexagonLayer",
-        hex_df,
+        hex_df.reset_index(),
         pickable=True,
         stroked=True,
         filled=True,
@@ -234,20 +251,31 @@ def get_layers(hex_df):
     layers = [hex_fuzzy]
     return layers
 
+###
+def plot_result(fig):
+    if fig is not None:
+        st.plotly_chart(fig, theme="streamlit")
+
+
 ### INITIALIZE SESSION STATE ##################################
-def initialize_session_state():
+def initialize_session_state(idx):
+    if 'all_loi' not in st.session_state:
+        st.session_state.all_loi = pd.DataFrame()
     if 'loi' not in st.session_state:
         st.session_state.loi = pd.DataFrame()
-    if 'w' not in st.session_state:
-        idx = gpd.read_file('./h3_polygons.shp')
-        idx = idx.set_index('hex9')
+    if 'fig' not in st.session_state:
+        st.session_state.fig = None
+    if 'w' not in st.session_state: #and 'hex_df' not in st.session_state
         st.session_state.w = weights.Queen.from_dataframe(idx, use_index=True)
+        # df = pd.DataFrame(index=idx.index)
+        # df['color'] = '[0,0,0,0]'
+        # st.session_state.hex_df = df
     if 'g' not in st.session_state:
-        st.session_state.g = read_graphml('./g.graphml')
+        st.session_state.g = nx.read_graphml('./app_data/g.graphml')
 
 ### CREATE STREAMLIT ##################################
 def main():
-    initialize_session_state()
+    initialize_session_state(idx)
     st.markdown("### Phase 1: Suitability Analysis - Identify Candidate Sites for Large-scale Digester")
     st.markdown("")
     st.markdown(
@@ -309,12 +337,22 @@ def main():
 
     if submit_button and not selected_variables:
         st.warning("No variable selected.")
-        return
+        pass
     
+    if submit_button:
+        hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
+        get_sites(hex_df, st.session_state.w, st.session_state.g, idx)
+        fig = ff.create_distplot([st.session_state.all_loi['fuzzy'].tolist()], ['Run#2'], show_hist=False, bin_size=0.02)
+        fig.update_layout(autosize=True,
+                            width=600,
+                            height=400)
+        st.session_state.fig = fig
+
     st.markdown("### **Suitability Map**")
+        
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(f"**Number of Candidate Sites: {len(st.session_state['loi'])}**")
+        st.markdown(f"**Number of Candidate Sites: {len(st.session_state['all_loi'])}**")
     with col3:
         if st.button(':three: Save Result', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer*** page. Please ensure that the number of saved locations does not exceed **15**."):
             st.write("Saved successfully!")
@@ -322,18 +360,21 @@ def main():
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
 
-    # Filtering 
-    # Filtering location of interest (loi) section
-    with st.sidebar.form("select_loi"):
-        st.slider(':two: Select Candidate Sites', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
-        # st.form_submit_button("Filter", on_click=filter_loi, args=(st.session_state.myslider, hex_df))
-        on_click_filter_loi = lambda: filter_loi(st.session_state.myslider, hex_df)
-        st.form_submit_button("Filter", on_click=on_click_filter_loi)
+    # # Filtering location of interest (loi) section
+    # with st.sidebar.form("select_loi"):
+    #     st.slider(':two: Select Candidate Sites', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
+    #     # st.form_submit_button("Filter", on_click=filter_loi, args=(st.session_state.myslider, hex_df))
+    #     on_click_filter_loi = lambda: filter_loi(st.session_state.myslider, hex_df)
+    #     st.form_submit_button("Filter", on_click=on_click_filter_loi)
 
-    hex_df
+    # st.sidebar.button("Find Candidate Sites", on_click=get_sites(hex_df, st.session_state.w, st.session_state.g, idx))
+
+    # st.session_state.all_loi
+    plot_result(st.session_state.fig)
+
     loi_plot = pdk.Layer(
         "H3HexagonLayer",
-        st.session_state.loi,
+        st.session_state.all_loi,
         pickable=True,
         stroked=True,
         filled=True,
