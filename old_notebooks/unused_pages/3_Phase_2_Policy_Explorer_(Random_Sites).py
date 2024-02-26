@@ -283,15 +283,14 @@ def main_content_random():
 
     ### SIDEBAR ##################################
     with st.sidebar:
-        target = (st.slider(':dart: **Manure Utilization Target (%):**', min_value=0, max_value=100,step=10, key="target_random")/ 100) # Define manure use goal (mu)
+        target = (st.slider(':dart: **Manure Utilization Target (%):**', min_value=0, max_value=100,step=10)/ 100) # Define manure use goal (mu)
 
         with st.container():
             st.write("**Map Layers**")
-            show_farm = st.sidebar.checkbox('Farms', value=True, key="show_farm_random")
-            show_digester = st.sidebar.checkbox('Digesters', value=True, key="show_digester_random")
-            show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True, key="show_arcs_random")
-            show_suitability = st.sidebar.checkbox('Suitability', value=False, key="show_suitability_random")
-            # show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
+            show_farm = st.sidebar.checkbox('Farms', value=True)
+            show_digester = st.sidebar.checkbox('Digesters', value=True)
+            # show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
+            show_suitability = st.sidebar.checkbox('Suitability', value=False)
 
         st.markdown("")
         st.markdown("")
@@ -302,12 +301,12 @@ def main_content_random():
             *Updated on {str(today)}.*  
             """)
 
-    # Toggle the visibility of the ArcLayer based on the checkbox
-    # deck.layers[0].visible = show_suitability
-    # deck.layers[1].visible = show_digester
-    # deck.layers[2].visible = show_farm
-    # deck.layers[3].visible = show_farm
-    # deck.layers[-1].visible = show_polygon
+    # Toggle the visibility of the ArcLayer based on the checkbox 
+        # PROBLEM : every time after re ticking the layer, all data is gone on the layer
+    deck.layers[0].visible = show_suitability
+    deck.layers[1].visible = show_farm
+    deck.layers[2].visible = show_digester
+    # deck.layers[-1].visible = show_arcs 
 
     ### SELECT PLANT FORM ##########################################
     with st.expander(':white_check_mark: Customize Site Selection'):

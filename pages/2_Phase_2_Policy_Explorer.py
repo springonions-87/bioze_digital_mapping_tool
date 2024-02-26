@@ -310,9 +310,8 @@ def main_content(page_2_space):
             st.write("**Map Layers**")
             show_farm = st.sidebar.checkbox('Farms', value=True)
             show_digester = st.sidebar.checkbox('Digesters', value=True)
-            show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
+            # show_arcs = st.sidebar.checkbox('Farm-Digester Assignment', value=True)
             show_suitability = st.sidebar.checkbox('Suitability', value=False)
-            # show_polygon = st.sidebar.checkbox('Suitable Areas', value=False)
 
         st.markdown("")
         st.markdown("")
@@ -323,12 +322,12 @@ def main_content(page_2_space):
             *Updated on {str(today)}.*  
             """)
 
-    # Toggle the visibility of the ArcLayer based on the checkbox
-    # deck.layers[0].visible = show_suitability
-    # deck.layers[1].visible = show_digester
-    # deck.layers[2].visible = show_farm
-    # deck.layers[3].visible = show_farm
-    # deck.layers[-1].visible = show_polygon
+    # Toggle the visibility of the ArcLayer based on the checkbox 
+        # PROBLEM : every time after re ticking the layer, all data is gone on the layer
+    deck.layers[0].visible = show_suitability
+    deck.layers[1].visible = show_farm
+    deck.layers[2].visible = show_digester
+    # deck.layers[-1].visible = show_arcs 
 
     ### SELECT PLANT FORM ##########################################
     with st.expander(':white_check_mark: Customize Site Selection'):
@@ -421,25 +420,6 @@ def main():
         with st.spinner("Preparing the data..."):
             perform_initial_setup(st.session_state.loi, page_2_space) # Replace with your function to generate trial selection
             main_content(page_2_space)
-
-    # with tab2:
-    #     with st.spinner("Preparing the data..."):
-    #         perform_initial_setup(loi=st.session_state.loi)
-    #         main_content_saved()
-
-    ### DISPLAY MAIN CONTENT OF THE APP ##########################################
-    # if st.button('Show Data'):
-    #     st.write('Data:', st.session_state.list_of_locations)
-
-    # Run the model 
-    # total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index = cflp(Plant, 
-    #                                                                                                 Farm, 
-    #                                                                                                 fixed_cost, 
-    #                                                                                                 transport_cost, 
-    #                                                                                                 manure_production, 
-    #                                                                                                 max_capacity, 
-    #                                                                                                 target, total_manure)
-           
 
 if __name__ == "__main__":
     main()

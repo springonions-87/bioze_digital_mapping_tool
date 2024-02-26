@@ -174,7 +174,8 @@ def get_sites(fuzzy_df, w, g, idx):
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
-st.cache_data
+
+@st.cache_data
 def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -284,18 +285,19 @@ def main():
         " Each area in the region is given a suitability score between 0 and 1, representing least and most suitable respectively."
         " Tip: Click the question mark icon :grey_question: on top of each map for more information."
     )
+    st.markdown("")
     st.markdown("**Step**:one:")
     st.markdown(
-        "Find areas that satisfy your needs by selecting the criteria of your interest and click **'Build Suitability Map'**. The tool outputs a new suitability map below by combining all your selected criteria. "
+        "Identify candidate areas suitable for building large digesters by selecting the criteria of your interest and click **'Build Suitability Map'**. The tool outputs a new suitability map below by combining all your selected criteria. "
+        " The number of candidate sites ewill b displayed and the sites are highlighted **:green[green]** on the new suitability map. Try different combinations of criteria until satisfied."
     )
     st.markdown("**Step**:two:")
-    st.markdown(
-        "Next, given the your new suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
-    )
-    st.markdown("**Step**:three:")
-    st.markdown("Once you are satisfied with the selected candidate sites, you are ready to move on to **Phase 2** of the tool. Click **'Save Result'** to save your sites. :red[Please ensure that the number of candidate sites does not exceed **15**].")
+    # st.markdown(
+    #     "Next, given the your new suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
+    # )
+    # st.markdown("**Step**:three:")
+    st.markdown("Once you are satisfied with the list of candidate sites, you are ready to move on to **Phase 2** of the tool. Click **'Save Result'** and the tool will guide you to the next Phase.") #:red[Please ensure that the number of candidate sites does not exceed **15**].
 
-    st.markdown("")
     st.markdown("")
     st.markdown("")
     # Plotting suitability variables
@@ -354,9 +356,10 @@ def main():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"**Number of Candidate Sites: {len(st.session_state['all_loi'])}**")
-    with col3:
-        if st.button(':three: Save Result', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer*** page. Please ensure that the number of saved locations does not exceed **15**."):
-            st.write("Saved successfully!")
+    # with col3:
+    if st.sidebar.button(':two: Save Result', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer***."):
+        # st.write("Saved successfully!")
+        st.switch_page("pages/2_Phase_2_Policy_Explorer.py")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
