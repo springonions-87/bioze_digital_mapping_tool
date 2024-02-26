@@ -360,11 +360,11 @@ def main_content(page_2_space):
             col1, col2, col3 = st.columns(3)
             col1.metric(label="Total Cost over Lifetime (12 yr)", value="€{:,.2f}M".format(sum(total_cost['Value']) / 1000000))
                         #value= "€{:,.0f}".format(sum(total_cost['Value']))) #, delta="1.2 °F")
-            with col1:
-                fig = px.pie(total_cost, names='Category', values='Value')
-                st.plotly_chart(fig, use_container_width=True)
-            col2.metric(label="Total Manure Processed", value="{:,.0f} t/yr".format(processed_manure))
-            col2.metric(label="Total Biogas Yield Potential", value="{:,.0f}M m³/yr".format(total_biogas/ 1000000))
+            # with col1:
+            #     fig = px.pie(total_cost, names='Category', values='Value')
+            #     st.plotly_chart(fig, use_container_width=True)
+            col1.metric(label="Total Manure Processed", value="{:,.0f} t/yr".format(processed_manure))
+            col1.metric(label="Total Biogas Yield Potential", value="{:,.0f}M m³/yr".format(total_biogas/ 1000000))
             # col1.metric(label="Total Methane Saving Potential", value="{:,.0f} m³/yr".format(methane_saving))
             with col3:
             # Plot bar chart
