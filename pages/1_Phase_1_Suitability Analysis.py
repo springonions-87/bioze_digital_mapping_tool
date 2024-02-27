@@ -162,7 +162,7 @@ def get_sites(fuzzy_df, w, g, idx):
             # Create a subgraph for the current connected component
             subgraph = H.subgraph(component)
             # Calculate eigenvector centrality for a connected graph
-            eigenvector_centrality = nx.eigenvector_centrality(subgraph, max_iter=1000)
+            eigenvector_centrality = nx.eigenvector_centrality(subgraph, max_iter=1500)
             # Get the node index with the highest eigenvector centrality in that connected graph
             max_node_index = max(eigenvector_centrality, key=eigenvector_centrality.get)
             # Append the node index to a list
@@ -175,7 +175,7 @@ def get_sites(fuzzy_df, w, g, idx):
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 
-@st.cache_data
+# @st.cache_data
 def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
