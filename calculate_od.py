@@ -93,8 +93,8 @@ def calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69, frequency_per_day=1
 
     """
     g = ox.load_graphml('./osm_network/G.graphml') 
-    orig = farm_gdf['closest_osmid'].unique().tolist()
-    dest = loi_gdf['closest_osmid'].unique().tolist()
+    orig = farm_gdf['closest_os'].unique().tolist()
+    dest = loi_gdf['closest_os'].unique().tolist()
 
     # Initialize an empty OD matrix
     od_matrix = {}
@@ -113,11 +113,11 @@ def calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69, frequency_per_day=1
     # Some road network nodes are the closest for more than 1 farms, so now we make sure the dictionary has a key of all farms despite some wil linherit the  
     # same associated distances to all digesters. This dictionary structure is required for the optimization model later.
     for idx, row in farm_gdf.iterrows():
-        osmid_value = row['closest_osmid']
+        osmid_value = row['closest_os']
         if osmid_value in od_matrix:
             new_nested_dict[idx] = od_matrix[osmid_value]    
 
-    placeholders = {i:j for i, j in zip(loi_gdf.index.values, loi_gdf['closest_osmid'])}
+    placeholders = {i:j for i, j in zip(loi_gdf.index.values, loi_gdf['closest_os'])}
 
     restructured_od = {}
     for farm, distances in new_nested_dict.items():

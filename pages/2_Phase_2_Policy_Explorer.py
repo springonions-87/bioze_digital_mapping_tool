@@ -217,18 +217,20 @@ def session_load(loi):
 
     ### LOAD DATA ###
     boundary = load_gdf('./data/twente_4326.geojson')
-    loi_gdf = loi_to_gdf(loi.reset_index(drop=True))  # Find centroid of hexagons and convert to gdf
+    h3_gdf = load_gdf('./app_data/h3_geometry.shp')
+    loi_gdf = h3_gdf[h3_gdf['hex9'].isin(loi.hex9)]
+    # loi_gdf = loi_to_gdf(loi.reset_index(drop=True))  # Find centroid of hexagons and convert to gdf
     loi_gdf.index = range(1, len(loi_gdf) + 1) # Reset index to start with 1
-    # st.write(loi_gdf)
-    farm_gdf = load_gdf("./farm/farm_new.shp")
-    n = load_gdf("./osm_network/G_n.shp") # Road network nodes
-    n = n.to_crs(main_crs)
+    farm_gdf = load_gdf("./app_data/farm.shp")
+    farm_gdf.head()
+    # n = load_gdf("./osm_network/G_n.shp") # Road network nodes
+    # n = n.to_crs(main_crs)
 
     ### CALCULATE OD MATRIX ###
-    loi_gdf['y'] = loi_gdf['geometry'].y
-    loi_gdf['x'] = loi_gdf['geometry'].x
-    find_closest_osmid(farm_gdf, n)
-    find_closest_osmid(loi_gdf, n)
+    # loi_gdf['y'] = loi_gdf['geometry'].y
+    # loi_gdf['x'] = loi_gdf['geometry'].x
+    # find_closest_osmid(farm_gdf, n)
+    # find_closest_osmid(loi_gdf, n)
     c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
 
     ### FORMAT DATA ###

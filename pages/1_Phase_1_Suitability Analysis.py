@@ -138,7 +138,6 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
 # def filter_loi(fuzzy_cut_off, fuzzy_df):
 #     st.session_state.all_loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
 
-
 def get_sites(fuzzy_df, w, g, idx):
     if 'fuzzy' in fuzzy_df.columns:
         fuzzy_df = fuzzy_df.set_index('hex9').reindex(idx.index)
@@ -146,10 +145,7 @@ def get_sites(fuzzy_df, w, g, idx):
         lisa = esda.Moran_Local(fuzzy_df['fuzzy'], w, seed=42)
         # 2. Break observations into significant or not
         # fuzzy_df['significant'] = lisa.p_sim < 0.01
-        # # 3. Store the quadrant they belong to
-        # fuzzy_df['quadrant'] = lisa.q
-        # # Get indices of H3 cells that are in the HH quadrant
-        # HH = fuzzy_df[(fuzzy_df['significant'] == True) & (fuzzy_df['quadrant'] == 1)].hex9.to_list()
+        # 3. Store the quadrant they belong to
         HH = fuzzy_df[(lisa.q == 1) & (lisa.p_sim < 0.01)].index.to_list()
         # Build sub graph that includes only the HH quadrant
         H = g.subgraph(HH)
