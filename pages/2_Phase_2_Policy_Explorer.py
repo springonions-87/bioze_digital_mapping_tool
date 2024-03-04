@@ -275,18 +275,6 @@ def perform_initial_setup(loi, page_2_space):
 ### FUNCTION TO DISPLAY THE MAIN CONTENT OF THE APP ##################################
 def main_content(page_2_space):
     ### ACCESS INITIAL SESSION VARIABLES ##################################
-    # I = st.session_state['I']
-    # d = st.session_state['d']
-    # # total_manure = st.session_state.total_manure
-    # farm = st.session_state['farm']
-    # hex_df = st.session_state['hex_df']
-    # c = st.session_state['c']
-    # plant = st.session_state['plant']
-    # M = st.session_state['M']
-    # f = st.session_state['f']
-    # Plant_all = st.session_state['Plant_all']
-    # loi_gdf = st.session_state['loi_gdf']
-    # target = st.session_state['target']
     boundary = page_2_space.get('boundary', None)
     I = page_2_space.get('I', None)  # Replace None with an appropriate default
     d = page_2_space.get('d', None)
