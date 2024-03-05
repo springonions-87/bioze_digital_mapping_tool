@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below."
+authors:
+  - family-names: Chen
+    given-names: Wen-Yu
+    orcid: https://orcid.org/0009-0007-2352-7613
+title: "Enhancing Governance of Bioenergy (EU Interreg BIOZE): Web-Based Interactive Decision Support Tool with Multi-criteria Suitability Analysis and Spatial Optimization"
+version: 1.0
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.10782928
+date-released: 2024-03-05
