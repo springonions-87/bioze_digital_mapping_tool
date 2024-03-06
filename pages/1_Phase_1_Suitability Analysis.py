@@ -224,10 +224,8 @@ def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_
     return legend_html
 
 variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)', label_right='Most Suitable (1)',)
-# suitability_map_legend_html = generate_colormap_legend(label_left='Most Suitable', label_right='Least Suitable', cmap=plt.cm.plasma)
 
 ### 
-
 @st.cache_data
 def get_layers(hex_df):
     hex_fuzzy = pdk.Layer(
@@ -352,8 +350,9 @@ def main():
     with col1:
         st.markdown(f"**Number of Candidate Sites: {len(st.session_state['all_loi'])}**")
     # with col3:
-    if st.sidebar.button(':two: Save Result', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer***."):
-        st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
+    if st.sidebar.button(':two: Save Result & Enter Phase 2', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer***."):
+        # st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
+        st.session_state.loi = st.session_state.all_loi
         st.switch_page("pages/2_Phase_2_Policy_Explorer.py")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
