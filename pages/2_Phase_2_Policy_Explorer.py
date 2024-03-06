@@ -4,19 +4,15 @@ import geopandas as gpd
 import pydeck as pdk
 from cflp_function import *
 from calculate_od import *
-from shapely.geometry import mapping
+# from shapely.geometry import mapping
 from datetime import date
 from pydeck.types import String
 import plotly.express as px
 
 
 today = date.today()
-# import os
-# print("Current working directory: ", os.getcwd())
 
 ### PAGE CONFIGURATIONS #######################################
-# st.title('BIOZE Digital Mapping Tool')
-# st.text('This is an interactive mapping tool on biogas.')
 st.set_page_config(page_title="BIOZE Tool - Policy Exploration (Saved Sites)", layout="wide")
 # st.markdown(
 #     """
@@ -51,13 +47,13 @@ def load_pickle():
     folder_path = 'app_data'
     # List
     # set F     set of farm locations (list)
-    I = load_data_from_pickle(folder_path, 'Farm_test.pickle')
+    J = load_data_from_pickle(folder_path, 'Farm_test.pickle')
     # set P     set of potential digester locations
     # Plant = load_data_from_pickle(folder_path, 'Plant_test_2.pickle')
 
     # Dictionary 
     # p_i       manure production of each i
-    d = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
+    M = load_data_from_pickle(folder_path, 'manure_production_test.pickle')
     # q_j       max capacity of each j 
     # max_capacity = load_data_from_pickle(folder_path, 'max_capacity_test.pickle')
     # f_j       fixed cost of establishing each j
@@ -73,8 +69,7 @@ def load_pickle():
     # DataFrame
     # potential_digester_location = load_csv(r'./farm/farm_cluster_mock_5.csv')
     # farm = load_csv(r"./farm/farm_mock.csv")
-
-    return I, d
+    return J, M
 
 @st.cache_data
 def filter_Plant(original_dict, J):
@@ -173,10 +168,10 @@ def initialize_map(digester_df, farm_df, suitability_df, boundary):
         )
     return deck
 
-def update_digester_layer_color(digester_df, J, deck):
+def update_digester_layer_color(digester_df, I, deck):
     # Update the color of digester to grey if not selected 
     digester_df_copy = digester_df.copy()
-    digester_df_copy.loc[~digester_df_copy.index.isin(J), 'color'] ='[169, 169, 169]'
+    digester_df_copy.loc[~digester_df_copy.index.isin(I), 'color'] ='[169, 169, 169]'
     deck.layers[2].data = digester_df_copy
     return deck
 
@@ -212,33 +207,39 @@ def update_map(farm_df, digester_df, assignment_decision, deck):
 
 ### SESSION STATE INITIALIZATION #######################################
 @st.cache_data
-def session_load(loi):
-    main_crs ='EPSG:4326'
+def prepare_model_input(loi, _h3_gdf, _farm_gdf):
 
-    ### LOAD DATA ###
-    boundary = load_gdf('./data/twente_4326.geojson')
-    h3_gdf = load_gdf('./app_data/h3_geometry.shp')
-    loi_gdf = h3_gdf[h3_gdf['hex9'].isin(loi.hex9)]
-    # loi_gdf = loi_to_gdf(loi.reset_index(drop=True))  # Find centroid of hexagons and convert to gdf
+    loi_gdf = _h3_gdf[_h3_gdf['hex9'].isin(loi.hex9)]
     loi_gdf.index = range(1, len(loi_gdf) + 1) # Reset index to start with 1
-    farm_gdf = load_gdf("./app_data/farm.shp")
-    farm_gdf.head()
-    # n = load_gdf("./osm_network/G_n.shp") # Road network nodes
-    # n = n.to_crs(main_crs)
+    C, plant = calculate_od_matrix(_farm_gdf, loi_gdf, cost_per_km=0.69)
 
-    ### CALCULATE OD MATRIX ###
-    # loi_gdf['y'] = loi_gdf['geometry'].y
-    # loi_gdf['x'] = loi_gdf['geometry'].x
-    # find_closest_osmid(farm_gdf, n)
-    # find_closest_osmid(loi_gdf, n)
-    c, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
-
-    ### FORMAT DATA ###
     Plant_all = ['All'] + plant # add "ALL" to the list of candidate sites as input labels for customizing which sites to include in analysis
     color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
     loi_gdf['color'] = loi_gdf.index.map(color_mapping)
-    M, f = assign_capacity_capex(plant) # random M and f generator for the time being
-    I, d  = load_pickle() # Load mock data for farm locations and manure production 
+
+    d, f = assign_capacity_capex(plant) # random M and f generator for the time being
+
+    return loi_gdf, C, plant, Plant_all, d, f
+
+### SESSION STATE INITIALIZATION #######################################
+@st.cache_data
+def session_load():
+    ### LOAD DATA ###
+    boundary = load_gdf('./data/twente_4326.geojson')
+    h3_gdf = load_gdf('./app_data/h3_geometry.shp')
+    # loi_gdf = h3_gdf[h3_gdf['hex9'].isin(loi.hex9)]
+    # loi_gdf.index = range(1, len(loi_gdf) + 1) # Reset index to start with 1
+    farm_gdf = load_gdf("./app_data/farm.shp")
+
+    ### CALCULATE OD MATRIX ###
+    
+    # C, plant = calculate_od_matrix(farm_gdf, loi_gdf, cost_per_km=0.69)
+
+    ### FORMAT DATA ###
+    # Plant_all = ['All'] + plant # add "ALL" to the list of candidate sites as input labels for customizing which sites to include in analysis
+    # color_mapping = {label: [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for label in loi_gdf.index}
+    # loi_gdf['color'] = loi_gdf.index.map(color_mapping)
+    J, M  = load_pickle() # Load mock data for farm locations and manure production 
 
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")
@@ -247,30 +248,30 @@ def session_load(loi):
 
     data_dict = {
         'boundary':boundary,
-        'loi_gdf':loi_gdf,
-        'c':c,
-        'plant':plant,
-        'Plant_all':Plant_all,
+        'h3_gdf':h3_gdf,
+        'farm_gdf':farm_gdf,
+        # 'loi_gdf':loi_gdf,
+        # 'C':C,
+        # 'plant':plant,
+        # 'Plant_all':Plant_all,
         'M':M,
-        'f':f,
-        'I':I,
-        'd':d,
+        # 'f':f,
+        'J':J,
+        # 'd':d,
         'farm':farm,
         'hex_df':hex_df
     }
     return data_dict
 
 ### FUNCTION TO PERFORM THE ONE-TIME INITIAL CALCULATION ##################################
-def perform_initial_setup(loi, page_2_space):
-    data_name = ['boundary', 'loi_gdf', 'c', 'plant', 'Plant_all', 'M', 'f', 'I', 'd', 'farm', 'hex_df']
+def perform_initial_setup(page_2_space):
+    data_name = ['boundary', 'h3_gdf', 'farm_gdf', 'M', 'J', 'farm', 'hex_df']
     # Check if any key in data_names is missing in st.session_state.keys()
     missing_keys = [key for key in data_name if key not in page_2_space.keys()]
-    # st.write(missing_keys)
     if missing_keys:
-        loaded_data = session_load(loi)
+        loaded_data = session_load()
         for key, value in loaded_data.items():
             page_2_space[key] = value
-        # Initialize session_state if it doesn't exist
     if 'target' not in page_2_space:
         page_2_space['target'] = 0  # Set a default value, adjust as needed
 
@@ -278,18 +279,21 @@ def perform_initial_setup(loi, page_2_space):
 def main_content(page_2_space):
     ### ACCESS INITIAL SESSION VARIABLES ##################################
     boundary = page_2_space.get('boundary', None)
-    I = page_2_space.get('I', None)  # Replace None with an appropriate default
-    d = page_2_space.get('d', None)
-    # total_manure = page_namespace.get('total_manure', None)
+    J = page_2_space.get('J', None)  # Replace None with an appropriate default
+    # d = page_2_space.get('d', None)
     farm = page_2_space.get('farm', None)
     hex_df = page_2_space.get('hex_df', None)
-    c = page_2_space.get('c', None)
-    plant = page_2_space.get('plant', None)
+    # C = page_2_space.get('C', None)
+    # plant = page_2_space.get('plant', None)
     M = page_2_space.get('M', None)
-    f = page_2_space.get('f', None)
-    Plant_all = page_2_space.get('Plant_all', None)
-    loi_gdf = page_2_space.get('loi_gdf', None)
+    # f = page_2_space.get('f', None)
+    # Plant_all = page_2_space.get('Plant_all', None)
+    # loi_gdf = page_2_space.get('loi_gdf', None)
     target = page_2_space.get('target', None)
+    h3_gdf = page_2_space.get('h3_gdf', None)
+    farm_gdf = page_2_space.get('farm_gdf', None)
+
+    loi_gdf, C, plant, Plant_all, d, f = prepare_model_input(st.session_state.loi, h3_gdf, farm_gdf)
     deck = initialize_map(loi_gdf, farm, hex_df, boundary)
 
     ### SIDEBAR ##################################
@@ -322,25 +326,25 @@ def main_content(page_2_space):
     ### SELECT PLANT FORM ##########################################
     with st.expander(':white_check_mark: Customize Site Selection'):
         with st.form('select_plant'):
-            J = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
-            if "All" in J or not J:
-                J = plant
+            I = st.multiselect("Select specific sites to include in the analysis. By default, all sites are included.", Plant_all)
+            if "All" in I or not I:
+                I = plant
             submit_select_loi = st.form_submit_button("Submit")
 
     if submit_select_loi and page_2_space['target'] == 0:
-        deck = update_digester_layer_color(loi_gdf, J, deck)
+        deck = update_digester_layer_color(loi_gdf, I, deck)
 
     if submit_select_loi or page_2_space['target'] != target:
         with st.spinner('Running the model...'):
             page_2_space['target'] = target # Update the session state with the new target value
-            M = filter_Plant(M, J)
-            f = filter_Plant(f, J)
-            c = {(i, j): value for (i, j), value in c.items() if j in J}
+            d = filter_Plant(d, I)
+            f = filter_Plant(f, I)
+            C = {(i, j): value for (i, j), value in C.items() if i in I}
 
         ### RUN MODEL ##########################################
-            m, processed_manure = flp_scip(I, J, d, M, f, c, target)
+            m, processed_manure = flp_scip(I, J, d, M, f, C, target)
             m.optimize()
-            total_cost, assignment_decision, used_capacity_df = flp_get_result(m, I, J, M, c, plant)
+            total_cost, assignment_decision, used_capacity_df = flp_get_result(m, I, J, d, C)
             ### OUTCOME INDICATORS ##########################################
             total_biogas = processed_manure * 20 # 1 tonne manure yields around 20m³ biogas
             # Methane savings (m3/yr)=Biogas yield potential (m3/yr)× Methane content of biogas (%)
@@ -361,7 +365,7 @@ def main_content(page_2_space):
                 st.markdown("Digester Capacity Utilization Rate")
                 st.bar_chart(used_capacity_df)
 
-            deck = update_digester_layer_color(loi_gdf, J, deck)
+            deck = update_digester_layer_color(loi_gdf, I, deck)
             deck = update_farm_layer_color(farm, loi_gdf, assignment_decision, deck)
             deck = update_map(farm, loi_gdf, assignment_decision, deck)
 
@@ -407,8 +411,8 @@ def main():
         if st.button("Visit **Phase 1**"):
             st.switch_page("app.py")
     else:
-        with st.spinner("Preparing the data..."):
-            perform_initial_setup(st.session_state.loi, page_2_space) # Replace with your function to generate trial selection
+        with st.spinner("Running..."):
+            perform_initial_setup(page_2_space) # Replace with your function to generate trial selection
             main_content(page_2_space)
 
 if __name__ == "__main__":

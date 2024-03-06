@@ -14,7 +14,7 @@ import plotly.figure_factory as ff
 
 
 padding=0
-st.set_page_config(page_title="Suitability Analysis_copy", layout="wide")
+st.set_page_config(page_title="Suitability Analysis", layout="wide")
 
 # st.markdown(
 #     """
@@ -164,14 +164,13 @@ def get_sites(fuzzy_df, w, g, idx):
             # Append the node index to a list
             site_idx.append(max_node_index)
         st.session_state.all_loi = fuzzy_df.loc[site_idx].reset_index()
-        st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
     else:
         return None
 
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 
-# @st.cache_data
+@st.cache_data
 def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -354,7 +353,7 @@ def main():
         st.markdown(f"**Number of Candidate Sites: {len(st.session_state['all_loi'])}**")
     # with col3:
     if st.sidebar.button(':two: Save Result', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer***."):
-        # st.write("Saved successfully!")
+        st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
         st.switch_page("pages/2_Phase_2_Policy_Explorer.py")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)

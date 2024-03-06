@@ -14,19 +14,6 @@ The functions are called by both Phase 1 and 2 of the app.
 
 """
 
-# def random_M_f(J):
-#     small = [7848, 209249] # [capacity, cost]
-#     medium = [15056, 252616]
-#     large = [120000, 12000000]
-
-#     # Randomly assign medium or large factory to each index in J
-#     digester_sizes = random.choices(["medium", "large"], k=len(J))
-
-#     # Create dictionaries M and f based on the assigned values
-#     M = {index: medium[0] if size == "medium" else large[0] for index, size in zip(J, digester_sizes)}
-#     f = {index: medium[1] if size == "medium" else large[1] for index, size in zip(J, digester_sizes)}
-#     return M, f
-
 def assign_capacity_capex(J):
     opex_12_yr = 1047200*12
     capex = 6089160
@@ -37,101 +24,25 @@ def assign_capacity_capex(J):
 
     return M, f
 
-# # def cflp(Plant, Farm, fixed_cost, transport_cost, manure_production, max_capacity, target, total_manure):
-#     """
-#     Input
-#     * Plant: list (sets/array) of facility indices
-#     * Farm: list (sets/array) of customer indices
-#     * fixed_cost: dictionary of fixed cost of each Plant - {Plant:fixed cost}
-#     * transport_cost: nested dictionary of shortest paths (OD matrix) from all Farm to all Plant - {Plant:{Farm:distance}}
-#     * manure_production: quantity of manure in each Farm - {Farm:manure quantity}
-#     * max_capacity: maximum capacity of each Plant - {Plant:max capacity}
-#     * target: float of manure use goal defined as policy
-#     * total_manure: total manure produced by all Farm
-#     """
 
-#     # Setting the Problem
-#     prob = LpProblem("Capacitated_Facility_Location_Problem", LpMinimize)
-
-#     # Defining our Decision Variables
-#     use_plant = LpVariable.dicts("Plant", Plant, 0, 1, LpBinary) 
-#     ser_farm = LpVariable.dicts("Farm_Plant", [(i, j) for i in Farm for j in Plant], 0, 1, LpBinary) 
-
-#     # Objective Function
-#     prob += lpSum(fixed_cost[j]*use_plant[j] for j in Plant) + lpSum(transport_cost[j][i]*ser_farm[(i,j)] for j in Plant for i in Farm)
-
-#     # Costraints
-#     for i in Farm:
-#         prob += lpSum(ser_farm[(i, j)] for j in Plant) <= 1 # Very strange, the model becomes infeasible  if it's == 1, maybe because now the constraint has relaxed and not all farms need to be assigned to facility, which will be the case if ==1
-
-#     # The capacity constraint here it differnt than the one in paper, but i think it does the work still
-#     for j in Plant:
-#         prob += lpSum(manure_production[i] * ser_farm[(i,j)] for i in Farm) <= max_capacity[j]*use_plant[j]
-
-#     # Not really sure what this constraint does, I think it makes sure a farm can only be assigned to a facility given it's open, hence the value of xij is smaller or equal to yj 
-#     for i in Farm:
-#         for j in Plant:
-#             prob += ser_farm[(i,j)] <= use_plant[j]
-
-#     # Add a constraint to ensure at least x% of total manure production is sent to plants
-#     prob += lpSum(manure_production[i] * ser_farm[(i, j)] for i in Farm for j in Plant) >= target * total_manure
-
-#     # Solve 
-#     prob.solve()
-#     print("Solution Status = ", LpStatus[prob.status])
-
-#     """ Solution Outputs """
-    
-#     # # Solution matrix
-#     # assignment_matrix = pd.DataFrame(index=Farm, columns=Plant)
-#     # for i in Plant:
-#     #     for j in Farm:
-#     #         assignment_matrix.at[j, i] = ser_farm[(j, i)].varValue
-
-#     # Solution dictionary
-#     # Initialize lists to store assignment information
-#     assignment_decision = {j: [] for j in Plant}
-
-#     # Collect assigned farms
-#     for i in Plant:
-#         for j in Farm:
-#             if ser_farm[(j,i)].varValue > 0.00001:
-#                 assignment_decision[i].append(j)
-    
-#     # Get total cost
-#     total_cost = pulp.value(prob.objective)
-
-#     # Extracting the values of the decision variables
-#     use_plant_index = {j: use_plant[j].varValue for j in Plant}
-#     ser_farm_index = {(i, j): ser_farm[(i, j)].varValue for i in Farm for j in Plant}
-
-#     # Calculating total fixed cost
-#     total_fixed_cost = sum(fixed_cost[j] * use_plant_index[j] for j in Plant)
-
-#     # Calculating total transportation cost
-#     total_transport_cost = sum(transport_cost[j][i] * ser_farm_index[(i, j)] for j in Plant for i in Farm)
-    
-#     return total_cost, total_fixed_cost, total_transport_cost, assignment_decision, use_plant_index # assignment_matrix,
-
-def flp_scip(I, J, d, M, f, c, p):
-
+def flp_scip(I, J, d, M, f, C, p):
     """
     Model for defining and solving the capacitated facility location problem.
 
     Parameters
     ----------
     I : list
-        set of feedstock locations (customers)
+        set of candidate digester sites
     J : list
-        set of candidate digester sites (facilities)
+        set of feedstock locations
     d: list
-        d[i] is feedstock supply of farm i (demand of customer i)
+        d[i] is capacity of digester site i ('demand' of digester site i)
     M : list
-        M[j] is capacity of digester site j
+        M[j] is maximum manure production of farm j
     f: list
-        f[j] is fixed cost for building a digester in site j
-    c: dict
-        c[i,j] is unit cost of transporting feedstock from farm i to digester j
+        f[i] is fixed cost for building a digester site i 
+    C: dict
+        C[i,j] is unit cost of transporting feedstock from farm j to digester i
     p: float 
         percentage of total demand to be met (manure utilization target, determined by user input through the slider in the app)
 
@@ -145,34 +56,35 @@ def flp_scip(I, J, d, M, f, c, p):
     """
     model = Model("flp_percentage_demand")
     
-    x, y, z = {}, {}, {}
-    total_demand = sum(d[i] for i in I)
+    X,y = {},{}
+
+    # Express the total manure in the region & target demand input by users
+    total_demand = sum(M[j] for j in J)
     target_demand = total_demand * p
-
-    for j in J:
-        y[j] = model.addVar(vtype="B", name="y(%s)" % j)
-        for i in I:
-            x[i, j] = model.addVar(vtype="C", name="x(%s,%s)" % (i, j))
-            z[i, j] = model.addVar(vtype="B", name="z(%s,%s)" % (i, j))
-
+    # Decision variables
     for i in I:
-        model.addCons(quicksum(x[i, j] for j in J) == d[i] * z[i, j], "Demand(%s)" % i)
-
+        y[i] = model.addVar(vtype="B", name="y(%s)"%i)
+        for j in J:
+            X[i,j] = model.addVar(vtype="C", name="X(%s,%s)"%(i,j))
+    # Constraint 1
+    for i in I:
+        model.addCons(quicksum(X[i,j] for j in J) <= d[i]*y[i], "Demand_(of_Digester_Capacity)(%s)"%i)
+    # Constrain 2
     for j in M:
-        model.addCons(quicksum(x[i, j] for i in I) <= M[j] * y[j], "Capacity(%s)" % j)
+        model.addCons(quicksum(X[i,j] for i in I) <= M[j], "Capacity_(of_Farm_Manure_Production)(%s)"%i)
+    # Constrain 3
+    for (i,j) in X:
+        model.addCons(X[i,j] <= d[i]*y[i], "Strong(%s,%s)"%(i,j))
+    # Constraint 4
+    model.addCons(quicksum(X[i, j] for i in I for j in J) >= target_demand, "TargetManureDemand")
 
-    for (i, j) in x:
-        model.addCons(x[i, j] <= d[i] * y[j], "Strong(%s,%s)" % (i, j))
-
-    model.addCons(quicksum(x[i, j] for i in I for j in J) >= target_demand, "PercentageDemand")
-
+    # Objective function
     model.setObjective(
-        quicksum(f[j] * y[j] for j in J) +
-        quicksum(c[i, j] * x[i, j] for i in I for j in J),
-        "minimize"
-    )
+        quicksum(f[i]*y[i] for i in I) +
+        quicksum(C[i,j]*X[i,j] for i in I for j in J),
+        "minimize")
+    model.data = X,y
 
-    model.data = x, y, z
     return model, target_demand
 
 # def find_farm_not_in_solution_plant_in_solution(assignment_decision, Farm, use_plant_index):
@@ -274,7 +186,7 @@ def flp_scip(I, J, d, M, f, c, p):
     plt.show()
 
 
-def flp_get_result(m, I, J, M, c, plant):
+def flp_get_result(m, I, J, d, C):
     """
     Retrieve the results of a SCIP optimization model (PySCIPOpt).
 
@@ -283,13 +195,13 @@ def flp_get_result(m, I, J, M, c, plant):
     m : model
         SCIP optimization model instance.
     I : list
-        set of feedstock locations (customers)
+        set of candidate digester sites 
     J : list
-        set of candidate digester sites (facilities)
-    M : list
-        M[j] is capacity of digester site j
-    c : dict
-        c[i, j] is the transport cost from farm i to digester j
+        set of feedstock locations
+    d: list
+        d[i] is capacity of digester site i ('demand' of digester site i)
+    C: dict
+        C[i,j] is unit cost of transporting feedstock from farm j to digester i
 
     Outputs
     ----------
@@ -302,30 +214,30 @@ def flp_get_result(m, I, J, M, c, plant):
 
     """
     EPS = 1.e-6
-    x,y,z = m.data
+    x,y = m.data
     assignment = [(i,j) for (i,j) in x if m.getVal(x[i,j]) > EPS]
-    facilities = [j for j in y if m.getVal(y[j]) > EPS]
+    digester = [i for i in y if m.getVal(y[i]) > EPS]    
     
     total_cost = m.getObjVal()
 
     # Create a dictionary to store the results
-    result_dict = {f: [] for f in facilities}
+    result_dict = {x: [] for x in digester}
     # Iterate over edges and populate the result_dict
     for (i, j) in assignment:
-        if j in facilities:
-            result_dict[j].append(i)
+        if i in digester:
+            result_dict[i].append(j)
 
     # Get percentage of utilization
     x_values = {(i, j): m.getVal(x[i, j]) for (i, j) in x if m.getVal(x[i, j]) > EPS} # get how much is flowing between every assignment
-    flow_matrix = np.array([[x_values.get((i, j), 0) for j in J] for i in I]) # create a flow matrix (len(farm)xlen(plant))
-    column_sum = np.sum(flow_matrix, axis=0) # sum of total flow going to every plant
-    used_capacity = (column_sum/np.array(list(M.values())))*100
-    used_capacity_df = pd.DataFrame(used_capacity, index=plant)
+    flow_matrix = np.array([[x_values.get((i, j), 0) for i in I] for j in J]) # create a flow matrix (len(farm)xlen(plant))
+    column_sum = np.sum(flow_matrix, axis=0) # sum of total flow going to every plant    used_capacity = (column_sum/np.array(list(M.values())))*100
+    used_capacity = (column_sum/np.array(list(d.values())))*100
+    used_capacity_df = pd.DataFrame(used_capacity, index=I)
 
     # Total costs
-    total_c = sum(c[key] for key in assignment if key in c)*365*12
-    total_capex = len(facilities)*6089160
-    total_opex = len(facilities)*(1047200*12)
+    total_c = sum(C[key] for key in assignment if key in C)*365*12
+    total_capex = len(digester)*6089160
+    total_opex = len(digester)*(1047200*12)
     total_cost = pd.DataFrame({'Category': ['CAPEX', 'OPEX', 'Transportation Costs'],
         'Value': [total_capex, total_opex, total_c]})
 
