@@ -1,7 +1,14 @@
 [![DOI](https://zenodo.org/badge/682611837.svg)](https://zenodo.org/doi/10.5281/zenodo.10782927)
 
-# BIOZE Interative Decision Support Tool
-The tool is developed for the EU Interreg Project: BIOmass skills for Net Zero ([BIOZE](https://www.interregnorthsea.eu/bioze)), on behalf of Faculty of Geo-Information Science and Earth Observation (ITC) at the University of Twente. Access the tool [here](https://bioze-interreg.streamlit.app/). User manual is available in [English](https://docs.google.com/document/d/1ycvVgknZ5-1XHSdp9uUJvC5qiD_btm0e/edit?usp=sharing&ouid=106170972880662385112&rtpof=true&sd=true "User Manual (Eng)") and [Dutch](https://docs.google.com/document/d/1kIgRok_GxITcHYWf_X_9CXxNyqwHAqdc/edit?usp=sharing&ouid=106170972880662385112&rtpof=true&sd=true "User Manual (Dutch)") to guide you through the tool. 
+# BIOZE Interactive Decision Support Tool
+Authors: Wen-Yu Chen [![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/wenyuchen-tw-nl/), Johannes Flacke [![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/johannes-flacke-38463340/), Pirouz Nourian [![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/pirouz-nourian-71b10427/)  
+
+The tool is developed for the EU Interreg Project: BIOmass skills for Net Zero ([BIOZE](https://www.interregnorthsea.eu/bioze)), on behalf of the Faculty of Geo-Information Science and Earth Observation ([ITC](https://www.itc.nl/)) at the University of Twente.  
+
+Access the tool [here](https://bioze-interreg.streamlit.app/).  
+
+User manual is available in [English](https://docs.google.com/document/d/1ycvVgknZ5-1XHSdp9uUJvC5qiD_btm0e/edit?usp=sharing&ouid=106170972880662385112&rtpof=true&sd=true "User Manual (Eng)") and [Dutch](https://docs.google.com/document/d/1kIgRok_GxITcHYWf_X_9CXxNyqwHAqdc/edit?usp=sharing&ouid=106170972880662385112&rtpof=true&sd=true "User Manual (Dutch)").  
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
