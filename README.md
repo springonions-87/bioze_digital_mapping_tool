@@ -28,3 +28,18 @@ If the Streamlit app has gone over the resource limits of Streamlit Community Cl
 * Reboot the app to clear the memory.
 * Upgrade the Streamlit version of the app to the latest release.
 * Optimize memory usage of the app, refers to these [tips](https://docs.streamlit.io/streamlit-community-cloud/manage-your-app#app-resources-and-limits "Manage your app resources and limits"). 
+
+<!-- 
+## File Descriptions
+<details>
+<summary>Data processing notebooks</summary>
+<br>
+This is how you dropdown.
+</details>
+
+<details>
+<summary>Web app notebooks</summary>
+<br>
+Home.py
+</details>
+-->
