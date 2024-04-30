@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import geopandas as gpd
 import pydeck as pdk
-from cflp_function import *
-from calculate_od import *
+from utils.cflp_function import *
+from utils.calculate_od import *
 from shapely.geometry import mapping
 from datetime import date
 from pydeck.types import String

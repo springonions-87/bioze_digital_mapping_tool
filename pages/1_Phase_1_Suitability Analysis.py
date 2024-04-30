@@ -3,7 +3,7 @@ import geopandas as gpd
 import pydeck as pdk
 import streamlit as st
 import numpy as np
-from cflp_function import *
+from utils.cflp_function import *
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
@@ -108,7 +108,7 @@ def create_empty_layer(d_to_farm):
     df_empty['color'] = '[0,0,0,0]'
     return df_empty
 
-idx = load_gdf('./h3_polygons.shp')
+idx = load_gdf('./app_data/h3_polygons.shp')
 idx = idx.set_index('hex9')
 
 ### UPDATE EMPTY DF ##################################

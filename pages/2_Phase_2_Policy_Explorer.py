@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import geopandas as gpd
 import pydeck as pdk
-from cflp_function import *
-from calculate_od import *
+from utils.cflp_function import *
+from utils.calculate_od import *
 # from shapely.geometry import mapping
 from datetime import date
 from pydeck.types import String
@@ -225,7 +225,7 @@ def prepare_model_input(loi, _h3_gdf, _farm_gdf):
 @st.cache_data
 def session_load():
     ### LOAD DATA ###
-    boundary = load_gdf('./data/twente_4326.geojson')
+    boundary = load_gdf('./app_data/twente_4326.geojson')
     h3_gdf = load_gdf('./app_data/h3_geometry.shp')
     # loi_gdf = h3_gdf[h3_gdf['hex9'].isin(loi.hex9)]
     # loi_gdf.index = range(1, len(loi_gdf) + 1) # Reset index to start with 1
