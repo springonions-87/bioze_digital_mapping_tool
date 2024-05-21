@@ -376,26 +376,26 @@ def main_content(page_2_space):
         
 ### CREATE STREAMLIT ##################################
 def main():
-    st.markdown("### Phase 2: Policy Explorer")
+    st.markdown("### Fase 2: Beleidsverkenner")
     st.markdown(
-        "The map below displays where your candidate sites from **Phase 1** and the farms in the area are located."
-        " By utilizing manure from local farms, we can produce biogas as a substitute for natural gas, promoting renewable energy and preventing greenhouse gas emissions from manure. "
-        " Investigate the best locations to build large digesters based on various policy goals concerning the amount of manure designated for biogas production.")
+        "Op onderstaande kaart ziet u waar uw kandidaat-locaties uit **Fase 1** en de boerderijen in de omgeving zich bevinden."
+        " Door mest van lokale boerderijen te gebruiken, kunnen we biogas produceren ter vervanging van aardgas, waardoor duurzame energie wordt bevorderd en de uitstoot van broeikasgassen door mest wordt voorkomen. "
+        " Onderzoek de beste locaties om grote vergisters te bouwen op basis van verschillende beleidsdoelen met betrekking tot de hoeveelheid mest bestemd voor de productie van biogas.")
     st.markdown("")
     st.markdown(":dart:"
-        " Determine how much of the manure in the region you would like to use for biogas production and indicate that amount with the **'Manure Utilization Target (%)'** slider. "
-        " The tool will find the most strategic locations to build large digesters to meet your target."
+        " Bepaal hoeveel van de mest in de regio u wilt gebruiken voor de productie van biogas en geef die hoeveelheid aan met de schuifregelaar **'Mestgebruiksdoelstelling (%)'**. "
+        " De tool vindt de meest strategische locaties om grote vergisters te bouwen om uw doel te bereiken."
     )
     st.markdown("")
     st.markdown(":white_check_mark:"
-        " You can determine which candidate sites are included in the analysis by selecting them in **'Customize Site Selection'**. By default all sites are included in the analysis."
+        " U kunt bepalen welke kandidaat-sites in de analyse worden opgenomen door ze te selecteren in **'Siteselectie aanpassen'**. Standaard worden alle sites meegenomen in de analyse."
     )
     st.markdown("")
-    with st.expander("**How to read the map :mag_right:**"):
-        st.markdown("Farms - :black_circle:")
-        st.markdown("Candidate digester sites - :rainbow[Colored] and numbered markers")
-        st.markdown("Assignment of farms to digester sites - **:green[green]** and **:red[red]** arcs")
-        st.markdown("Note: Color of farms will change to the color of the digester sites they are assigned to in the solution. If the farms are excluded in the solution, they will remain black.")
+    with st.expander("**Hoe de kaart te lezen :mag_right:**"):
+        st.markdown("Boerderijen - :black_circle:")
+        st.markdown("Kandidaat-vergistersites - :rainbow[Gekleurde] and numbered markers")
+        st.markdown("Toewijzing van boerderijen aan vergistingslocaties - **:green[groen]** en **:red[rood]** bogen")
+        st.markdown("Opmerking: De kleur van boerderijen verandert in de kleur van de vergistingslocaties waaraan ze in de oplossing zijn toegewezen. Als de boerderijen worden uitgesloten van de oplossing, blijven ze zwart.")
     st.markdown("")
     st.divider()
     st.markdown("")
@@ -407,7 +407,7 @@ def main():
     page_2_space = st.session_state.page_2
 
     if "loi" not in st.session_state or len(st.session_state.loi) == 0:
-        st.warning("Oops! It looks like you haven't saved any results yet. Go to **Phase 1** first.", icon="⚠️")
+        st.warning("Oeps! Het lijkt erop dat je nog geen resultaten hebt opgeslagen. Ga eerst naar **Fase 1**.", icon="⚠️")
         if st.button("Visit **Phase 1**"):
             st.switch_page("app.py")
     else:

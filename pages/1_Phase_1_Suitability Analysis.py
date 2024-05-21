@@ -14,20 +14,8 @@ import plotly.figure_factory as ff
 
 
 padding=0
-st.set_page_config(page_title="Suitability Analysis", layout="wide")
+st.set_page_config(page_title="Geschiktheids Analyse", layout="wide")
 
-# st.markdown(
-#     """
-#     <style>
-#     .small-font {
-#         font-size:12px;
-#         font-style: italic;
-#         color: #b1a7a6;
-#     }
-#     </style>
-#     """,
-#     unsafe_allow_html=True,
-# )
 
 st.markdown(
     """
@@ -271,54 +259,54 @@ def initialize_session_state(idx):
 ### CREATE STREAMLIT ##################################
 def main():
     initialize_session_state(idx)
-    st.markdown("### Phase 1: Suitability Analysis - Identify Candidate Sites for Large-scale Digester")
+    st.markdown("### Fase 1: Geschiktheidsanalyse - Identificeer kandidaatlocaties voor grootschalige vergister")
     st.markdown("")
     st.markdown(
-        "Examine the maps below, each represents a pre-selected criterion deemed crucial for determining how suitable an area is for large digesters."
-        " Each area in the region is given a suitability score between 0 and 1, representing least and most suitable respectively."
-        " Tip: Click the question mark icon :grey_question: on top of each map for more information."
+        "Bekijk de onderstaande kaarten. Elke kaart vertegenwoordigt een vooraf geselecteerd criterium dat van cruciaal belang wordt geacht om te bepalen hoe geschikt een gebied is voor grote vergisters."
+        "Elk gebied in de regio krijgt een geschiktheidsscore tussen 0 en 1, respectievelijk het minst en het meest geschikt."
+        "Tip: Klik op het vraagtekenpictogram :grey_question: bovenaan elke kaart voor meer informatie."
     )
     st.markdown("")
-    st.markdown("**Step**:one:")
+    st.markdown("**Stap**:one:")
     st.markdown(
-        "Identify candidate areas suitable for building large digesters by selecting the criteria of your interest and click **'Build Suitability Map'**. The tool outputs a new suitability map below by combining all your selected criteria. "
-        " The number of candidate sites ewill b displayed and the sites are highlighted **:green[green]** on the new suitability map. Try different combinations of criteria until satisfied."
+        "Identificeer kandidaat-gebieden die geschikt zijn voor het bouwen van grote vergisters door de criteria van uw interesse te selecteren en op **'Bouw Geschiktheidskaart'** te klikken. De tool geeft hieronder een nieuwe geschiktheidskaart weer door al uw geselecteerde criteria te combineren."
+        " Het aantal kandidaat-locaties wordt weergegeven en de locaties zijn gemarkeerd **:groen[groen]** op de nieuwe geschiktheidskaart. Probeer verschillende combinaties van criteria totdat u tevreden bent."
     )
-    st.markdown("**Step**:two:")
+    st.markdown("**Stap**:two:")
     # st.markdown(
-    #     "Next, given the your new suitability map, select a range of suitability score (e.g. 0.8 - 1) to filter candidate sites. **'Number of candidate sites'** will be updated and candidate sites will be highlighted **:green[green]** on your suitability map. Repeat Step 1 and 2 until satisfied." 
+    #     "Selecteer vervolgens, op basis van uw nieuwe geschiktheidskaart, een bereik van geschiktheidsscores (bijvoorbeeld 0,8 - 1) om kandidaat-sites te filteren. **'Aantal kandidaatsites'** wordt bijgewerkt en kandidaatsites worden uitgelicht **:green[green]** op uw geschiktheidskaart. Herhaal stap 1 en 2 totdat u tevreden bent." 
     # )
-    # st.markdown("**Step**:three:")
-    st.markdown("Once you are satisfied with the list of candidate sites, you are ready to move on to **Phase 2** of the tool. Click **'Save Result'** and the tool will guide you to the next Phase.") #:red[Please ensure that the number of candidate sites does not exceed **15**].
+    # st.markdown("**Stap**:three:")
+    st.markdown("Zodra u tevreden bent met de lijst met kandidaat-sites, bent u klaar om door te gaan naar **Fase 2** van de tool. Klik op **'Resultaat opslaan'** en de tool begeleidt u naar de volgende fase.") #:red[Zorg ervoor dat het aantal kandidaat-sites niet groter is dan **15**].
 
     st.markdown("")
     st.markdown("")
     # Plotting suitability variables
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("**Farm Locations**", 
-                    help="Suitability for building large digesters determined by distance to locations of feedstocks. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to feedstocks the ***higher*** the suitability.")
+        st.markdown("**Boerderijen Locaties**", 
+                    help="Geschiktheid voor het bouwen van grote vergisters, bepaald door de afstand tot locaties van grondstoffen. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij de grondstoffen, hoe ***hoger*** de geschiktheid.")
         st.pydeck_chart(generate_pydeck(fuzzy_farm), use_container_width=True)
     with col1:
-        st.markdown("**Road Infrastructure**", 
-                    help="Suitability for building large digesters determined by distance to road infrastructure. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to roads the ***higher*** the suitability. Road infrastructure includes only major roads.")
+        st.markdown("**Wegen Infrastructuur**", 
+                    help="Geschiktheid voor het bouwen van grote vergisters, afhankelijk van de afstand tot de wegeninfrastructuur. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij wegen, hoe ***hoger*** de geschiktheid. De wegeninfrastructuur omvat alleen hoofdwegen.")
         st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
     with col1:
-        st.markdown("**Water Bodies**", 
-                    help="Suitability for building large digesters determined by distance to inland and marine waters. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from water bodies the ***higher*** the suitability.")
+        st.markdown("**Water Lichamen**", 
+                    help="Geschiktheid voor het bouwen van grote vergisters, afhankelijk van de afstand tot binnen- en zeewateren. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***verder*** verwijderd van waterlichamen, hoe ***hoger*** de geschiktheid.")
         st.pydeck_chart(generate_pydeck(fuzzy_water), use_container_width=True)
     with col2:
-        st.markdown("**Industrial Areas**", help="Suitability for building large digesters determined by distance to industrial areas, including industrial and commercial units, port areas, mines, dump sites, and construction sites. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to industrial areas the ***higher*** the suitability.")
+        st.markdown("**Industrie Gebieden**", help="Geschiktheid voor het bouwen van grote vergisters, bepaald door de afstand tot industriële gebieden, inclusief industriële en commerciële eenheden, havengebieden, mijnen, stortplaatsen en bouwplaatsen. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij industriële gebieden, hoe ***hoger*** de geschiktheid.")
         st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
     with col2:
-        st.markdown("**Urban and Residential Areas**", help="Suitability for building large digesters determined by distance to urban and residential areas. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from urban and residential areas the ***higher*** the suitability.")
+        st.markdown("**Stedelijke en residentiele gebieden**", help="Geschiktheid voor het bouwen van grote vergisters, afhankelijk van de afstand tot stedelijke en residentiële gebieden. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***verder*** verwijderd van stedelijke en residentiële gebieden, hoe ***hoger*** de geschiktheid.")
         st.pydeck_chart(generate_pydeck(fuzzy_urban), use_container_width=True)
     with col3:
-        st.markdown("**Nature and Forest**", help="Suitability for locating digestersbuilding large digesters determined by distance to nature and forest areas, including also grasslands, wetlands, beaches, dunes, sands, and woodlands. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***further*** away from natural areas and water bodies the ***higher*** the suitability.")
+        st.markdown("**Natuur en bos**", help="Geschiktheid voor het lokaliseren van vergisters, het bouwen van grote vergisters, bepaald door de afstand tot natuur- en bosgebieden, waaronder ook graslanden, wetlands, stranden, duinen, zand en bossen. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***verder*** verwijderd van natuurgebieden en waterlichamen, hoe ***hoger*** de geschiktheid.")
         st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
     with col3:
-        st.markdown("**Gas Inlets**", 
-                    help="Suitability for building large digesters determined by distance to randomly generated gas inlet points. Suitability score ranges from 0 (least suitable) to 1 (most suitable). The ***closer*** to inlets the ***higher*** the suitability. Currently, randomly generated data points are employed due to lack of data, and ideally should be replaced by real data of gas injection stations or other representations of inlets to gas grids.")
+        st.markdown("**Gasinlaatpunten**", 
+                    help="Geschiktheid voor het bouwen van grote vergisters, bepaald door de afstand tot willekeurig gegenereerde gasinlaatpunten. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij de inlaten, hoe ***hoger*** de geschiktheid. Momenteel worden willekeurig gegenereerde gegevenspunten gebruikt vanwege een gebrek aan gegevens, en deze zouden idealiter moeten worden vervangen door echte gegevens van gasinjectiestations of andere representaties van inlaten naar gasnetten.")
         st.pydeck_chart(generate_pydeck(fuzzy_inlet), use_container_width=True)
     with col3:
         st.markdown(variable_legend_html, unsafe_allow_html=True)
@@ -329,10 +317,10 @@ def main():
     # Suitability analysis section 
     with st.sidebar.form("suitability_analysis_form"):
         selected_variables = st.multiselect(":one: Select Criteria", list(all_arrays.keys()))
-        submit_button = st.form_submit_button("Build Suitability Map")
+        submit_button = st.form_submit_button("Bouw Geschiktheidskaart")
 
     if submit_button and not selected_variables:
-        st.warning("No variable selected.")
+        st.warning("Geen variabelen geselecteerd.")
         pass
     
     if submit_button:
@@ -344,13 +332,13 @@ def main():
                             height=400)
         st.session_state.fig = fig
 
-    st.markdown("### **Suitability Map**")
+    st.markdown("### **Geschiktheidskaart**")
         
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(f"**Number of Candidate Sites: {len(st.session_state['all_loi'])}**")
+        st.markdown(f"**Aantal kandidaatsites: {len(st.session_state['all_loi'])}**")
     # with col3:
-    if st.sidebar.button(':two: Save Result & Enter Phase 2', help="Click to save the current filtered locations for further exploration in ***Phase 2: Policy Explorer***."):
+    if st.sidebar.button(':two: Resultaat opslaan en fase 2 betreden', help="Klik om de huidige gefilterde locaties op te slaan voor verder onderzoek in ***Fase 2: Beleidsverkenner***."):
         # st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
         st.session_state.loi = st.session_state.all_loi
         st.switch_page("pages/2_Phase_2_Policy_Explorer.py")
@@ -358,16 +346,7 @@ def main():
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
 
-    # # Filtering location of interest (loi) section
-    # with st.sidebar.form("select_loi"):
-    #     st.slider(':two: Select Candidate Sites', 0.0, 1.0, (0.8, 1.0), step=0.01, key='myslider')
-    #     # st.form_submit_button("Filter", on_click=filter_loi, args=(st.session_state.myslider, hex_df))
-    #     on_click_filter_loi = lambda: filter_loi(st.session_state.myslider, hex_df)
-    #     st.form_submit_button("Filter", on_click=on_click_filter_loi)
 
-    # st.sidebar.button("Find Candidate Sites", on_click=get_sites(hex_df, st.session_state.w, st.session_state.g, idx))
-
-    # st.session_state.all_loi
     plot_result(st.session_state.fig)
 
     loi_plot = pdk.Layer(
@@ -384,7 +363,7 @@ def main():
         line_width_min_pixels=2)
     layers.append(loi_plot)
     
-    deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Suitability: {fuzzy}"})
+    deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Geschiktheid: {fuzzy}"})
     st.pydeck_chart(deck, use_container_width=True)
     st.markdown(variable_legend_html, unsafe_allow_html=True)
 

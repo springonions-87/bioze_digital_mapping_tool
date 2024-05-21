@@ -2,7 +2,7 @@ import streamlit as st
 
 
 padding=0
-st.set_page_config(page_title="Home", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Begin", layout="wide", initial_sidebar_state="expanded")
 
 
 st.markdown(
