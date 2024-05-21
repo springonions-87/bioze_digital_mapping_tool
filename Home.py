@@ -18,29 +18,29 @@ st.markdown(
 )
 
 def main():
-    st.title(":seedling: BIOZE Interactive Tool")
+    st.title(":seedling: Provincie Zuid-Holland Interactieve Tool")
     
     st.markdown("")
     st.markdown("")
     st.markdown("")
 
-    st.subheader(":bulb: About the tool...")
-    st.markdown("The tool consists of a ***two-step*** learning process to engage users to learn about the benefits and trade-offs associated with placement of large-scale biogas digesters.")
+    st.subheader(":bulb: Over de tool...")
+    st.markdown("De tool bestaat uit een ***tweestaps*** leerproces om gebruikers te betrekken bij het leren over de voordelen en afwegingen die gepaard gaan met de plaatsing van grootschalige biogasvergisters.")
 
     st.markdown("")
     st.markdown("")
 
-    st.subheader(":compass: How to use the tool...")
+    st.subheader(":compass: Hoe de tool te gebruiken...")
     st.markdown("")
-    st.markdown("**Phase 1: Suitability Analysis**")
-    st.markdown("Phase 1 welcomes users to conduct a multi-criteria suitability analysis. Suitability analysis can be considered a method of site selection.")
-    st.markdown("We will use this method to determine the appropriateness of a give area in the region for building a large-scale digester.")
-    st.markdown("At the end of this phase, you will have a list of candidate sites for large-scale digesters.")
+    st.markdown("**Fase 1: Geschiktheidsanalyse**")
+    st.markdown("Fase 1 verwelkomt gebruikers om een ​​geschiktheidsanalyse op meerdere criteria uit te voeren. Geschiktheidsanalyse kan worden beschouwd als een methode voor locatieselectie.")
+    st.markdown("We zullen deze methode gebruiken om te bepalen of een bepaald gebied in de regio geschikt is voor het bouwen van een grootschalige vergister.")
+    st.markdown("Aan het einde van deze fase beschikt u over een lijst met kandidaatlocaties voor grootschalige vergisters.")
     st.markdown("")
-    st.markdown("**Phase 2: Policy Explorer**")
-    st.markdown("Phase 2 invites users to explore combinations of candidate sites for large-scale digesters in order to efficiently process manure produced in the region for biogas production.")
-    st.markdown("We will use your list of candidate sites from Phase 1 to generate scenarios consisting of the most strategic locations for digesters to meet certain goals.")
-    st.markdown("At the end of this phase, you will learn the costs and benefits of different scenarios.")
+    st.markdown("**Fase 2: Beleidsverkenner**")
+    st.markdown("Fase 2 nodigt gebruikers uit om combinaties van kandidaat-locaties voor grootschalige vergisters te verkennen om de in de regio geproduceerde mest efficiënt te verwerken voor de productie van biogas.")
+    st.markdown("We zullen uw lijst met kandidaatlocaties uit Fase 1 gebruiken om scenario's te genereren die bestaan ​​uit de meest strategische locaties voor vergisters om bepaalde doelen te bereiken.")
+    st.markdown("Aan het einde van deze fase leer je de kosten en baten van verschillende scenario’s.")
     st.markdown("")
     st.markdown(":repeat: **Iterative Learning**") 
     col1, col2, col3 = st.columns(3)
@@ -50,7 +50,7 @@ def main():
     
     st.markdown("")
     st.divider()
-    st.markdown("This tool is developed for the EU Interreg Project: BIOmass skills for Net Zero (BIOZE), by University of Twente’s Faculty of Geo-Information Science and Earth Observation (ITC).")
+    st.markdown("Deze tool is ontwikkeld voor Data Gedreven werken binnen het Provincie Zuid Holland Programma Landelijk Gebied. Het bouwt verder op het al bestaande BIOZE project. BIOZE is ontwikkeld voor het EU Interreg Project: BIOmass skills for Net Zero (BIOZE), door de Faculteit Geo-Informatie Wetenschap en Aardobservatie (ITC) van de Universiteit Twente.")
 
 
 # Run the Streamlit app
