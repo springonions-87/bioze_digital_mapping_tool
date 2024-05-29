@@ -18,14 +18,14 @@ st.markdown(
 )
 
 def main():
-    st.title(":seedling: Provincie Zuid-Holland Interactieve Tool")
+    st.title(":seedling: Provincie Zuid-Holland Interactieve Tool (Met Neppe Data)")
     
     st.markdown("")
     st.markdown("")
     st.markdown("")
 
     st.subheader(":bulb: Over de tool...")
-    st.markdown("De tool bestaat uit een ***tweestaps*** leerproces om gebruikers te betrekken bij het leren over de voordelen en afwegingen die gepaard gaan met de plaatsing van grootschalige biogasvergisters.")
+    st.markdown("Voor de duidelijkheid: deze tool bestaat puur uit mock data. De tool bestaat uit een ***tweestaps*** leerproces om gebruikers te betrekken bij het leren over de voordelen en afwegingen die gepaard gaan met de plaatsing van grootschalige biogasvergisters.")
 
     st.markdown("")
     st.markdown("")

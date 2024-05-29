@@ -42,13 +42,13 @@ def load_gdf(gdf_path):
     gdf = gpd.read_file(gdf_path)
     return gdf
 
-d_to_farm = load_data('./hex/farm_v2.csv')
-d_to_road = load_data('./hex/road_v2.csv')
-d_to_industry = load_data('./hex/industry_v2.csv')
-d_to_nature = load_data('./hex/nature_v2.csv')
-d_to_water = load_data('./hex/water_v2.csv')
-d_to_urban = load_data('./hex/urban_v2.csv')
-d_to_inlet = load_data('./hex/inlet_v2.csv')
+d_to_farm = load_data('./hex/h3_hexagons_mock_data_1.csv')
+d_to_road = load_data('./hex/h3_hexagons_mock_data_2.csv')
+d_to_industry = load_data('./hex/h3_hexagons_mock_data_3.csv')
+d_to_nature = load_data('./hex/h3_hexagons_mock_data_4.csv')
+d_to_water = load_data('./hex/h3_hexagons_mock_data_5.csv')
+d_to_urban = load_data('./hex/h3_hexagons_mock_data_6.csv')
+d_to_inlet = load_data('./hex/h3_hexagons_mock_data_7.csv')
 
 
 ### GENERATE COLORMAP ##################################
@@ -96,7 +96,7 @@ def create_empty_layer(d_to_farm):
     df_empty['color'] = '[0,0,0,0]'
     return df_empty
 
-idx = load_gdf('./app_data/h3_polygons.shp')
+idx = load_gdf('./app_data/h3_indices_polygon.geojson')
 idx = idx.set_index('hex9')
 
 ### UPDATE EMPTY DF ##################################
