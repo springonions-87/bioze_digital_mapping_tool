@@ -42,13 +42,13 @@ def load_gdf(gdf_path):
     gdf = gpd.read_file(gdf_path)
     return gdf
 
-d_to_farm = load_data('./hex/h3_hexagons_mock_data_1.csv')
-d_to_road = load_data('./hex/h3_hexagons_mock_data_2.csv')
-d_to_industry = load_data('./hex/h3_hexagons_mock_data_3.csv')
-d_to_nature = load_data('./hex/h3_hexagons_mock_data_4.csv')
-d_to_water = load_data('./hex/h3_hexagons_mock_data_5.csv')
-d_to_urban = load_data('./hex/h3_hexagons_mock_data_6.csv')
-d_to_inlet = load_data('./hex/h3_hexagons_mock_data_7.csv')
+d_to_farm = load_data('./hex/farm_v2_pzh.csv')
+d_to_road = load_data('./hex/h3_indices_2.csv')
+d_to_industry = load_data('./hex/h3_indices_3.csv')
+d_to_nature = load_data('./hex/h3_indices_4.csv')
+d_to_water = load_data('./hex/h3_indices_5.csv')
+d_to_urban = load_data('./hex/h3_indices_6.csv')
+d_to_inlet = load_data('./hex/h3_indices_7.csv')
 
 
 ### GENERATE COLORMAP ##################################
@@ -96,7 +96,7 @@ def create_empty_layer(d_to_farm):
     df_empty['color'] = '[0,0,0,0]'
     return df_empty
 
-idx = load_gdf('./app_data/h3_indices_polygon.geojson')
+idx = load_gdf('./app_data/h3_pzh_polygons.shp')
 idx = idx.set_index('hex9')
 
 ### UPDATE EMPTY DF ##################################
@@ -156,7 +156,7 @@ def get_sites(fuzzy_df, w, g, idx):
         return None
 
 ### PLOT PYDECK MAPS ##################################
-view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
+view_state = pdk.ViewState(longitude=4.390, latitude=51.891, zoom=8, bearing=0, pitch=0)
 
 @st.cache_data
 def generate_pydeck(df, view_state=view_state):
@@ -341,7 +341,7 @@ def main():
     if st.sidebar.button(':two: Resultaat opslaan en fase 2 betreden', help="Klik om de huidige gefilterde locaties op te slaan voor verder onderzoek in ***Fase 2: Beleidsverkenner***."):
         # st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
         st.session_state.loi = st.session_state.all_loi
-        st.switch_page("pages/2_Phase_2_Policy_Explorer.py")
+        st.switch_page("pages/2_Fase_2_Beleidsverkenner.py")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
