@@ -42,13 +42,13 @@ def load_gdf(gdf_path):
     gdf = gpd.read_file(gdf_path)
     return gdf
 
-d_to_farm = load_data('./hex/farm_v2_pzh.csv')
+d_to_farm = load_data('./hex/h3_indices_2.csv')
 d_to_road = load_data('./hex/h3_indices_2.csv')
-d_to_industry = load_data('./hex/h3_indices_3.csv')
-d_to_nature = load_data('./hex/h3_indices_4.csv')
-d_to_water = load_data('./hex/h3_indices_5.csv')
-d_to_urban = load_data('./hex/h3_indices_6.csv')
-d_to_inlet = load_data('./hex/h3_indices_7.csv')
+d_to_industry = load_data('./hex/h3_indices_2.csv')
+d_to_nature = load_data('./hex/h3_indices_2.csv')
+d_to_water = load_data('./hex/h3_indices_2.csv')
+d_to_urban = load_data('./hex/h3_indices_2.csv')
+d_to_inlet = load_data('./hex/h3_indices_2.csv')
 
 
 ### GENERATE COLORMAP ##################################
