@@ -1,22 +1,46 @@
-import pandas as pd
+# Importing standard libraries
+from io import BytesIO
+
+# Importing third-party libraries
+import base64
 import geopandas as gpd
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+import pandas as pd
+import plotly.figure_factory as ff
 import pydeck as pdk
 import streamlit as st
-import numpy as np
-from utils.cflp_function import *
-import matplotlib.pyplot as plt
-from io import BytesIO
-import base64
-import networkx as nx
-from pysal.lib import weights
 from pysal.explore import esda
-import plotly.figure_factory as ff
+from pysal.lib import weights
+from libpysal.weights import w_subset
 
+# Importing local application/library specific imports
+from utils.cflp_function import *
 
-padding=0
+#####
+
+# Constants
+PADDING = 0
+COLORMAP = 'magma'
+VIEW_STATE = pdk.ViewState(longitude=4.390, latitude=51.891, zoom=8, bearing=0, pitch=0)
+DATA_PATHS = {
+    'farm': './hex/h3_farm_mock_data.csv',
+    'road': './hex/h3_indices_2.csv',
+    'industry': './hex/h3_indices_3.csv',
+    'nature': './hex/h3_indices_4.csv',
+    'water': './hex/h3_indices_5.csv',
+    'urban': './hex/h3_indices_6.csv',
+    'inlet': './hex/h3_indices_7.csv',
+}
+
+# Generating colormap
+color_mapping = generate_color_mapping(COLORMAP)
+
+# Setting page configuration
 st.set_page_config(page_title="Geschiktheids Analyse", layout="wide")
 
-
+# Setting markdown
 st.markdown(
     """
     <style>
@@ -29,50 +53,55 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+#####
 
-### LOAD DATA ##################################
-@st.cache_data
 def load_data(csv_path):
-    df = pd.read_csv(csv_path)
-    # get color for plotting
-    return df
+    """Function to load data from a CSV file."""
+    try:
+        data = pd.read_csv(csv_path)
+        if data.empty:
+            raise ValueError(f"File {csv_path} is empty.")
+        return data
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File {csv_path} not found.")
+    except pd.errors.EmptyDataError:
+        raise ValueError(f"No data in file {csv_path}.")
+    except Exception as e:
+        raise Exception(f"An error occurred while reading the file {csv_path}: {str(e)}")
 
-@st.cache_data
 def load_gdf(gdf_path):
-    gdf = gpd.read_file(gdf_path)
-    return gdf
+    """Function to load a GeoDataFrame from a file."""
+    try:
+        return gpd.read_file(gdf_path).set_index('hex9')
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File {gdf_path} not found.")
 
-d_to_farm = load_data('./hex/h3_indices_2.csv')
-d_to_road = load_data('./hex/h3_indices_2.csv')
-d_to_industry = load_data('./hex/h3_indices_2.csv')
-d_to_nature = load_data('./hex/h3_indices_2.csv')
-d_to_water = load_data('./hex/h3_indices_2.csv')
-d_to_urban = load_data('./hex/h3_indices_2.csv')
-d_to_inlet = load_data('./hex/h3_indices_2.csv')
+# Loading dataframes
+d_to_farm = load_data(DATA_PATHS['farm'])
+d_to_road = load_data(DATA_PATHS['road'])
+d_to_industry = load_data(DATA_PATHS['industry'])
+d_to_nature = load_data(DATA_PATHS['nature'])
+d_to_water = load_data(DATA_PATHS['water'])
+d_to_urban = load_data(DATA_PATHS['urban'])
+d_to_inlet = load_data(DATA_PATHS['inlet'])
 
+# Checking if data is loaded correctly
+if d_to_farm is None or d_to_road is None or d_to_industry is None or d_to_nature is None or d_to_water is None or d_to_urban is None or d_to_inlet is None:
+    st.write("Error loading data.")
+    exit()
 
-### GENERATE COLORMAP ##################################
-colormap = 'magma'
-color_mapping = generate_color_mapping(colormap)
+#####
 
-### FUZZIFY INPUT VARIABLES ##################################
+# Fuzzify input variables
 @st.cache_data
 def fuzzify(df, type="close", colormap_name=color_mapping):
     df_array = np.array(df['value'])
-    if type == "close":
-        fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-        df['fuzzy'] = fuzzified_array.round(3)
-        # get_fill_color(df, "fuzzy", colormap_name)
-        apply_color_mapping(df, 'fuzzy', color_mapping)
-    elif type == "far":
-        fuzzified_array = np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
-        df['fuzzy'] = fuzzified_array.round(3)
-        # get_fill_color(df, "fuzzy", colormap_name)
-        apply_color_mapping(df, 'fuzzy', color_mapping)
-    else:
-        raise ValueError("Invalid type. Choose 'close' or 'far'.")
+    fuzzified_array = np.maximum(0, 1 - (df_array - df_array.min()) / (df_array.max() - df_array.min())) if type == "close" else np.maximum(0, (df_array - df_array.min()) / (df_array.max() - df_array.min()))
+    df['fuzzy'] = fuzzified_array.round(3)
+    apply_color_mapping(df, 'fuzzy', color_mapping)
     return df
 
+# Fuzzifying dataframes
 fuzzy_farm = fuzzify(d_to_farm, type='close')
 fuzzy_road = fuzzify(d_to_road, type='close')
 fuzzy_industry = fuzzify(d_to_industry, type='close')
@@ -80,86 +109,206 @@ fuzzy_nature = fuzzify(d_to_nature, type='far')
 fuzzy_water = fuzzify(d_to_water, type='far')
 fuzzy_urban = fuzzify(d_to_urban, type='far')
 fuzzy_inlet = fuzzify(d_to_inlet, type='close')
+# fuzzy_pm25 = fuzzify(d_to_pm25, type='close')  # or type='far',
 
-all_arrays = {'Farms': np.array(fuzzy_farm['fuzzy']), 
-              'Road infrastructure': np.array(fuzzy_road['fuzzy']),
-              'Urban and residential areas': np.array(fuzzy_urban['fuzzy']), 
-              'Industrial areas': np.array(fuzzy_industry['fuzzy']), 
-              'Nature': np.array(fuzzy_nature['fuzzy']),
-              'Water Bodies': np.array(fuzzy_water['fuzzy']),
-              'Gas Inlets': np.array(fuzzy_inlet['fuzzy'])}
+# All arrays
+all_arrays = {'Boerderijen': np.array(fuzzy_farm['fuzzy']), 
+              'Weginfrastructuur': np.array(fuzzy_road['fuzzy']),
+              'Stedelijke en woongebieden': np.array(fuzzy_urban['fuzzy']), 
+              'Industriële gebieden': np.array(fuzzy_industry['fuzzy']), 
+              'Natuur': np.array(fuzzy_nature['fuzzy']),
+              'Waterlichamen': np.array(fuzzy_water['fuzzy']),
+              'Gasinlaten': np.array(fuzzy_inlet['fuzzy']),
+            #   'Pm25': np.array(fuzzy_pm25['fuzzy'])
+            }
 
-### CREATE EMPTY LAYER ##################################
+#####
 
+# Create empty layer
 def create_empty_layer(d_to_farm):
     df_empty = d_to_farm[['hex9']]
     df_empty['color'] = '[0,0,0,0]'
     return df_empty
 
-idx = load_gdf('./app_data/h3_pzh_polygons.shp')
-idx = idx.set_index('hex9')
-
-### UPDATE EMPTY DF ##################################
+# Update empty df
 def update_layer(selected_variables, all_arrays, d_to_farm):
     if not selected_variables:
         return create_empty_layer(d_to_farm)
     
-    # Extract the selected variables (array) from the dictionary
     selected_array_list = [all_arrays[key] for key in selected_variables]
-    
-    # METHOD 1 NP.MINIMUM
-    # result_array = selected_array_list[0] 
-    # for arr in selected_array_list[1:]:
-    #     result_array = np.minimum(result_array, arr)
-    
-    # METHOD 2 AVERAGE
     result_array = np.mean(selected_array_list, axis=0)
-    
     hex_df = create_empty_layer(d_to_farm)
     hex_df['fuzzy'] = result_array
-    # get_fill_color(hex_df, 'fuzzy', colormap_name_suitability_map)
     apply_color_mapping(hex_df, 'fuzzy', color_mapping)
     hex_df['fuzzy'] = hex_df['fuzzy'].round(3)
     return hex_df
 
-### FILTER POTENTIAL DIGESTER LOCATIONS ##################################
-# def filter_loi(fuzzy_cut_off, fuzzy_df):
-#     st.session_state.all_loi = fuzzy_df[(fuzzy_df['fuzzy'] >=fuzzy_cut_off[0]) & (fuzzy_df['fuzzy'] <= fuzzy_cut_off[1])]
 
-def get_sites(fuzzy_df, w, g, idx):
-    if 'fuzzy' in fuzzy_df.columns:
-        fuzzy_df = fuzzy_df.set_index('hex9').reindex(idx.index)
-        # 1. Compute loca moran's I
-        lisa = esda.Moran_Local(fuzzy_df['fuzzy'], w, seed=42)
-        # 2. Break observations into significant or not
-        # fuzzy_df['significant'] = lisa.p_sim < 0.01
-        # 3. Store the quadrant they belong to
-        HH = fuzzy_df[(lisa.q == 1) & (lisa.p_sim < 0.01)].index.to_list()
-        # Build sub graph that includes only the HH quadrant
-        H = g.subgraph(HH)
-        # Get sub components in the sub graphs
-        subH = list(nx.connected_components(H))
-        filter_subH = [component for component in subH if len(component) > 10]
-        # Calculate eigenvector centrality for each connected component
-        site_idx = []
-        for component in filter_subH:
-            # Create a subgraph for the current connected component
-            subgraph = H.subgraph(component)
-            # Calculate eigenvector centrality for a connected graph
-            eigenvector_centrality = nx.eigenvector_centrality(subgraph, max_iter=1500)
-            # Get the node index with the highest eigenvector centrality in that connected graph
-            max_node_index = max(eigenvector_centrality, key=eigenvector_centrality.get)
-            # Append the node index to a list
-            site_idx.append(max_node_index)
-        st.session_state.all_loi = fuzzy_df.loc[site_idx].reset_index()
-    else:
-        return None
 
-### PLOT PYDECK MAPS ##################################
-view_state = pdk.ViewState(longitude=4.390, latitude=51.891, zoom=8, bearing=0, pitch=0)
 
-@st.cache_data
-def generate_pydeck(df, view_state=view_state):
+
+# # Filter potential digester locations
+# def get_sites(df, w, g, idx, score_column='fuzzy', seed=42) -> pd.DataFrame:
+#     """
+#     Analyzes potential digester locations based on suitability scores and spatial factors.
+
+#     Args:
+#         df (pd.DataFrame): DataFrame containing a column with suitability scores.
+#         w (pysal.W): Spatial weights object for spatial analysis.
+#         g (networkx.Graph): Graph object for network analysis.
+#         idx (pd.DataFrame): DataFrame with potential digester locations (indexed by "hex9").
+#         score_column (str, optional): Name of the column containing suitability scores. Defaults to 'fuzzy'.
+#         seed (int, optional): Seed for random number generator. Defaults to 42.
+
+#     Returns:
+#         pd.DataFrame: DataFrame containing the most central locations within significant suitability clusters.
+#     """
+
+#     # Input Validation
+#     if score_column not in df.columns:
+#         raise ValueError(f"The DataFrame does not contain a '{score_column}' column.")
+#     if not isinstance(idx, pd.DataFrame) or idx.index.name != 'hex9':
+#         raise ValueError("The idx should be a pandas DataFrame with 'hex9' as index.")
+
+#     # Data Cleaning and Preprocessing (Improved handling of missing values)
+#     df.dropna(subset=[score_column], inplace=True)  # Handle missing values
+#     df = df.drop_duplicates(subset='hex9').set_index('hex9')
+
+#     # Ensure all "hex9" values from df are present in the index
+#     unique_idx = df.index.intersection(idx.index)
+
+#     if unique_idx.empty:
+#         raise ValueError("No overlapping 'hex9' values found between df and idx. Check data quality and 'hex9' formatting.")
+
+#     df = df.loc[unique_idx]  # Reindex df based on the intersection
+
+#     if 'geometry' in df.columns:
+#         df['geometry'] = gpd.GeoSeries(df['geometry']).to_shapely()
+
+#     w_subset_result = w_subset(w, df.index)
+
+#     # Spatial Analysis with Error Handling (using a try-except block)
+#     try:
+#         lisa = esda.Moran_Local(df[score_column], w_subset_result, seed=seed)
+#     except ValueError as e:
+#         raise ValueError(f"Error computing Moran's I: {str(e)}") from e  # Propagate original error
+
+#     # Identify Significant Locations
+#     significant_locations = df[lisa.p_sim < 0.01].index.to_list()
+#     st.write(f"Number of significant locations: {len(significant_locations)}")
+
+#     # # Check if nodes in significant_locations exist in the main graph
+#     # missing_nodes = [node for node in significant_locations if node not in st.session_state.g.nodes]
+#     # if missing_nodes:
+#     #     st.write(f"Missing nodes: {missing_nodes}")
+
+#     st.write(f"Number of nodes in the graph: {len(g.nodes)}")
+#     st.write(f"Number of edges in the graph: {len(g.edges)}")
+
+
+#     # Network Analysis
+#     H = g.subgraph(significant_locations)
+#     st.write(f"Number of nodes in H: {len(H.nodes)}")
+#     st.write(f"Number of edges in H: {len(H.edges)}")
+#     H_undirected = nx.Graph(H.to_undirected())
+
+#     # st.write(H_undirected)
+#     connected_components = [component for component in nx.connected_components(H_undirected) if len(component) > 1]
+#     filtered_components = [component for component in connected_components if len(component) > 2]
+#     # st.write(filtered_components)
+
+#     # Calculate Eigenvector Centrality for Each Component
+#     centrality_measure = nx.eigenvector_centrality  # Example: using eigenvector centrality
+#     central_locations = []
+#     for component in filtered_components:
+#         subgraph = H.subgraph(component)
+#         centrality = centrality_measure(subgraph, max_iter=1500)
+#         most_central_node = max(centrality, key=centrality.get)
+#         central_locations.append(most_central_node)
+
+#     # Check if 'fuzzy' exists in st.session_state.all_loi
+#     # if 'fuzzy' in st.session_state.all_loi.columns and st.session_state.all_loi['fuzzy'] is not None:
+#         # if not st.session_state.all_loi['fuzzy'].empty:
+#     st.session_state.all_loi = df.loc[central_locations].reset_index()
+#     #     else:
+#     #         st.write("st.session_state.all_loi['fuzzy'] is empty.")
+#     # else:
+#     #     st.write("'fuzzy' does not exist in st.session_state.all_loi.")
+
+def get_sites(df, w, g, idx, score_column: str = 'fuzzy', seed: int = 42) -> pd.DataFrame:
+    """
+    Analyzes potential digester locations based on suitability scores and spatial factors.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing a column with suitability scores.
+        w (pysal.W): Spatial weights object for spatial analysis.
+        g (networkx.Graph): Graph object representing the network.
+        idx (pd.DataFrame): DataFrame containing potential digester locations (indexed by "hex9").
+        score_column (str, optional): Name of the column containing suitability scores. Defaults to 'fuzzy'.
+        seed (int, optional): Seed for the random number generator. Defaults to 42.
+
+    Returns:
+        pd.DataFrame: DataFrame containing the most central locations within significant suitability clusters.
+
+    Raises:
+        ValueError: If required columns are missing, data quality issues are detected, or errors occur during spatial analysis.
+    """
+
+    # Input Validation
+    if score_column not in df.columns:
+        raise ValueError(f"The DataFrame does not contain a '{score_column}' column.")
+    if not isinstance(idx, pd.DataFrame) or idx.index.name != 'hex9':
+        raise ValueError("The idx should be a pandas DataFrame with 'hex9' as index.")
+
+    # Data Cleaning and Preprocessing
+    df.dropna(subset=[score_column], inplace=True)  # Handle missing values in score column
+    df = df.drop_duplicates(subset='hex9').set_index('hex9')  # Ensure unique hex9 and set as index
+    unique_idx = df.index.intersection(idx.index)
+    if unique_idx.empty:
+        raise ValueError("No overlapping 'hex9' values found between df and idx. Check data quality and 'hex9' formatting.")
+    df = df.loc[unique_idx]  # Retain data with matching hex9 values
+
+    if 'geometry' in df.columns:
+        df['geometry'] = gpd.GeoSeries(df['geometry']).to_shapely()  # Convert geometry to shapely format (if applicable)
+
+    w_subset_result = w_subset(w, df.index)  # Create sub-weights object based on df index
+
+    # Spatial Analysis
+    try:
+        
+        lisa = esda.Moran_Local(df[score_column], w_subset_result, seed=seed)
+        significant_locations = df[(lisa.q == 1) & (lisa.p_sim < 0.01)].index.to_list()
+    except ValueError as e:
+        raise ValueError(f"Error computing Moran's I: {str(e)}") from e
+
+    # Network Analysis (Identify central locations within significant clusters - Optional)
+    H = g.subgraph(significant_locations)
+    H_undirected = nx.Graph(H.to_undirected())
+    filtered_components = [component for component in nx.connected_components(H_undirected) if len(component) > 2]
+    # st.write(filtered_components)
+    
+    # Calculate centrality for each component (optional - uncomment to implement)
+    # centrality_measure = nx.eigenvector_centrality
+    # central_locations = []
+    # for component in filtered_components:
+    #     subgraph = H.subgraph(component)
+    #     centrality = centrality_measure(subgraph, max_iter=1500)
+    #     most_central_node = max(centrality, key=centrality.get)
+    #     central_locations.append(most_central_node)
+
+    return df[df.index.isin(significant_locations)]  # Return DataFrame with significant locations
+
+
+
+
+
+
+
+#####
+
+# Generate pydeck
+@st.cache_resource
+def generate_pydeck(df, view_state=VIEW_STATE):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
                         pdk.Layer(
@@ -172,48 +321,33 @@ def generate_pydeck(df, view_state=view_state):
                             opacity=0.6,
                             get_hexagon="hex9",
                             get_fill_color ='color', 
-                            # get_line_color=[255, 255, 255],
-                            # line_width_min_pixels=1
                         ),
                     ],
-                    tooltip={"text": "Suitability:" f"{{fuzzy}}"})
+                    tooltip={"text": "Geschiktheid:" f"{{fuzzy}}"}
+    )
 
-### CREATE VARIABLE LEGEND ##################################
+# Create variable legend
 @st.cache_data
-def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_cmap(colormap)):
-    # Create Viridis colormap image
+def generate_colormap_legend(label_left='Far', label_right='Near', cmap=plt.get_cmap(COLORMAP)):
     gradient = np.linspace(0, 1, 256)
     gradient = np.vstack((gradient, gradient))
-
-    # Create Matplotlib figure and axis
     fig, ax = plt.subplots(figsize=(4, 0.5))
     ax.imshow(gradient, aspect='auto', cmap=cmap)
-    ax.axis('off') 
-
-    # Add labels 
+    ax.axis('off')
     ax.text(-10, 0.5, label_left, verticalalignment='center', horizontalalignment='right', fontsize=12)
     ax.text(266, 0.5, label_right, verticalalignment='center', horizontalalignment='left', fontsize=12)
-
-    # Save Matplotlib figure as PNG image
     buffer = BytesIO()
     fig.savefig(buffer, format='png', bbox_inches='tight', pad_inches=0)
     buffer.seek(0)
     image_png = buffer.getvalue()
-    plt.close(fig)    # Close Matplotlib figure
-    # Convert Matplotlib PNG image to Base64 string
+    plt.close(fig)
     image_base64 = base64.b64encode(image_png).decode()
-
-    # Create HTML content with image and labels
-    legend_html = f'''
-        <div style="width: 100%; height: 300px; overflow: auto; padding: 10px;">
-            <img src="data:image/png;base64,{image_base64}" alt="Colorbar" style="max-width: 100%; max-height: 100%; height: auto; width: auto; display: block; margin-left: auto; margin-right: auto;">
-        </div>
-    '''
+    legend_html = f''' <div style="width: 100%; height: 300px; overflow: auto; padding: 10px;"> <img src="data:image/png;base64,{image_base64}" alt="Colorbar" style="max-width: 100%; max-height: 100%; height: auto; width: auto; display: block; margin-left: auto; margin-right: auto;"> </div> '''
     return legend_html
 
-variable_legend_html = generate_colormap_legend(label_left='Least Suitable (0)', label_right='Most Suitable (1)',)
+variable_legend_html = generate_colormap_legend(label_left='Minst Geschikt (0)', label_right='Meest Geschikt (1)',)
 
-### 
+# Get layers
 @st.cache_data
 def get_layers(hex_df):
     hex_fuzzy = pdk.Layer(
@@ -223,24 +357,30 @@ def get_layers(hex_df):
         stroked=True,
         filled=True,
         extruded=False,
-        opacity=0.6,
+        opacity=0.1,
         get_hexagon="hex9",
         get_fill_color='color', 
-                    # get_line_color=[255, 255, 255],
-            # line_width_min_pixels=2
     )
 
     layers = [hex_fuzzy]
     return layers
 
-###
-@st.cache_data 
+# Plot result
 def plot_result(fig):
     if fig is not None:
         st.plotly_chart(fig, theme="streamlit")
 
+#####
 
-### INITIALIZE SESSION STATE ##################################
+### CREATE STREAMLIT ##
+def main(idx):
+    initialize_session_state(idx)
+    display_intro_text()
+    plot_suitability_variables()
+    perform_suitability_analysis()
+
+
+# Initialize session state | STAP 1
 def initialize_session_state(idx):
     if 'all_loi' not in st.session_state:
         st.session_state.all_loi = pd.DataFrame()
@@ -248,139 +388,104 @@ def initialize_session_state(idx):
         st.session_state.loi = pd.DataFrame()
     if 'fig' not in st.session_state:
         st.session_state.fig = None
-    if 'w' not in st.session_state: #and 'hex_df' not in st.session_state
+    if 'w' not in st.session_state:
         st.session_state.w = weights.Queen.from_dataframe(idx, use_index=True)
-        # df = pd.DataFrame(index=idx.index)
-        # df['color'] = '[0,0,0,0]'
-        # st.session_state.hex_df = df
+        # st.write(st.session_state.w)
     if 'g' not in st.session_state:
-        st.session_state.g = nx.read_graphml('./app_data/g.graphml')
+        st.session_state.g = nx.read_graphml('./osm_network/G.graphml')
 
-### CREATE STREAMLIT ##################################
-def main():
-    initialize_session_state(idx)
-    st.markdown("### Fase 1: Geschiktheidsanalyse - Identificeer kandidaatlocaties voor grootschalige vergister")
-    st.markdown("")
-    st.markdown(
-        "Bekijk de onderstaande kaarten. Elke kaart vertegenwoordigt een vooraf geselecteerd criterium dat van cruciaal belang wordt geacht om te bepalen hoe geschikt een gebied is voor grote vergisters."
-        "Elk gebied in de regio krijgt een geschiktheidsscore tussen 0 en 1, respectievelijk het minst en het meest geschikt."
-        "Tip: Klik op het vraagtekenpictogram :grey_question: bovenaan elke kaart voor meer informatie."
-    )
-    st.markdown("")
-    st.markdown("**Stap**:one:")
-    st.markdown(
-        "Identificeer kandidaat-gebieden die geschikt zijn voor het bouwen van grote vergisters door de criteria van uw interesse te selecteren en op **'Bouw Geschiktheidskaart'** te klikken. De tool geeft hieronder een nieuwe geschiktheidskaart weer door al uw geselecteerde criteria te combineren."
-        " Het aantal kandidaat-locaties wordt weergegeven en de locaties zijn gemarkeerd **:groen[groen]** op de nieuwe geschiktheidskaart. Probeer verschillende combinaties van criteria totdat u tevreden bent."
-    )
-    st.markdown("**Stap**:two:")
-    # st.markdown(
-    #     "Selecteer vervolgens, op basis van uw nieuwe geschiktheidskaart, een bereik van geschiktheidsscores (bijvoorbeeld 0,8 - 1) om kandidaat-sites te filteren. **'Aantal kandidaatsites'** wordt bijgewerkt en kandidaatsites worden uitgelicht **:green[green]** op uw geschiktheidskaart. Herhaal stap 1 en 2 totdat u tevreden bent." 
-    # )
-    # st.markdown("**Stap**:three:")
-    st.markdown("Zodra u tevreden bent met de lijst met kandidaat-sites, bent u klaar om door te gaan naar **Fase 2** van de tool. Klik op **'Resultaat opslaan'** en de tool begeleidt u naar de volgende fase.") #:red[Zorg ervoor dat het aantal kandidaat-sites niet groter is dan **15**].
 
-    st.markdown("")
-    st.markdown("")
-    # Plotting suitability variables
+### STAP 2
+def display_intro_text():
+    st.markdown("### Fase 1: Geschiktheidsanalyse - Potentiële Locaties voor Grootschalige Vergisters")
+    st.markdown(
+        "Bekijk de onderstaande kaarten, elk vertegenwoordigt een vooraf geselecteerd criterium dat essentieel wordt geacht voor het bepalen van de geschiktheid van een gebied voor grootschalige vergisters.  "
+        " Elk gebied in de regio krijgt een geschiktheidsscore tussen 0 en 1, waarbij 0 het minst geschikt en 1 het meest geschikt vertegenwoordigt.  "
+        "<br>Tip: Klik op het vraagtekenpictogram :grey_question: boven elke kaart voor meer informatie.",
+        unsafe_allow_html=True
+    )
+
+
+### STAP 3
+def plot_suitability_variables():
     col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("**Boerderijen Locaties**", 
-                    help="Geschiktheid voor het bouwen van grote vergisters, bepaald door de afstand tot locaties van grondstoffen. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij de grondstoffen, hoe ***hoger*** de geschiktheid.")
-        st.pydeck_chart(generate_pydeck(fuzzy_farm), use_container_width=True)
-    with col1:
-        st.markdown("**Wegen Infrastructuur**", 
-                    help="Geschiktheid voor het bouwen van grote vergisters, afhankelijk van de afstand tot de wegeninfrastructuur. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij wegen, hoe ***hoger*** de geschiktheid. De wegeninfrastructuur omvat alleen hoofdwegen.")
-        st.pydeck_chart(generate_pydeck(fuzzy_road), use_container_width=True)
-    with col1:
-        st.markdown("**Water Lichamen**", 
-                    help="Geschiktheid voor het bouwen van grote vergisters, afhankelijk van de afstand tot binnen- en zeewateren. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***verder*** verwijderd van waterlichamen, hoe ***hoger*** de geschiktheid.")
-        st.pydeck_chart(generate_pydeck(fuzzy_water), use_container_width=True)
-    with col2:
-        st.markdown("**Industrie Gebieden**", help="Geschiktheid voor het bouwen van grote vergisters, bepaald door de afstand tot industriële gebieden, inclusief industriële en commerciële eenheden, havengebieden, mijnen, stortplaatsen en bouwplaatsen. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij industriële gebieden, hoe ***hoger*** de geschiktheid.")
-        st.pydeck_chart(generate_pydeck(fuzzy_industry), use_container_width=True)
-    with col2:
-        st.markdown("**Stedelijke en residentiele gebieden**", help="Geschiktheid voor het bouwen van grote vergisters, afhankelijk van de afstand tot stedelijke en residentiële gebieden. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***verder*** verwijderd van stedelijke en residentiële gebieden, hoe ***hoger*** de geschiktheid.")
-        st.pydeck_chart(generate_pydeck(fuzzy_urban), use_container_width=True)
-    with col3:
-        st.markdown("**Natuur en bos**", help="Geschiktheid voor het lokaliseren van vergisters, het bouwen van grote vergisters, bepaald door de afstand tot natuur- en bosgebieden, waaronder ook graslanden, wetlands, stranden, duinen, zand en bossen. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***verder*** verwijderd van natuurgebieden en waterlichamen, hoe ***hoger*** de geschiktheid.")
-        st.pydeck_chart(generate_pydeck(fuzzy_nature), use_container_width=True)
-    with col3:
-        st.markdown("**Gasinlaatpunten**", 
-                    help="Geschiktheid voor het bouwen van grote vergisters, bepaald door de afstand tot willekeurig gegenereerde gasinlaatpunten. De geschiktheidsscore varieert van 0 (minst geschikt) tot 1 (meest geschikt). Hoe ***dichter*** bij de inlaten, hoe ***hoger*** de geschiktheid. Momenteel worden willekeurig gegenereerde gegevenspunten gebruikt vanwege een gebrek aan gegevens, en deze zouden idealiter moeten worden vervangen door echte gegevens van gasinjectiestations of andere representaties van inlaten naar gasnetten.")
-        st.pydeck_chart(generate_pydeck(fuzzy_inlet), use_container_width=True)
-    with col3:
-        st.markdown(variable_legend_html, unsafe_allow_html=True)
-   
-    "---"
-    st.markdown("")
+    plot_variable(col1, "Boerderij locaties", fuzzy_farm, "Hoe dichter bij voedingsstoffen, hoe geschikter.")
+    plot_variable(col1, "Weginfrastructuur", fuzzy_road, "Hoe dichter bij wegen, hoe geschikter.")
+    plot_variable(col1, "Waterlichamen", fuzzy_water, "Hoe verder weg van waterlichamen, hoe geschikter.")
+    plot_variable(col2, "Industriële Gebieden", fuzzy_industry, "Hoe dichter bij industriële gebieden, hoe geschikter.")
+    plot_variable(col2, "Stedelijke en Woongebieden", fuzzy_urban, "Hoe verder weg van stedelijke en woongebieden, hoe geschikter.")
+    plot_variable(col3, "Natuur en Bos", fuzzy_nature, "Hoe verder weg van natuurgebieden en waterlichamen, hoe geschikter.")
+    plot_variable(col3, "Gasinlaten", fuzzy_inlet, "Hoe dichter bij inlaten, hoe geschikter.")
+    # plot_variable(col3, "Pm25", fuzzy_pm25, "The closer to pm25 the higher the suitability.")
+    col3.markdown(variable_legend_html, unsafe_allow_html=True)
 
-    # Suitability analysis section 
+def plot_variable(column, title, data, help_text):
+    # st.write(data)
+    column.markdown(f"**{title}**", help=help_text)
+    column.pydeck_chart(generate_pydeck(data), use_container_width=True)
+
+
+### STAP 4
+def perform_suitability_analysis():
+    """
+        Performs suitability analysis based on selected criteria and visualizes results.
+    """
     with st.sidebar.form("suitability_analysis_form"):
-        selected_variables = st.multiselect(":one: Select Criteria", list(all_arrays.keys()))
+        selected_variables = st.multiselect(":one: Selecteer Criteria", list(all_arrays.keys()))
         submit_button = st.form_submit_button("Bouw Geschiktheidskaart")
 
     if submit_button and not selected_variables:
-        st.warning("Geen variabelen geselecteerd.")
-        pass
-    
+        st.warning("Geen variabele geselecteerd.")
+        return
+
     if submit_button:
         hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
-        get_sites(hex_df, st.session_state.w, st.session_state.g, idx)
-        fig = ff.create_distplot([st.session_state.all_loi['fuzzy'].tolist()], ['Distribution'], show_hist=False, bin_size=0.02)
-        fig.update_layout(autosize=True,
-                            width=600,
-                            height=400)
-        st.session_state.fig = fig
+
+        # Improved data handling in get_sites
+        all_loi = get_sites(hex_df, st.session_state.w, st.session_state.g, idx)
+        if all_loi is not None and not all_loi.empty:
+            st.session_state.all_loi = all_loi
+            fig = ff.create_distplot([all_loi['fuzzy'].tolist()], ['Distribution'], show_hist=False, bin_size=0.02)
+            fig.update_layout(autosize=True, width=600, height=400)
+            st.session_state.fig = fig
+        else:
+            st.write("No suitable locations identified based on selected criteria.")
 
     st.markdown("### **Geschiktheidskaart**")
-        
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(f"**Aantal kandidaatsites: {len(st.session_state['all_loi'])}**")
-    # with col3:
-    if st.sidebar.button(':two: Resultaat opslaan en fase 2 betreden', help="Klik om de huidige gefilterde locaties op te slaan voor verder onderzoek in ***Fase 2: Beleidsverkenner***."):
-        # st.session_state.loi = st.session_state.all_loi.nlargest(12, 'fuzzy')
+        st.markdown(f"**Aantal Potentiële Locaties: {len(st.session_state['all_loi'])}**")
+
+    if st.sidebar.button(':two: Resultaat Opslaan & Ga naar Fase 2', help="Klik om de huidige gefilterde locaties op te slaan voor verder onderzoek in ***Fase 2: Beleid Verkenner***."):
         st.session_state.loi = st.session_state.all_loi
         st.switch_page("pages/2_Fase_2_Beleidsverkenner.py")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
     layers = get_layers(hex_df)
-
-
     plot_result(st.session_state.fig)
-
+    
     loi_plot = pdk.Layer(
         "H3HexagonLayer",
-        st.session_state.all_loi,
+        st.session_state.all_loi.reset_index(),
         pickable=True,
         stroked=True,
         filled=True,
         extruded=False,
-        opacity=0.6,
+        opacity=0.7,
         get_hexagon="hex9",
-        get_fill_color=[0, 0, 0, 0], 
+        get_fill_color=[0, 255, 0], 
         get_line_color=[0, 255, 0],
         line_width_min_pixels=2)
+
     layers.append(loi_plot)
     
-    deck = pdk.Deck(layers=layers, initial_view_state=view_state, tooltip={"text": "Geschiktheid: {fuzzy}"})
+    deck = pdk.Deck(layers=layers, initial_view_state=VIEW_STATE, tooltip={"text": "Suitability: {fuzzy}"})
     st.pydeck_chart(deck, use_container_width=True)
     st.markdown(variable_legend_html, unsafe_allow_html=True)
 
+
+
 # Run the Streamlit app
 if __name__ == "__main__":
-    main()
-
-# # import sys
-# import leafmap.foliumap as leafmap
-
-# # sys.path
-
-# raster_file = '/Users/wenyuc/Desktop/UT/data/raster/fuzzy_complete_3857.tif'
-
-# m = leafmap.Map()
-# m.add_basemap()
-# m.add_raster(raster_file, cmap="viridis", layer_name="Raster Layer")
-
-# m.to_streamlit()
-
+    idx = load_gdf('./app_data/h3_pzh_polygons.shp')
+    main(idx)
