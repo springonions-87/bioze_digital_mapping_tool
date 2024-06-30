@@ -16,19 +16,6 @@ import plotly.figure_factory as ff
 padding=0
 st.set_page_config(page_title="Suitability Analysis", layout="wide")
 
-# st.markdown(
-#     """
-#     <style>
-#     .small-font {
-#         font-size:12px;
-#         font-style: italic;
-#         color: #b1a7a6;
-#     }
-#     </style>
-#     """,
-#     unsafe_allow_html=True,
-# )
-
 st.markdown(
     """
     <style>
@@ -170,7 +157,7 @@ def get_sites(fuzzy_df, w, g, idx):
 ### PLOT PYDECK MAPS ##################################
 view_state = pdk.ViewState(longitude=6.747489560596507, latitude=52.316862707395394, zoom=8, bearing=0, pitch=0)
 
-@st.cache_data
+# @st.cache_data
 def generate_pydeck(df, view_state=view_state):
     return pdk.Deck(initial_view_state=view_state,
                     layers=[
@@ -258,13 +245,14 @@ def initialize_session_state(idx):
         st.session_state.all_loi = pd.DataFrame()
     if 'loi' not in st.session_state:
         st.session_state.loi = pd.DataFrame()
+    if 'hex_df' not in st.session_state:
+        st.session_state.hex_df = pd.DataFrame()
     if 'fig' not in st.session_state:
         st.session_state.fig = None
     if 'w' not in st.session_state: #and 'hex_df' not in st.session_state
         st.session_state.w = weights.Queen.from_dataframe(idx, use_index=True)
         # df = pd.DataFrame(index=idx.index)
         # df['color'] = '[0,0,0,0]'
-        # st.session_state.hex_df = df
     if 'g' not in st.session_state:
         st.session_state.g = nx.read_graphml('./app_data/g.graphml')
 
@@ -356,6 +344,7 @@ def main():
         st.switch_page("pages/2_Phase_2_Policy_Explorer.py")
 
     hex_df = update_layer(selected_variables, all_arrays, d_to_farm)
+    st.session_state.hex_df = hex_df
     layers = get_layers(hex_df)
 
     # # Filtering location of interest (loi) section

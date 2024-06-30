@@ -120,13 +120,13 @@ def initialize_map(digester_df, farm_df, suitability_df, boundary):
         data=suitability_df,
         pickable=True,
         filled=True,
+        stroked=True,
         extruded=False,
-        opacity=0.5,
-        get_hexagon="he7",
+        opacity=0.6,
+        get_hexagon="hex9",
         # get_fill_color ='[255 * Value, 255 * (100 - Value), 0, 255]',
-        get_fill_color ='[0, 0, 255*Value, 255]',
-        auto_highlight=True)
-    
+        get_fill_color='color')
+
     boundary_layer = pdk.Layer(
         "GeoJsonLayer",
         data=boundary,
@@ -244,7 +244,7 @@ def session_load():
     # Load suitability map
     farm = load_csv("./farm/farm_mock.csv")
     farm['color'] = '[169, 169, 169]'
-    hex_df = load_csv('./hex/hex_df2.csv') # need to be changed later
+    hex_df = st.session_state.hex_df
 
     data_dict = {
         'boundary':boundary,
@@ -295,6 +295,7 @@ def main_content(page_2_space):
 
     loi_gdf, C, plant, Plant_all, d, f = prepare_model_input(st.session_state.loi, h3_gdf, farm_gdf)
     deck = initialize_map(loi_gdf, farm, hex_df, boundary)
+    hex_df
 
     ### SIDEBAR ##################################
     with st.sidebar:
@@ -317,7 +318,6 @@ def main_content(page_2_space):
             """)
 
     # Toggle the visibility of the ArcLayer based on the checkbox 
-        # PROBLEM : every time after re ticking the layer, all data is gone on the layer
     deck.layers[0].visible = show_suitability
     deck.layers[1].visible = show_farm
     deck.layers[2].visible = show_digester
