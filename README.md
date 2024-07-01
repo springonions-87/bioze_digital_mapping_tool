@@ -27,7 +27,13 @@ It is highly recommended to create a virtual environment before running the proj
 If the Streamlit app has gone over the resource limits of Streamlit Community Cloud, access to the website will be temporarily restrcited. A few possible solutions:
 * Reboot the app to clear the memory.
 * Upgrade the Streamlit version of the app to the latest release.
-* Optimize memory usage of the app, refers to these [tips](https://docs.streamlit.io/streamlit-community-cloud/manage-your-app#app-resources-and-limits "Manage your app resources and limits"). 
+* Optimize memory usage of the app, refers to these [tips](https://docs.streamlit.io/streamlit-community-cloud/manage-your-app#app-resources-and-limits "Manage your app resources and limits").
+
+## Script errors
+  ```ruby
+  AttributeError: 'DeckGLWidget' object has no attribute 'm'
+  ```
+If you encounter this error while running the repository locally, the quick and dirty fix is to comment out **@st.cache_data** right above the function **generate_pydeck** in 1_Phase_1_Suitability Analysis.py. The long-term fix is not yet found. 
 
 <!-- 
 ## File Descriptions
