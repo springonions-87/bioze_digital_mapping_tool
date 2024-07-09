@@ -25,7 +25,7 @@ PADDING = 0
 COLORMAP = 'magma'
 VIEW_STATE = pdk.ViewState(longitude=4.390, latitude=51.891, zoom=8, bearing=0, pitch=0)
 DATA_PATHS = {
-    # 'farm': './hex/aantal_eenpersoonshoudens.csv',
+    # 'farm': './hex/aantal_meergezins_woningen.csv',
     'farm': './standalone/cbs_2022_h3.csv',
     'road': './hex/aantal_huurwoningen_in_bezit_woningcorporaties.csv',
     'industry': './hex/aantal_inwoners.csv',
@@ -146,96 +146,6 @@ def update_layer(selected_variables, all_arrays, d_to_farm):
 
 
 
-
-
-# # Filter potential digester locations
-# def get_sites(df, w, g, idx, score_column='fuzzy', seed=42) -> pd.DataFrame:
-#     """
-#     Analyzes potential digester locations based on suitability scores and spatial factors.
-
-#     Args:
-#         df (pd.DataFrame): DataFrame containing a column with suitability scores.
-#         w (pysal.W): Spatial weights object for spatial analysis.
-#         g (networkx.Graph): Graph object for network analysis.
-#         idx (pd.DataFrame): DataFrame with potential digester locations (indexed by "hex9").
-#         score_column (str, optional): Name of the column containing suitability scores. Defaults to 'fuzzy'.
-#         seed (int, optional): Seed for random number generator. Defaults to 42.
-
-#     Returns:
-#         pd.DataFrame: DataFrame containing the most central locations within significant suitability clusters.
-#     """
-
-#     # Input Validation
-#     if score_column not in df.columns:
-#         raise ValueError(f"The DataFrame does not contain a '{score_column}' column.")
-#     if not isinstance(idx, pd.DataFrame) or idx.index.name != 'hex9':
-#         raise ValueError("The idx should be a pandas DataFrame with 'hex9' as index.")
-
-#     # Data Cleaning and Preprocessing (Improved handling of missing values)
-#     df.dropna(subset=[score_column], inplace=True)  # Handle missing values
-#     df = df.drop_duplicates(subset='hex9').set_index('hex9')
-
-#     # Ensure all "hex9" values from df are present in the index
-#     unique_idx = df.index.intersection(idx.index)
-
-#     if unique_idx.empty:
-#         raise ValueError("No overlapping 'hex9' values found between df and idx. Check data quality and 'hex9' formatting.")
-
-#     df = df.loc[unique_idx]  # Reindex df based on the intersection
-
-#     if 'geometry' in df.columns:
-#         df['geometry'] = gpd.GeoSeries(df['geometry']).to_shapely()
-
-#     w_subset_result = w_subset(w, df.index)
-
-#     # Spatial Analysis with Error Handling (using a try-except block)
-#     try:
-#         lisa = esda.Moran_Local(df[score_column], w_subset_result, seed=seed)
-#     except ValueError as e:
-#         raise ValueError(f"Error computing Moran's I: {str(e)}") from e  # Propagate original error
-
-#     # Identify Significant Locations
-#     significant_locations = df[lisa.p_sim < 0.01].index.to_list()
-#     st.write(f"Number of significant locations: {len(significant_locations)}")
-
-#     # # Check if nodes in significant_locations exist in the main graph
-#     # missing_nodes = [node for node in significant_locations if node not in st.session_state.g.nodes]
-#     # if missing_nodes:
-#     #     st.write(f"Missing nodes: {missing_nodes}")
-
-#     st.write(f"Number of nodes in the graph: {len(g.nodes)}")
-#     st.write(f"Number of edges in the graph: {len(g.edges)}")
-
-
-#     # Network Analysis
-#     H = g.subgraph(significant_locations)
-#     st.write(f"Number of nodes in H: {len(H.nodes)}")
-#     st.write(f"Number of edges in H: {len(H.edges)}")
-#     H_undirected = nx.Graph(H.to_undirected())
-
-#     # st.write(H_undirected)
-#     connected_components = [component for component in nx.connected_components(H_undirected) if len(component) > 1]
-#     filtered_components = [component for component in connected_components if len(component) > 2]
-#     # st.write(filtered_components)
-
-#     # Calculate Eigenvector Centrality for Each Component
-#     centrality_measure = nx.eigenvector_centrality  # Example: using eigenvector centrality
-#     central_locations = []
-#     for component in filtered_components:
-#         subgraph = H.subgraph(component)
-#         centrality = centrality_measure(subgraph, max_iter=1500)
-#         most_central_node = max(centrality, key=centrality.get)
-#         central_locations.append(most_central_node)
-
-#     # Check if 'fuzzy' exists in st.session_state.all_loi
-#     # if 'fuzzy' in st.session_state.all_loi.columns and st.session_state.all_loi['fuzzy'] is not None:
-#         # if not st.session_state.all_loi['fuzzy'].empty:
-#     st.session_state.all_loi = df.loc[central_locations].reset_index()
-#     #     else:
-#     #         st.write("st.session_state.all_loi['fuzzy'] is empty.")
-#     # else:
-#     #     st.write("'fuzzy' does not exist in st.session_state.all_loi.")
-
 def get_sites(df, w, g, idx, score_column: str = 'fuzzy', seed: int = 42) -> pd.DataFrame:
     """
     Analyzes potential digester locations based on suitability scores and spatial factors.
@@ -286,16 +196,7 @@ def get_sites(df, w, g, idx, score_column: str = 'fuzzy', seed: int = 42) -> pd.
     H = g.subgraph(significant_locations)
     H_undirected = nx.Graph(H.to_undirected())
     filtered_components = [component for component in nx.connected_components(H_undirected) if len(component) > 2]
-    # st.write(filtered_components)
-    
-    # Calculate centrality for each component (optional - uncomment to implement)
-    # centrality_measure = nx.eigenvector_centrality
-    # central_locations = []
-    # for component in filtered_components:
-    #     subgraph = H.subgraph(component)
-    #     centrality = centrality_measure(subgraph, max_iter=1500)
-    #     most_central_node = max(centrality, key=centrality.get)
-    #     central_locations.append(most_central_node)
+
 
     return df[df.index.isin(significant_locations)]  # Return DataFrame with significant locations
 
@@ -398,9 +299,9 @@ def initialize_session_state(idx):
 
 ### STAP 2
 def display_intro_text():
-    st.markdown("### Fase 1: Geschiktheidsanalyse - Potentiële Locaties voor Grootschalige Vergisters")
+    st.markdown("### Fase 1: Geschiktheidsanalyse - Potentiële Locaties voor Nieuwbouw Projecten")
     st.markdown(
-        "Bekijk de onderstaande kaarten, elk vertegenwoordigt een vooraf geselecteerd criterium dat essentieel wordt geacht voor het bepalen van de geschiktheid van een gebied voor grootschalige vergisters.  "
+        "Bekijk de onderstaande kaarten, elk vertegenwoordigt een vooraf geselecteerd criterium dat essentieel wordt geacht voor het bepalen van de geschiktheid van een gebied voor nieuwbouw projecten.  "
         " Elk gebied in de regio krijgt een geschiktheidsscore tussen 0 en 1, waarbij 0 het minst geschikt en 1 het meest geschikt vertegenwoordigt.  "
         "<br>Tip: Klik op het vraagtekenpictogram :grey_question: boven elke kaart voor meer informatie.",
         unsafe_allow_html=True
