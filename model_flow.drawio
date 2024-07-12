@@ -1,0 +1,444 @@
+<mxfile host="65bd71144e">
+    <diagram id="fEbwRjq-CAVIX-2oLrUQ" name="Page-1">
+        <mxGraphModel dx="2210" dy="-647" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1830" y="2830" width="490" height="205" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1820" y="2665" width="520" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="58" target="52">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="2730" y="2685" width="280" height="155" as="geometry"/>
+                </mxCell>
+                <mxCell id="44" value="" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="30" target="43">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4190" y="2615" width="490" height="445" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3320" y="2615" width="690" height="445" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Land cover, relevant as digester sites&lt;br&gt;&amp;nbsp;(raster; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3370" y="2835" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="4" target="6">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Land cover, relevant as suitability criteria (raster; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3540" y="2915" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="6" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Calculate euclidean distance &lt;br&gt;(raster to raster)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3700" y="2915" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="8" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Calculate euclidean distance &lt;br&gt;(raster to linestrings)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3700" y="2835" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="10" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Calculate euclidean distance &lt;br&gt;(raster to point)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3700" y="2705" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="12" target="8">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Road network edges&lt;br&gt;(linestring; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3540" y="2835" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="14" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Farms&lt;br&gt;(point; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3540" y="2745" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="16" target="10">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="Gas inlets&lt;br&gt;(point; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3540" y="2675" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="18" target="20">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" style="html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;dashed=1;dashPattern=1 1;strokeColor=#FF3333;" edge="1" parent="1" source="28" target="33">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="18" target="39">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Reproject to EPSG 4326 (ArcGIS)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4035" y="2835" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="20" target="22">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Euclidean distance to all variable of interest&lt;br&gt;(raster; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4210" y="2835" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="22" target="23">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="Hexagonize &lt;br&gt;(raster to H3)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4370" y="2835" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="Euclidean distance to all variable of interest&lt;br&gt;(H3 polygons; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4540" y="2835" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="+" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=21;fontStyle=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3505" y="2845" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="+" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=21;fontStyle=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3505" y="2925" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="+" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=21;fontStyle=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3505" y="2755" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="+" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=21;fontStyle=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3505" y="2685" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="raster_h3_conversion" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4230" y="2640" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="fuzzy_suitability _anlaysis" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3360" y="2630" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="33" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="./raster/&lt;br&gt;proximity__poi_3857.tiff (raster; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="4030" y="2720" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#7F00FF;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;entryX=0.002;entryY=0.838;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="39" target="30">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="./raster/&lt;br&gt;proximity_4326.tiff (raster; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="4030" y="2945" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="147" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="43" target="146">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="./hex/&lt;br&gt;poi_v2_csv" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="4730" y="2795" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="45" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="./raster/&lt;br&gt;poi_3857.tiff (raster; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="3535" y="3110" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="47" target="12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="./osm_network/&lt;br&gt;&lt;br&gt;G_e.shp" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="3160" y="2945" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="50" target="14">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="88" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="50" target="97">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2340" y="2917.1487603305786" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="50" value="./farm/&lt;br&gt;&lt;br&gt;farm_new.shp" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="3130" y="2732.5" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="52" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="./data/&lt;br&gt;&lt;br&gt;inlet.shp" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+                    <mxGeometry x="3130" y="2602.5" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="54" target="58">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="./osm_network/&lt;br&gt;&lt;br&gt;G_n.shp" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="2550" y="2722.5" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="Randomly select points" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="2810" y="2735" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="create_mock_data" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="2740" y="2690" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="extract_osm_road_network" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1820" y="2665" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="65" value="" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="66" target="71">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1620" y="2755" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="66" value="OSM&lt;br&gt;(graph)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1710" y="2727.5" width="60" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Simplified road network &lt;br&gt;(graph; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="2370" y="2665" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="71" target="67">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2370" y="2750" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="71" target="72">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" style="edgeStyle=none;html=1;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="71" target="73">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="Consolidate intersection" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1840" y="2727.5" width="130" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="72" target="54">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="72" target="93">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="Road network nodes&lt;br&gt;(point; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="2370" y="2735" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="73" target="47">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="Road network edges&lt;br&gt;(linestring; EPSG:3857)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="2370" y="2805" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="82" target="95">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1750" y="2955" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="176" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="82" target="152">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1570" y="2590"/>
+                            <mxPoint x="5220" y="2580"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="82" value="h3_list.shp&lt;br&gt;(list of h3 hexagons relevant for the study)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#bac8d3;strokeColor=#23445d;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1510" y="2855" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="101" target="89">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2210" y="2910" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="92" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="103" target="90">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2209.871794871795" y="3062.5" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="164" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="89" target="158">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="./app_data/&lt;br&gt;&lt;br&gt;h3_geometry.shp" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+                    <mxGeometry x="2370" y="2935" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="167" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="90" target="158">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="./app_data/&lt;br&gt;&lt;br&gt;farm.shp" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+                    <mxGeometry x="2370" y="3030" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="106" value="" style="group;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="1580" y="2860" width="690" height="157.5" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" value="Reprojected road network nodes&lt;br&gt;(point; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="260" y="35" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="H3 polygons; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="430" y="5" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="Reprojected farms&lt;br&gt;(point; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="430" y="85" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="+" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=21;fontStyle=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="395" y="15" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="+" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=21;fontStyle=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="395" y="85" width="30" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="Nearest neighbor&amp;nbsp;&lt;br&gt;(polygon to point)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="600" y="5" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="106" source="95" target="101">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" value="Nearest neighbor&amp;nbsp;&lt;br&gt;(point to point)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="106">
+                    <mxGeometry x="600" y="85" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="106" source="97" target="103">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="Find nearest nodes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="1830" y="2835" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="" style="group;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" connectable="0" parent="1">
+                    <mxGeometry x="4800" y="3260" width="670" height="860" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="Fuzzy membership assignment&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="120" target="118">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="Euclidean distance to variable of interest&lt;br&gt;(H3 polygons; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="Suitability based distance to variable of interest&lt;br&gt;(H3 polygons; EPSG:4326)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="170" y="100" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="118" target="122">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="User selected criteria" style="html=1;strokeWidth=1;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="100" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="126" value="Aggregate criteria&lt;br&gt;(weighted average)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="350" y="100" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="122" target="126">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="124" target="126">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="Compound suitability map" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="350" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="126" target="128">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="131" value="HH clusters" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="300" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="133" value="Graph representation &amp;amp; identify HH connected graphs" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="390" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="130" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="131" target="133">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="134" value="Calculate spatial weights &amp;amp; spatial autocorrelation &lt;br&gt;(Local Moran's I)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="127" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="128" target="134">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="134" target="131">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1140" y="30" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="136" value="HH connected graphs" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="490" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="132" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="133" target="136">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="138" value="Calculate eigenvector centrality and select highest for each connected graphs" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="590" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="135" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="136" target="138">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="139" value="Candidate sites&lt;br&gt;(H3 indices)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="510" y="680" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="137" value="" style="edgeStyle=none;html=1;fontSize=21;endArrow=blockThin;endFill=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="145" source="138" target="139">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="146" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="145">
+                    <mxGeometry x="-50" y="-40" width="720" height="900" as="geometry"/>
+                </mxCell>
+                <mxCell id="149" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="148" target="146">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="172" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="148" target="152">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" value="./app_data/&lt;br&gt;&lt;br&gt;h3_polygon.shp (potentially the original h3_list)" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#FF3333;" vertex="1" parent="1">
+                    <mxGeometry x="4970" y="3000" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="156" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="151" target="146">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="151" value="./app_data/&lt;br&gt;&lt;br&gt;g.graphml" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+                    <mxGeometry x="5130" y="3000" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="174" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="152" target="148">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="152" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="5080" y="2720" width="280" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" value="spatial_autocorrelation" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="5080" y="2720" width="130" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="155" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="154" target="151">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" value="Networktized H3 hexagons layer&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="5100" y="2797.5" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="158" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=default;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3960" y="3420" width="720" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="159" value="Phase 2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="3960" y="3420" width="130" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" value="Phase 1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" vertex="1" parent="1">
+                    <mxGeometry x="4760" y="3220" width="130" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="162" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="160">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="4095.7142857142853" y="3415" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="160" value="./app_data/&lt;br&gt;&lt;br&gt;Farn_test.pickle" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#FF3333;" vertex="1" parent="1">
+                    <mxGeometry x="3950" y="3195" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="163" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="161">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="4213.571428571428" y="3415" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="161" value="./app_data/&lt;br&gt;&lt;br&gt;manure_production_test.pickle" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#FF3333;" vertex="1" parent="1">
+                    <mxGeometry x="4090" y="3195" width="170" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="166" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="165" target="158">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="165" value="./app_data/&lt;br&gt;&lt;br&gt;twente_4326.geojson" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#ffe6cc;strokeColor=#FF3333;" vertex="1" parent="1">
+                    <mxGeometry x="4280" y="3195" width="170" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="169" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="168" target="158">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="168" value="./farm/&lt;br&gt;&lt;br&gt;farm_mock.csv" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#d5e8d4;strokeColor=#FF3333;" vertex="1" parent="1">
+                    <mxGeometry x="3780" y="3192.5" width="140" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="178" style="edgeStyle=none;html=1;dashed=1;dashPattern=1 1;strokeColor=#FF3333;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;" edge="1" parent="1" source="177" target="152">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="177" value="./hex/&lt;br&gt;all_loi_ppt.csv" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Oswald;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DOswald;fillColor=#fff2cc;strokeColor=#FF3333;" vertex="1" parent="1">
+                    <mxGeometry x="4910" y="2780" width="140" height="85" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
