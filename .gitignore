@@ -1,5 +1,7 @@
 osm_network/G.graphml
 osm_network/G_e.dbf
-standalone/cbs_2022.zip
-standalone/cbs_2022/cbs_vk100_2022_v1.gpkg
 standalone/clipped.geojson
+standalone/downloads
+standalone/extracts
+standalone/downloads
+
