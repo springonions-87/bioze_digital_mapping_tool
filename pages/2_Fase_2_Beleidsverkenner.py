@@ -254,12 +254,12 @@ def main():
     st.markdown(
         "Op onderstaande kaart ziet u waar uw kandidaat-locaties uit **Fase 1** en de boerderijen in de omgeving zich bevinden."
         " Door mest van lokale boerderijen te gebruiken, kunnen we biogas produceren ter vervanging van aardgas, waardoor duurzame energie wordt bevorderd en de uitstoot van broeikasgassen door mest wordt voorkomen. "
-        " Onderzoek de beste locaties om grote vergisters te bouwen op basis van verschillende beleidsdoelen met betrekking tot de hoeveelheid mest bestemd voor de productie van biogas."
+        " Onderzoek de beste locaties om grote <placeholder> te bouwen op basis van verschillende beleidsdoelen met betrekking tot de hoeveelheid mest bestemd voor de productie van biogas."
     )
     st.markdown("")
     st.markdown(":dart:"
         " Bepaal hoeveel van de mest in de regio u wilt gebruiken voor de productie van biogas en geef die hoeveelheid aan met de schuifregelaar **'Mestgebruiksdoelstelling (%)'**. "
-        " De tool vindt de meest strategische locaties om grote vergisters te bouwen om uw doel te bereiken."
+        " De tool vindt de meest strategische locaties om grote <placeholder> te bouwen om uw doel te bereiken."
     )
     st.markdown("")
     st.markdown(":white_check_mark:"
@@ -268,7 +268,7 @@ def main():
     st.markdown("")
     with st.expander("**Hoe de kaart te lezen :mag_right:**"):
         st.markdown("Boerderijen - :black_circle:")
-        st.markdown("Kandidaat-vergistersites - :rainbow[Gekleurde] and numbered markers")
+        st.markdown("Kandidaat-<placeholder>ites - :rainbow[Gekleurde] and numbered markers")
         st.markdown("Toewijzing van boerderijen aan vergistingslocaties - **:green[groen]** en **:red[rood]** bogen")
         st.markdown("Opmerking: De kleur van boerderijen verandert in de kleur van de vergistingslocaties waaraan ze in de oplossing zijn toegewezen. Als de boerderijen worden uitgesloten van de oplossing, blijven ze zwart.")
     st.markdown("")
