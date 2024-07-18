@@ -397,9 +397,9 @@ def initialize_session_state(idx):
 
 ### STAP 2
 def display_intro_text():
-    st.markdown("### Fase 1: Geschiktheidsanalyse - Potentiële Locaties voor Grootschalige Vergisters")
+    st.markdown("### Fase 1: Geschiktheidsanalyse - Potentiële Locaties voor Grootschalige  s")
     st.markdown(
-        "Bekijk de onderstaande kaarten, elk vertegenwoordigt een vooraf geselecteerd criterium dat essentieel wordt geacht voor het bepalen van de geschiktheid van een gebied voor grootschalige vergisters.  "
+        "Bekijk de onderstaande kaarten, elk vertegenwoordigt een vooraf geselecteerd criterium dat essentieel wordt geacht voor het bepalen van de geschiktheid van een gebied voor grootschalige  s.  "
         " Elk gebied in de regio krijgt een geschiktheidsscore tussen 0 en 1, waarbij 0 het minst geschikt en 1 het meest geschikt vertegenwoordigt.  "
         "<br>Tip: Klik op het vraagtekenpictogram :grey_question: boven elke kaart voor meer informatie.",
         unsafe_allow_html=True
