@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 import networkx as nx
-from pysal.lib import weights
+import libpysal.weights as weights# from pysal.lib import weights
 from pysal.explore import esda
 import plotly.figure_factory as ff
 
